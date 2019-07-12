@@ -69,7 +69,7 @@ public class NaverCaptcha {
                byte[] bytes = new byte[1024];
                // 랜덤한 이름으로  파일 생성
                tempname = Long.valueOf(new Date().getTime()).toString();
-               File f = new File("C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Namu\\resources\\images\\captcha\\"+tempname + ".jpg");
+               File f = new File("C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\YouLovePlan\\resources\\images\\captcha\\"+tempname + ".jpg");
                f.createNewFile();
                OutputStream outputStream = new FileOutputStream(f);
                while ((read =is.read(bytes)) != -1) {
