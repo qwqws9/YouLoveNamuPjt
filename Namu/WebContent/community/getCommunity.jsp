@@ -62,7 +62,7 @@
 				<button type="button" style="border: none; background: none;">
 					<i class="far fa-heart" ></i>
 				</button>
-				<span style="font-size: 11px;">${community.likes }</span>
+				<span style="font-size: 11px;">20</span>
 				<button style="border: none; background: none;">
 					<i class="fas fa-ellipsis-v"></i>
 				</button>

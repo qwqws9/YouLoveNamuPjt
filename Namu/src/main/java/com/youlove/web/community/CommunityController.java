@@ -60,7 +60,7 @@ public class CommunityController {
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
 		System.out.println("Commnity = "+community);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/addCommunityView.jsp");
+		modelAndView.setViewName("/community/getCommunity.jsp");
 		String safeFile ="";
 		System.out.println(file);
 		if(file.isEmpty() != true) {
@@ -81,7 +81,7 @@ public class CommunityController {
 			community.setOpenRange("2");
 			System.out.println("off");
 		}
-		
+		community.setWriter(1);
 		community.setHashtag("null");
 		communityService.addCommunity(community);
 		

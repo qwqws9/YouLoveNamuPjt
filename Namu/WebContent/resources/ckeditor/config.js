@@ -47,6 +47,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.youtube_related = true;
 	config.youtube_older = false;
 	config.youtube_privacy = false;
+	config.allowedContent = true;
 	//font
 	config.font_names = '굴림;궁서;돋움;맑은 고딕;바탕;' + CKEDITOR.config.font_names;
 	config.font_defaultLabel = '굴림';

@@ -18,6 +18,12 @@
 			self.location = '/user/loginView';
 		})
 	});
+	
+	$(function(){
+		$("#communityList").on("click",function(){
+			self.location = "/community/getCommunityList"
+		})
+	})
 </script>
 
 <nav class="navbar navbar-dark bg-dark">
@@ -105,7 +111,7 @@
 						    	<span>커뮤니티</span>
 							</button>
 						  	<div class="dropdown-menu">
-						  		<a class="dropdown-item" href="#">커뮤니티 목록</a>
+						  		<a id="communityList" class="dropdown-item" href="#">커뮤니티 목록</a>
 							    <a class="dropdown-item" href="#">분석</a>
 						  	</div>
 						</div>

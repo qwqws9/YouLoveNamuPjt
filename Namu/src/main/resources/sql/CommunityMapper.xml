@@ -16,23 +16,21 @@
 		<result property="openRange" 			column="open_range" 			jdbcType="CHAR" />
 		<result property="views" 				column="views" 					jdbcType="NUMERIC"  />
 		<result property="writer" 				column="writer" 				jdbcType="NUMERIC" />
-		<result property="likes" 				column="like_code" 				jdbcType="NUMERIC" />
 		<result property="hashtag" 				column="hashtag_code" 			jdbcType="VARCHAR" />
-		<result property="comment" 				column="comment_code" 			jdbcType="NUMERIC" />
 		<result property="city" 				column="city_name" 				jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<insert 	id="addCommunity"		parameterType="community" >
 		INSERT
 		INTO community (community_code, community_board, community_title, community_content, community_date,community_thumbnail,
-						open_range, views, writer, like_code, hashtag_code, comment_code, city_name)
+						open_range, views, writer, hashtag_code, city_name)
 		VALUES (seq_community_code.nextval,#{communityBoard},#{communityTitle},<![CDATA[#{communityContent}]]>,to_char(sysdate,'yy.mm.dd hh24:mi'),
-				#{communityThumbnail:VARCHAR},#{openRange},#{views},#{writer},#{likes:NUMERIC},#{hashtag:VARCHAR},#{comment:NUMERIC},#{city:VARCHAR})
+				#{communityThumbnail:VARCHAR},#{openRange},#{views},#{writer},#{hashtag:VARCHAR},#{city:VARCHAR})
 	</insert>
 	 
 	<select 	id="getCommunity"		parameterType="int"		resultMap="communityMap">
 		SELECT
-		community_code, community_board, community_title,community_content, community_date, views, writer, like_code, hashtag_code, comment_code
+		community_code, community_board, community_title,community_content, community_date, views, writer, hashtag_code
 		FROM community
 		WHERE community_code = #{communityCode}
 	</select>
