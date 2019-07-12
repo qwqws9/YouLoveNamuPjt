@@ -14,7 +14,7 @@ public class Wallet {
 	private int exchangeRate;
 	private String category;
 	private int payer;
-	// ȯ�� ���� ���(��ȭ)
+	// 환율 적용한 한화 값
 	private int exchangePrice;
 	
 	public int getWalletDetailCode() {

@@ -22,8 +22,10 @@
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     
+    <!-- Our Own Resources -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
-	<script type="text/javascript" src="/resources/javascript/common.js"></script>
+	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
