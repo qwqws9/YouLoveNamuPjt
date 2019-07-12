@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+ 	
+ 	
+	<resultMap id="userSelectMap" type="user">
+		<result property="userCode" 			column="USER_CODE" 			jdbcType="NUMERIC"/>
+		<result property="token"				column="TOKEN" 				jdbcType="VARCHAR" />
+		<result property="profileAuth" 			column="PROFILE_AUTH" 		jdbcType="CHAR" />
+		<result property="role" 				column="ROLE" 				jdbcType="VARCHAR" />
+		<result property="nickname" 			column="NICKNAME" 			jdbcType="VARCHAR" />
+		<result property="email" 				column="EMAIL" 				jdbcType="VARCHAR" />
+		<result property="phone" 				column="PHONE" 				jdbcType="VARCHAR" />
+		<result property="name" 				column="NAME" 				jdbcType="VARCHAR"  />
+		<result property="password" 			column="PASSWORD" 			jdbcType="VARCHAR" />
+		<result property="birth" 				column="BIRTH" 				jdbcType="DATE" />
+		<result property="gender" 				column="GENDER" 			jdbcType="CHAR" />
+		<result property="profileImg" 			column="PROFILE_IMG" 		jdbcType="VARCHAR" />
+		<result property="introduce" 			column="INTRODUCE" 			jdbcType="VARCHAR" />
+		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
+		<result property="startBlock" 			column="START_BLOCK" 		jdbcType="DATE" />
+		<result property="endBlock" 			column="END_BLOCK" 			jdbcType="DATE" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addUser"		parameterType="user" >
+	 	INSERT
+		INTO users( USER_CODE , TOKEN , PROFILE_AUTH , ROLE , NICKNAME, EMAIL, PHONE, NAME , PASSWORD,BIRTH,GENDER,PROFILE_IMG,INTRODUCE,REG_DATE,START_BLOCK,END_BLOCK) 
+		VALUES	 (	seq_user_code.nextval , #{token:VARCHAR} , #{profileAuth} , 'user' , #{nickname} , 
+					#{email} , #{phone} , #{name} ,#{password},#{birth},#{gender},#{profileImg:VARCHAR},#{introduce:VARCHAR}, SYSDATE,#{startBlock:DATE},#{endBlock:DATE} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		* 		
+		FROM users 
+		WHERE EMAIL = #{value} or PHONE = #{value}
+	 </select>
+	 
+	 <select 	id="getCheckUser"	parameterType="string"	resultType="string">
+		SELECT
+		nickname 		
+		FROM users 
+		WHERE NICKNAME = #{value}
+	 </select>
+	 
+	
+	 
+</mapper>
