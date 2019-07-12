@@ -28,7 +28,7 @@ input::placeholder {
 	<div class="container">
 		<div class="col-lg-12">
 			<div class="row  justify-content-center">
-				<form >
+				<form enctype="multipart/form-data">
 					<div class="col">
 		  				<h1 class="h3 mb-3 font-weight-normal">회원가입</h1>
 					</div>
@@ -209,12 +209,125 @@ input::placeholder {
 	<script type="text/javascript">
 	
 	
+	//생년월일 유효성 체크
+	function isValidDate(dateStr) {
+	     var year = Number(dateStr.substr(0,2)); 
+	     var month = Number(dateStr.substr(2,2));
+	     var day = Number(dateStr.substr(4,2));
+	     var today = new Date(); 
+	     var yearNow = today.getFullYear();
+	 
+	 
+	     
+	     if (month < 1 || month > 12) { 
+	          alert("달은 1월부터 12월까지 입력 가능합니다.");
+	          $('#birth').focus();
+	          return false;
+	     }
+	    if (day < 1 || day > 31) {
+	          alert("일은 1일부터 31일까지 입력가능합니다.");
+	          $('#birth').focus();
+	          return false;
+	     }
+	     if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+	    	 $('#birth').focus();
+	          alert(month+"월은 31일이 존재하지 않습니다.");
+	          return false;
+	     }
+	     if (month == 2) {
+	          var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+	          if (day>29 || (day==29 && !isleap)) {
+	        	  $('#birth').focus();
+	               alert(year + "년 2월은  " +day + "일이 없습니다.");
+	               return false;
+	          }
+	     }
+	     return true;
+	}
+
+
+	
+	//회원가입시 유효성 체크
+	function signUp() {
+		var captcha = $('#userCaptcha').attr('class');
+		var email = $('#email').attr('class');
+		var phone = $('#phone').attr('class');
+		var password = $('#password').val();
+		var password2 = $('#password2').val();
+		var name = $('#name').val();
+		
+		var birth = $('#birth').val();
+		var gender = $('#gender').val();
+		var introduce = $('#introduce').attr('class');
+		var nickname = $('#nickname').attr('class');
+		
+		
+		if(captcha != 'form-control is-valid') {
+			$('#userCaptcha').focus();
+			alert('캡차값을 확인하세요')
+			return;
+		}
+		
+		if(email != 'form-control is-valid') {
+			$('#email').focus();
+			alert('이메일을 확인하세요')
+			return;
+		}
+		
+		if(phone != 'form-control is-valid') {
+			$('#phone').focus();
+			alert('휴대폰번호를 확인하세요')
+			return;
+		}
+		
+		if(password != password2) {
+			$('#password').focus();
+			alert('비밀번호를 확인하세요')
+			return;
+		}
+		
+		if(name.length < 1) {
+			$('#name').focus();
+			alert('이름을 입력하세요')
+			return;
+		}
+		
+		if(gender.length < 1) {
+			$('#gender').focus();
+			alert('성별을 입력하세요')
+			return;
+		}
+		
+		if(nickname != 'form-control is-valid') {
+			$('#nickname').focus();
+			alert('닉네임을 확인하세요')
+			return;
+		}
+		
+		if(introduce == 'form-control is-invalid') {
+			$('#introduce').focus();
+			alert('자기소개는 1000bytes 이하만 입력가능합니다.')
+			return;
+		}
+		
+		
+		if(birth.length < 1) {
+			$('#birth').focus();
+			alert('생년월일을 입력하세요')
+			return;
+		}else {
+			isValidDate(birth);
+			return;
+		}
+	}
+	
+	
 		$(function(){
 			
 			
-			
+			//회원가입
 			$('#signUp').on('click',function(){
-				
+				signUp();
 			});
 			
 			
@@ -280,7 +393,7 @@ input::placeholder {
 							//alert(JSONData);
 							
 							if(JSONData == true) {
-								$('#captchaOk').attr('disabled',true).text('완료');
+								$('#captchaOk').attr('disabled',true).text('완료').attr('class','btn btn-outline-success');
 								$('#userCaptcha').attr('readonly',true).attr('class','form-control is-valid');
 								$('#refCaptcha').attr('disabled',true);
 							}else {
@@ -451,10 +564,7 @@ input::placeholder {
 			$('#'+target+'Form').prop('style','display : none');
 		}
 		
-		//회원가입시 유효성 체크
-		function signUp() {
-			
-		}
+		
 		
 		
 		//이미지 업로드
@@ -484,7 +594,7 @@ input::placeholder {
 				if(target == 'saveM'){
 					$('#emailCheckNum').attr('class','form-control is-invalid');
 				}else {
-					$('phoneCheckNum').attr('class','form-control is-invalid');
+					$('#phoneCheckNum').attr('class','form-control is-invalid');
 				}
 			}
 		}
@@ -518,7 +628,7 @@ input::placeholder {
 						
 					}else if(JSONData.target == 'error') {
 						nodisplay('phoneCheck');
-						$('phoneCheckNum').attr('class','form-control is-invalid');
+						$('#phoneCheckNum').attr('class','form-control is-invalid');
 						$('#phoneHelp').text('유효하지 않은 번호입니다.').css('color','red');
 					}
 				}

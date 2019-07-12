@@ -32,10 +32,10 @@
 	
 	<div style="width: 100%;">
 		<h4 style="margin: auto;">
-			<a href="http://localhost:8080/wallet/walletList.jsp">규리 가계부 목록</a><br>
+			<a href="/wallet/walletList.jsp">규리 가계부 목록</a><br>
 			<a href="http://192.168.0.13:8005/">상욱 채팅</a><br>
-			<a href="http://localhost:8080/user/loginView.jsp/">성용 회원가입</a><br>
-			<a href="http://192.168.0.80:8080/Planner/addRoute.jsp">민희 구글맵 루트</a><br>
+			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
+			<a href="/planner/addRoute.jsp">민희 구글맵 루트</a><br>
 			<a href="/community/getCommunityList">중현 커뮤니티 등록</a>
 		</h4>
 	</div>
