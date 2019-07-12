@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap');
+
+/* RESET */
+html, body, div, span, ul, li, input, button {margin: 0; padding: 0;}
+body {line-height: 1; direction: ltr;}
+h2, h3 {margin: 0; padding: 0; font-size: 14px; font-weight: 400; color: #ccc;}
+ul, li {list-style:none;}
+input, button, select {background: none; border: 0 none;}
+select {-webkit-appearance: none; -moz-appearance: none; appearance: none;}
+select::-ms-expand {display: none;}
+select:focus {outline: none;}
+
+input[type=button] {background: transparent; outline: 0; cursor: pointer;}
+select:active {box-shadow: 0;}
+a {color: inherit; text-decoration: none;}
+a:hover, a:active {color: inherit; text-decoration:none;}
+
+/* COMMON */
+.wrap {position: relative; max-width: 1200px; margin: auto; padding-top: 30px; font-family: 'Noto Sans KR', sans-serif;}
+.skip {overflow: hidden; position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; clip: rect(0 0 0 0);}
+
+/* walletListView */
+.pre_btn {margin-left: 10px; font-size: 18px; font-weight: 700;}
+.pre_btn i {font-size: 21px;}
+.pre_btn span {line-height: 30px;}
+.next_btn {}
+
+.sec_wrap {width: 100%; padding-top: 80px;}
+.sec_wrap::after {content: ''; display: block; clear: both;}
+.left_nav, .right_table {float: left;}
+.left_nav {width: 10%;}
+.right_table {width: 90%; text-align: center;}
+
+.day_btn {display: block;}
+
+.search_form {position: absolute; top: 30px; right: 10px; height: 40px; margin-right: 1.5%;}
+.search_txt, .search_btn {height: inherit; padding: 7px 12px; border-top-right-radius: 0.25em; border-bottom-right-radius: 0.25em; box-sizing: border-box;}
+.search_txt {width: 250px; border: 1px solid #ccc; border-radius: 0.25em;}
+.search_btn {margin-left: -7px; color: #fff; background-color: #343a40;}
+
+.total_table, .detail_table {width: 95%; margin: auto;}
+.total_table::after {content: ''; display: block; clear: both;}
+.total_budget, .total_price {width: 100%; height: 50px; line-height: 44px; border: 3px solid #ccc; box-sizing: border-box;}
+.total_budget span {display: inline-block; width: 50%; font-size: 20px; font-weight: 700;}
+.total_budget span:first-child {background-color: #e2e2e2; border-right: 3px solid #ccc;}
+.total_price {margin-top: 5px;}
+.total_floating {float: left; width: 50%; height: 44px; line-height: 44px;}
+.total_floating span {display: inline-block; width: 50%;}
+.total_floating:first-child {border-right: 3px solid #ccc;}
+.total_floating span:first-child {border-right: 2px solid #ccc;}
+.total_floating:last-child {background-color: #e2e2e2;}
+
+.plus_btns {position: relative; margin-top: 30px; margin-right: 2.5%; font-size: 16px; text-align: right;}
+.pop_wrap_parent {/*display: none;*/ position: absolute; top: 25px; right: 0; width: auto; height: auto; text-align: center;}
+.pop_wrap_parent:last-child {display: none;}
+.pop_wrap {padding: 30px 30px; background-color: #fff; border: 2px solid #343a40; border-radius: 0.25em; z-index: 1;}
+
+.detail_table {margin-top: 20px; margin-bottom: 100px; font-size: 14px;}
+.table_header {height: 50px; line-height: 47px; border-top: 2px solid #ccc; border-bottom: 2px solid #ccc;}
+.table_row {height: 75px; line-height: 74px; border-bottom: 1px solid #ccc; vertical-align: middle;}
+.table_row:last-child {border-bottom: 2px solid #ccc;}
+.table_col {display: inline-block;}
+.table_header .table_col:nth-child(2), .table_header .table_col:nth-child(3), .table_header .table_col:nth-child(4),
+.table_row .table_col:nth-child(1), .table_row .table_col:nth-child(2), .table_row .table_col:nth-child(3) {width: 20%;}
+.table_header .table_col:nth-child(5), .table_row .table_col:nth-child(4) {width: 25%;}
+.table_header .table_col:nth-child(6), .table_row .table_col:nth-child(5) {width: 10%;}
+.table_col img {width: 60px; height: 60px; border: 1px solid #6c757d;}
+
+/* walletListView : incomeAdd */
+.result {width: 150px; background-color: gray;}
+.unit_selec {width: 85px; padding: 7px 12px; background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; border: 1px solid #ccc; border-radius: 0.25em; }
+
+.cal_btns::after {content: ''; display: block; clear: both;}
+.cal_btns div:first-child {position: relative;}
+.cal_btns div:first-child::after {content: ''; display: block; clear: both;}
+.formular, .ac {float: right;}
+.formular {width: 188px; height: 60px; margin-left: 4px; padding: 0 8px; text-align: right;}
+.cal_btns .cal_btn {width: 60px; height: 60px; font-size: 20px; border: 1px solid #ccc; border-radius: 0.25em; box-sizing: border-box;}
+.cal_left, .cal_right {float: left;}
+.cal_left > div, .cal_right .cal_btn {margin-top: 4px;}
+.cal_left > div .cal_btn {margin-right: 4px;}
+.cal_right {width: 60px;}

@@ -24,7 +24,7 @@
 <div class="container-fluid">
 	<div class="col-lg-1">
 		<a class="navbar-brand" href="/">
-		    <span class="brand" >YOULOVE</span>
+		    <span class="brand">YOULOVE</span>
 		</a>
 	</div>
 	<div class="col-lg-11">
@@ -70,12 +70,12 @@
 						<div class="row">
 							<div class="col-lg-9">
 								<div class="float-right" style="padding-top: 10px;">
-									<span class="align-text-bottom" style="font-size:x-small; color: white;">나무발발이dddddddddd</span>
+									<span class="align-text-bottom" style="font-size:x-small; color: white;">나무발발이</span>
 								</div>
 							</div>	
 							<div class="col-lg-3">
 								<div class="float-right" id="profile-image">
-									<a href="#"><img src="<c:url value="/resources/images/dog.JPG" />" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="40px" height="40px"></a>
+									<a href="#"><img src="<c:url value="/resources/images/stitch.png" />" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="40px" height="40px"></a>
 								</div>
 							</div>
 						</div>
@@ -98,8 +98,6 @@
 							    <a class="dropdown-item" href="#">플래너 공유</a>
 						  	</div>
 						</div>
-						
-						
 					</div>					
 					<div class="col-lg-2">
 						<div class="btn-group">
@@ -139,7 +137,5 @@
 			</div>
 		</div>
 	</div>
-	
-
 </div><!-- end of container -->
 </nav>

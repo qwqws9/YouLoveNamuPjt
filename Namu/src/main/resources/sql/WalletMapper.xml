@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WalletMapper">
+
+	<resultMap id="walletSelectMap" type="wallet">
+		<result property="walletDetailCode"	column="W_DETAIL_CODE"	jdbcType="NUMERIC" />
+		<result property="walletCode"		column="W_CODE"			jdbcType="NUMERIC" />
+		<result property="part"				column="PART"			jdbcType="CHAR" />
+		<result property="moneyUnit"		column="MONEY_UNIT"		jdbcType="VARCHAR" />
+		<result property="expression"		column="EXPRESSION"		jdbcType="VARCHAR" />
+		<result property="price"			column="PRICE"			jdbcType="NUMERIC" />
+		<result property="regDate"			column="REG_DATE"		jdbcType="DATE" />
+		<result property="item"				column="ITEM"			jdbcType="VARCHAR" />
+		<result property="content"			column="CONTENT"		jdbcType="VARCHAR" />
+		<result property="payOption"		column="PAY_OPTION"		jdbcType="CHAR" />
+		<result property="exchangeRate"		column="EXCHANGE_RATE"	jdbcType="NUMERIC" />
+		<result property="category"			column="CATEGORY"		jdbcType="CHAR" />
+		<result property="walletImage"		column="W_IMAGE"		jdbcType="VARCHAR" />
+		<result property="payer"			column="PAYER"			jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- walletList.jsp -->
+	<insert id="addWallet" parameterType="wallet">
+		INSERT
+		INTO wallet_detail ( w_detail_code, w_code, part, money_unit, expression, price, reg_date,
+							 item, content, pay_option, exchange_rate, category, w_image, payer )
+		VALUES ( seq_product_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
+				 #{price}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
+				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer:NUMERIC} )
+	</insert>
+	
+	<select id="getWallet" parameterType="int" resultMap="walletSelectMap">
+		SELECT w_detail_code, w_code, part, money_unit, expression, price, reg_date,
+			   item, content, pay_option, exchange_rate, category, w_image, payer
+		FROM wallet_detail
+		WHERE w_detail_code = #{value}
+	</select>
+	
+	<update	id="updateWallet" parameterType="wallet">
+	  	UPDATE wallet_detail
+		<set>
+			money_unit = #{moneyUnit},
+			expression = #{expression},
+			price = #{price},
+			reg_date = #{regDate},
+			item = #{item:VARCHAR},
+			content = #{content:VARCHAR},
+			pay_option = #{payOption},
+			exchange_rate = #{exchangeRate:NUMERIC},
+			category = #{category},
+			w_image = #{walletImage:VARCHAR},
+			payer = #{payer:NUMERIC}
+		</set>
+	  	WHERE w_detail_code = #{walletDetailCode}
+	</update>
+	
+	<delete id="deleteWallet" parameterType="int">
+		DELETE
+		FROM wallet_detail
+		WHERE w_detail_code = #{value}
+	</delete>
+	
+	<select id="getWalletList" parameterType="int" resultMap="walletSelectMap">
+		SELECT *
+		FROM wallet_detail
+		WHERE w_code = #{value}
+	</select>
+	
+</mapper>
