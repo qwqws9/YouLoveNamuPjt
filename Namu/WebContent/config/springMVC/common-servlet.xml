@@ -47,7 +47,8 @@
    	:: 본실습에서는 주석처리 : 추후 PJT 시 RestFul 고려 LogonCheckInterceptor 조건 추가할것
    	-->
 
-
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    
 	<!--  :: ViewResolver 선언 -->	
     <bean id="viewResolver"
 				class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
@@ -63,6 +64,8 @@
 	     <mvc:resources mapping="/resources/**" location="/resources/" />
 	--> 
    	<mvc:resources mapping="/resources/**" location="/resources/" />
+   	
+   	<mvc:resources mapping="/upload/**" location="/resources/images/Content/" />
 
 	<!-- 	:: exception resolver  선언 :: 서술적 / 선언적 예외처리 
 			:: Servlet 에서의 선언적 예외처리를 다시 생각하며....  -->
