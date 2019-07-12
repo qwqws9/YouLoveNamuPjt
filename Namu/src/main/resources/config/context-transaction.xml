@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:aop="http://www.springframework.org/schema/aop"
-	   xsi:schemaLocation=
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation=
 				"http://www.springframework.org/schema/beans 
 				 http://www.springframework.org/schema/beans/spring-beans.xsd
 				 http://www.springframework.org/schema/tx 
@@ -17,14 +17,71 @@
 		<property name="location" value="classpath:config/jdbc.properties" />
 	</bean>
 
-	<!-- DBCP (Apache Commons Database Connection) 사용 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<!-- DBCP (Apache Commons Database Connection) 사용 (하단 DBCP 정리)-->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="initialSize" value="${jdbc.initialSize}" />
-		<property name="maxActive" value="${jdbc.maxActive}" />
-	</bean>
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+	</bean>				 
+												 
 	
+	<!-- TransactioManager instance 생성 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+		<property name="dataSource" ref="dataSource"/>
+	</bean>	
+	
+	
+	<!-- Transaction Advice 생성 
+			:: method : transaction 적용 Method
+			:: propagation : transaction 전파규칙(default : REQUIRED)
+			:: read-only : 트랜잭션이 읽기만가능 (선택)-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- get 으로 시작된는 Method에 적용 transaction 규칙 -->				
+			<tx:method 	name="get*" 	propagation="REQUIRED"	read-only="true" />
+			<!-- add 으로 시작된는 Method에 적용 transaction 규칙 -->		
+			<tx:method	name="add*"	 	propagation="REQUIRED"/>
+			<tx:method	name="update*"	propagation="REQUIRED"/>
+			<!--모든 Method에 적용 transaction 규칙 -->		
+			<!-- <tx:method	name="*"	 />-->	
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- AOP : pointcut / advisor 설정 -->
+	<aop:config>
+		<aop:pointcut id="requiredTx" expression="execution(* com.youlove.service..*ServiceImpl.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx"  />
+	</aop:config>
+	
+	
+
 </beans>
+
+
+	
+	<!-- DBCP
+	DBCP는 DataBase Connection Pool 의 약자로 DB와 커넥션을 맺고 있는 객체를 관리하는 역할을 합니다.
+	JDBC만을 사용할 경우라면 DB접속 시 아래와 같은 순서가 반복되게 됩니다.
+	1. DB 접속을 위한 JDBC 드라이버 로드
+	2. getConnection Method로 부터 DB 커넥션 객체를 얻음
+	3. 쿼리 수행을 위한 PreparedStatement 객체 생성
+	4. excuteQuery를 실행해서 결과를 받아옴.
+	
+	여기서 비효율적인 부분은 1번과 2번 입니다.
+	DB 연결 시 마다 Driver를 로드하고 커넥션 객체를 얻는 작업을 반복하죠.
+	이 부분을 효율적으로 처리하도록 바꾸는 것이 DBCP의 역할 입니다.
+	
+	DBCP를 사용하게 되면,
+	WAS 실행 시 미리 일정량의 DB Connection 객체를 생성하고 Pool 이라는 공간에 저장해 둡니다.
+	그리고 DB 연결 요청이 있으면, 이 Pool 이라는 공간에서 Connection 객체를 가져다 쓰고 반환 하게 됩니다.
+	DBCP를 사용하므로써 설정할 수 있는 옵션은 아래와 같습니다.
+
+	maxActive : 동시에 사용할 수 있는 최대 커넥션 개수
+	maxIdle : Connection Pool에 반납할 때 최대로 유지될 수 있는 커넥션 개수
+	minIdle : 최소한으로 유지할 커넥션 개수
+	initialSize : 최소로 getConnection() Method를 통해 커넥션 풀에 채워 넣을 커넥션 개수
+	-->
