@@ -239,9 +239,9 @@ CREATE TABLE groups (
 
 CREATE TABLE hashtag (
    hashtag_code   NUMBER(10) NOT NULL,
-   community_code   NUMBER(10) NOT NULL,
-   party_code      NUMBER(10) NOT NULL,
-   hashtag         VARCHAR2(50) NOT NULL,
+   hashtag         VARCHAR2(500) NOT NULL,
+   community_code   NUMBER(10),
+   party_code      NUMBER(10),
    user_code      VARCHAR2(10) NOT NULL,
    PRIMARY KEY(hashtag_code)
 );
@@ -273,13 +273,10 @@ CREATE TABLE community (
 	open_range				CHAR(1)		DEFAULT '2'	NOT NULL,
 	views					NUMBER(10),
 	writer					NUMBER(10) 		NOT NULL,
-	hashtag_code			VARCHAR2(500),
+	hashtag_code			NUMBER(10),
 	city_name				VARCHAR2(100),
 	PRIMARY KEY(community_code)
 );
-
-
-
 
 
 CREATE TABLE message (
@@ -301,19 +298,14 @@ ALTER TABLE likes add CONSTRAINT commentlike_fk FOREIGN KEY(comment_code)  REFER
 
 ALTER TABLE message add CONSTRAINT sender_fk FOREIGN KEY(sender)  REFERENCES users(user_code);
 
-ALTER TABLE hashtag add CONSTRAINT community_fk FOREIGN KEY(community_code)  REFERENCES community(community_code);
-ALTER TABLE hashtag add CONSTRAINT party_fk FOREIGN KEY(party_code)  REFERENCES party(party_code);
-
-
 ALTER TABLE party add CONSTRAINT city_fk FOREIGN KEY(city_name)  REFERENCES city(city_name);
 ALTER TABLE party add CONSTRAINT user_fk FOREIGN KEY(party_user)  REFERENCES users(user_code);
 --ALTER TABLE party add CONSTRAINT hashtagparty_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
 
 ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES users(user_code);
---ALTER TABLE community add CONSTRAINT hashtagcommunity_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
+ALTER TABLE community add CONSTRAINT hashtagcommunity_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
 --ALTER TABLE community add CONSTRAINT comment_fk FOREIGN KEY(comment_code)  REFERENCES comments(comment_code);
-ALTER TABLE community add CONSTRAINT commcity_fk FOREIGN KEY(city_name)  REFERENCES city(city_name);
-
+--ALTER TABLE community add CONSTRAINT commcity_fk FOREIGN KEY(city_name)  REFERENCES city(city_name);
 
 
 ---------------------------- 규리
@@ -417,21 +409,20 @@ INSERT INTO city VALUES ( '브라티슬라바','SK',48.1485965,17.1077478,'슬�
 
 
 
-INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png',1,33,1,'#paris','세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png',2,33,2,'#paris','세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png',1,33,3,'#paris','세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png',2,33,4,'#paris','세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png',1,33,5,'#paris','세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png',2,33,1,'#paris','세비야');
+INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ddd#eeee',1,null,1);
+INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ddfff#3434',2,null,2);
+INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#33432#ddd#qqq',3,null,3);
+INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ff#eeee',4,null,4);
+INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#89888#ddd#fgf',5,null,5);
+INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#jghj#ggg#rrr',6,null,1);
 
 
-
-
-
-
-
-
-
+INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,1,1,'세비야');
+INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,2,2,'세비야');
+INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,3,3,'세비야');
+INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,4,4,'세비야');
+INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,5,5,'세비야');
+INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,1,6,'세비야');
 
 
 

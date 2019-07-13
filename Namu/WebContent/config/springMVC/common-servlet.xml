@@ -65,7 +65,7 @@
 	--> 
    	<mvc:resources mapping="/resources/**" location="/resources/" />
    	
-   	<mvc:resources mapping="/upload/**" location="/resources/images/Content/" />
+   	<mvc:resources mapping="/Content/**" location="/resources/images/Content/" />
 
 	<!-- 	:: exception resolver  선언 :: 서술적 / 선언적 예외처리 
 			:: Servlet 에서의 선언적 예외처리를 다시 생각하며....  -->

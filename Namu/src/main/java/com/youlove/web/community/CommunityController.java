@@ -28,6 +28,9 @@ import com.youlove.common.Page;
 import com.youlove.common.Search;
 import com.youlove.service.community.CommunityService;
 import com.youlove.service.domain.Community;
+import com.youlove.service.domain.Hashtag;
+import com.youlove.service.hashtag.HashtagService;
+import com.youlove.web.hashtag.HashtagController;
 
 
 
@@ -39,7 +42,11 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
-		
+	@Autowired
+	@Qualifier("hashtagServiceImpl")
+	private HashtagService hashtagService;
+	
+	
 	public CommunityController(){
 		System.out.println(this.getClass());
 	}
@@ -56,11 +63,11 @@ public class CommunityController {
 	
 	@RequestMapping(value="addCommunity",method=RequestMethod.POST)
 	public ModelAndView addCommunity(@ModelAttribute("community") Community community,
-									 @RequestParam(value="Thumbnail") MultipartFile file)throws Exception{
+									 @RequestParam(value="Thumbnail") MultipartFile file,
+									 @RequestParam(value="hashtag", required=false)String hashtag)throws Exception{
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
 		System.out.println("Commnity = "+community);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/getCommunity.jsp");
 		String safeFile ="";
 		System.out.println(file);
 		if(file.isEmpty() != true) {
@@ -68,36 +75,60 @@ public class CommunityController {
 			File target = new File(uploadPathThunbNail, originFileName);
 			FileCopyUtils.copy(file.getBytes(),target);
 			safeFile += originFileName;
-		}else {
-			safeFile += "noThumbnail.png";
-		}
+		}else { safeFile += "noThumbnail.png"; }
 		community.setCommunityThumbnail(safeFile);
-		
-		System.out.println(community.getOpenRange());
 		if(community.getOpenRange().equals("on")) {
 			community.setOpenRange("1");
-			System.out.println("on");
 		}else {
 			community.setOpenRange("2");
-			System.out.println("off");
 		}
 		community.setWriter(1);
-		community.setHashtag("null");
+		community.setCommunityHashtagCode(1);
 		communityService.addCommunity(community);
 		
+		
+		System.out.println(hashtag);
+		
+		
+//		HashtagController hashtagController = new HashtagController();
+//		Hashtag HashVo = new Hashtag();
+//		HashVo.setCommunityCode(community.getCommunityCode());
+//		HashVo.setHashtag(hashtag);
+//		HashVo.setWriter(community.getWriter());
+//		hashtagController.addHashtag(HashVo);
+		
+		
+		
+		
+		
+		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode()+"&hashtag="+hashtag);
 		System.out.println("\nCommunityController:::addCommunity() 끝:::");
 		return modelAndView;
 	} 
 	
-	@RequestMapping(value="getCommunity",method=RequestMethod.GET)
-	public ModelAndView getCommunity(@RequestParam("communityCode") int communityCode)throws Exception {
+	@RequestMapping(value="getCommunity",method= {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView getCommunity(@RequestParam(value="communityCode") int communityCode,
+									 @RequestParam(value="hashtag", required=false)String hashtag)throws Exception {
 		System.out.println("\nCommunityController:::getCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunity.jsp");
-		
+		System.out.println(hashtag);
 		Community community = communityService.getCommunity(communityCode);
-		modelAndView.addObject("community", community);
 		
+		HashtagController hashtagController = new HashtagController();
+		Hashtag HashVo = new Hashtag();
+		HashVo.setCommunityCode(communityCode);
+		HashVo.setHashtag(hashtag);
+		HashVo.setWriter(community.getWriter());
+		int hashtagCode = hashtagController.addHashtag(HashVo);
+		System.out.println("hashtagCode = "+hashtagCode);
+		community.setCommunityHashtagCode(hashtagCode);
+		
+		communityService.updateCommunity(community);
+		
+		
+		
+		modelAndView.addObject("community", community);
 		System.out.println("\nCommunityController:::getCommunity() 끝:::");
 		return modelAndView;
 	}
@@ -165,9 +196,9 @@ public class CommunityController {
 
             printWriter = response.getWriter();
             response.setContentType("text/html");
-            String fileUrl = "/upload/"+uid+"_"+originFileName;
+            String fileUrl = "/resources/images/Content/"+uid+"_"+originFileName;
             System.out.println("fileUrl = "+fileUrl);
-            
+            System.out.println(request.getContextPath());
             json.put("uploaded", 1);
             json.put("fileName", originFileName);
             json.put("url", fileUrl);

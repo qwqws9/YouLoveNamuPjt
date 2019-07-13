@@ -15,6 +15,7 @@
 </head>
 
 <body>
+<header><jsp:include page="/layout/header.jsp" /></header>
 <!-- <div class="col-xs-1"></div> -->
 <div class="container-fluid col-10">
 

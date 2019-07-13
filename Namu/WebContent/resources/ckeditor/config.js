@@ -29,7 +29,7 @@ CKEDITOR.editorConfig = function( config ) {
 	//config
 	config.extraPlugins = 'youtube,font,justify,colorbutton,panelbutton,image2,tableresize';//이미지 사이징 추가예정
 	
-	config.removePlugins = 'easyimage, cloudservices';
+	config.removePlugins = 'easyimage, cloudservices,image';
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
 	// Set the most common block elements.
@@ -47,7 +47,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.youtube_related = true;
 	config.youtube_older = false;
 	config.youtube_privacy = false;
-	config.allowedContent = true;
+	//config.allowedContent = true;
 	config.extraAllowedContent  = 'iframe[*]'
 	//font
 	config.font_names = '굴림;궁서;돋움;맑은 고딕;바탕;' + CKEDITOR.config.font_names;
