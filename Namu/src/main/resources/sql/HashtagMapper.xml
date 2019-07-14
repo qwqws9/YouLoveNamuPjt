@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HashtagMapper">
+ 	
+	<resultMap id="hashtagMap" type="hashtag">
+		<result property="hashtagCode" 		column="hashtag_code" 	 	jdbcType="NUMERIC"/>
+		<result property="hashtag"			column="hashtag" 		jdbcType="VARCHAR" />
+		<result property="communityCode" 	column="community_code" 		jdbcType="INTEGER" />
+		<result property="partyCode" 		column="party_code" 		jdbcType="INTEGER" />
+		<result property="writer" 			column="user_code" 		jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<insert id="addHashtag" parameterType="hashtag">
+		<selectKey keyProperty="communityCode" resultType="int" order="BEFORE">
+		     SELECT MAX(hashtag_code)+1 FROM community
+		</selectKey>
+		INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,#{hashtag},#{communityCode:INTEGER},#{partyCode:INTEGER},#{writer});
+	</insert>
+	 
+	<select 	id="getHashtag"		parameterType="int"		resultMap="hashtagMap">
+	
+	
+	</select>
+	 
+	<update		id="updateHashtag"	parameterType="string" >
+	
+	</update>
+		 
+	<delete 	id="deleteHashtag" 	parameterType="string">
+	
+	</delete>
+	
+</mapper>
