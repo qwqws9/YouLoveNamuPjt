@@ -126,5 +126,15 @@ public class User {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	@Override
+	public String toString() {
+		return "User [userCode=" + userCode + ", token=" + token + ", profileAuth=" + profileAuth + ", role=" + role
+				+ ", nickname=" + nickname + ", email=" + email + ", phone=" + phone + ", name=" + name + ", password="
+				+ password + ", birth=" + birth + ", gender=" + gender + ", profileImg=" + profileImg + ", introduce="
+				+ introduce + ", regDate=" + regDate + ", startBlock=" + startBlock + ", endBlock=" + endBlock
+				+ ", userId=" + userId + "]";
+	}
 
+	
+	
 }

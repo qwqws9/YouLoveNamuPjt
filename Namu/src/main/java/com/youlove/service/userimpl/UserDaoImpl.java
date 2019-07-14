@@ -1,5 +1,7 @@
 package com.youlove.service.userimpl;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,8 +28,8 @@ public class UserDaoImpl implements UserDao{
 		sqlSession.insert("UserMapper.addUser", user);
 	}
 
-	public User getUser(String info) throws Exception {
-		return sqlSession.selectOne("UserMapper.getUser", info);
+	public User getUser(Map<String,Object> map) throws Exception {
+		return sqlSession.selectOne("UserMapper.getUser", map);
 	}
 	
 	public String getCheckUser(String nickname) throws Exception {

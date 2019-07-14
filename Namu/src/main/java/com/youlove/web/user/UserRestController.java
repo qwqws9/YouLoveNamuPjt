@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -57,15 +58,73 @@ public class UserRestController {
 		
 		System.out.println("/user/json/login");
 		
-		User dbUser = userService.getUser(user.getUserId());
+		Map<String,Object> map = new HashMap<>();
+		map.put("login", user.getUserId());
+		
+		User dbUser = userService.getUser(map);
 		
 		if(dbUser != null) {
 			if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
+			}else {
+				dbUser = null;
 			}
 		}
 		
 		return dbUser;
+	}
+	
+	@RequestMapping(value="json/findInfo", method=RequestMethod.POST)
+	public User findInfo(@RequestBody Map<String,Object> req) throws Exception {
+		
+		System.out.println("/user/json/findInfo");
+		
+		System.out.println(req.get("name") + "1");
+		System.out.println(req.get("email") + "2");
+		System.out.println(req.get("phone") + "3");
+		System.out.println(req.get("target") + "4");
+		
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("findInfo", req.get("name"));
+		
+		if(req.get("phone") == "") {
+			map.put("email", req.get("email"));
+		}else {
+			map.put("phone", req.get("phone"));
+		}
+		
+		User dbUser = userService.getUser(map);
+		
+		if(req.get("target").equals("id") ) {
+			dbUser.setPassword("");
+		}else {
+			dbUser.setPassword(RandomStringUtils.randomAlphabetic(10));
+		}
+		
+		
+		
+		return dbUser;
+	}
+	
+	@RequestMapping(value="json/findInfoCheck", method=RequestMethod.POST)
+	public boolean findInfoCheck(@RequestBody User user) throws Exception {
+		
+		System.out.println("/user/json/findInfoCheck");
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("findInfo", user.getName());
+		
+		if(user.getPhone() == null || user.getPhone().equals("")) {
+			map.put("email", user.getEmail());
+		}else {
+			map.put("phone", user.getPhone());
+		}
+		
+		User dbUser = userService.getUser(map);
+		
+		
+		return dbUser == null ? false : true;
 	}
 	
 	
@@ -107,7 +166,8 @@ public class UserRestController {
 			map.put("target", "email");
 		
 		}else if(target.equals("phone")) {
-			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
+//			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
+			boolean result = true;
 			System.out.println(result);
 			if(result == true) {
 				map.put("target", "phone");
