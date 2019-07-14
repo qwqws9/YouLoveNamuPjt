@@ -2,7 +2,6 @@ package com.youlove.service.community;
 
 import java.util.Map;
 
-import com.youlove.common.Search;
 import com.youlove.service.domain.Community;
 
 public interface CommunityService {
@@ -11,10 +10,11 @@ public interface CommunityService {
 	
 	public Community getCommunity(int communityCode) throws Exception;
 	
-	public Map<String,Object> getCommunityList(Search search) throws Exception;
+	public Map<String,Object> getCommunityList(Map<String,Object> map) throws Exception;
 	
 	public void updateCommunity(Community community) throws Exception;
 	
-	public void deleteCommunity(Community community) throws Exception;
+	public void deleteCommunity(int communityCode) throws Exception;
 	
+	public void countCommunity(int communityCode) throws Exception;
 }

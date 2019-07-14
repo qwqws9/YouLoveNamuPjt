@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -66,7 +67,6 @@ public class CommunityController {
 									 @RequestParam(value="Thumbnail") MultipartFile file,
 									 @RequestParam(value="hashtag", required=false)String hashtag)throws Exception{
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
-		System.out.println("Commnity = "+community);
 		ModelAndView modelAndView = new ModelAndView();
 		String safeFile ="";
 		System.out.println(file);
@@ -87,7 +87,6 @@ public class CommunityController {
 		communityService.addCommunity(community);
 		
 		
-		System.out.println(hashtag);
 		
 		
 //		HashtagController hashtagController = new HashtagController();
@@ -96,8 +95,6 @@ public class CommunityController {
 //		HashVo.setHashtag(hashtag);
 //		HashVo.setWriter(community.getWriter());
 //		hashtagController.addHashtag(HashVo);
-		
-		
 		
 		
 		
@@ -113,19 +110,19 @@ public class CommunityController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunity.jsp");
 		System.out.println(hashtag);
+		communityService.countCommunity(communityCode);
 		Community community = communityService.getCommunity(communityCode);
-		
-		HashtagController hashtagController = new HashtagController();
-		Hashtag HashVo = new Hashtag();
-		HashVo.setCommunityCode(communityCode);
-		HashVo.setHashtag(hashtag);
-		HashVo.setWriter(community.getWriter());
-		int hashtagCode = hashtagController.addHashtag(HashVo);
-		System.out.println("hashtagCode = "+hashtagCode);
-		community.setCommunityHashtagCode(hashtagCode);
-		
-		communityService.updateCommunity(community);
-		
+//		HashtagController hashtagController = new HashtagController();
+//		Hashtag HashVo = new Hashtag();
+//		HashVo.setCommunityCode(communityCode);
+//		HashVo.setHashtag(hashtag);
+//		HashVo.setWriter(community.getWriter());
+//		int hashtagCode = hashtagController.addHashtag(HashVo);
+//		System.out.println("hashtagCode = "+hashtagCode);
+//		community.setCommunityHashtagCode(hashtagCode);
+//		
+//		communityService.updateCommunity(community);
+//		
 		
 		
 		modelAndView.addObject("community", community);
@@ -134,8 +131,11 @@ public class CommunityController {
 	}
 
 	@RequestMapping(value="getCommunityList")
-	public ModelAndView getCommunityList(@ModelAttribute("Search") Search search)throws Exception {
+	public ModelAndView getCommunityList(@ModelAttribute("Search") Search search,
+										 @RequestParam(value="communityBoard",required=false, defaultValue = "0")int communityBoard)throws Exception {
 		System.out.println("\nCommunityController:::getCommunityList() 시작:::");
+		System.out.println("searchKeyword = "+search.getSearchKeyword());
+		System.out.println("searchCondition = "+search.getSearchCondition());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunityList.jsp");
 		if(search.getCurrentPage() ==0 ){
@@ -143,11 +143,14 @@ public class CommunityController {
 		}
 		search.setPageSize(pageSize);
 		
+		System.out.println("communityBoard = "+communityBoard);
 		
-		Map<String,Object> map = communityService.getCommunityList(search);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("communityBoard", communityBoard);
+		map.put("search", search);
+		map = communityService.getCommunityList(map);
 		/*map.put("search", search);
 		map = communityService.getCommunityList(search);*/
-		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println("=============================");
 		System.out.println(resultPage);
@@ -168,6 +171,16 @@ public class CommunityController {
 		
 		
 		System.out.println("\nCommunityController:::updateCommunity() 끝:::");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="deleteCommunity", method=RequestMethod.GET)
+	public ModelAndView daleteCommunity(@RequestParam(value="communityCode")int communityCode)throws Exception{
+		System.out.println("\nCommunityController:::daleteCommunity() 시작:::");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/community/getCommunityList.jsp");
+		communityService.deleteCommunity(communityCode);
+		System.out.println("\nCommunityController:::daleteCommunity() 끝:::");
 		return modelAndView;
 	}
 	

@@ -31,11 +31,13 @@
 	  	        if(!container.hasClass('active')){
 	  	            container.addClass('active');
 	  	            evt.preventDefault();
+	  	            $(".search-icon").on("click", function(){
+	  	            	$("form").attr("method", "POST").attr("action", "/community/getCommunityList").submit();
+	  	            })
 	  	        }
 	  	        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
-	  	            container.removeClass('active');
-	  	            // clear input
-	  	            container.find('.search-input').val('');
+		  	            container.removeClass('active');
+		  	            container.find('.search-input').val('');
 	  	        }
 	  	}
 		
@@ -43,9 +45,18 @@
 			$( "#addCommunity" ).on("click" , function() {
 				self.location = "/community/addCommunity.jsp"
 			});
-		    
-		   // $("#City").selectmenu();
-		    
+			
+		    $(".board").on("click", function(){
+		    	if($(this).children().text() == $(".free").text()){
+		    		self.location = "/community/getCommunityList?communityBoard=1"			
+		    	}else if($(this).children().text() == $(".city").text()){
+		    		self.location = "/community/getCommunityList?communityBoard=2"			
+		    	}else if($(this).children().text() == $(".qna").text()){
+		    		self.location = "/community/getCommunityList?communityBoard=3"			
+		    	}else{
+		    		self.location = "/community/getCommunityList"
+		    	}
+		    })
 		    $('a[href$="#Modal"]').on( "click", function() {
 		    	   $('#Modal').modal('show');
 		   	});
@@ -53,18 +64,21 @@
 		    $(".getCommunity").on("click", function(){
 		    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").text();
 		    })
+			$(".card.bestCommunity").on("click", function(){
+				self.location="/community/getCommunity?communityCode="+$(this).prev().val();								
+			})		    
 		    
 		    
 		    var content = $(".content").text();
 		    $(this).parents(".row.list").find(".content").text();
 		    $(".content").text();
 		    //alert($(".content").text());
-		   $(document).ready("")
+		   	$(document).ready("")
 		    
 		    
 		    $("#searchSelect").change(function(){
 				var selected = $("#searchSelect option:selected").val();
-				if(selected == 1){
+				if(selected == 0){
 					$("#selectCity").show();			
 				}else{
 					$("#selectCity").hide();
@@ -77,11 +91,11 @@
 		
 
  	</script>
-<style>
-#communityTop {
-	
-}
-</style>
+	<style>
+	#communityTop {
+		
+	}
+	</style>
 </head>
 
 <body>
@@ -107,16 +121,16 @@
 					<div class="col-md-10 col-lg-9">
 						<div class="row justify-content-end" style="padding-top: 13px;">
 							<div class="col-1 col-xs-1" style="font-size: 14px;">
-								<a href="#" style="color: #ff7d75;"><strong>전체</strong></a>
+								<a href="#" class="board" style="color: #ff7d75;"><strong class="all" >전체</strong></a>
 							</div>
 							<div class="col-1 col-xs-1" style="font-size: 14px;">
-								<a href="#" style="color: #ff7d75;"><strong>자유</strong></a>
+								<a href="#" class="board" style="color: #ff7d75;"><strong class="free" >자유</strong></a>
 							</div>
 							<div class="col-1 col-xs-1" style="font-size: 14px;">
-								<a href="#" style="color: #ff7d75;"><strong>도시별</strong></a>
+								<a href="#" class="board" style="color: #ff7d75;"><strong class="city">도시별</strong></a>
 							</div>
 							<div class="col-1 col-xs-1" style="font-size: 14px;">
-								<a href="#" style="color: #ff7d75;"><strong>QnA</strong></a>
+								<a href="#" class="board" style="color: #ff7d75;"><strong class="qna">QnA</strong></a>
 							</div>
 						</div>
 					</div>
@@ -146,13 +160,13 @@
 
 				<div class="row justify-content-center">
 					<div class="col-10 col-md-10">
+						<form><!-- Search -->
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="Search">
 									<div class="input-holder">
-										<input type="text" class="search-input" placeholder="Search" />
-										<button type="button" class="search-icon"
-											onclick="searchToggle(this, event);">
+										<input type="text" class="search-input" name="searchKeyword" placeholder="Search" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/>
+										<button type="button" class="search-icon" onclick="searchToggle(this, event);">
 											<span></span>
 										</button>
 									</div>
@@ -163,32 +177,30 @@
 							<div class="col-lg-4 offset-lg-2">
 								<div class="row float-right">
 									<div class="col mr-3">
-										<select id="searchSelect" class="selectpicker" multiple
-											data-actions-box="true" title="All"
-											style="border: 1px solid #ff7d75; background: white;">
-											<option value="1">City</option>
-											<option value="2">Title</option>
-											<option value="3">Content</option>
-											<option value="4">#HashTag</option>
-											<option value="5">Writer</option>
+										<select id="searchSelect" name="searchCondition" class="selectpicker" multiple data-actions-box="true" title="All" style="border: 1px solid #ff7d75; background: white;">
+											<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""  }>City</option>
+											<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""  }>Title</option>
+											<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""  }>Content</option>
+											<option value="3" ${! empty search.searchCondition && search.searchCondition==3 ? "selected" : ""  }>#HashTag</option>
+											<option value="4" ${! empty search.searchCondition && search.searchCondition==4 ? "selected" : ""  }>Writer</option>
 										</select>
 									</div>
-									<div id="selectCity" class="col" style="display: none;">
-										<select id="selectCity" class="selectpicker"
-											data-live-search="true" data-width="100px" title="City">
-											<option>파리</option>
-											<option>구리</option>
-											<option>보리</option>
+									<div id="selectCity" class="col" style="display:  none;">
+										<select id="selectCity" class="selectpicker" data-live-search="true" data-width="100px" title="City">
+											<c:set var="i" value="0"/>
+											<c:forEach var="city" begin="0" end="5">
+												<c:set var="i" value="${i+1}"/>
+													<option value="${i}">${i}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 							</div>
-
 						</div>
+						</form>
 						<hr align="center">
 						<c:forEach var="community" items="${list}">
 							<div class="row list">
-							<%-- <input class="communityCode" type="hidden" value="${community.communityCode}" /> --%>
 								<div class="col-2 col-md-2" style="top: 30px;">
 									<p class="text-center" style="font-size: x-small; color: #344157;">
 										No.<span class="communityCode">${community.communityCode}</span>

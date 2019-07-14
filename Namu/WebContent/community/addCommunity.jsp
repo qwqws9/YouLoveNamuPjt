@@ -215,8 +215,6 @@
 		    $("Thumbnail").val("noThumbnail.png");
 		}
 		
-		
-		
 		var str = document.getElementById('hashtag');
 		/* (str).on("change keyup paste", function() {
 		    var currentVal = $(this).val();
@@ -240,9 +238,6 @@
 			//aa.value.text('#');
 			//alert(aa.value.indexOf('#'));
 		})
-		
-
-		
 	});
 	
 	
@@ -256,7 +251,6 @@
 			return;
 		}
 		
-		
 		$('#openRange').change(function() {
 			if($(this).prop('checked') == true){
 				$("#openRange").val('1');
@@ -264,7 +258,6 @@
 				$("#openRange").val('2');
 			}
 	    });
-		
 		
 		var special_pattern = /[`~!@$%^&*|\\\'\";:\/?]/gi;
 		if( special_pattern.test(str.value) == true ){
@@ -279,15 +272,6 @@
 		if( hash_pattern.length > 20){
 			alert('#해시태그는 20개까지 입력 할 수 있습니다.')
 		}
-		/* $(str).onfocus(function(e) {
-			var oldvalue =$(this).val();
-			var field=this;
-			addHash(function () {
-			    if(field.value.indexOf('#') !== 0) {
-			        $(field).val(oldvalue);
-			    } 
-			}, 1);
-		}); */
 		
 		$("form").attr("method","POST").attr("action","/community/addCommunity").submit();
 	}	

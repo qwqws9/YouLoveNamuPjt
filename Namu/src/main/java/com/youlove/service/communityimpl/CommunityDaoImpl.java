@@ -1,6 +1,7 @@
 package com.youlove.service.communityimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,21 +39,33 @@ public class CommunityDaoImpl implements CommunityDao {
 		return sqlSession.selectOne("CommunityMapper.getCommunity", communityCode);
 	}
 	@Override
-	public List<Community> getCommunityList(Search search) throws Exception {
-		return sqlSession.selectList("CommunityMapper.getCommunityList", search);
+	public List<Community> getCommunityList(Map<String,Object> map) throws Exception {
+		Search search = (Search) map.get("search");
+		map.put("endRowNum", search.getEndRowNum());
+		map.put("startRowNum",search.getStartRowNum());
+		map.put("searchCondition",search.getSearchCondition());
+		map.put("searchKeyword",search.getSearchKeyword());
+		System.out.println(map.get("communityBoard"));
+		return sqlSession.selectList("CommunityMapper.getCommunityList", map);
 	}
 	@Override
 	public void updateCommunity(Community community) throws Exception {
 		this.sqlSession.update("CommunityMapper.updateCommunity", community);
 	}
 	@Override
-	public void deleteCommunity(Community community) throws Exception {
-		this.sqlSession.delete("CommunityMapper.deleteCommunity", community);
+	public void deleteCommunity(int communityCode) throws Exception {
+		this.sqlSession.delete("CommunityMapper.deleteCommunity", communityCode);
 	}
 	@Override
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("CommunityMapper.getTotalCount", search);
 	}
+
+	@Override
+	public void countCommunity(int communityCode) throws Exception {
+		this.sqlSession.update("CommunityMapper.countCommunity", communityCode);
+	}
+
 	
 		
 }

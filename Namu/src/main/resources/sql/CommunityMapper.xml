@@ -37,18 +37,75 @@
 		FROM community
 		WHERE community_code = #{communityCode}
 	</select>
-	 
-	<update		id="updateCommunity"	parameterType="string" >
 	
+	<update 	id="countCommunity" 	parameterType="int">
+		UPDATE community
+		<set>
+			views = #{views}+1
+		</set>
+		WHERE community_code = #{communityCode}
+	</update> 
+
+	<update		id="updateCommunity"	parameterType="community" >
+		UPDATE community
+		<set>
+		    community_board 	= #{communityBoard},
+			community_title		= #{communityTitle},
+			community_content	= <![CDATA[#{communityContent}]]>,
+			community_thumbnail	= #{communityThumbnail:VARCHAR},
+			open_range			= #{openRange},
+			hashtag_code		= #{communityHashtagCode:NUMERIC},
+			city_name           = #{city:VARCHAR}
+		</set>
+		WHERE community_code = #{communityCode}
 	</update>
 		 
-	<select  	id="getCommunityList"  	parameterType="search"	resultMap="communityMap">
+	<select  	id="getCommunityList"  	parameterType="map"	resultMap="communityMap">
 		SELECT *
-		FROM community
+		FROM (SELECT first_table.*, ROWNUM AS row_seq
+		            FROM ( SELECT *
+	                       FROM community
+	                        <if test="communityBoard != 0">
+	                       	 	<where>
+		                       		<if test="communityBoard == 1">
+		                       			community_board = 1
+		                       		</if>
+		                       		<if test="communityBoard == 2">
+		                       			community_board = 2
+		                       		</if>
+		                       		<if test="communityBoard == 3">
+		                       			community_board = 3
+		                       		</if>
+	                       		</where>
+	                        </if>
+	                       	<if test="searchCondition != null or searchKeyword != null">
+	                        	<where>
+	                        		<if test="searchCondition == 0 and searchKeyword !='' ">
+				                        city_name LIKE &apos;%${searchKeyword}%&apos;
+	                        		</if>
+	                        		<if test="searchCondition == 1 and searchKeyword !='' ">
+				                        community_title LIKE &apos;%${searchKeyword}%&apos;
+	                        		</if>
+	                        		<if test="searchCondition == 2 and searchKeyword !='' ">
+				                        community_content LIKE &apos;%${searchKeyword}%&apos;
+	                        		</if>
+	                        		<if test="searchCondition == 3 and searchKeyword !='' ">
+				                        hashtag_code LIKE &apos;#%${searchKeyword}%&apos;
+	                        		</if>
+	                        		<if test="searchCondition == 4 and searchKeyword !='' ">
+				                        writer LIKE &apos;%${searchKeyword}%&apos;
+	                        		</if>
+	                        	</where>
+	                       	</if>
+	                        ORDER BY community_code DESC ) first_table
+		            WHERE ROWNUM &lt;= 2 )
+		WHERE row_seq BETWEEN 0 AND 2
 	</select>
 	 
-	<delete 	id="deleteCommunity" 	parameterType="string">
-	
+	<delete 	id="deleteCommunity" 	parameterType="int">
+		DELETE
+		FROM community
+		WHERE community_code = #{communityCode};
 	</delete>
 	
 	<select  id="getTotalCount"  parameterType="search" resultType="int">

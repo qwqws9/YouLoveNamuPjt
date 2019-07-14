@@ -11,15 +11,28 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 	
+	<script>
+		$(function(){
+			var communityCode = encodeURI($("#communityCode"));
+			
+			$("#update").on("click",function(){
+				self.location = "/community/updateCommunity?communityCode="+communityCode;
+			})
+			$("#delete").on("click",function(){
+				self.location = "/community/deleteCommunity?communityCode="+communityCode;
+			})
+			
+		})
+		
+	</script>
 	
 </head>
-
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
 <!-- <div class="col-xs-1"></div> -->
 <div class="container-fluid col-10">
 
-
+	<input id="communityCode" type="hidden" value="${community.communityCode}" >
 	<div class="row">
 		<div class="col-12">
 		<h4 style="resize: none; display: inline-blocke">
@@ -41,7 +54,7 @@
 					<div style="font-size:small; color:#344157;">${community.writer}</div>
 				</div>
 				<div class="col-1 order-last" id="getCount" style="position: absolute; font-size: x-small; right: 0px; bottom: 0px;"> 
-					조회수&nbsp;${community.views }
+					조회수&nbsp;${community.views}
 				</div>
 			</div>
 		</div>
@@ -70,9 +83,9 @@
 			</span>
 		</div>
 		<div class="col-6" align="right" style="bottom: 5px;" >
-			<button style="border: none; background: none;"><span style="font-size: 10px">수정</span></button>
+			<button style="border: none; background: none;" id="update"><span style="font-size: 10px" >수정</span></button>
 			<span style="font-size: 8px">|</span>
-			<button style="border: none; background: none;"><span style="font-size: 10px">삭제</span></button>
+			<button style="border: none; background: none;" id="delete"><span style="font-size: 10px" >삭제</span></button>
 		</div>
 	</div>
 	
