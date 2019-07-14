@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript">
 	$(function(){
@@ -45,6 +46,7 @@
 				    </div>
 			  	</div>
 			</div>
+			<c:if test ="${empty user }">
 			<div class="col-lg-6" id="beforeLogin"><!-- 로그인 전 -->
 				<div class="row text-right">
 					<div class="col-lg-4 offset-8">
@@ -54,7 +56,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6" id="afterLogin" style="display: none;"><!-- 로그인 후 -->
+			</c:if>
+			<c:if test ="${!empty user }">
+			<div class="col-lg-6" id="afterLogin"><!-- 로그인 후 -->
 				<div class="row">
 					<div class="col-lg-4 offset-4">
 						<div class="row">
@@ -76,18 +80,33 @@
 						<div class="row">
 							<div class="col-lg-9">
 								<div class="float-right" style="padding-top: 10px;">
-									<span class="align-text-bottom" style="font-size:x-small; color: white;">나무발발이</span>
+								<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    		<span class="align-text-bottom" style="font-size:x-small; color: white;">${user.nickname }</span>
+								</button>
+									<div class="dropdown-menu">
+								  		<a class="dropdown-item" href="#">내 정보</a>
+									    <a class="dropdown-item" href="#">내 작성글/댓글</a>
+									    <a class="dropdown-item" href="#">결제내역</a>
+									    <c:if test="${user.role eq 'admin' }">
+									    <div class="dropdown-divider"></div>
+									    <a class="dropdown-item" href="#">전체회원 조회</a>
+									    <a class="dropdown-item" href="#">신고목록 조회</a>
+									    </c:if>
+									    <div class="dropdown-divider"></div>
+									    <a class="dropdown-item" href="/user/logout">로그아웃</a>
+							  		</div>
 								</div>
 							</div>	
 							<div class="col-lg-3">
 								<div class="float-right" id="profile-image">
-									<a href="#"><img src="<c:url value="/resources/images/stitch.png" />" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="40px" height="40px"></a>
+									<a href="#"><img src="<c:url value="/resources/images/profile/${user.profileImg }" />" id="userImage" name="userImage" alt="" class="rounded-circle" width="40px" height="40px"></a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			 </c:if>
 		</div>
 		<div class="row"><!-- bottom -->
 			<div class="col-lg-12">
@@ -133,7 +152,7 @@
 						    	<span>여행 가이드</span>
 							</button>
 						  	<div class="dropdown-menu">
-						  		<a class="dropdown-item" href="#">관광지</a>
+						  		<a class="dropdown-item" href="/guide/initTour">관광지</a>
 							    <a class="dropdown-item" href="#">숙소</a>
 							    <a class="dropdown-item" href="#">항공권</a>
 						  	</div>

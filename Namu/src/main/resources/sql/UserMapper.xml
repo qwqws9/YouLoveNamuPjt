@@ -35,11 +35,21 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+	 <select 	id="getUser"	parameterType="map"	resultMap="userSelectMap">
 		SELECT
 		* 		
-		FROM users 
-		WHERE EMAIL = #{value} or PHONE = #{value}
+		FROM users
+		<where>
+			<if test="login != null">
+				EMAIL = #{login} or PHONE = #{login}
+			</if>
+			<if test="email != null" >
+				NAME = #{findInfo} AND EMAIL = #{email}
+			</if>
+			<if test="phone != null" >
+				NAME = #{findInfo} AND PHONE = #{phone}
+			</if>
+		</where> 
 	 </select>
 	 
 	 <select 	id="getCheckUser"	parameterType="string"	resultType="string">

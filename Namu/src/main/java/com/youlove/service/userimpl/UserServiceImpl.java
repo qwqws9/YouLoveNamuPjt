@@ -1,5 +1,7 @@
 package com.youlove.service.userimpl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,8 @@ public class UserServiceImpl implements UserService{
 		userDao.addUser(user);
 	}
 
-	public User getUser(String info) throws Exception {
-		return userDao.getUser(info);
+	public User getUser(Map<String,Object> map) throws Exception {
+		return userDao.getUser(map);
 	}
 	
 	public boolean getCheckUser(String nickname) throws Exception {

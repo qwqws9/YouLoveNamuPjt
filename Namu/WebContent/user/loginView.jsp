@@ -56,89 +56,117 @@
 			</div>
 		</div>
 	</div>
-		
+		<input type="text" id="cityName">
+		<input type="button"  class="btn btn-lg-6 btn-primary btn-block" id="getCity" value="도시가져오기">
 		
 		<script type="text/javascript">
-$(function(){
-	
-	$('#signUp').on('click',function(){
-		self.location = '/user/addUser';
-	})
-	
-	$("#userId").on('keyup',function(){
-		$('#userId').attr('class','form-control');
-	})
-	
-	$("#password").on('keyup',function(){
-		$('#password').attr('class','form-control');
-	})
-	
-	$("#autoLogin").on('click',function(){
-		//alert($('#autoLogin').is(':checked'));
-		if($('#autoLogin').is(':checked')) {
-			$("#saveId").prop('disabled',true).prop('checked',true)
-		}else {
-			$("#saveId").prop('disabled',false).prop('checked',false)
-		}
 		
-	})
-	
-	
-	$('#login').on('click',function(){
-		//alert('클릭');
-		$('#errorMessage').text();
 		
-		var id = $('#userId').val();
-		var pw = $('#password').val();
+	$(function(){
 		
-		if(id == null || id.length <1) {
-			$('#errorMessage').text('아이디를 입력해주세요');
-			$('#userId').attr('class','form-control is-invalid');
-			$("#userId").focus();
-			return false;
-		}
-		
-		if(pw == null || pw.length <1) {
-			$('#errorMessage').text('비밀번호를 입력해주세요');
-			$('#password').attr('class','form-control is-invalid');
-			$("#password").focus();
-			return false;
-		}
-		
-		$.ajax({
-			url : "/user/json/login",
-			method : "POST" ,
-			//dataType : "json" ,
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			data : JSON.stringify({
-				userId : id,
-				password : pw
-			}),
-			success : function(JSONData , status) {
-				//alert(status);
-				//alert(JSONData);
-				if(JSONData != "") {
-					//alert("정보가있음");
-					alert(JSONData.email);
-				}else {
-					//alert("정보가없음");
-					$('#errorMessage').text('아이디 또는 비밀번호를 확인해주세요');
-					$('#password').attr('class','form-control is-invalid');
-					$('#userId').attr('class','form-control is-invalid');
+		$('#getCity').on('click',function(){
+			$.ajax({
+				url : "/guide/json/getCity",
+				method : "POST" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data : JSON.stringify({
+					cityName : $('#cityName').val().trim()
+				}),
+				success : function(JSONData , status) {
+					alert(JSONData.lat);
 				}
-			}
-			,
-			error:function( jqXHR, textStatus, errorThrown){
-				alert(textStatus);
-				alert(errorThrown);
-			}
-		}) // end ajax 
-	}); // end login event
+		})
+		});
 	
-});
+		$('#findInfo').on('click',function(){
+			var url = '/user/findInfo';
+			var name = "_blank";
+			var option = "width = 500,height = 600,marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no,location = no"
+			window.open(url,name,option);
+		});
+	
+	
+		$('#signUp').on('click',function(){
+			self.location = '/user/addUser';
+		})
+		
+		$("#userId").on('keyup',function(){
+			$('#userId').attr('class','form-control');
+		})
+		
+		$("#password").on('keyup',function(){
+			$('#password').attr('class','form-control');
+		})
+		
+		$("#autoLogin").on('click',function(){
+			//alert($('#autoLogin').is(':checked'));
+			if($('#autoLogin').is(':checked')) {
+				$("#saveId").prop('disabled',true).prop('checked',true)
+			}else {
+				$("#saveId").prop('disabled',false).prop('checked',false)
+			}
+			
+		})
+		
+		
+		$('#login').on('click',function(){
+			//alert('클릭');
+			$('#errorMessage').text();
+			
+			var id = $('#userId').val();
+			var pw = $('#password').val();
+			
+			if(id == null || id.length <1) {
+				$('#errorMessage').text('아이디를 입력해주세요');
+				$('#userId').attr('class','form-control is-invalid');
+				$("#userId").focus();
+				return false;
+			}
+			
+			if(pw == null || pw.length <1) {
+				$('#errorMessage').text('비밀번호를 입력해주세요');
+				$('#password').attr('class','form-control is-invalid');
+				$("#password").focus();
+				return false;
+			}
+			
+			$.ajax({
+				url : "/user/json/login",
+				method : "POST" ,
+				//dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data : JSON.stringify({
+					userId : id,
+					password : pw
+				}),
+				success : function(JSONData , status) {
+					//alert(status);
+					//alert(JSONData);
+					if(JSONData != "") {
+						//alert("정보가있음");
+						self.location = '/';
+					}else {
+						//alert("정보가없음");
+						$('#errorMessage').text('아이디 또는 비밀번호를 확인해주세요');
+						$('#password').attr('class','form-control is-invalid');
+						$('#userId').attr('class','form-control is-invalid');
+					}
+				}
+				,
+				error:function( jqXHR, textStatus, errorThrown){
+					alert(textStatus);
+					alert(errorThrown);
+				}
+			}) // end ajax 
+		}); // end login event
+		
+	});
 </script>
 
 </body>
