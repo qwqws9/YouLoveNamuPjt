@@ -9,13 +9,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- bootstrap -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <!-- SearchBox -->
 <link href="../resources/css/search.css" rel="stylesheet">
 <!-- 이모티콘 -->
@@ -23,10 +20,8 @@
 
 <!-- jQuerty -->
 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
 <script>
 		$.fn.selectpicker.Constructor.BootstrapVersion = '4';
@@ -55,39 +50,16 @@
 		    	   $('#Modal').modal('show');
 		   	});
 		    
-		    $("#bestCommunity").on("click", function(){
-			    alert($("#bestCommunity").val());
-		    	//self.location="/community/getCommunity?communityCode="+$(this).find(":hidden").val();
-		    })
-		    $(".getCommunity.image").on("click", function(){
-		    	alert($("#communityCodelist").index(this));
-		    	
-		    	//alert($("card input:nth-child(1)").html());
-		    	//self.location="/community/getCommunity?communityCode="+$("#communityCodelist").val();
-		    })
-		    $(".getCommunity.title").on("click", function(){
-		    	alert($("#communityCodelist").index(this));
-		    })
-		    	//self.location="/community/getCommunity?communityCode="+$("#communityCodelist").val();
-		    })
-		    $(".getCommunity.content").on("click", function(){
-		    	alert($("#communityCodelist").val());
-		    	//self.location="/community/getCommunity?communityCode="+$("#communityCodelist").val();
+		    $(".getCommunity").on("click", function(){
+		    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").text();
 		    })
 		    
-		    $('.card ')
-		   // $( ".ct_list_pop td:nth-child(1)" ).on("click" , function() {
-               var prodNo = $( $('.ct_list_pop td:nth-child(1)')[$('.ct_list_pop td:nth-child(1)').index(this)]).text().trim();
 		    
-		    /* $("#content").text($("#content")val());
-		    $("#content").html();
-		    var list = '${list}';
-		    for(var i=0; i< '${list}';i++){
-		    	console.log($("#content").text());
-		    }
-		    $("#content").text("값변경")
-		    alert($("#content").html());
-		     */
+		    var content = $(".content").text();
+		    $(this).parents(".row.list").find(".content").text();
+		    $(".content").text();
+		    //alert($(".content").text());
+		   $(document).ready("")
 		    
 		    
 		    $("#searchSelect").change(function(){
@@ -113,6 +85,8 @@
 </head>
 
 <body>
+	<header><jsp:include page="/layout/header.jsp" /></header>
+	
 
 	<div class="container-fluid">
 		<div class="row">
@@ -153,14 +127,10 @@
 						<div class="row">
 							<c:forEach var="best" items="${list}" begin="0" end="2">
 								<div class="col-md-4">
-									<div class="card" id="bestCommunity"
-										style="width: 350px; cursor: pointer;">
-										<input type="hidden" id="communityCode" name="communityCode"
-											value="${best.communityCode}" /> <img
-											src="/resources/images/ThumbNail/${best.communityThumbnail }"
-											class="card-img-top" alt="..." style="height: 250px;">
-										<div class="card-body"
-											style="overflow: hidden; text-overflow: ellipsis; height: 130px;">
+									<input type="hidden" class="bestCommunityCode" value="${best.communityCode}" />
+									<div class="card bestCommunity" style="width: 350px; cursor: pointer;">
+										<img src="/resources/images/ThumbNail/${best.communityThumbnail }" class="card-img-top" alt="..." style="height: 250px;">
+										<div class="card-body" style="overflow: hidden; text-overflow: ellipsis; height: 130px;">
 											<h5 class="card-title">${best.communityTitle}</h5>
 											<p class="card-text">${best.communityContent }</p>
 										</div>
@@ -177,8 +147,6 @@
 				<div class="row justify-content-center">
 					<div class="col-10 col-md-10">
 						<div class="row">
-
-
 							<div class="col-lg-6">
 								<div class="Search">
 									<div class="input-holder">
@@ -219,15 +187,13 @@
 						</div>
 						<hr align="center">
 						<c:forEach var="community" items="${list}">
-							<input class="communityCode" type="hidden" id="communityCodelist"
-								name="communityCode" value="${community.communityCode}" />
-							<div class="row">
+							<div class="row list">
+							<%-- <input class="communityCode" type="hidden" value="${community.communityCode}" /> --%>
 								<div class="col-2 col-md-2" style="top: 30px;">
-
-									<p class="text-center"
-										style="font-size: x-small; color: #344157;">No.${community.communityCode}</p>
-									<p class="text-center"
-										style="font-size: x-small; color: #344157;">
+									<p class="text-center" style="font-size: x-small; color: #344157;">
+										No.<span class="communityCode">${community.communityCode}</span>
+									</p>
+									<p class="text-center communityBoard" style="font-size: x-small; color: #344157;">
 										<c:if test="${community.communityBoard eq '1'}">자유 게시판</c:if>
 										<c:if test="${community.communityBoard eq '2'}">도시별 게시판</c:if>
 										<c:if test="${community.communityBoard eq '3'}">QnA 게시판</c:if>
@@ -240,21 +206,16 @@
 								<div class="col-7 col-md-7">
 									<div class="row" id="profile-box" style="position: relative;">
 										<div id="profile-image">
-											<a href="#"><img src="/resources/images/dog.JPG"
-												id="userImage" name="userImage" alt="글쓴이"
-												class="rounded-circle" width="45px" height="45px"></a>
+											<a href="#"><img src="/resources/images/dog.JPG" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px"></a>
 										</div>
-										<div id="profile-nickname"
-											style="position: absolute; top: 10px; left: 52px;">
+										<div id="profile-nickname" style="position: absolute; top: 10px; left: 52px;">
 											<div style="font-size: x-small; color: #3c64a6;">글쓴이</div>
-											<div style="font-size: small; color: #344157;">
-												${community.writer}</div>
+											<div style="font-size: small; color: #344157;">${community.writer}</div>
 										</div>
 									</div>
 
 									<div class="row" style="margin-top: 10px;">
-										<div
-											style="overflow: hidden; text-overflow: ellipsis; height: 30px">
+										<div style="overflow: hidden; text-overflow: ellipsis; height: 30px">
 											<h5 style="resize: none; display: inline-blocke">
 												<strong class="getCommunity title" style="cursor: pointer;">${community.communityTitle }&nbsp;&nbsp;</strong>
 												<small style="font-size: xx-small;">${community.communityDate }&nbsp;&nbsp;</small>
@@ -263,19 +224,13 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="getCommunity content"
-											style="overflow: hidden; text-overflow: ellipsis; height: 50px; cursor: pointer;">
-											<span id="content"
-												style="resize: none; display: inline-blocke">
-												${community.communityContent} </span>
+										<div class="getCommunity content" style="overflow: hidden; text-overflow: ellipsis; height: 50px; cursor: pointer;">
+											<span class="content" style="resize: none; display: inline-blocke">${community.communityContent}</span>
 										</div>
 									</div>
 								</div>
 								<div class="col-3 col-md-3">
-									<img alt="" class="getCommunity image"
-										src="/resources/images/ThumbNail/${community.communityThumbnail }"
-										width="250px" height="160px"
-										style="border-radius: 6px; cursor: pointer;">
+									<img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/ThumbNail/${community.communityThumbnail }" width="250px" height="160px" style="border-radius: 6px; cursor: pointer;">
 								</div>
 							</div>
 							<hr>

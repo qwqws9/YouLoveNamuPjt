@@ -13,7 +13,6 @@ import com.youlove.service.domain.Community;
 
 
 
-//==> È¸¿ø°ü¸® Controller
 @RestController
 @RequestMapping("/community/*")
 public class CommunityRestController {
@@ -22,7 +21,7 @@ public class CommunityRestController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
-	//setter Method ±¸Çö ¾ÊÀ½
+	//setter Method ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 	public CommunityRestController(){
 		System.out.println(this.getClass());
@@ -31,7 +30,7 @@ public class CommunityRestController {
 	
 	@RequestMapping(value="json/addCommunity",method=RequestMethod.POST)
 	public ModelAndView addCommunity(@ModelAttribute("community") Community community)throws Exception{
-		System.out.println("\nCommunityController:::addCommunity() ½ÃÀÛ:::");
+		System.out.println("\nCommunityController:::addCommunity() ï¿½ï¿½ï¿½ï¿½:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/addCommunity.jsp");
 		
@@ -39,40 +38,40 @@ public class CommunityRestController {
 		
 		
 		
-		System.out.println("\nCommunityController:::addCommunity() ³¡:::");
+		System.out.println("\nCommunityController:::addCommunity() ï¿½ï¿½:::");
 		return modelAndView;
 	} 
 	
 	@RequestMapping(value="json/getCommunity",method=RequestMethod.POST)
 	public ModelAndView getCommunity(@ModelAttribute("community") Community community)throws Exception {
-		System.out.println("\nCommunityController:::getCommunity() ½ÃÀÛ:::");
+		System.out.println("\nCommunityController:::getCommunity() ï¿½ï¿½ï¿½ï¿½:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunity.jsp");
 		
 		
-		System.out.println("\nCommunityController:::getCommunity() ³¡:::");
+		System.out.println("\nCommunityController:::getCommunity() ï¿½ï¿½:::");
 		return modelAndView;
 	}
 
 	@RequestMapping(value="json/getCommunityList",method=RequestMethod.POST)
 	public ModelAndView getCommunityList(@ModelAttribute("community") Community community)throws Exception {
-		System.out.println("\nCommunityController:::getCommunityList() ½ÃÀÛ:::");
+		System.out.println("\nCommunityController:::getCommunityList() ï¿½ï¿½ï¿½ï¿½:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunityList.jsp");
 		
 		
-		System.out.println("\nCommunityController:::getCommunityList() ³¡:::");
+		System.out.println("\nCommunityController:::getCommunityList() ï¿½ï¿½:::");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value="json/updateCommunity",method=RequestMethod.POST)
 	public ModelAndView updateCommunity(@ModelAttribute("community") Community community)throws Exception {
-		System.out.println("\nCommunityController:::updateCommunity() ½ÃÀÛ:::");
+		System.out.println("\nCommunityController:::updateCommunity() ï¿½ï¿½ï¿½ï¿½:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/updateCommunity.jsp");
 		
 		
-		System.out.println("\nCommunityController:::updateCommunity() ³¡:::");
+		System.out.println("\nCommunityController:::updateCommunity() ï¿½ï¿½:::");
 		return modelAndView;
 	}
 
