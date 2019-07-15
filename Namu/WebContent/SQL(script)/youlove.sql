@@ -49,10 +49,10 @@ CREATE SEQUENCE seq_message_code            INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_w_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_w_detail_code           INCREMENT BY 1 START WITH 1;
 -- 민희 시퀀스
-CREATE SEQUENCE seq_planner_code          INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_route_code                INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_schedule_code            INCREMENT BY 1 START WITH 10000;
-CREATE SEQUENCE seq_group_code                INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_planner_code          INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_route_code                INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_schedule_code            INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_group_code                INCREMENT BY 1 START WITH 1;
 --성용 시퀀스
 CREATE SEQUENCE seq_user_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_timeline_code                  INCREMENT BY 1 START WITH 1;
@@ -179,46 +179,49 @@ CREATE TABLE PAYLIST (
 -------------------------민희
 
 CREATE TABLE planner ( 
-   planner_code          NUMBER             NOT NULL,
-   user_code    NUMBER    NOT NULL  REFERENCES users(user_code),
+   planner_code          NUMBER(10)            NOT NULL,
+   user_code    NUMBER(10)    NOT NULL  REFERENCES users(user_code),
    planner_name       VARCHAR2(2000)   NOT NULL,
-   planner_image       VARCHAR2(100)   ,
+   planner_image       VARCHAR2(100),
    member              CHAR(1),
    privacy               CHAR(1),      
    status              CHAR(1),
    isgroup              CHAR(1),
    board_code              CHAR(1) default '4', 
-   start_date             VARCHAR2(8),
+   depart_date             VARCHAR2(8),
    reg_date       DATE default sysdate,
    PRIMARY KEY(planner_code)
 );
 
 
 CREATE TABLE route ( 
-   route_code                   NUMBER      NOT NULL,
+   route_code                  NUMBER(10)      NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
-   planner_code NUMBER(2) REFERENCES planner(planner_code),
+   planner_code NUMBER(10) REFERENCES planner(planner_code),
    city_name      VARCHAR2(100),
    stay_day                      NUMBER(2),
    city_order                NUMBER(2),
-
+   lat 								VARCHAR2(100),
+   lng 							VARCHAR2(100),
+   start_date 					DATE   ,
+   end_date 					DATE   ,
    PRIMARY KEY(route_code)
 );
 
 
 CREATE TABLE schedule( 
-   sche_code               NUMBER          NOT NULL,
-   route_code                   NUMBER      NOT NULL REFERENCES route(route_code),
+   sche_code               NUMBER(10)          NOT NULL,
+   route_code                  NUMBER(10)       NOT NULL REFERENCES route(route_code),
    planner_ver            NUMBER(2)    NOT NULL,
-   planner_code NUMBER(2) REFERENCES planner(planner_code),
-   sche_day VARCHAR2(500),
+   planner_code NUMBER(10)  NOT NULL REFERENCES planner(planner_code),
+   sche_day DATE,
    time_hour NUMBER(2),
    time_min NUMBER(2),
    SCHE_NAME VARCHAR2(500) NOT NULL,
    SCHE_place VARCHAR2(200),
    SCHE_detail VARCHAR2(2000),
    accomotadion VARCHAR2(200),
-   PRIMARY KEY(sche_code   )
+   PRIMARY KEY(sche_code)
 );
 
 CREATE TABLE groups ( 
