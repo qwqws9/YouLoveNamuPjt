@@ -1,5 +1,7 @@
 package com.youlove.web.wallet;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,15 +25,15 @@ public class WalletRestController {
 	}
 	
 	@RequestMapping(value="json/addWallet", method=RequestMethod.POST)
-	public Wallet addWallet(@RequestBody Wallet wallet) throws Exception{
+	public Wallet addWallet(@RequestBody Map<String, Object> wallet/*@RequestBody(required=true) Wallet wallet*/) throws Exception{
 		
 		System.out.println("/wallet/json/addWallet :: POST");
 		
-		System.out.println(wallet);
+		System.out.println(wallet.get("regDate"));
 		
-		walletService.addWallet(wallet);
+		// walletService.addWallet(wallet);
 		
-		return wallet;
+		return new Wallet();
 		
 	}
 	
