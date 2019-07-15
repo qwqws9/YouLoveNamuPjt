@@ -136,10 +136,13 @@ public class CommunityController {
 		System.out.println("\nCommunityController:::getCommunityList() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunityList.jsp");
-		if(search.getCurrentPage() ==0 ){
+		if(search.getCurrentPage() == 0){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		System.out.println("end = "+search.getEndRowNum());
+		System.out.println("strat = "+search.getStartRowNum());
+		
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("communityBoard", communityBoard);
@@ -171,7 +174,9 @@ public class CommunityController {
 	public ModelAndView daleteCommunity(@RequestParam(value="communityCode")int communityCode)throws Exception{
 		System.out.println("\nCommunityController:::daleteCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/getCommunityList.jsp");
+		modelAndView.setViewName("/community/getCommunityList");
+		
+		
 		communityService.deleteCommunity(communityCode);
 		System.out.println("\nCommunityController:::daleteCommunity() 끝:::");
 		return modelAndView;

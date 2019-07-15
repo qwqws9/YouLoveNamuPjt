@@ -14,7 +14,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <!-- SearchBox -->
-<link href="../resources/css/search.css" rel="stylesheet">
+<link href="/resources/css/search.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+<!-- <script type="text/javascript" src="../resources/javascript/community.js"></script> -->
 <!-- 이모티콘 -->
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 
@@ -24,31 +26,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <!-- Our Own Resources -->
-<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 
-<script>
+
+	<script>
 		$.fn.selectpicker.Constructor.BootstrapVersion = '4';
-		
-	  	function searchToggle(obj, evt){
-	  	    var container = $(obj).closest('.Search');
-	  	        if(!container.hasClass('active')){
-	  	            container.addClass('active');
-	  	            evt.preventDefault();
-	  	            $(".search-icon").on("click", function(){
-	  	            	$("form").attr("method", "POST").attr("action", "/community/getCommunityList").submit();
-	  	            })
-	  	        }
-	  	        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
-		  	            container.removeClass('active');
-		  	            container.find('.search-input').val('');
-	  	        }
-	  	}
-		
+			
 		$( function() {
 			$( "#addCommunity" ).on("click" , function() {
 				self.location = "/community/addCommunity.jsp"
 			});
-			
 		    $(".board").on("click", function(){
 		    	if($(this).children().text() == $(".free").text()){
 		    		self.location = "/community/getCommunityList?communityBoard=1"			
@@ -57,7 +43,7 @@
 		    	}else if($(this).children().text() == $(".qna").text()){
 		    		self.location = "/community/getCommunityList?communityBoard=3"			
 		    	}else{
-		    		self.location = "/community/getCommunityList"
+		    		self.location = "/community/getCommunityList?communityBoard=0"
 		    	}
 		    })
 		    $('a[href$="#Modal"]').on( "click", function() {
@@ -91,57 +77,134 @@
 				
 			});
 		 });
-		//무한 스크롤
-		//$(function(){
-			$(window).scroll(function() {
+		$(function(){
+			
+		
+		$(window).scroll(function() {
+			var page = 2;
 			var scrollH = $(document).height();
 			var scrollT	= $(window).scrollTop();
 			var scrollP = $(window).height();
 			console.log("documentHeight:" + scrollH + " | scrollTop:" + scrollT + " | windowHeight: " + scrollP );
-			var page = 1;
-			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-			    	console.log("scrollHeight"+$(document).height());
-			    	console.log("scrollPosition"+$(window).height() + $(window).scrollTop())
-		      		console.log(++page);
-		      		//$(".col-10.col-md-10.append").append('<div class="big-box"><h1>Page ' + page + '</h1></div><hr>');
-					
-		      		$.ajax({
-		      			url : "/community/json/getCommunityList",
-		      			method : "POST",
-		      			data : JSON.stringify({
-		      				"currentPage" : page,
-		      				"pageSize" : "3"
-		      			}),
-		      			dataType : "json",
-		      			headers : {
-		      				 "Accept" : "application/json",
-		                     "Content-Type" : "application/json"
-		      			},
-		      			success : function(JSONData , status){
-		      				//var list = new Array();
-		      				$.each(JSONData.list,function(index,item){
-		      					console.log(index+"ddd"+item.communityCode);
-		      				})
-		      				$(".col-10.col-md-10.append").append('<div class="big-box"><h1>Page ' + page + '</h1></div><hr>');
-		      				//alert(JSONData.list.communityCode);
-		      			},
-		      			error:function(jqXHR, textStatus, errorThrown){
-		    				alert( textStatus );
-		    				alert( errorThrown );
-		    			}
-		      		});
-					page++;
-			    }
-		    
-		    
-		    
-			});
 			
-			
-			
-		//});
+		    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+		    	//alert(page);
+		    	callCommunityList(page);
+		    	page++;
+		    }//end of if
+		});//end of scroll
+				
+				
+		//getCommunityList
+		//무한 스크롤
+		function callCommunityList(page){
+				    	var communityBoard = document.location.href.split("=")[1];
+				    	if(communityBoard === undefined || communityBoard === null){
+				    		communityBoard = 0;
+				    	}
+				    	console.log(communityBoard);
+				    	//console.log("scrollHeight"+$(document).height());
+				    	//console.log("scrollPosition"+$(window).height() + $(window).scrollTop())
+			      		//$(".col-10.col-md-10.append").append('<div class="big-box"><h1>Page ' + page + '</h1></div><hr>');
+			      		$.ajax({
+			      			url : "/community/json/getCommunityList/"+communityBoard,
+			      			method : "POST",
+			      			data : JSON.stringify({
+			      				"currentPage" : page,
+			      				"pageSize" : "3"
+			      			}),
+			      			dataType : "json",
+			      			headers : {
+			      				 "Accept" : "application/json",
+			                     "Content-Type" : "application/json"
+			      			},
+			      			success : function(JSONData , status){
+			      				//var list = new Array();
+			      				$.each(JSONData.list,function(index,item){
+			      					var appendBoard = '';
+			      					var appendCity = '';
+			      					var communityBoard =  item.communityBoard;
+			      					if(communityBoard == 1){
+			      						appendBoard = '자유게시판';
+			      					}else if(communityBoard == 2){
+			      						appendBoard = '도시별 게시판';
+			      					}else if(communityBoard == 3){
+			      						appendBoard = 'QnA 게시판';
+			      					}
+			      					if(communityBoard == 2){
+			      						appendCity = '<p class="text-center"style="font-size: x-small; color: #344157;">['+item.city+']</p>';
+			      					}
+			      					$(".col-10.col-md-10.append").append( '<div class="row list"><div class="col-2 col-md-2" style="top: 30px;">'
+			      														+'<p class="text-center" style="font-size: x-small; color: #344157;">'
+			      														+'No.<span class="'+item.communityCode+'">${community.communityCode}</span>'
+			      														+'</p>'
+			      														+'<p class="text-center communityBoard" style="font-size: x-small; color: #344157;">'
+			      														+ appendBoard
+																		+'</p>'
+																		+ appendCity
+																		+'</div>'
+																		+'<div class="col-7 col-md-7">'
+																		+'<div class="row" id="profile-box" style="position: relative;">'
+																		+'<div id="profile-image">'
+																		+'<a href="#"><img src="/resources/images/dog.JPG" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px"></a>'
+																		+'</div>'
+																		+'<div id="profile-nickname" style="position: absolute; top: 10px; left: 52px;">'
+																		+'<div style="font-size: x-small; color: #3c64a6;">글쓴이</div>'
+																		+'<div style="font-size: small; color: #344157;">'+item.writer+'</div>'
+																		+'</div>'
+																		+'</div>'
+																		+'<div class="row" style="margin-top: 10px;">'
+																		+'<div style="overflow: hidden; text-overflow: ellipsis; height: 30px">'
+																		+'<h5 style="resize: none; display: inline-blocke">'
+																		+'<strong class="getCommunity title" style="cursor: pointer;">'+item.communityTitle+'&nbsp;&nbsp;</strong>'
+																		+'<small style="font-size: xx-small;">'+item.communityDate+'&nbsp;&nbsp;</small>'
+																		+'<small style="font-size: xx-small;">조회수&nbsp;'+item.views+'</small>'
+																		+'</h5>'
+																		+'</div>'
+																		+'</div>'
+																		+'<div class="row">'
+																		+'<div class="getCommunity content" style="overflow: hidden; text-overflow: ellipsis; height: 50px; cursor: pointer;">'
+																		+'<span class="content" style="resize: none; display: inline-blocke;">'+item.communityContent+'</span>'
+																		+'</div>'
+																		+'</div>'
+																		+'</div>'
+																		+'<div class="col-3 col-md-3">'
+																		+'<img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/ThumbNail/'+item.communityThumbnail+'" width="250px" height="160px" style="border-radius: 6px; cursor: pointer;">'
+																		+'</div>'
+																		+'</div>'
+																		+'<hr>');
+			      				});
+			      				//$(".col-10.col-md-10.append").append('<div class="big-box"><h1>Page ' + page + '</h1></div><hr>');
+			      				//alert(JSONData.list.communityCode);
+			      			},
+			      			error:function(jqXHR, textStatus, errorThrown){
+			    				alert( textStatus );
+			    				alert( errorThrown );
+			    			}
+			      		});
+						
+					}
+		});
+
+		//Search Box Event
+		function searchToggle(obj, evt){
+			    var container = $(obj).closest('.Search');
+			        if(!container.hasClass('active')){
+			            container.addClass('active');
+			            evt.preventDefault();
+			            $(".search-icon").on("click", function(){
+			            	$("form").attr("method", "POST").attr("action", "/community/getCommunityList").submit();
+			            })
+			        }
+			        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+		  	            container.removeClass('active');
+		  	            container.find('.search-input').val('');
+			        }
+			}
+
 		
-		
+			
+			
 
  	</script>
 	<style>
@@ -300,7 +363,7 @@
 									<img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/ThumbNail/${community.communityThumbnail }" width="250px" height="160px" style="border-radius: 6px; cursor: pointer;">
 								</div>
 							</div>
-							<hr class="apend">
+							<hr>
 						</c:forEach>
 					</div>
 					

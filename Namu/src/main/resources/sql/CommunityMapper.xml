@@ -105,8 +105,8 @@
 	                        	</where>
 	                       	</if>
 	                        ORDER BY community_code DESC ) first_table
-		            WHERE ROWNUM &lt;= 2 )
-		WHERE row_seq BETWEEN 0 AND 2
+		            WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	<select  	id="getCommunityBestList"  	parameterType="map"	resultMap="communityMap">
 		SELECT *
@@ -117,11 +117,12 @@
 	                        ORDER BY views DESC ) first_table
 		            WHERE ROWNUM  &lt;= 3 )
 			WHERE  row_seq BETWEEN 0 AND 3
+			
 	</select>
 	<delete 	id="deleteCommunity" 	parameterType="int">
 		DELETE
 		FROM community
-		WHERE community_code = #{communityCode};
+		WHERE community_code = #{communityCode}
 	</delete>
 	
 	<select  id="getTotalCount"  parameterType="search" resultType="int">

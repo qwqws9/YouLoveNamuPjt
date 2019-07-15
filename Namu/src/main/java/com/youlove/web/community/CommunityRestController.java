@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,13 +60,15 @@ public class CommunityRestController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="json/getCommunityList",method=RequestMethod.POST)
-	public Map<String, Object> getCommunityList(@RequestBody Search search)throws Exception {
+	@RequestMapping(value="json/getCommunityList/{communityBoard}",method=RequestMethod.POST)
+	public Map<String, Object> getCommunityList(@RequestBody Search search,@PathVariable int communityBoard)throws Exception {
 		System.out.println("\nCommunityRestController:::json/getCommunityList() 시작:::");
 		System.out.println("currentPage = "+search.getCurrentPage());
 		System.out.println("pageSize = "+search.getPageSize());
+		System.out.println("end = "+search.getEndRowNum());
+		System.out.println("start = "+search.getStartRowNum());
 		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("communityBoard", 0);
+		map.put("communityBoard", communityBoard);
 		map.put("search", search);
 		map = communityService.getCommunityList(map);
 		

@@ -41,6 +41,8 @@ public class CommunityDaoImpl implements CommunityDao {
 	@Override
 	public List<Community> getCommunityList(Map<String,Object> map) throws Exception {
 		Search search = (Search) map.get("search");
+		System.out.println("여기는 Dao = "+search.getEndRowNum());
+		System.out.println("여기는 Dao = "+search.getStartRowNum());
 		map.put("endRowNum", search.getEndRowNum());
 		map.put("startRowNum",search.getStartRowNum());
 		map.put("searchCondition",search.getSearchCondition());
