@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +40,7 @@
 		</a>
 		<a href="javascript:void(0);" class="next_btn">결산 보고서 조회</a>
 		
-		<section class="sec_wrap">
+		<section class="sec_wrap clear">
 			<h3 class="skip">가계부 내역</h3>
 			
 			<form class="search_form" name="search_form">
@@ -48,17 +50,17 @@
 			</form>
 			
 			<nav class="left_nav">
-				<span class="day_btn">All</span>
-				<span class="day_btn">준비</span>
+				<a class="day_btn rounded-circle"><span>All</span></a>
+				<a class="day_btn rounded-circle"><span>준비</span></a>
 				
-				8월
-				<span class="day_btn">21일</span>
-				<span class="day_btn">22일</span>
-				<span class="day_btn">23일</span>
+				<span class="day_btn">8월</span>
+				<a class="day_btn rounded-circle"><span>21</span><span class="skip">일</span></a>
+				<a class="day_btn rounded-circle"><span>22</span><span class="skip">일</span></a>
+				<a class="day_btn rounded-circle"><span>23</span><span class="skip">일</span></a>
 			</nav>
 			
 			<div class="right_table">
-				<div class="total_table">
+				<div class="total_table clear">
 					<div class="total_budget">
 						<span>총 예산</span><span>€ 2500.00</span>
 					</div>
@@ -74,43 +76,84 @@
 				
 				<div class="plus_btns">
 					<a href="javascript:void(0);" class="modal_btn">예산 추가 <i class="fas fa-plus-square"></i></a>
-					<div class="pop_wrap_parent">
-						<div class="pop_wrap">
-							<select class="unit_selec">
-								<option value="KRW">KRW</option>
-								<option value="EUR">EUR</option>
-							</select>
-							<input type="text" class="result">
+					<form class="pop_wrap_parent" name="add_income_form">
+						<div class="pop_wrap clear">
+							<div class="pop_left">
+								<div class="result_top">
+									<input type="text" class="date_time" name="regDate" readonly />
+								
+									<select class="unit_selec" name="moneyUnit">
+										<option value="KRW">KRW</option>
+										<option value="EUR">EUR</option>
+									</select>
+									<div class="result">
+										<input type="text" class="price" name="price" value="" readonly>
+										<span class="krw_price">KRW 6,000.00</span>
+									</div>
+								</div><!-- //result_top -->
+								
+								<div class="pay_option_selec_wrap">
+									<span class="skip">예산 유형</span>
+									<div class="pay_option_selec">
+										<div class="pay_option_wrap">
+											<input type="radio" id="no" class="pay_option" name="pay_option" value="0" checked /><label for="no"><i class="fas fa-wallet"></i>&nbsp;<span>유형없음</span></label>
+										</div>
+										<div class="pay_option_wrap">
+											<input type="radio" id="cash" class="pay_option" name="pay_option" value="0" /><label for="cash"><i class="fas fa-money-bill-alt"></i>&nbsp;<span>현금</span></label>
+										</div>
+										<div class="pay_option_wrap">
+											<input type="radio" id="card" class="pay_option" name="pay_option" value="0" /><label for="card"><i class="fas fa-credit-card"></i>&nbsp;<span>카드</span></label>
+										</div>
+									</div>
+								</div><!-- //pay_option_selec_wrap -->
+								
+								<div class="apply_exchange_rate">
+									<span>환율</span>
+									<div>
+										<span>EUR 1.00 = KRW <span>1,312.22</span></span><br/>
+										<input type="hidden" class="exchange_rate" name="exchangeRate" value="1,312.22">
+										<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
+									</div>
+								</div>
+								
+								<div class="item">
+									<input type="text" name="item" placeholder="항목명을 기입해주세요." />
+								</div>
+							</div><!-- //pop_left -->
 							
 							<div class="cal_btns">
-								<div>
-									<input type="text" class="formular">
-									<input type="button" class="cal_btn ac" value="AC">
+								<div class="clear">
+									<input type="text" class="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
 								</div>
-								<div class="cal_left">
-									<div>
-										<input type="button" class="cal_btn" value="1"><input type="button" class="cal_btn" value="2"><input type="button" class="cal_btn" value="3">
+								<div class="clear">
+									<div class="cal_left">
+										<div>
+											<input type="button" class="cal_btn" value="1"><input type="button" class="cal_btn" value="2"><input type="button" class="cal_btn" value="3">
+										</div>
+										<div>
+											<input type="button" class="cal_btn" value="4"><input type="button" class="cal_btn" value="5"><input type="button" class="cal_btn" value="6">
+										</div>
+										<div>
+											<input type="button" class="cal_btn" value="7"><input type="button" class="cal_btn" value="8"><input type="button" class="cal_btn" value="9">
+										</div>
+										<div>
+											<input type="button" class="cal_btn" value="0"><input type="button" class="cal_btn real" value="."><input type="button" class="cal_btn back" value="back">
+										</div>
 									</div>
-									<div>
-										<input type="button" class="cal_btn" value="4"><input type="button" class="cal_btn" value="5"><input type="button" class="cal_btn" value="6">
-									</div>
-									<div>
-										<input type="button" class="cal_btn" value="7"><input type="button" class="cal_btn" value="8"><input type="button" class="cal_btn" value="9">
-									</div>
-									<div>
-										<input type="button" class="cal_btn" value="0"><input type="button" class="cal_btn real" value="."><input type="button" class="cal_btn back" value="back">
+									<div class="cal_right">
+										<input type="button" class="cal_btn operator" value="+"><input type="button" class="cal_btn operator" value="-"><input type="button" class="cal_btn operator" value="*"><input type="button" class="cal_btn operator" value="/">
 									</div>
 								</div>
-								<div class="cal_right">
-									<input type="button" class="cal_btn operator" value="+"><input type="button" class="cal_btn operator" value="-"><input type="button" class="cal_btn operator" value="*"><input type="button" class="cal_btn operator" value="/">
+								
+								<div class="act_btn">
+									<a href="javascript:void(0);" class="save_btn">저장</a><a href="javascript:void(0);" class="closs_btn">취소</a>
 								</div>
 							</div><!-- //cal_btns -->
-							<a href="javascript:void(0);" class="closs_btn">취소</a>
 						</div><!-- //pop_wrap -->
-					</div><!-- //pop_wrap_parent -->
+					</form><!-- //pop_wrap_parent -->
 					&nbsp;&nbsp;&nbsp;
 					<a href="javascript:void(0);" class="modal_btn">지출 추가 <i class="fas fa-plus-square"></i></a>
-					<div class="pop_wrap_parent">
+					<div class="pop_wrap_parent" style="display: none;">
 						<div class="pop_wrap">
 							<p>
 								Thank you.22222222222<br>
@@ -128,6 +171,7 @@
 				<div class="detail_table">
 					<div class="table_header">
 						<span class="skip">내역 조회는</span>
+						<span class="table_col">번호</span>
 						<span class="table_col">날짜/시간</span>
 						<span class="table_col">수입 금액</span>
 						<span class="table_col">지출 금액</span>
@@ -137,166 +181,56 @@
 					</div>
 					
 					<ul>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								<img src="/resources/images/uploadFiles/AHlbAAAAtBqyWAAA.jpg" alt="기타" class="rounded-circle">
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
-						<li class="table_row">
-							<span class="table_col">
-								<span>2018-08-23</span> <span>오후 11:00</span>
-							</span>
-							<span class="table_col">
-								<span>€ 25.00</span> <span>￦ 32,879.16</span>
-							</span>
-							<span class="table_col">
-							</span>
-							<span class="table_col">
-								응급실
-							</span>
-							<span class="table_col">
-								기타
-							</span>
-						</li>
+						<c:set var="i" value="0" />
+						<c:forEach var="wallet" items="${list}">
+							<c:set var="i" value="${i+1}" />
+							<li class="table_row">
+								<span class="table_col">${i}</span>
+								<span class="table_col">
+									${wallet.regDate}
+								</span>
+								<span class="table_col">
+									<c:if test="${wallet.part eq 0}">
+										<span>
+											<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+											<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+											<c:if test="${wallet.payOption eq 2}">
+												<i class="fas fa-credit-card"></i>
+											</c:if>
+										</span>
+										<span>
+											<c:if test="${wallet.moneyUnit ne 'KRW'}">
+												<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+											</c:if>
+										</span>
+									</c:if>
+								</span>
+								<span class="table_col">
+									<c:if test="${wallet.part eq 1}">
+										<span>
+											<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+											<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+										</span>
+										<span>
+											<c:if test="${wallet.moneyUnit ne 'KRW'}">
+												<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+											</c:if>
+										</span>
+									</c:if>
+								</span>
+								<span class="table_col">
+									${wallet.item}
+								</span>
+								<span class="table_col">
+									<c:if test="${! empty wallet.walletImage}">
+										<img src="/resources/images/${wallet.walletImage}" alt="${wallet.category}" class="rounded-circle">
+									</c:if>
+									<c:if test="${empty wallet.walletImage}">
+										<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
+									</c:if>
+								</span>
+							</li>
+						</c:forEach>
 					</ul>
 				</div><!-- //detail_table -->
 			</div><!-- //right_table -->
