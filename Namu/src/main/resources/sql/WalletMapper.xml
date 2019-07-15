@@ -6,7 +6,7 @@
 
 	<resultMap id="walletSelectMap" type="wallet">
 		<result property="walletDetailCode"	column="W_DETAIL_CODE"	jdbcType="NUMERIC" />
-		<result property="walletCode"		column="W_CODE"			jdbcType="NUMERIC" />
+		<result property="walletCode"		column="W_MAIN_CODE"	jdbcType="NUMERIC" />
 		<result property="part"				column="PART"			jdbcType="CHAR" />
 		<result property="moneyUnit"		column="MONEY_UNIT"		jdbcType="VARCHAR" />
 		<result property="expression"		column="EXPRESSION"		jdbcType="VARCHAR" />
@@ -24,15 +24,15 @@
 	<!-- walletList.jsp -->
 	<insert id="addWallet" parameterType="wallet">
 		INSERT
-		INTO wallet_detail ( w_detail_code, w_code, part, money_unit, expression, price, reg_date,
+		INTO wallet_detail ( w_detail_code, w_main_code, part, money_unit, expression, price, reg_date,
 							 item, content, pay_option, exchange_rate, category, w_image, payer )
-		VALUES ( seq_product_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
+		VALUES ( seq_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
 				 #{price}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
 				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer:NUMERIC} )
 	</insert>
 	
 	<select id="getWallet" parameterType="int" resultMap="walletSelectMap">
-		SELECT w_detail_code, w_code, part, money_unit, expression, price, reg_date,
+		SELECT w_detail_code, w_main_code, part, money_unit, expression, price, reg_date,
 			   item, content, pay_option, exchange_rate, category, w_image, payer
 		FROM wallet_detail
 		WHERE w_detail_code = #{value}
@@ -65,7 +65,7 @@
 	<select id="getWalletList" parameterType="int" resultMap="walletSelectMap">
 		SELECT *
 		FROM wallet_detail
-		WHERE w_code = #{value}
+		WHERE w_main_code = #{value}
 	</select>
 	
 </mapper>
