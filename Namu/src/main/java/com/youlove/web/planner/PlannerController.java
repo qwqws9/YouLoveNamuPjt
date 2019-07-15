@@ -1,8 +1,11 @@
 package com.youlove.web.planner;
 
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -62,34 +65,51 @@ public class PlannerController {
 		return "forward:/planner/addRoute.jsp";
 	}
 	
-@RequestMapping(value = "addRoute")
-public String addRoute(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("route") Route route) throws Exception{
+	@RequestMapping(value = "addRoute")
+	public String addRoute(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("route") Route route) throws Exception{
 
-	System.out.println("PlannerController :: addRoute start");
-	
-	String[] cityNames = request.getParameterValues("cityName");
-	String[] lats = request.getParameterValues("lat");
-	String[] lngs = request.getParameterValues("lng");
-	//String[] cityOrders = request.getParameterValues("cityOrder");
-	String[] stayDays = request.getParameterValues("stayDay");
-	
-	route.setPlannerCode(1);
-	route.setPlannerVer(1);
+		System.out.println("PlannerController :: addRoute start");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		
+		Date date=null;
+		
+		try {
+			date=dateFormat.parse("20190801");
+			
+		}catch(ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(date);
+		
+		String[] cityNames = request.getParameterValues("cityName");
+		String[] lats = request.getParameterValues("lat");
+		String[] lngs = request.getParameterValues("lng");
+		//String[] cityOrders = request.getParameterValues("cityOrder");
+		String[] stayDays = request.getParameterValues("stayDay");
+		
+		route.setPlannerCode(1);
+		route.setPlannerVer(1);
 
 
-	for (int i = 0; i < cityNames.length; i++) {
-	System.out.println(" city name : "+cityNames[i]+" lat: "+lats[i]+" lng : "+lngs[i]+" order : "+i+" stay day :"+stayDays[i]);
-	System.out.println(cityNames.length+"번 addRoute !!!!!!");
-	//Date start=2019-08-01;
-	
-	route.setCityName(cityNames[i]);
-	route.setLat(lats[i]);
-	route.setLng(lngs[i]);
-	route.setCityOrder(i+1);
-	route.setStayDay(Integer.parseInt(stayDays[i]));
-
-	plannerService.addRoute(route);
-	}
+		for (int i = 0; i < cityNames.length; i++) {
+		System.out.println(" city name : "+cityNames[i]+" lat: "+lats[i]+" lng : "+lngs[i]+" order : "+i+" stay day :"+stayDays[i]);
+		System.out.println(cityNames.length+"번 addRoute !!!!!!");
+		//Date start=2019-08-01;
+		
+		route.setCityName(cityNames[i]);
+		route.setLat(lats[i]);
+		route.setLng(lngs[i]);
+		route.setCityOrder(i+1);
+		route.setStayDay(Integer.parseInt(stayDays[i]));
+		String startDate = dateFormat.format(cal.getTime());
+		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+		String endDate = dateFormat.format(cal.getTime());
+		route.setStartDate(startDate);
+		route.setEndDate(endDate);
+		
+		plannerService.addRoute(route);
+		}
 
 	return "forward:/planner/getSchedule.jsp";
 		

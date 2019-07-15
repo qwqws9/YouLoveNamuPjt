@@ -7,7 +7,7 @@ public class Planner {
 	///Field
 	private int plannerCode;
 	private String plannerName;
-	private String startDate;
+	private String departDate;
 	private String plannerImage;
 	private User user;
 	private int member;
@@ -36,12 +36,13 @@ public class Planner {
 		this.plannerName = plannerName;
 	}
 
-	public String getStartDate() {
-		return startDate;
+	
+	public String getDepartDate() {
+		return departDate;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setDepartDate(String departDate) {
+		this.departDate = departDate;
 	}
 
 	public String getPlannerImage() {
@@ -110,7 +111,7 @@ public class Planner {
 
 	@Override
 	public String toString() {
-		return "Planner [plannerCode=" + plannerCode + ", plannerName=" + plannerName + ", startDate=" + startDate
+		return "Planner [plannerCode=" + plannerCode + ", plannerName=" + plannerName + ", departDate=" + departDate
 				+ ", plannerImage=" + plannerImage + ", user=" + user + ", member=" + member + ", privacy=" + privacy
 				+ ", status=" + status + ", isGroup=" + isGroup + ", boardCode=" + boardCode + ", regDate=" + regDate
 				+ "]";

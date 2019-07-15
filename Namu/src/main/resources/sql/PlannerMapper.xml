@@ -9,7 +9,7 @@
 	<resultMap id="plannerSelectMap" type="planner">
 		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
 		<result property="plannerName"				column="PLANNER_NAME" 				jdbcType="VARCHAR" />
-		<result property="startDate" 			column="START_DATE" 		jdbcType="VARCHAR" />
+		<result property="departDate" 			column="DEPART_DATE" 		jdbcType="VARCHAR" />
 		<result property="plannerImage" 				column="PLANNER_IMAGE" 				jdbcType="VARCHAR" />
 		<result property="userCode" 				column="USER_CODE" 				jdbcType="VARCHAR" />
 		<result property="member" 				column="MEMBER" 				jdbcType="CHAR" />
@@ -18,18 +18,23 @@
 		<result property="isGroup" 			column="ISGROUP" 			jdbcType="CHAR" />
 		<result property="boardCode" 				column="BOARD_CODE" 				jdbcType="CHAR" />
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
+
 	</resultMap>
 	
 	<resultMap id="routeSelectMap" type="route">
 		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/>
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="plannerCode" 			column="planner_code" 			jdbcType="NUMERIC"/>
+		
 		<result property="cityName" 			column="city_name" 			jdbcType="VARCHAR"/>
 		<result property="cityOrder"	column="city_order" 		jdbcType="NUMERIC" />
 		<result property="stayDay" 			column="stay_day" 		jdbcType="NUMERIC" />
 		<result property="lat" 			column="lat" 		jdbcType="VARCHAR" />
 		<result property="lng" 			column="lng" 		jdbcType="VARCHAR" />
-	</resultMap>	
+		<result property="startDate" 			column="START_DATE" 		jdbcType="VARCHAR" />
+		<result property="endDate" 			column="END_DATE" 		jdbcType="VARCHAR" />
+		
+		</resultMap>	
 	
 	<!-- <resultMap id="scheduleSelectMap" type="schedule">
 		<result property="scheduleCode"				column="ROUTE_CODE" 				jdbcType="NUMERIC" />
@@ -40,17 +45,11 @@
 		<result property="routeCode" 			column="ROUTE_CODE" 			jdbcType="NUMERIC"/>	
 	</resultMap>	
 	 -->
-	<!-- SQL : INSERT -->
-	<insert 	id="addPlanner"		parameterType="planner" >
+		<!-- SQL : INSERT -->
+	<insert 	id="addRoute"		parameterType="route" >
 	 	INSERT
-		INTO planner(PLANNER_CODE ,USER_CODE, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, START_DATE , REG_DATE ) 
-		VALUES	 (seq_planner_code.nextval , 2, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{startDate:VARCHAR}, SYSDATE)
-	 </insert>
-	 
-	 <insert 	id="addRoute"		parameterType="route" >
-	 	INSERT
-		INTO route (route_code, planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng) 
-		VALUES	 (seq_route_route_no.nextval, #{plannerVer:INTEGER}, #{plannerCode:INTEGER}, #{cityName:VARCHAR} ,#{stayDay:INTEGER}, #{cityOrder:INTEGER} , #{lat:VARCHAR},#{lng:VARCHAR})
+		INTO route (route_code, planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng, start_date, end_date) 
+		VALUES	 (seq_route_route_no.nextval, #{plannerVer:INTEGER}, #{plannerCode:INTEGER}, #{cityName:VARCHAR} ,#{stayDay:INTEGER}, #{cityOrder:INTEGER} , #{lat:VARCHAR}, #{lng:VARCHAR},#{startDate:VARCHAR}, #{endDate:VARCHAR})
 	 </insert>
 	
 	

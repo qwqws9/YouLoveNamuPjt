@@ -15,8 +15,8 @@ public class Route {
 	private String lng;
 	private int stayDay;
 	private int cityOrder;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	
 	
 	///Constructor
@@ -103,22 +103,21 @@ public class Route {
 	}
 
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
