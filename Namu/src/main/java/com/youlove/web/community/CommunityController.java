@@ -57,7 +57,7 @@ public class CommunityController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	@Value("#{commonProperties['uploadPathThunbNail']}")
-	String uploadPathThunbNail;
+	String uploadPathThumbNail;
 	@Value("#{commonProperties['uploadPathContent']}")
 	String uploadPathContent;
 	
@@ -72,7 +72,7 @@ public class CommunityController {
 		System.out.println(file);
 		if(file.isEmpty() != true) {
 			String originFileName = file.getOriginalFilename(); 
-			File target = new File(uploadPathThunbNail, originFileName);
+			File target = new File(uploadPathThumbNail, originFileName);
 			FileCopyUtils.copy(file.getBytes(),target);
 			safeFile += originFileName;
 		}else { safeFile += "noThumbnail.png"; }
@@ -110,8 +110,8 @@ public class CommunityController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunity.jsp");
 		System.out.println(hashtag);
-		communityService.countCommunity(communityCode);
 		Community community = communityService.getCommunity(communityCode);
+		
 //		HashtagController hashtagController = new HashtagController();
 //		Hashtag HashVo = new Hashtag();
 //		HashVo.setCommunityCode(communityCode);
@@ -134,16 +134,15 @@ public class CommunityController {
 	public ModelAndView getCommunityList(@ModelAttribute("Search") Search search,
 										 @RequestParam(value="communityBoard",required=false, defaultValue = "0")int communityBoard)throws Exception {
 		System.out.println("\nCommunityController:::getCommunityList() 시작:::");
-		System.out.println("searchKeyword = "+search.getSearchKeyword());
-		System.out.println("searchCondition = "+search.getSearchCondition());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunityList.jsp");
-		if(search.getCurrentPage() ==0 ){
+		if(search.getCurrentPage() == 0){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		System.out.println("end = "+search.getEndRowNum());
+		System.out.println("strat = "+search.getStartRowNum());
 		
-		System.out.println("communityBoard = "+communityBoard);
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("communityBoard", communityBoard);
@@ -152,11 +151,8 @@ public class CommunityController {
 		/*map.put("search", search);
 		map = communityService.getCommunityList(search);*/
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println("=============================");
-		System.out.println(resultPage);
-		System.out.println(map.get("list"));
-		System.out.println("=============================");
 		modelAndView.addObject("resultPage",resultPage);
+		modelAndView.addObject("bestlist", map.get("bestlist"));
 		modelAndView.addObject("list", map.get("list"));
 		
 		System.out.println("\nCommunityController:::getCommunityList() 끝:::");
@@ -178,7 +174,9 @@ public class CommunityController {
 	public ModelAndView daleteCommunity(@RequestParam(value="communityCode")int communityCode)throws Exception{
 		System.out.println("\nCommunityController:::daleteCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/getCommunityList.jsp");
+		modelAndView.setViewName("/community/getCommunityList");
+		
+		
 		communityService.deleteCommunity(communityCode);
 		System.out.println("\nCommunityController:::daleteCommunity() 끝:::");
 		return modelAndView;
@@ -192,13 +190,14 @@ public class CommunityController {
 		JSONObject json = new JSONObject();
 		OutputStream out = null;
 		PrintWriter printWriter = null;
-		//String Path = request.getSession().getServletContext().getRealPath("/upload");
+		String Path = request.getSession().getServletContext().getRealPath("/resources/images/Content");
+		System.out.println(Path);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		try{
 			String originFileName = upload.getOriginalFilename();
 			byte[] bytes = upload.getBytes();
-			String uploadPath = uploadPathContent+"/"+uid+"_"+originFileName;
+			String uploadPath = Path+"/"+uid+"_"+originFileName;
 			//폴더 없으면 만들어줌
 //			if(!destD.exists()) {
 //        		destD.mkdirs();

@@ -62,7 +62,7 @@
 					<div class="mb-1 text-muted">${tour.tourShortDesc }</div>
 					<hr>
 					<p class="card-text mb-auto">${tour.longDesc }</p>
-					<a href="#" class="stretched-link">별점과 댓글수가 들어갈곳</a>
+<!-- 					<a href="#" class="stretched-link">별점과 댓글수가 들어갈곳</a> -->
 				</div>
 			</div>
 		</div>
@@ -107,6 +107,7 @@
         </div>           
              </div>      
       
+      <jsp:include page="../comment/getComment.jsp" ></jsp:include>
       
       <script type="text/javascript">
       		$(function(){

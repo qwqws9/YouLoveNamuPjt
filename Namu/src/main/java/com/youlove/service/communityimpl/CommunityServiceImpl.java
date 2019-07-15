@@ -35,14 +35,18 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 	@Override
 	public Community getCommunity(int communityCode) throws Exception {
+		Community community = communityDao.getCommunity(communityCode);
+		communityDao.countCommunity(community);
 		return communityDao.getCommunity(communityCode);
 	}
 	@Override
 	public Map<String, Object> getCommunityList(Map<String,Object> map) throws Exception {
 		Search search = (Search) map.get("search");
 		List<Community> list = communityDao.getCommunityList(map);
+		List<Community> bestlist = communityDao.getCommunityBestList(map);
 		int totalCount = communityDao.getTotalCount(search);
 		
+		map.put("bestlist", bestlist);
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		return map;
@@ -59,7 +63,6 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public void countCommunity(int communityCode) throws Exception {
-		communityDao.countCommunity(communityCode);
 	}
 
 

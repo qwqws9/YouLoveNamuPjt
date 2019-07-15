@@ -143,8 +143,10 @@
 		width: '100%',
 		height: 500,
 		uiColor: '#ff7d75',
-		filebrowserUploadUrl: '${pageContext.request.contextPath}/community/fileUpload'
+		filebrowserUploadUrl: '/community/fileUpload'
 	});
+	/* ${pageContext.request.contextPath} */
+	
 	/* $(".form-control").on("",function(){
 	var oldvalue=$(this).val();
 	var field=this;

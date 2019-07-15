@@ -38,7 +38,7 @@
 		WHERE community_code = #{communityCode}
 	</select>
 	
-	<update 	id="countCommunity" 	parameterType="int">
+	<update 	id="countCommunity" 	parameterType="community">
 		UPDATE community
 		<set>
 			views = #{views}+1
@@ -95,17 +95,34 @@
 	                        		<if test="searchCondition == 4 and searchKeyword !='' ">
 				                        writer LIKE &apos;%${searchKeyword}%&apos;
 	                        		</if>
+	                        		<if test="searchCondition == 5 and searchKeyword !='' ">
+				                        city_name LIKE &apos;%${searchKeyword}%&apos;
+				                        OR community_title LIKE &apos;%${searchKeyword}%&apos;
+				                        OR community_content LIKE &apos;%${searchKeyword}%&apos;
+				                        OR hashtag_code LIKE &apos;#%${searchKeyword}%&apos;
+				                        OR writer LIKE &apos;%${searchKeyword}%&apos;
+	                        		</if>
 	                        	</where>
 	                       	</if>
 	                        ORDER BY community_code DESC ) first_table
-		            WHERE ROWNUM &lt;= 2 )
-		WHERE row_seq BETWEEN 0 AND 2
+		            WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
-	 
+	<select  	id="getCommunityBestList"  	parameterType="map"	resultMap="communityMap">
+		SELECT *
+			FROM (SELECT first_table.*, ROWNUM AS row_seq
+		            FROM ( SELECT community_code, community_board, community_title, community_content, community_date,
+		                                    community_thumbnail, open_range, views, writer, city_name
+	                        FROM community
+	                        ORDER BY views DESC ) first_table
+		            WHERE ROWNUM  &lt;= 3 )
+			WHERE  row_seq BETWEEN 0 AND 3
+			
+	</select>
 	<delete 	id="deleteCommunity" 	parameterType="int">
 		DELETE
 		FROM community
-		WHERE community_code = #{communityCode};
+		WHERE community_code = #{communityCode}
 	</delete>
 	
 	<select  id="getTotalCount"  parameterType="search" resultType="int">
