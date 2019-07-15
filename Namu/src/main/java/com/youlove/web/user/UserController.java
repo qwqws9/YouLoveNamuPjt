@@ -1,5 +1,6 @@
 package com.youlove.web.user;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/loginView",method=RequestMethod.GET)
-	public String loginView() throws Exception{
+	public String loginView(HttpServletRequest request) throws Exception{
 		
 		System.out.println("/user/loginView : GET");
+		System.out.println(request.getRealPath("/"));
 		
 		return "redirect:/user/loginView.jsp";
 	}
