@@ -1,4 +1,5 @@
 package com.youlove.service.domain;
+
 public class Wallet {
 	
 	private int walletDetailCode;
@@ -6,16 +7,17 @@ public class Wallet {
 	private String part;
 	private String moneyUnit;
 	private String expression;
-	private int price;
+	private double price;
 	private String regDate;
 	private String item;
 	private String content;
 	private String payOption;
-	private int exchangeRate;
+	private double exchangeRate;
 	private String category;
+	private String walletImage;
 	private int payer;
 	// 환율 적용한 한화 값
-	private int exchangePrice;
+	private double exchangePrice;
 	
 	public int getWalletDetailCode() {
 		return walletDetailCode;
@@ -52,10 +54,10 @@ public class Wallet {
 		this.expression = expression;
 	}
 	
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	
@@ -87,10 +89,10 @@ public class Wallet {
 		this.payOption = payOption;
 	}
 	
-	public int getExchangeRate() {
+	public double getExchangeRate() {
 		return exchangeRate;
 	}
-	public void setExchangeRate(int exchangeRate) {
+	public void setExchangeRate(double exchangeRate) {
 		this.exchangeRate = exchangeRate;
 	}
 	
@@ -101,6 +103,13 @@ public class Wallet {
 		this.category = category;
 	}
 	
+	public String getWalletImage() {
+		return walletImage;
+	}
+	public void setWalletImage(String walletImage) {
+		this.walletImage = walletImage;
+	}
+	
 	public int getPayer() {
 		return payer;
 	}
@@ -108,11 +117,20 @@ public class Wallet {
 		this.payer = payer;
 	}
 	
-	public int getExchangePrice() {
+	public double getExchangePrice() {
 		return exchangePrice;
 	}
-	public void setExchangePrice(int exchangePrice) {
+	public void setExchangePrice(double exchangePrice) {
 		this.exchangePrice = exchangePrice;
+	}
+	
+	@Override
+	public String toString() {
+		return "WalletVO : [walletDetailCode]" + walletDetailCode + "[walletCode]" + walletCode
+				+ "[part]" + part + "[moneyUnit]" + moneyUnit + "[expression]" + expression
+				+ "[price]" + price + "[regDate]" + regDate + "[item]" + item + "[content]" + content
+				+ "[payOption]" + payOption + "[exchangeRate]" + exchangeRate + "[category]" + category
+				+ "[walletImage]" + walletImage + "[payer]" + payer + "[exchangePrice]" + exchangePrice;
 	}
 	
 }
