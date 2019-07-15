@@ -35,6 +35,11 @@ public class GuideController {
 	public String initTour(Model model) throws Exception {
 		
 		List<Tour> list = wishBeenService.initTour();
+		
+		//댓글 구현되면 완성시키기
+		for(Tour t : list) {
+			t.getTourId();
+		}
 		model.addAttribute("tourList", list);
 		
 		return "/guide/initTour.jsp";
@@ -50,5 +55,7 @@ public class GuideController {
 		model.addAttribute("tour",tour);
 		return "forward:/guide/tourDetail.jsp";
 	}
+	
+	
 
 }
