@@ -45,7 +45,6 @@ public class CommunityDaoImpl implements CommunityDao {
 		map.put("startRowNum",search.getStartRowNum());
 		map.put("searchCondition",search.getSearchCondition());
 		map.put("searchKeyword",search.getSearchKeyword());
-		System.out.println(map.get("communityBoard"));
 		return sqlSession.selectList("CommunityMapper.getCommunityList", map);
 	}
 	@Override
@@ -62,8 +61,18 @@ public class CommunityDaoImpl implements CommunityDao {
 	}
 
 	@Override
-	public void countCommunity(int communityCode) throws Exception {
-		this.sqlSession.update("CommunityMapper.countCommunity", communityCode);
+	public void countCommunity(Community community) throws Exception {
+		this.sqlSession.update("CommunityMapper.countCommunity", community);
+	}
+
+	@Override
+	public List<Community> getCommunityBestList(Map<String, Object> map) throws Exception {
+		Search search = (Search) map.get("search");
+		map.put("endRowNum", search.getEndRowNum());
+		map.put("startRowNum",search.getStartRowNum());
+		map.put("searchCondition",search.getSearchCondition());
+		map.put("searchKeyword",search.getSearchKeyword());
+		return sqlSession.selectList("CommunityMapper.getCommunityBestList", map);
 	}
 
 	

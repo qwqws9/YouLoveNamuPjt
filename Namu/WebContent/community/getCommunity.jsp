@@ -13,7 +13,7 @@
 	
 	<script>
 		$(function(){
-			var communityCode = encodeURI($("#communityCode"));
+			var communityCode = $("#communityCode");
 			
 			$("#update").on("click",function(){
 				self.location = "/community/updateCommunity?communityCode="+communityCode;
@@ -29,16 +29,20 @@
 </head>
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
+<br><br><br><br><br>
 <!-- <div class="col-xs-1"></div> -->
 <div class="container-fluid col-10">
 
 	<input id="communityCode" type="hidden" value="${community.communityCode}" >
 	<div class="row">
 		<div class="col-12">
-		<h4 style="resize: none; display: inline-blocke">
-			<strong>${community.communityTitle }&nbsp;&nbsp;</strong>
-			<small style="font-size: xx-small;">${community.communityDate }&nbsp;&nbsp;</small>
-		</h4>
+			<div class="col-2 order-1">
+				<a href="#"><img src="/resources/images/dog.JPG"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="60px" height="60px"></a>
+			</div>
+			<div class="col-2 order-2" id="profile-nickname" style="position: absolute; top: 12px; left: 88px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
+				<div class="text-muted" style="font-size:medium;">Writer.</div>
+				<div style="font-size:medium; color:#344157;">${community.writer}</div>
+			</div>
 		</div>
 	</div>
 	
@@ -46,14 +50,13 @@
 	<div class="row" style="margin-bottom: 10px;">
 		<div class="col-12">
 			<div class="row" id="profile" style="position: relative; ">
-				<div class="col-1 order-1" id="profile-image">
-					<a href="#"><img src="/resources/images/dog.JPG"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="45px" height="45px"></a>
+				<div class="col-3 order-1"  id="profile-image">
+					<h4 style="resize: none; display: inline-blocke;">
+						<strong style="font-size: xx-large;">${community.communityTitle }&nbsp;&nbsp;</strong>
+						<small style="font-size: medium;">${community.communityDate }&nbsp;&nbsp;</small>
+					</h4>
 				</div>
-				<div class="col order-2" id="profile-nickname" style="position: absolute; top: 10px; left: 52px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
-					<div class="text-muted" style="font-size:x-small;">Writer.</div>
-					<div style="font-size:small; color:#344157;">${community.writer}</div>
-				</div>
-				<div class="col-1 order-last" id="getCount" style="position: absolute; font-size: x-small; right: 0px; bottom: 0px;"> 
+				<div class="col-2 order-last" align="right" id="getCount" style="position: absolute; font-size: medium; right: 0px; bottom: 0px;"> 
 					조회수&nbsp;${community.views}
 				</div>
 			</div>
@@ -83,9 +86,9 @@
 			</span>
 		</div>
 		<div class="col-6" align="right" style="bottom: 5px;" >
-			<button style="border: none; background: none;" id="update"><span style="font-size: 10px" >수정</span></button>
+			<button style="border: none; background: none;" id="update"><span style="font-size: 13px" >수정</span></button>
 			<span style="font-size: 8px">|</span>
-			<button style="border: none; background: none;" id="delete"><span style="font-size: 10px" >삭제</span></button>
+			<button style="border: none; background: none;" id="delete"><span style="font-size: 13px" >삭제</span></button>
 		</div>
 	</div>
 	
@@ -93,7 +96,7 @@
 	
 	<div class="row no-gutters">
 		<div class="col-1">
-			<strong style="font-size: 15px;">#Hashtag</strong>
+			<strong style="font-size: 17px;">#Hashtag</strong>
 		</div>
 		<div class="col-11">
 			<div class="alert alert-light" role="alert">
@@ -110,10 +113,10 @@
 	
 	<div class="row">
 		<div class="col-6">
-			<strong style="font-size: 15px;">관련글</strong>
+			<strong style="font-size: 17px;">관련글</strong>
 		</div>
 		<div class="col-3 offset-3" align="right">
-			<span id="more" style="font-size: 10px; cursor: pointer;">관련글 더보기</span>
+			<span id="more" style="font-size: medium; cursor: pointer;">관련글 더보기</span>
 		</div>
 	</div>
 	

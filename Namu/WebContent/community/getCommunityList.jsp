@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -19,9 +19,12 @@
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 
 <!-- jQuerty -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<!-- Our Own Resources -->
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 
 <script>
 		$.fn.selectpicker.Constructor.BootstrapVersion = '4';
@@ -68,13 +71,15 @@
 				self.location="/community/getCommunity?communityCode="+$(this).prev().val();								
 			})		    
 		    
+		    //$(".content").text("")
 		    
-		    var content = $(".content").text();
-		    $(this).parents(".row.list").find(".content").text();
-		    $(".content").text();
-		    //alert($(".content").text());
-		   	$(document).ready("")
 		    
+		    $.each($(".content"),function(){
+		    	$(this).text($(this).text().trim());
+		    })
+		    $.each($(".card-body"),function(){
+		    	$(this).text($(this).text().trim());
+		    })
 		    
 		    $("#searchSelect").change(function(){
 				var selected = $("#searchSelect option:selected").val();
@@ -86,7 +91,55 @@
 				
 			});
 		 });
-		
+		//무한 스크롤
+		//$(function(){
+			$(window).scroll(function() {
+			var scrollH = $(document).height();
+			var scrollT	= $(window).scrollTop();
+			var scrollP = $(window).height();
+			console.log("documentHeight:" + scrollH + " | scrollTop:" + scrollT + " | windowHeight: " + scrollP );
+			var page = 1;
+			    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			    	console.log("scrollHeight"+$(document).height());
+			    	console.log("scrollPosition"+$(window).height() + $(window).scrollTop())
+		      		console.log(++page);
+		      		//$(".col-10.col-md-10.append").append('<div class="big-box"><h1>Page ' + page + '</h1></div><hr>');
+					
+		      		$.ajax({
+		      			url : "/community/json/getCommunityList",
+		      			method : "POST",
+		      			data : JSON.stringify({
+		      				"currentPage" : page,
+		      				"pageSize" : "3"
+		      			}),
+		      			dataType : "json",
+		      			headers : {
+		      				 "Accept" : "application/json",
+		                     "Content-Type" : "application/json"
+		      			},
+		      			success : function(JSONData , status){
+		      				//var list = new Array();
+		      				$.each(JSONData.list,function(index,item){
+		      					console.log(index+"ddd"+item.communityCode);
+		      				})
+		      				$(".col-10.col-md-10.append").append('<div class="big-box"><h1>Page ' + page + '</h1></div><hr>');
+		      				//alert(JSONData.list.communityCode);
+		      			},
+		      			error:function(jqXHR, textStatus, errorThrown){
+		    				alert( textStatus );
+		    				alert( errorThrown );
+		    			}
+		      		});
+					page++;
+			    }
+		    
+		    
+		    
+			});
+			
+			
+			
+		//});
 		
 		
 
@@ -139,14 +192,13 @@
 				<div class="row justify-content-center">
 					<div class="col-md-10">
 						<div class="row">
-							<c:forEach var="best" items="${list}" begin="0" end="2">
+							<c:forEach var="best" items="${bestlist}" begin="0" end="2">
 								<div class="col-md-4">
 									<input type="hidden" class="bestCommunityCode" value="${best.communityCode}" />
 									<div class="card bestCommunity" style="width: 350px; cursor: pointer;">
 										<img src="/resources/images/ThumbNail/${best.communityThumbnail }" class="card-img-top" alt="..." style="height: 250px;">
-										<div class="card-body" style="overflow: hidden; text-overflow: ellipsis; height: 130px;">
-											<h5 class="card-title">${best.communityTitle}</h5>
-											<p class="card-text">${best.communityContent }</p>
+										<div class="card-body" style="overflow: hidden; text-overflow: ellipsis; height: 130px;font-size: 30px; font-weight: bold;">
+											${best.communityTitle}
 										</div>
 									</div>
 								</div>
@@ -178,6 +230,7 @@
 								<div class="row float-right">
 									<div class="col mr-3">
 										<select id="searchSelect" name="searchCondition" class="selectpicker" multiple data-actions-box="true" title="All" style="border: 1px solid #ff7d75; background: white;">
+											<option value="5" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""  }>All</option>
 											<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""  }>City</option>
 											<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""  }>Title</option>
 											<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""  }>Content</option>
@@ -198,6 +251,8 @@
 							</div>
 						</div>
 						</form>
+					</div>
+					<div class="col-10 col-md-10 append">
 						<hr align="center">
 						<c:forEach var="community" items="${list}">
 							<div class="row list">
@@ -237,7 +292,7 @@
 									</div>
 									<div class="row">
 										<div class="getCommunity content" style="overflow: hidden; text-overflow: ellipsis; height: 50px; cursor: pointer;">
-											<span class="content" style="resize: none; display: inline-blocke">${community.communityContent}</span>
+											<span class="content" style="resize: none; display: inline-blocke;">${community.communityContent}</span>
 										</div>
 									</div>
 								</div>
@@ -245,9 +300,10 @@
 									<img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/ThumbNail/${community.communityThumbnail }" width="250px" height="160px" style="border-radius: 6px; cursor: pointer;">
 								</div>
 							</div>
-							<hr>
+							<hr class="apend">
 						</c:forEach>
 					</div>
+					
 				</div>
 			</div>
 			<div class="col-1 col-md-1">
