@@ -1,5 +1,8 @@
 package com.youlove.service.commentimpl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,11 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public void deleteComment(Comment comment) throws Exception {
 		commentDao.deleteComment(comment);
+	}
+
+	@Override
+	public List<Comment> getComment(Map<String, Object> map) throws Exception {
+		return commentDao.getComment(map);
 	}
 
 	

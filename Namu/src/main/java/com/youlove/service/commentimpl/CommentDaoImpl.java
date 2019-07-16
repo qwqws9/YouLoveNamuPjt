@@ -36,13 +36,19 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public void updateComment(Comment comment) throws Exception {
-		sqlSession.update("commentMapper.updateComment",comment);
+		sqlSession.update("CommentMapper.updateComment",comment);
 		
 	}
 
 	@Override
 	public void deleteComment(Comment comment) throws Exception {
-		sqlSession.update("commentMapper.deleteComment",comment);
+		sqlSession.update("CommentMapper.deleteComment",comment);
+	}
+
+	@Override
+	public List<Comment> getComment(Map<String, Object> map) throws Exception {
+		
+		return sqlSession.selectList("CommentMapper.getComment",map);
 	}
 
 	

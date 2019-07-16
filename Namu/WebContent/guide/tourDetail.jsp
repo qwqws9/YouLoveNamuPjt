@@ -107,7 +107,10 @@
         </div>           
              </div>      
       
-      <jsp:include page="../comment/getComment.jsp" ></jsp:include>
+      <jsp:include page="../comment/getComment.jsp" >
+      	<jsp:param value="${boardCode1 }" name="boardCode"/>
+      	<jsp:param value="${detailCode1 }" name="detailCode"/>
+      </jsp:include>
       
       <script type="text/javascript">
       		$(function(){

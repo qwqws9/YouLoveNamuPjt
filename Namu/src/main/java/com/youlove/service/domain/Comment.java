@@ -6,16 +6,25 @@ public class Comment {
 	
 	private int commentCode;
 	private int boardCode;
-	private int detailCode;
+	private String detailCode;
 	private String commentContent;
 	private int step;
 	private int replyCode;
 	private String commentDate;
-	private String writerComment;
+	private User writerComment;
+	private String commentDelete;
+	
+	
 	
 	
 
 	
+	public String getCommentDelete() {
+		return commentDelete;
+	}
+	public void setCommentDelete(String commentDelete) {
+		this.commentDelete = commentDelete;
+	}
 	public int getCommentCode() {
 		return commentCode;
 	}
@@ -28,10 +37,10 @@ public class Comment {
 	public void setBoardCode(int boardCode) {
 		this.boardCode = boardCode;
 	}
-	public int getDetailCode() {
+	public String getDetailCode() {
 		return detailCode;
 	}
-	public void setDetailCode(int detailCode) {
+	public void setDetailCode(String detailCode) {
 		this.detailCode = detailCode;
 	}
 	public String getCommentContent() {
@@ -58,17 +67,18 @@ public class Comment {
 	public void setCommentDate(String commentDate) {
 		this.commentDate = commentDate;
 	}
-	public String getWriterComment() {
+	public User getWriterComment() {
 		return writerComment;
 	}
-	public void setWriterComment(String writerComment) {
+	public void setWriterComment(User writerComment) {
 		this.writerComment = writerComment;
 	}
 	@Override
 	public String toString() {
 		return "Comment [commentCode=" + commentCode + ", boardCode=" + boardCode + ", detailCode=" + detailCode
 				+ ", commentContent=" + commentContent + ", step=" + step + ", replyCode=" + replyCode
-				+ ", commentDate=" + commentDate + ", writerComment=" + writerComment + "]";
+				+ ", commentDate=" + commentDate + ", writerComment=" + writerComment + ", commentDelete="
+				+ commentDelete + "]";
 	}
 	
 	

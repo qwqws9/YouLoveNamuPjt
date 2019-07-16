@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,12 +29,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/loginView",method=RequestMethod.GET)
-	public String loginView(HttpServletRequest request) throws Exception{
+	public String loginView(HttpServletRequest request,Model model) throws Exception{
 		
 		System.out.println("/user/loginView : GET");
 		System.out.println(request.getRealPath("/"));
 		
-		return "redirect:/user/loginView.jsp";
+		model.addAttribute("boardCode1",5);
+		model.addAttribute("detailCode1","12345");
+		
+		return "forward:/user/loginView.jsp";
 	}
 	
 	@RequestMapping(value="/addUser", method= RequestMethod.GET)

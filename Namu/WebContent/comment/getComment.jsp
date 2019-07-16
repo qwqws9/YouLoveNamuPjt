@@ -29,52 +29,10 @@
 <div class="container">
 	<div class="col-md-12">
 		<div class="my-3 p-3 bg-white rounded shadow-sm">
-   			 <h6 class="border-bottom border-gray pb-2 mb-0">댓글(댓글수가 들어갈곳)</h6>
+   			 <h6 class="count border-bottom border-gray pb-2 mb-0"></h6>
    			 
-    <ul style="list-style: none; padding-left: 0px;">
-		<li>
-    		<div class="media text-muted pt-3">
-    			<input type="hidden" value="12345">
-    			<img alt="" src="/resources/images/profile/7877e8c81ac0a942265a9b65a049b784.jpg" width="32" height="32">
-      			<p class="media-body pb-3 mb-0 small">
-        			<span class="d-block" style="position:relative;">
-			        	<strong class="text-gray-dark">@닉네임들어갈곳</strong>&nbsp;&nbsp;
-			        	<button class="like" type="button" style="border:none; background: none">
-			        		<i class="far fa-heart"></i>추천수들어갈곳
-			        	</button>
-			        	<small>작성시간들어갈곳</small>&nbsp;&nbsp;&nbsp;
-			        	<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>
-			        	<button class="reply" style="color:#4285F4; border:none; background: none;"><i class="fas fa-reply"></i>답글</button>&nbsp;&nbsp;
-			        	<button class="commentEdit" style="position: absolute; right: 150px; border:none; background: none;">수정</button>
-				        <button class="commentDelete" style="position: absolute; right: 100px; border:none; background: none;">삭제</button>
-        			</span>
-        			 <span>댓글내용</span>
-      			</p>
-    		</div>
-   		 </li>
-    
-    		<li style="padding-left: 30px;">
-			    <div class="media text-muted pt-3">
-			    	<input type="hidden" value="12345">
-				    <img alt="" src="/resources/images/profile/7877e8c81ac0a942265a9b65a049b784.jpg" width="32" height="32">
-				    <p class="media-body pb-3 mb-0 small">
-				    	<span class="d-block" style="position:relative;">
-				        	<strong class="text-gray-dark">@닉네임들어갈곳</strong>&nbsp;&nbsp; 
-				        	<button class="like" type="button" style="border:none; background: none">
-				        		<i class="far fa-heart"></i>추천수들어갈곳
-				        	</button>
-				        	<small>작성시간들어갈곳</small>&nbsp;&nbsp;&nbsp;
-				        	<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>
-				        	<button class="commentEdit" style="position: absolute; right: 150px; border:none; background: none;">수정</button>
-				        	<button class="commentDelete" style="position: absolute; right: 100px; border:none; background: none;">삭제</button>
-				        </span>
-			        	<span>awdawdawd댓글내용</span>
-			     	</p>
-			    </div>
-    		</li>
-    		
-		    <!-- 선긋기 -->
-		    <li class="lh-125 border-bottom border-gray"> </li>
+    <ul class="commentAjax" style="list-style: none; padding-left: 0px;">
+		
 	</ul>
     
     
@@ -89,8 +47,9 @@
 	</div>
 </div>
 
-<input type="hidden" id="boardCode" value="5">
-<input type="hidden" id="detailCode" value="10675">
+<input type="hidden" id="boardCode" value="${boardCode1 }">
+<input type="hidden" id="detailCode" value="${detailCode1 }">
+<input type="hidden" id="sessionId" value="${user.userCode }">
 
 <div class="text-xs-center">
 			<nav aria-label="..." >
@@ -106,6 +65,7 @@
 		    <li class="page-item">
 		      <button class="nextBtn page-link">Next</button>
 		    </li>
+		    
 		  </ul>
 			</nav>
 	</div>
@@ -114,94 +74,256 @@
 <script type="text/javascript">
 	
 	$(function(){
-		$('.reply').on('click',function(){
-			console.log($(this).parents('div').children().val());
-			if($(this).text() == '답글취소') {
-					$('.comment').remove();
-					$(this).html('<i class="fas fa-reply"></i>답글');
-					$(this).css('color','#4285F4').css('border','none').css('background','none');
-					return;
-				
+		
+		getComment($('#boardCode').val(),$('#detailCode').val());
+		
+	});
+	
+	$(document).on("click",".like",function(){  
+		console.log($(this).children().attr('class'));
+		if($(this).children().attr('class') == 'fas fa-heart') {
+			$(this).html('<i class="far fa-heart"></i>추천수들어갈곳');
+		}else {
+			$(this).html('<i class="fas fa-heart" style="color:red;"></i>추천수들어갈곳');
+		}
+	});
+	
+	$(document).on("click",".commentDelete",function(){  
+		console.log($(this).parents('div').children().val());
+		var commentCode = $(this).parents('div').children().val();
+		if(confirm('삭제하시겠습니까?')) {
+			//document.write('삭제')
+				$.ajax({
+					url : '/comment/json/deleteComment',
+					method : 'post',
+					data : JSON.stringify({
+						commentCode : commentCode
+					}),
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData) {
+						if(JSONData == true) {
+							getComment($('#boardCode').val(),$('#detailCode').val());
+						}
+					}
+				})
+			} else {
+			//document.write('취소')
+			return;
 			}
+	});
+			
+	
+	$(document).on("click",".commentEdit",function(){  
+		
+		if($(this).text() == '수정취소') {
+			$('.edit').remove();
 			$('.comment').remove();
-			$('.reply').text('답글').removeAttr('style');
-			$(this).text('답글취소').css('color','red').css('border','none').css('background','none');
-			$(this).parents('li').after('<li class="comment replyAdd">'+$('.replyAdda').html()+'<br><br></li>'.trim());
-			$('.comment').attr('id', $(this).parents('div').children().val());
-		});
+			$(this).text('수정').css('color','blue');
+			$(this).next().show().css('display','');
+			$(this).prev().show().css('display','');
+			$(this).parent().next().show().css('display','');
+			return;
 		
-// 		$('button:contains("등록")').on('click',function(){
-// 			alert('adadad');
-// 		})
-		$(document).on("click","button:contains('등록')",function(){ 
-			//console.log($(this).prev().val().length);
-			if($(this).prev().val().length < 1) {
-				$(this).prev().attr('class','form-control is-invalid');
-				return;
-			}
-			
-			$(this).prev().attr('class','form-control');
-			if($(this).parents('li').length > 0) {
-				//alert("있으므로 대댓글");
-				//alert($(this).parents('li').attr('id'));
-				//alert($(this).prev().val());
+	}
+		$('.edit').remove();
+		$('.comment').remove();
+		$('.commentEdit').text('수정').css('color','blue');
+		$(this).text('수정취소').css('color','red');
+		$(this).parents('li').after('<li class="edit replyAdd">'+$('.replyAdda').html()+'<br><br></li>'.trim());
+		$('.edit').attr('id', $(this).parents('div').children().val());
+		$(this).next().hide();
+		$(this).prev().hide();
+		$(this).parent().next().hide();
+	
+		console.log($(this).parents('div').children().val());
+		console.log($(this).parents('span').next().text());
+		$(this).parents('li').next().children().children().val($(this).parents('span').next().text());
 				
-				addComment($(this).parents('li').attr('id'),$(this).prev().val());
-			}else {
-				//alert("없으므로 댓글")
-				//alert($(this).prev().val());
-				addComment(0,$(this).prev().val());
-			}
+	});
 			
-			 });
-		
-		$('.like').on('click',function(){
-			console.log($(this).children().attr('class'));
-			if($(this).children().attr('class') == 'fas fa-heart') {
-				$(this).html('<i class="far fa-heart"></i>추천수들어갈곳');
-			}else {
-				$(this).html('<i class="fas fa-heart" style="color:red;"></i>추천수들어갈곳');
-			}
-		})
-		
-		$('.commentEdit').on('click',function() {
-			if($(this).text() == '수정취소') {
+			
+			
+	$(document).on("click",".reply",function(){ 
+		console.log($(this).parents('div').children().val());
+		if($(this).text() == '답글취소') {
 				$('.comment').remove();
-				$(this).text('수정').css('color','blue');
-				$(this).next().show().css('display','');
-				$(this).prev().show().css('display','');
-				$(this).parent().next().show().css('display','');
+				$('.edit').remove();
+				$(this).html('<i class="fas fa-reply"></i>답글');
+				$(this).css('color','#4285F4').css('border','none').css('background','none');
 				return;
 			
 		}
-			$('.comment').remove();
-			$('.commentEdit').text('수정').css('color','blue');
-			$(this).text('수정취소').css('color','red');
-			$(this).parents('li').after('<li class="comment replyAdd">'+$('.replyAdda').html()+'<br><br></li>'.trim());
-			$('.comment').attr('id', $(this).parents('div').children().val());
-			$(this).next().hide();
-			$(this).prev().hide();
-			$(this).parent().next().hide();
-			
-			
-			
-			//console.log($(this).parents('div').children().val());
-			
-			
-		});
-		$('.commentDelete').on('click',function() {
-			console.log($(this).parents('div').children().val());
-			if(confirm('삭제하시겠습니까?')) {
-				//document.write('삭제')
-				} else {
-				//document.write('취소')
-				return;
-				}
-		});
-		
-		
-		
+		$('.comment').remove();
+		$('.edit').remove();
+		//$('.reply').text('답글').removeAttr('style');
+		$(this).text('답글').removeAttr('style');
+		$(this).text('답글취소').css('color','red').css('border','none').css('background','none');
+		$(this).parents('li').after('<li class="comment replyAdd">'+$('.replyAdda').html()+'<br><br></li>'.trim());
+		$('.comment').attr('id', $(this).parents('div').children().val());
 	});
+	
+	$(document).on("click","button:contains('등록')",function(){ 
+		//console.log($(this).prev().val().length);
+		if($(this).prev().val().length < 1) {
+			alert('내용을 입력하세요');
+			return;
+		}
+		if($(this).parents('li').attr('class') == 'edit replyAdd') {
+			//alert("수정창");
+			//console.log($(this).parents('li').attr('id'));
+			//console.log($(this).prev().val());
+			editComment($(this).parents('li').attr('id'),$(this).prev().val());
+		}else {
+			alert("답글창");
+		}
+		
+		return ;
+		
+		if($(this).parents('li').length > 0) {
+			//alert("있으므로 대댓글");
+			//alert($(this).parents('li').attr('id'));
+			//alert($(this).prev().val());
+			
+			addComment($(this).parents('li').attr('id'),$(this).prev().val());
+		}else {
+			//alert("없으므로 댓글")
+			//alert($(this).prev().val());
+			addComment(0,$(this).prev().val());
+		}
+		$(this).prev().val("");
+		
+		 });
+	
+	
+	function editComment(commentCode,value) {
+		
+		$.ajax({
+			url : '/comment/json/updateComment',
+			method : 'post',
+			data : JSON.stringify({
+				commentCode : commentCode,
+				commentContent : value
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData){
+				if(JSONData == true) {
+					getComment($('#boardCode').val(),$('#detailCode').val());
+				}
+			}
+		});
+	}
+	
+	
+	
+	
+	function getComment(boardCode,detailCode) {
+		console.log(boardCode);
+		console.log(detailCode);
+		var userCode = $('#sessionId').val();
+		
+		$.ajax({
+			url : '/comment/json/getComment',
+			method : 'post',
+			data : JSON.stringify({
+				detailCode : detailCode,
+				boardCode : boardCode
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData, status) {
+				
+				$('.count').text("댓글("+JSONData.length+")");
+				
+				if(JSONData.length != 0) {
+					//return;
+				
+					$('ul.commentAjax').empty();
+				$.each(JSONData, function(index,item){
+					//alert(item.commentContent + " : " + index);
+					//alert(index);
+					//댓글
+					
+					if(item.step == 0) {
+						
+						$('ul.commentAjax').append('<li>'
+			    		+'<div class="media text-muted pt-3">'
+			    		+'	<input type="hidden" value="'+item.commentCode+'">'
+			    		+'	<img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="32" height="32">'
+			    		+'	<p class="media-body pb-3 mb-0 small">'
+			    		+'		<span class="apto-'+index+' d-block" style="position:relative;">'
+			    		+'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
+			    		+'       	<button class="like" type="button" style="border:none; background: none">'
+			    		+'        		<i class="far fa-heart"></i>추천수들어갈곳'
+			    		+'        	</button>'
+			    		+'        	<small>'+item.commentDate+'</small>&nbsp;&nbsp;&nbsp;'
+			    		
+			    		+'		</span>'
+			    		+'		 <span>'+item.commentContent+'</span>'
+			    		+'	</p>'
+			    		+'</div>'
+			    		+' </li>');
+						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
+							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.apto-'+index);
+						}else if(item.commentDelete == 0 && item.writerComment.userCode == userCode) {
+							$('<button class="commentEdit" style="position: absolute; right: 50px; border:none; background: none;">수정</button>').appendTo('.apto-'+index);
+							$('<button class="commentDelete" style="position: absolute; right: 0px; border:none; background: none;">삭제</button>').appendTo('.apto-'+index);
+						}
+						if(item.commentDelete == 0) {
+							$('<button class="reply" style="color:#4285F4; border:none; background: none;"><i class="fas fa-reply"></i>답글</button>&nbsp;&nbsp;').appendTo('.apto-'+index);
+						}
+					//대댓글
+					}else {
+						
+						
+						$('ul.commentAjax').append('<li style="padding-left: 30px;">'
+					   +' <div class="media text-muted pt-3">'
+					   +' 	<input type="hidden" value="'+item.commentCode+'">'
+					   +'    <img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="32" height="32">'
+					   +'    <p class="media-body pb-3 mb-0 small">'
+					   +'    	<span class="aptoo-'+index+' d-block" style="position:relative;">'
+					   +'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 
+					   +'       	<button class="like" type="button" style="border:none; background: none">'
+					   +'       		<i class="far fa-heart"></i>추천수들어갈곳'
+					   +'       	</button>'
+					   +'       	<small>'+item.commentDate+'</small>&nbsp;&nbsp;&nbsp;'
+					   +'       </span>'
+					   +'   	<span>'+item.commentContent+'</span>'
+					   +'	</p>'
+					   +' </div>'
+					   +'</li>' );
+						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
+							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.aptoo-'+index);
+						}else if(item.commentDelete == 0 && item.writerComment.userCode == userCode) {
+							$('<button class="commentEdit" style="position: absolute; right: 50px; border:none; background: none;">수정</button>').appendTo('.aptoo-'+index);
+							$('<button class="commentDelete" style="position: absolute; right: 0px; border:none; background: none;">삭제</button>').appendTo('.aptoo-'+index);
+						}
+						//대댓글은 답글이 없음
+// 						if(item.commentDelete == 0) {
+// 							$('<button class="reply" style="color:#4285F4; border:none; background: none;"><i class="fas fa-reply"></i>답글</button>&nbsp;&nbsp;').appendTo('.aptoo-'+index);
+// 						}
+						
+					}
+					$('ul').append('<li class="lh-125 border-bottom border-gray"> </li>');
+					
+				})
+				}
+			},
+			error:function( jqXHR, textStatus, errorThrown){
+				alert(textStatus);
+				alert(errorThrown);
+			}
+			
+		})
+		
+	}
 	
 	
 	function addComment(replyCode,commentContent) {
@@ -222,7 +344,9 @@
 				"Content-Type" : "application/json"
 			},
 			success : function(JSONData, status) {
-				alert(JSONData);
+				if(JSONData == true) {
+					getComment($('#boardCode').val(),$('#detailCode').val());
+				}
 			}
 			
 		})
