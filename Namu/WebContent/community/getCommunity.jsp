@@ -1,27 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
-
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>getCommunityBBS</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 	
 	<script>
 		$(function(){
-			var communityCode = $("#communityCode").val();
+			var communityCode = $("#communityCode");
 			
 			$("#update").on("click",function(){
-				self.location = "/community/updateCommunity?communityCode="+$("#communityCode").val();
+				self.location = "/community/updateCommunity?communityCode="+communityCode;
 			})
 			$("#delete").on("click",function(){
-				self.location = "/community/deleteCommunity?communityCode="+$("#communityCode").val();
+				self.location = "/community/deleteCommunity?communityCode="+communityCode;
 			})
 			
 		})
@@ -150,7 +148,7 @@
 				</div>
 				<div class="align-self-start" id="profile-nickname"><!-- style="position: absolute; top: 10px; left: 52px;" -->
 					<div class="col-10 offset-1">
-						<span style="font-size: 13px; color:#3c64a6;">${community.writer}</span>
+						<span onclick="#" style="font-size: 13px; color:#3c64a6;">${community.writer}</span>
 						<span style="font-size: 9px">19.06.27 15:26</span>
 						<span style="font-size: 8px">|</span>
 						<span style="font-size: 9px">신고</span>

@@ -10,13 +10,13 @@
 	
 	<title>YouLovePlan</title>
 	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
 	
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
@@ -76,10 +76,7 @@
 				
 				<div class="plus_btns">
 					<a href="javascript:void(0);" class="modal_btn">예산 추가 <i class="fas fa-plus-square"></i></a>
-					<form class="pop_wrap_parent" id="save_income_form">
-						<input type="hidden" name="walletCode" value="2" />
-						<input type="hidden" name="part" value="0" />
-						<input type="hidden" name="category" value="0" />
+					<form class="pop_wrap_parent" name="add_income_form">
 						<div class="pop_wrap clear">
 							<div class="pop_left">
 								<div class="result_top">
@@ -90,10 +87,25 @@
 										<option value="EUR">EUR</option>
 									</select>
 									<div class="result">
-										<input type="text" class="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
-										<span class="krw_price">KRW 6,204.08</span>
+										<input type="text" class="price" name="price" value="" readonly>
+										<span class="krw_price">KRW 6,000.00</span>
 									</div>
 								</div><!-- //result_top -->
+								
+								<div class="pay_option_selec_wrap">
+									<span class="skip">예산 유형</span>
+									<div class="pay_option_selec">
+										<div class="pay_option_wrap">
+											<input type="radio" id="no" class="pay_option" name="pay_option" value="0" checked /><label for="no"><i class="fas fa-wallet"></i>&nbsp;<span>유형없음</span></label>
+										</div>
+										<div class="pay_option_wrap">
+											<input type="radio" id="cash" class="pay_option" name="pay_option" value="0" /><label for="cash"><i class="fas fa-money-bill-alt"></i>&nbsp;<span>현금</span></label>
+										</div>
+										<div class="pay_option_wrap">
+											<input type="radio" id="card" class="pay_option" name="pay_option" value="0" /><label for="card"><i class="fas fa-credit-card"></i>&nbsp;<span>카드</span></label>
+										</div>
+									</div>
+								</div><!-- //pay_option_selec_wrap -->
 								
 								<div class="apply_exchange_rate">
 									<span>환율</span>
@@ -107,32 +119,6 @@
 								<div class="item">
 									<input type="text" name="item" placeholder="항목명을 기입해주세요." />
 								</div>
-								
-								<div class="option_wrap clear">
-									<div class="pay_option_selec">
-										<span class="txt">유형 선택</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="no" class="pay_option" name="payOption" value="0" checked /><label for="no"><i class="fas fa-wallet"></i><br/><span class="txt">구분<br/>없음</span></label>
-										</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="cash" class="pay_option" name="payOption" value="0" /><label for="cash"><i class="fas fa-money-bill-alt"></i><br/><span class="txt">현금</span></label>
-										</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="card" class="pay_option" name="payOption" value="0" /><label for="card"><i class="fas fa-credit-card"></i><br/><span class="txt">카드</span></label>
-										</span>
-									</div>
-									
-									<div class="add_option_selec">
-										<span class="txt">추가 입력</span>
-										<span class="add_option_wrap">
-											<a href="javascript:void(0);"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span></a>
-										</span>
-										<span class="add_option_wrap">
-											<!-- <label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
-											<input type="file" name="file" id="file"> -->
-										</span>
-									</div>
-								</div><!-- //option_wrap -->
 							</div><!-- //pop_left -->
 							
 							<div class="cal_btns">
@@ -159,8 +145,8 @@
 									</div>
 								</div>
 								
-								<div class="act_btns">
-									<button class="act_btn save_btn">저장</button><a href="javascript:void(0);" class="act_btn closs_btn">취소</a>
+								<div class="act_btn">
+									<a href="javascript:void(0);" class="save_btn">저장</a><a href="javascript:void(0);" class="closs_btn">취소</a>
 								</div>
 							</div><!-- //cal_btns -->
 						</div><!-- //pop_wrap -->
