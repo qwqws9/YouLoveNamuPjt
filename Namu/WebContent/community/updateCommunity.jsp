@@ -22,26 +22,34 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
   	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
   	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+  	<!-- fontAwsome -->
+  	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
   	
   	<style>
-	  body {
-            padding-top : 50px;
-        }
     </style>
 	 
 </head>
 <body>
-
+<header><jsp:include page="/layout/header.jsp" /></header>
+<br><br>
+<input type="hidden" id="update" value="update">
 <div class="container-fluid">
 <div class="row justify-content-center">
 	<div class="col-lg-1"></div><!-- 추가예정(Side bar) -->
 	<div class="col-lg-10">
 			<br>
+			<div class="row">
+				<div class="col offset-1">
+					<h4><strong>게시물 수정</strong></h4>
+				</div>
+			</div>
+			<br>
 			<form enctype="multipart/form-data" method="post">
+			<input type="hidden" name="communityCode" value="${community.communityCode }">
 				<div class="row justify-content-center">
 					<div class="col-lg-10">
 						<div class="card">
-					  		<div class="card-body" style="border: 1px solid #ff7d75;">
+					  		<div class="card-body" style="border: 1px solid #cbcbcb;">
 					  			<div class="row">
 									<div class="col-lg-2">
 										<select class="selectpicker form-control" id="communityBoard" name="communityBoard">
@@ -78,29 +86,28 @@
 					  			</div>
 						  	</div>
 						  	
-						  	<div class="card-footer" style="background: rgba(255,125,117,0.2); border: 1px solid #ff7d75;">
+						  	<div class="card-footer" style="background: none; border: 1px solid #cbcbcb;">
 						  		<div class="row">
 						  			<div class="col-lg-2">
 						  				<span class="align-middle"><strong style="font-style: inherit;" >#HashTag</strong></span>
 						  			</div>
 							  		<div class="col-lg-10 input-group">
-								  		<input type="text" class="form-control" id="hashtag" name="hashtag" value="${community.communityHashtag }" placeholder="#태그를 입력하세요. ex) #파리#에펠탑#abc" 
-								  				onkeypress="javascript:if(event.keyCode==13 || event.keyCode==32){addHashtag();}"/>
+								  		<input type="text" class="form-control" id="hashtag" name="hashtag" placeholder="#태그를 입력하세요. ex) #파리#에펠탑#abc" 
+								  				onkeypress="javascript:if(event.keyCode==13){addHashtag();}"/>
 							  		</div>
 						  		</div>
 						  		
 						  		<div class="row">
 						  			<div class="col-lg-2"></div>
 						  			<div class="col-lg-10">
-						  				<div class="alert alert-light" role="alert">
-						  					<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 20px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
-										    	<span style="font-size: 14px;">#Paris</span>
+						  				<div class="alert alert-light" role="alert" style=" background: none; border: none;">
+						  					<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
+										    	<span style="font-size: 14px;">${community.communityHashtag }</span>
 										    </button>
 										</div>
 						  			</div>
 						  		</div>
 						  		
-						  		<br>
 						  		
 						  		<div class="row">
 						  			<div class="col-lg-2">
@@ -119,7 +126,16 @@
 						  				<strong style="font-style: inherit;" >공개설정</strong>
 						  			</div>
 						  			<div class="col-lg-10 text-right">
-						  				<input type="checkbox" id="openRange" name="openRange" value="off" checked data-toggle="toggle"  data-on="전체" data-off="회원" data-onstyle="light" data-offstyle="light">
+						  				<select class="selectpicker form-control" id="openRange" name="openRange">
+						  				<c:if test="${community.openRange eq '1' }">
+										  	<option value="1" selected="selected" >전체</option>
+										  	<option value="2" >회원만</option>
+						  				</c:if>
+						  				<c:if test="${community.openRange eq '2' }">
+						  					<option value="1" >전체</option>
+										  	<option value="2" selected="selected" >회원만</option>
+						  				</c:if>
+										</select>
 						  			</div>
 						  		</div>
 						  		
@@ -159,90 +175,6 @@
 </div><!-- container -->
 
 <script>
-	
-	$(function(){
-		
-		$(".btn.btn-outline-secondary.add").on("click",function(){
-			addCommunity();
-		});
-		$("#cancel").on("click",function(){
-			history.go(-1);
-		});
-		
-		//Thumbnail text show
-		$('#Thumbnail').on('change',function(){
-            var fileName = $(this).val();
-            $(this).next('.custom-file-label').html(fileName);
-        })
-		//도시 선택
-		$("#communityBoard").change(function(){
-			var selected = $("#communityBoard option:selected").val();
-			if(selected == 2){$("#selecCity").show();			
-			}else{$("#selecCity").hide();}
-		});
-		//thumbnail 유효성
-		if( document.getElementById("Thumbnail").files.length == 0 ){
-		    $("Thumbnail").val("noThumbnail.png");
-		}
-		
-		var str = document.getElementById('hashtag');
-		var special_pattern = /[`~!@$%^&*|\\\'\";:\/?]/gi;
-		if( special_pattern.test(str.value) == true ){
-			alert('특수문자는 사용할 수 없습니다.');
-			return false;
-		}
-		
-		/* (str).on("change keyup paste", function() {
-		    var currentVal = $(this).val();
-		    if(currentVal == oldVal) {
-		        return;
-		    }
-		 
-		    oldVal = currentVal;
-		    alert("changed!");
-		}); */		
-		
-		
- 
- 		//Hashtag space 유효성 검사
-		/*$(str).on("keyup",function(){
-			var aa = this;
-			var blank_pattern = /[\s]/g;
-			if( blank_pattern.test(str.value) == true){
-				str.value.slice(0,-1);
-			    alert('해시태그에 공백은 사용할 수 없습니다. ');
-			    return false;
-			};
-			//aa.value.text('#');
-			//alert(aa.value.indexOf('#'));
-		}) */
-		
-	});
-	function remove(){
-		$(".btn.btn-outline-dark").on("click",function(){
-			$(this).remove();
-		})
-	}
-	
-	function addHashtag(){
-		var Hashtag = $("#hashtag").val();
-		
-		
-		if(Hashtag){
-			$(".alert.alert-light").append(
-				'<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 20px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">'
-			    	+'<span style="font-size: 14px;">#'+Hashtag+'</span>'
-			    +'</button>&nbsp;'
-			)
-			$("#hashtag").val('');
-		}else{
-			alert("값을 입력하세요.");
-			
-		}
- 		//$('#hashtag').val('원하는 값');		
-		console.log(Hashtag);
-	}
-	
 	
 	
 </script>

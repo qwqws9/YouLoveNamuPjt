@@ -34,7 +34,9 @@
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
 <br><br><br><br><br>
-<!-- <div class="col-xs-1"></div> -->
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -136,7 +138,7 @@
 		<div class="col-11">
 			<div class="alert alert-light" role="alert">
 				<c:forEach var="hashtag" begin="0" end="40" step="1">
-				    <button type="button" class="btn btn-outline-dark " style="height: 20px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
+				    <button type="button" class="btn btn-outline-dark " style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
 				    	<span style="font-size: 13px;">#Paris</span>
 				    </button>
 				</c:forEach>

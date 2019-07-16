@@ -72,9 +72,9 @@ public class CommunityController {
 									 @RequestParam(value="Thumbnail") MultipartFile file,
 									 @RequestParam(value="hashtag", required=false)String hashtag)throws Exception{
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
+		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
 		String safeFile ="";
-		System.out.println(file);
 		if(file.isEmpty() != true) {
 			String originFileName = file.getOriginalFilename(); 
 			File target = new File(uploadPathThumbNail, originFileName);
@@ -82,11 +82,6 @@ public class CommunityController {
 			safeFile += originFileName;
 		}else { safeFile += "noThumbnail.png"; }
 		community.setCommunityThumbnail(safeFile);
-		if(community.getOpenRange().equals("on")) {
-			community.setOpenRange("1");
-		}else {
-			community.setOpenRange("2");
-		}
 		community.setWriter(1);
 		community.setCommunityHashtagCode(1);
 		communityService.addCommunity(community);
@@ -177,12 +172,27 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="updateCommunity",method=RequestMethod.POST)
-	public ModelAndView updateCommunity(@ModelAttribute("community") Community community)throws Exception {
+	public ModelAndView updateCommunity(@ModelAttribute("community") Community community,
+										@RequestParam(value="Thumbnail") MultipartFile file,
+			 							@RequestParam(value="hashtag", required=false)String hashtag)throws Exception {
 		System.out.println("\nCommunityController:::updateCommunity() 시작:::");
+		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/updateCommunity.jsp");
+		String safeFile ="";
+		if(file.isEmpty() != true) {
+			String originFileName = file.getOriginalFilename(); 
+			File target = new File(uploadPathThumbNail, originFileName);
+			FileCopyUtils.copy(file.getBytes(),target);
+			safeFile += originFileName;
+		}else { safeFile += "noThumbnail.png"; }
+		community.setCommunityThumbnail(safeFile);
+		community.setWriter(1);
+		community.setOpenRange("1");
+		community.setCommunityHashtagCode(1);
+		communityService.updateCommunity(community);
 		
 		
+		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode()+"&hashtag="+hashtag);
 		System.out.println("\nCommunityController:::updateCommunity() 끝:::");
 		return modelAndView;
 	}

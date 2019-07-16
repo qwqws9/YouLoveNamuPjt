@@ -29,6 +29,17 @@
 
 
 	<script>
+	
+		//무한 스크롤로 동적으로 생긴 게시물에 이벤트
+		$(document).ready(function(){
+	        $(document).on("click",".getCommunity",function(){
+			    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").text();
+	        });
+	    }); // end of ready()
+
+
+
+	
 		$.fn.selectpicker.Constructor.BootstrapVersion = '4';
 			
 		$( function() {
@@ -264,9 +275,9 @@
 				<div class="row">
 					<div class="col" style="position: fixed; bottom: 30px;">
 						<button type="button" id="addCommunity"
-							style="border-radius: 30px; border: 2px dashed #f2c029; background: none; width: 60px; height: 60px;">
+							style="border-radius: 30px; border: 2px dashed #30a9de; background: none; width: 60px; height: 60px;">
 							<i class="fas fa-pencil-alt fa-2x"
-								style="color: #f2c029; width: 30px; height: 30;"></i>
+								style="color: #30a9de; width: 30px; height: 30;"></i>
 						</button>
 					</div>
 				</div>

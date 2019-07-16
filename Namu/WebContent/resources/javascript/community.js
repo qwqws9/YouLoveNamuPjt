@@ -7,98 +7,119 @@ $(function(){
 	CKEDITOR.replace('communityContent', {
 		width: '100%',
 		height: 500,
-		uiColor: '#ff7d75',
+		uiColor: '#282c37',
 		filebrowserUploadUrl: '/community/fileUpload'
 	});
-});
+	//등록
+	$(".btn.btn-outline-secondary.add").on("click",function(){
+		addCommunity();
+	});
+	//취소
+	$("#cancel").on("click",function(){
+		history.go(-1);
+	});
+	//도시선택
+	$("#communityBoard").change(function(){
+		var selected = $("#communityBoard option:selected").val();
+		if(selected == 2){
+			$("#selecCity").show();			
+		}else{
+			$("#selecCity").hide();
+		}
+	});
+	//Thumbnail text show
+	$('#Thumbnail').on('change',function(){
+        var fileName = $(this).val();
+        $(this).next('.custom-file-label').html(fileName);
+    });
+	//Default Thumbnail
+	if( document.getElementById("Thumbnail").files.length == 0 ){
+	    $("Thumbnail").val("noThumbnail.png");
+	}
+	//특수문자 유효성검사
+	//Space 유효성검사
+	var str = document.getElementById('hashtag');
+	$(str).on("keyup",function(){
+		var special_pattern = /[`,~#!@$%^&*|\\\'\";:\/?]/gi;
+		if( special_pattern.test(str.value) == true ){
+			$(this).val($(this).val().replace(special_pattern,""));
+			alert('특수문자는 사용할 수 없습니다.');
+			return false;
+		}
+		var blank_pattern = /[\s]/g;
+		if( blank_pattern.test( str.value) == true){
+			$(this).val($(this).val().replace(blank_pattern,""));
+		    alert(' 공백은 사용할 수 없습니다. ');
+		    return false;
+		}
+
+	});
+	
+	/*$('#openRange').change(function() {
+		if($(this).prop('checked') == true){
+			//여기가 전체
+			alert("off"+$("#openRange").val())
+		}else{
+			//여기가 회원
+			alert("on"+$("#openRange").val());
+		}
+	});*/
+	
+	
+}); //end of Ready
+
+//Hasgtag
+function remove(){
+	$(".btn.btn-outline-dark").on("click",function(){
+		$(this).remove();
+	})
+}
+
+function addHashtag(){
+	var Hashtag = $("#hashtag").val();
+	var count = $(".btn.btn-outline-dark").length;
+	if(Hashtag && count < 20){
+		$(".alert.alert-light").append(
+			'<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">'
+		    	+'<span style="font-size: 14px;">#'+Hashtag+'</span>'
+		    +'</button>'
+		)
+		$("#hashtag").val('');
+	}else if(count => 20){
+		alert("해시태그는 20개까지 지원합니다.")
+	}else{
+		alert("값을 입력하세요.");
+	}
+	console.log($(".btn.btn-outline-dark").text().trim());
+}
 
 
 //addCommunity ,updateCommunity
 function addCommunity(){
 		var title = $("#title").val();
-		var content = $("#content").val();
-		var str = document.getElementById('hashtag');
-		
+		//제목 유효성 검사
 		if(title == null || title.length<1){
 			alert("제목을 입력해 주세요.");
 			return;
 		}
-		
-		$('#openRange').change(function() {
-			if($(this).prop('checked') == true){
-				$("#openRange").val('1');
-			}else{
-				$("#openRange").val('2');
+		var selected = $("#communityBoard option:selected").val();
+		if(selected == 2){
+			if($("#selecCity option:selected").val() == 0){
+				alert("도시를 선택해 주세요.")
+				return;
 			}
-	    });
-		
-		var special_pattern = /[`~!@$%^&*|\\\'\";:\/?]/gi;
-		if( special_pattern.test(str.value) == true ){
-			alert('특수문자는 사용할 수 없습니다.');
-			return false;
 		}
-		var hash_pattern = /[#]/;
-		/* if( hash_pattern.test(str.value) == false){
-			alert('#을 입력해주세요.');
-			return false;
-		} */
-		if( hash_pattern.length > 20){
-			alert('#해시태그는 20개까지 입력 할 수 있습니다.')
-		}
+		//해시태그 데이터 전송
+		var Hashtag = $(".btn.btn-outline-dark").text().trim();
+		$("#hashtag").val(Hashtag);
 		
-		$("form").attr("method","POST").attr("action","/community/addCommunity").submit();
-	}	
-
-/* ${pageContext.request.contextPath} */
-
-/* $(".form-control").on("",function(){
-var oldvalue=$(this).val();
-var field=this;
-setTimeout(function () {
-    if(field.value.indexOf('http://') !== 0) {
-        $(field).val(oldvalue);
-    } 
-}, 1);
-}); */
-/* function countBytesNoTrim(o){ // Byte 수를 계수한다
-	 var str = o.value;
-	 if(str=='') return 0;
-
-	 var bytes = 0;
-	 for(var i=0,s=str.length; i<s; i++){
-	  var chr = str.charCodeAt(i);
-	  if(chr>31 && chr<127) bytes++; // 32~47 과 58~64 특수기호, 48~57 숫자,  65~90 영문 대문자, 91~96 과 123~126 특수문자, 97~122 영문 소문자
-	  else if(escape(chr).length>1) bytes += 2; // \n 의 경우 \r\n 으로 DB 에 들어갑니다. 따라서 4Bytes
-	  else bytes++;
-	 }
-
-	 return bytes;
-	} */
-
-/* function textCheckByte(obj,maxByte){
-	var str = obj.value;
-	var str_length = str.length;
-	var bytes = 0;
-	
-	var onechar="";
-	if(str=='') return 0;
-	for(var i=0;i < str_length;i++){
-		onechar = str.charAt(i);
-		if(onechar <= 0x0007FF){
-			console.log("1");
-			return 1;
-		}else if(onechar <= 0x0007FF){
-			console.log("2");
-			return 2;
-		}else if(onechar <= 0x00FFFF){
-			console.log("3");
-			return 3;
+		var Role = $("#update").val();
+		if(Role == "update"){
+			$("form").attr("method","POST").attr("action","/community/updateCommunity").submit();
 		}else{
-			return 4;
+			$("form").attr("method","POST").attr("action","/community/addCommunity").submit();
 		}
-	}
-}
- */
+	}	
 
 
 //getCommunityList
@@ -131,6 +152,7 @@ function callCommunityList(page){
 	      					var appendBoard = '';
 	      					var appendCity = '';
 	      					var communityBoard =  item.communityBoard;
+	      					var content = $(item.communityContent).text($(item.communityContent).text().trim());
 	      					if(communityBoard == 1){
 	      						appendBoard = '자유게시판';
 	      					}else if(communityBoard == 2){
@@ -142,10 +164,10 @@ function callCommunityList(page){
 	      						appendCity = '<p class="text-center"style="font-size: x-small; color: #344157;">['+item.city+']</p>';
 	      					}
 	      					$(".col-10.col-md-10.append").append( '<div class="row list"><div class="col-2 col-md-2" style="top: 30px;">'
-	      														+'<p class="text-center" style="font-size: x-small; color: #344157;">'
+	      														+'<p class="text-center" style="font-size: small; color: #344157;">'
 	      														+'No.<span class="communityCode">'+item.communityCode+'</span>'
 	      														+'</p>'
-	      														+'<p class="text-center communityBoard" style="font-size: x-small; color: #344157;">'
+	      														+'<p class="text-center communityBoard" style="font-size: small; color: #344157;">'
 	      														+ appendBoard
 																+'</p>'
 																+ appendCity
@@ -155,8 +177,8 @@ function callCommunityList(page){
 																+'<div id="profile-image">'
 																+'<a href="#"><img src="/resources/images/dog.JPG" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px"></a>'
 																+'</div>'
-																+'<div id="profile-nickname" style="position: absolute; top: 10px; left: 52px;">'
-																+'<div style="font-size: x-small; color: #3c64a6;">글쓴이</div>'
+																+'<div id="profile-nickname" style="position: absolute; top: 8px; left: 52px;">'
+																+'<div style="font-size: small; color: #3c64a6;">글쓴이</div>'
 																+'<div style="font-size: small; color: #344157;">'+item.writer+'</div>'
 																+'</div>'
 																+'</div>'
@@ -171,7 +193,7 @@ function callCommunityList(page){
 																+'</div>'
 																+'<div class="row">'
 																+'<div class="getCommunity content" style="overflow: hidden; text-overflow: ellipsis; height: 50px; cursor: pointer;">'
-																+'<span class="content" style="resize: none; display: inline-blocke;">'+item.communityContent+'</span>'
+																+'<span class="content" style="resize: none; display: inline-blocke;">'+$(content).text()+'</span>'
 																+'</div>'
 																+'</div>'
 																+'</div>'
@@ -189,7 +211,6 @@ function callCommunityList(page){
 	    				alert( errorThrown );
 	    			}
 	      		});
-				
 			}
 
 //Search Box Event
