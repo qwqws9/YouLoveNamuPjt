@@ -105,7 +105,27 @@
 // 			alert('adadad');
 // 		})
 		$(document).on("click","button:contains('등록')",function(){ 
-			   alert("click"); 
+			
+			
+			//console.log($(this).prev().val().length);
+			if($(this).prev().val().length < 1) {
+				$(this).prev().attr('class','form-control is-invalid');
+				return;
+			}
+			
+			$(this).prev().attr('class','form-control');
+			if($(this).parents('li').length > 0) {
+				//alert("있으므로 대댓글");
+				//alert($(this).parents('li').attr('id'));
+				//alert($(this).prev().val());
+				
+				addComment($(this).parents('li').attr('id'),$(this).prev().val());
+			}else {
+				//alert("없으므로 댓글")
+				//alert($(this).prev().val());
+				addComment(0,$(this).prev().val());
+			}
+			
 			 });
 		
 		$('#like').on('click',function(){
