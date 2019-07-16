@@ -18,11 +18,13 @@
 			var communityCode = $("#communityCode").val();
 			
 			$("#update").on("click",function(){
-				self.location = "/community/updateCommunity?communityCode="+$("#communityCode").val();
+				self.location = "/community/updateCommunityView?communityCode="+$("#communityCode").val();
 			})
 			$("#delete").on("click",function(){
 				self.location = "/community/deleteCommunity?communityCode="+$("#communityCode").val();
 			})
+			
+			
 			
 		})
 		
@@ -33,6 +35,28 @@
 <header><jsp:include page="/layout/header.jsp" /></header>
 <br><br><br><br><br>
 <!-- <div class="col-xs-1"></div> -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        	게시물을 삭제 하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="delete" >삭제</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid col-10">
 
 	<input id="communityCode" type="hidden" value="${community.communityCode}" >
@@ -77,20 +101,29 @@
 	
 	<div class="row" style="margin-top: 8px;">
 		<div class="col-6">
-			<span class="badge badge-pill" style="border: 1px solid black;">
+			<div class="badge badge-pill" style="border: 1px solid black;">
 				<button type="button" style="border: none; background: none;">
-					<i class="far fa-heart" ></i>
+					<i class="far fa-heart fa-lg" ></i>
 				</button>
 				<span style="font-size: 11px;">20</span>
-				<button style="border: none; background: none;">
-					<i class="fas fa-ellipsis-v"></i>
-				</button>
-			</span>
+				
+				
+				<div class="btn-group dropright" style="height: 18px;">
+					<button type="button" class="btn" style="position:relative; border: none; background: none;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-ellipsis-v fa-sm" style="position: absolute; bottom: 1px;"></i>
+					</button>
+					<div class="dropdown-menu">
+						<a>신고하기</a>
+					</div>
+				</div>
+				
+				
+			</div>
 		</div>
 		<div class="col-6" align="right" style="bottom: 5px;" >
 			<button style="border: none; background: none;" id="update"><span style="font-size: 13px" >수정</span></button>
 			<span style="font-size: 8px">|</span>
-			<button style="border: none; background: none;" id="delete"><span style="font-size: 13px" >삭제</span></button>
+			<button style="border: none; background: none;" data-toggle="modal" data-target="#exampleModal"><span style="font-size: 13px" >삭제</span></button>
 		</div>
 	</div>
 	

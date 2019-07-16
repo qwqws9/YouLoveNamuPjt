@@ -13,12 +13,13 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<!-- jQuerty -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
+	<script type="text/javascript" src="/resources/javascript/community.js"></script>
 	<!-- Select Picker -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-	<!-- jQuerty -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	
   	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
   	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
@@ -134,17 +135,7 @@
 </div><!-- container -->
 
 <script>
-	CKEDITOR.scriptLoader.load( '/resources/ckeditor/ckeditor.js', function( success ) {
-		if(success != true){
-    		alert( success );
-		}
-	} );
-	CKEDITOR.replace('communityContent', {
-		width: '100%',
-		height: 500,
-		uiColor: '#ff7d75',
-		filebrowserUploadUrl: '/community/fileUpload'
-	});
+	
 	/* ${pageContext.request.contextPath} */
 	
 	/* $(".form-control").on("",function(){
@@ -193,8 +184,7 @@
 				return 4;
 			}
 		}
-	}
-	 */
+	} */
 	$(function(){
 		$(".btn.btn-outline-secondary.add").on("click",function(){
 			addCommunity();
@@ -226,8 +216,7 @@
 		 
 		    oldVal = currentVal;
 		    alert("changed!");
-		});
- */
+		}); */
 		
 		$(str).on("keyup",function(){
 			var aa = this;
@@ -239,7 +228,7 @@
 			};
 			//aa.value.text('#');
 			//alert(aa.value.indexOf('#'));
-		})
+		});
 	});
 	
 	

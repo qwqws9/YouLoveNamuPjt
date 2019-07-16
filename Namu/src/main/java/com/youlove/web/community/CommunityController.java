@@ -30,7 +30,9 @@ import com.youlove.common.Search;
 import com.youlove.service.community.CommunityService;
 import com.youlove.service.domain.Community;
 import com.youlove.service.domain.Hashtag;
+import com.youlove.service.domain.User;
 import com.youlove.service.hashtag.HashtagService;
+import com.youlove.service.user.UserService;
 import com.youlove.web.hashtag.HashtagController;
 
 
@@ -46,6 +48,9 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("hashtagServiceImpl")
 	private HashtagService hashtagService;
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	
 	public CommunityController(){
@@ -147,7 +152,9 @@ public class CommunityController {
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("communityBoard", communityBoard);
 		map.put("search", search);
+		
 		map = communityService.getCommunityList(map);
+		
 		/*map.put("search", search);
 		map = communityService.getCommunityList(search);*/
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -156,6 +163,16 @@ public class CommunityController {
 		modelAndView.addObject("list", map.get("list"));
 		
 		System.out.println("\nCommunityController:::getCommunityList() 끝:::");
+		return modelAndView;
+	}
+	@RequestMapping(value="updateCommunityView",method=RequestMethod.GET)
+	public ModelAndView updateCommunityView(@RequestParam("communityCode")int communityCode)throws Exception{
+		System.out.println("\nCommunityController:::updateCommunityView() 시작:::");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/community/updateCommunity.jsp");
+		Community community = communityService.getCommunity(communityCode);
+		modelAndView.addObject("community", community);
+		System.out.println("\nCommunityController:::updateCommunityView() 끝:::");
 		return modelAndView;
 	}
 	

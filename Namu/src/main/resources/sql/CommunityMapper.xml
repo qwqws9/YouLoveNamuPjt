@@ -15,7 +15,7 @@
 		<result property="communityThumbnail" 	column="community_thumbnail" 	jdbcType="VARCHAR" />
 		<result property="openRange" 			column="open_range" 			jdbcType="CHAR" />
 		<result property="views" 				column="views" 					jdbcType="NUMERIC"  />
-		<result property="writer" 				column="writer" 				jdbcType="NUMERIC" />
+		<result property="writer"		 		column="writer" 				jdbcType="NUMERIC" />
 		<result property="communityHashtagCode" column="hashtag_code" 			jdbcType="NUMERIC" />
 		<result property="city" 				column="city_name" 				jdbcType="VARCHAR" />
 	</resultMap>
@@ -63,7 +63,8 @@
 	<select  	id="getCommunityList"  	parameterType="map"	resultMap="communityMap">
 		SELECT *
 		FROM (SELECT first_table.*, ROWNUM AS row_seq
-		            FROM ( SELECT *
+		            FROM ( SELECT community_code, community_board, community_title, community_content, community_date, community_thumbnail,
+		            				open_range, views, writer, hashtag_code, city_name
 	                       FROM community
 	                        <if test="communityBoard != 0">
 	                       	 	<where>
