@@ -39,7 +39,7 @@ public class WalletServiceTest {
 		
 		walletService.addWallet(wallet);
 		
-		wallet = walletService.getWallet(6);
+		wallet = walletService.getWallet(11);
 		
 		System.out.println(wallet);
 		
