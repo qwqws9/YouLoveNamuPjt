@@ -15,6 +15,8 @@ public interface CommentDao {
 	
 	public List<Comment> getComment(Map<String,Object> map) throws Exception;
 	
+	public int countComment(Comment comment) throws Exception;
+	
 	
 	
 }

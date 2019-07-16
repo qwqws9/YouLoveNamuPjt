@@ -140,11 +140,10 @@ CREATE TABLE COMMENTS (
    STEP                     NUMBER(10)   ,
    REPLY_CODE                NUMBER(10),
    COMMENT_DATE          VARCHAR2(100),
-   WRITER_COMMENT   VARCHAR2(100)   
+   WRITER_COMMENT   VARCHAR2(100)  ,
+   COMMENT_DELETE   NUMBER(1)
    
 );   
-
-
 
 CREATE TABLE LIKES ( 
     LIKE_CODE           NUMBER(10) PRIMARY KEY,
@@ -461,5 +460,3 @@ INTO planner ( planner_code , user_code, planner_name , planner_image , member ,
 VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4',to_date('2019/08/19 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate);
 
 commit;
-
-

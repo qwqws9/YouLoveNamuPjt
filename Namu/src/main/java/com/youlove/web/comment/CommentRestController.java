@@ -1,6 +1,7 @@
 package com.youlove.web.comment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,34 +83,29 @@ public class CommentRestController {
 	
 	
 	@RequestMapping(value ="/json/getComment", method=RequestMethod.POST)
-	public List<Comment> getComment(@RequestBody Comment comment, Map<String,Object> map) throws Exception {
-
+	public List<Comment> getComment(@RequestBody Comment comment ) throws Exception {
+		
+		
+		Map<String,Object> map = new HashMap<String, Object>();
 		System.out.println("/json/getComment 들어옴");
+		System.out.println(comment.getSearch().getCurrentPage());
+		System.out.println(comment.getSearch().getPageSize());
+		System.out.println(comment.getSearch().getStartRowNum());
+		System.out.println(comment.getSearch().getEndRowNum());
+		
 		System.out.println(comment.getBoardCode());
 		System.out.println(comment.getDetailCode());
 		
+		map.put("search", comment.getSearch());
 		map.put("boardCode", comment.getBoardCode());
 		map.put("detailCode", comment.getDetailCode());
 		
+		//Map<String,Object> map2 = new HashMap<String, Object>();
+		//map = commentService.getComment(map);
 		List<Comment> list = commentService.getComment(map);
 		
-		/*
-		 * 			
-				
-		select * from (
-			select ROWNUM ronum ,innerT.* 
-			from ( select * 
-				   from comments 
-				   where BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode}
-				   order by reply_code, step) innerT
-			WHERE ROWNUM &lt;= 5 )
-		where ronum BETWEEN 1 AND 5;		
-				
-				
-		 * 
-		 */
 		
-		System.out.println(list.size() + "댓글 길이");
+//		System.out.println(map.size() + "댓글 길이");
 		
 		
 		return list;
@@ -117,7 +113,14 @@ public class CommentRestController {
 	}
 	
 	
-	
+	@RequestMapping(value ="/json/getCount", method=RequestMethod.POST)
+	public int getCount(@RequestBody Comment comment ) throws Exception {
+		
+		int result = commentService.countComment(comment);
+		
+		return result;
+		
+	}
 	
 
 }

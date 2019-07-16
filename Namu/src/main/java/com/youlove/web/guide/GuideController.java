@@ -47,6 +47,7 @@ public class GuideController {
 		for(Tour t : list) {
 			t.getTourId();
 		}
+		
 		model.addAttribute("tourList", list);
 		
 		return "/guide/initTour.jsp";
@@ -59,11 +60,11 @@ public class GuideController {
 		
 		tour = wishBeenService.selectPageDetail(tourId);
 		
-		map.put("boardCode", 5);
-		map.put("detailCode", tour.getTourId());
+		//map.put("boardCode", 5);
+		//map.put("detailCode", tour.getTourId());
 		//List<Comment> list = commentService.getComment(map);
-		model.addAttribute("boardCode1",5);
-		model.addAttribute("detailCode1",tour.getTourId());
+		model.addAttribute("boardCode",5);
+		model.addAttribute("detailCode",tour.getTourId());
 		//model.addAttribute("comment",list);
 		model.addAttribute("tour",tour);
 		return "forward:/guide/tourDetail.jsp";

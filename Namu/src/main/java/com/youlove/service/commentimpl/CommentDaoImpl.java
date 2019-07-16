@@ -51,6 +51,11 @@ public class CommentDaoImpl implements CommentDao {
 		return sqlSession.selectList("CommentMapper.getComment",map);
 	}
 
+	@Override
+	public int countComment(Comment comment) throws Exception {
+		return sqlSession.selectOne("CommentMapper.countComment",comment);
+	}
+
 	
 	
 		
