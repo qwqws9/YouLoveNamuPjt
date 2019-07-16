@@ -99,7 +99,7 @@
 									<span>환율</span>
 									<div>
 										<span>EUR 1.00 = KRW <span>1,312.22</span></span><br/>
-										<input type="hidden" class="exchange_rate" name="exchangeRate" value="1,312.22">
+										<input type="hidden" class="exchange_rate" name="exchangeRate" value="1312.22">
 										<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
 									</div>
 								</div>
@@ -128,8 +128,8 @@
 											<a href="javascript:void(0);"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span></a>
 										</span>
 										<span class="add_option_wrap">
-											<!-- <label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
-											<input type="file" name="file" id="file"> -->
+											<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
+											<input type="file" name="file" id="file">
 										</span>
 									</div>
 								</div><!-- //option_wrap -->
