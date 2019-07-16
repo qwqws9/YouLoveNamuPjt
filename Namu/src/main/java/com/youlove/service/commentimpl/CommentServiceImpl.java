@@ -1,5 +1,6 @@
 package com.youlove.service.commentimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,21 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public List<Comment> getComment(Map<String, Object> map) throws Exception {
+		
+//		List<Comment> list = new ArrayList<Comment>();
+		
+//		list = commentDao.getComment(map);
+//		int count = commentDao.countComment(map);
+//		map.clear();
+//		map.put("list", list);
+//		map.put("count", count);
+		
 		return commentDao.getComment(map);
+	}
+
+	@Override
+	public int countComment(Comment comment) throws Exception {
+		return commentDao.countComment(comment);
 	}
 
 	

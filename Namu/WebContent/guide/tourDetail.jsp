@@ -108,8 +108,8 @@
              </div>      
       
       <jsp:include page="../comment/getComment.jsp" >
-      	<jsp:param value="${boardCode1 }" name="boardCode"/>
-      	<jsp:param value="${detailCode1 }" name="detailCode"/>
+      	<jsp:param value="${boardCode}" name="boardCode"/>
+      	<jsp:param value="${detailCode}" name="detailCode"/>
       </jsp:include>
       
       <script type="text/javascript">

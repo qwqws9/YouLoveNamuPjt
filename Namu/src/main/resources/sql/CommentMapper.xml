@@ -29,12 +29,12 @@
 		insert into comments(COMMENT_CODE , BOARD_CODE, DETAIL_CODE, COMMENT_CONTENT, STEP, REPLY_CODE, COMMENT_DATE, WRITER_COMMENT, COMMENT_DELETE ) 
 		values (seq_comment_code.nextval,#{boardCode},#{detailCode},#{commentContent},
 		<if test="replyCode != 0">
-			(SELECT max(step)+1 from comments where comment_code=#{replyCode} or reply_code = #{replyCode})
+			(SELECT max(step)+1 from comments where comment_code=#{replyCode} or reply_code = #{replyCode}),#{replyCode:NUMERIC}
 		</if>
 		<if test="replyCode == 0">
-			0
+			0,seq_comment_code.currVal
 		</if>
-		,#{replyCode:NUMERIC},#{commentDate}, #{writerComment.userCode},0)			
+		,#{commentDate}, #{writerComment.userCode},0)			
 	 </insert>
 	 
 	 <update id="updateComment" parameterType="comment">
@@ -48,10 +48,20 @@
 	 </update>
 	 
 	 <select id="getComment" parameterType="map" resultMap="commentMap">
-	 	SELECT c.*,u.nickname,u.profile_Img,u.user_code 
-		FROM users u, comments c
-		WHERE u.user_Code = c.writer_Comment 
-				AND BOARD_CODE = #{boardCode} AND DETAIL_CODE = #{detailCode}
+		SELECT * FROM (
+			select ROWNUM ronum ,innerT.*, u.user_code,u.profile_img,u.nickname
+			FROM ( SELECT * 
+				   FROM comments 
+				   WHERE BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode}
+				   ORDER BY reply_code desc , step) innerT , users u
+			WHERE innerT.writer_comment = u.user_code AND ROWNUM &lt;= #{search.endRowNum} )
+		WHERE ronum BETWEEN #{search.startRowNum} AND #{search.endRowNum}	
+	 </select>
+	 
+	 <select id="countComment" parameterType="comment" resultType="int">
+	 	SELECT count(*) 
+	    FROM comments 
+	    WHERE BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode}
 	 </select>
 	 
 	

@@ -34,8 +34,8 @@ public class UserController {
 		System.out.println("/user/loginView : GET");
 		System.out.println(request.getRealPath("/"));
 		
-		model.addAttribute("boardCode1",5);
-		model.addAttribute("detailCode1","12345");
+		model.addAttribute("boardCode",5);
+		model.addAttribute("detailCode","12345");
 		
 		return "forward:/user/loginView.jsp";
 	}
