@@ -35,7 +35,9 @@
 		SELECT w_detail_code, w_main_code, part, money_unit, expression, price, reg_date,
 			   item, content, pay_option, exchange_rate, category, w_image, payer
 		FROM wallet_detail
-		WHERE w_detail_code = #{value}
+		<where>
+			w_detail_code = #{value}
+		</where>
 	</select>
 	
 	<update	id="updateWallet" parameterType="wallet">
@@ -53,19 +55,26 @@
 			w_image = #{walletImage:VARCHAR},
 			payer = #{payer:NUMERIC}
 		</set>
-	  	WHERE w_detail_code = #{walletDetailCode}
+	  	<where>
+	  		w_detail_code = #{walletDetailCode}
+	  	</where>
 	</update>
 	
 	<delete id="deleteWallet" parameterType="int">
 		DELETE
 		FROM wallet_detail
-		WHERE w_detail_code = #{value}
+		<where>
+			w_detail_code = #{value}
+		</where>
 	</delete>
 	
 	<select id="getWalletList" parameterType="int" resultMap="walletSelectMap">
 		SELECT *
 		FROM wallet_detail
-		WHERE w_main_code = #{value}
+		<where>
+			w_main_code = #{value}
+		</where>
+		ORDER BY reg_date DESC
 	</select>
 	
 </mapper>

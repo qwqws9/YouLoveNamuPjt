@@ -126,11 +126,11 @@ public class Wallet {
 	
 	@Override
 	public String toString() {
-		return "WalletVO : [walletDetailCode]" + walletDetailCode + "[walletCode]" + walletCode
-				+ "[part]" + part + "[moneyUnit]" + moneyUnit + "[expression]" + expression
-				+ "[price]" + price + "[regDate]" + regDate + "[item]" + item + "[content]" + content
-				+ "[payOption]" + payOption + "[exchangeRate]" + exchangeRate + "[category]" + category
-				+ "[walletImage]" + walletImage + "[payer]" + payer + "[exchangePrice]" + exchangePrice;
+		return "WalletVO : [walletDetailCode]" + walletDetailCode + " [walletCode]" + walletCode
+				+ " [part]" + part + " [moneyUnit]" + moneyUnit + " [expression]" + expression
+				+ " [price]" + price + " [regDate]" + regDate + " [item]" + item + " [content]" + content
+				+ " [payOption]" + payOption + " [exchangeRate]" + exchangeRate + " [category]" + category
+				+ " [walletImage]" + walletImage + " [payer]" + payer + " [exchangePrice]" + exchangePrice;
 	}
 	
 }
