@@ -440,27 +440,28 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4',to_date('2019/08/01 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+   
+VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4',to_date('2019/08/07 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+VALUES ( seq_planner_code.nextval, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4',to_date('2019/08/10 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+VALUES ( seq_planner_code.nextval, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', to_date('2019/08/12 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+VALUES ( seq_planner_code.nextval, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4',to_date('2019/08/19 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate);
+VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
 
 
 INSERT INTO wallet VALUES ( seq_w_code, 1, 'EUR');
@@ -468,5 +469,6 @@ INSERT INTO wallet VALUES ( seq_w_code, 2, 'EUR');
 INSERT INTO wallet VALUES ( seq_w_code, 3, 'EUR');
 INSERT INTO wallet VALUES ( seq_w_code, 4, 'EUR');
 INSERT INTO wallet VALUES ( seq_w_code, 5, 'EUR');
+
 
 commit;

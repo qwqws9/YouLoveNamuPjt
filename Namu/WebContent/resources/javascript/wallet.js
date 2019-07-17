@@ -7,7 +7,7 @@ $(function(){
 		currentTime();
 		
 		$('.pop_wrap_parent').hide();
-		$(this).next('.pop_wrap_parent').show();
+		$(this).next('.pop_wrap_parent').show('slow');
 	});
 	
 	// 모달창 세이브
@@ -18,8 +18,8 @@ $(function(){
 	});
 	
 	// 모달창 클로즈
-	$('.closs_btn').on('click', function(){
-		$('.pop_wrap_parent').hide();
+	$('.close_btn').on('click', function(){
+		$('.pop_wrap_parent').hide('fast');
 	});
 });
 
@@ -34,16 +34,17 @@ function currentTime(){
 	$('input.date_time').val(nowDay + ' ' + nowTime);
 }
 
+// addWallet Business Logic
 function addAjax(form){
-	// form.method = 'POST';
-	// form.enctype = 'multipart/form-data';
-
+	// file이 담긴 FORM 태그를 @ModelAttribute, MultipartFile 로 전달
 	var formData = new FormData(form);
 	
+	/*
 	for(var pair of formData.entries()){
 		console.log(pair[0] + ' = '+ pair[1]); 
 	}
 	console.log(formData.get('file'));
+	*/
 	
 	$.ajax({
 		url			: '/wallet/json/addWallet',
@@ -55,18 +56,20 @@ function addAjax(form){
 		processData	: false,
 		cache		: false,
 		timeout		: 600000,
-		success		: function(result){
-			console.log("[SUCCESS]\nRESULT : " + result);
+		success		: function(JSONData, status){
+			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
 			
 			$('.save_btn').prop('disabled', true);
 			$('.pop_wrap_parent').hide();
 			form.reset();
 		},
 		error		: function(request, status, error){
-			console.log("[ERROR]\nCODE : " + request.status + "\n" + "MESSAGE : " + request.responseText + "\n" + "ERROR : " + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);
 	    }
 	});
 
+	
+	// FORM 태그를 @RequestBody 로 전달
 	/*
 	console.log(form.serialize());
 	console.log(form.serializeArray());
@@ -87,12 +90,17 @@ function addAjax(form){
 		data		: JSON.stringify(data),
 		dataType	: 'json',
 		contentType	: 'application/json',
-		success		: function(result){
-			console.log("[SUCCESS]\nRESULT : " + result);
+		success		: function(JSONData, status){
+			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
 		},
 		error	: function(request, status, error){
-			console.log("[ERROR]\nCODE : " + request.status + "\n" + "MESSAGE : " + request.responseText + "\n" + "ERROR : " + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);
 		}
 	});
 	*/
+}
+
+//addWallet Business Logic
+function getListAjax(walletCode){
+	
 }
