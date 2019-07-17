@@ -104,9 +104,11 @@
 						  			<div class="col-lg-2"></div>
 						  			<div class="col-lg-10">
 						  				<div class="alert alert-light" role="alert" style=" background: none; border: none;">
-						  					<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
-										    	<span style="font-size: 14px;">${community.communityHashtag }</span>
-										    </button>
+						  					<c:forEach var="hashtag" items="${hashtag}">
+							  					<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
+											    	<span style="font-size: 14px;">${hashtag}</span>
+											    </button>
+						  					</c:forEach>
 										</div>
 						  			</div>
 						  		</div>

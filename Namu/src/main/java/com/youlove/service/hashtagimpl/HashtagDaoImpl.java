@@ -41,8 +41,8 @@ public class HashtagDaoImpl implements HashtagDao {
 		
 	}
 	@Override
-	public void deleteHashtag(Hashtag hashtag) throws Exception {
-		
+	public void deleteHashtag(int hashtagCode) throws Exception {
+		this.sqlSession.delete("HashtagMapper.deleteHashtag",hashtagCode);
 	}
 	@Override
 	public void updateCode(Map<String,Object> map) throws Exception {

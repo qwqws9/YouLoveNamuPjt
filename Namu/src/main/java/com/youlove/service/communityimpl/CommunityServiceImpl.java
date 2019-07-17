@@ -30,7 +30,6 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public void addCommunity(Community community) throws Exception {
-		System.out.println("serviceImpl");
 		communityDao.addCommunity(community);
 	}
 	@Override

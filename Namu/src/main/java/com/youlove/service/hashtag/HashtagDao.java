@@ -12,7 +12,7 @@ public interface HashtagDao {
 	
 	public void updateHashtag(Hashtag hashtag)throws Exception;
 	
-	public void deleteHashtag(Hashtag hashtag)throws Exception;
+	public void deleteHashtag(int hashtagCode)throws Exception;
 
 	public void updateCode(Map<String,Object> map)throws Exception;
 }

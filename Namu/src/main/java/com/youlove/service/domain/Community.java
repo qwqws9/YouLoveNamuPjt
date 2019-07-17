@@ -14,7 +14,7 @@ public class Community {
 	private String openRange;
 	private int views;
 	private int writer;
-	private City city;
+	private String city;
 	private String communityHashtag; 
 	private Hashtag communityHashtagCode;
 	
@@ -96,11 +96,11 @@ public class Community {
 		this.writer = writer;
 	}
 
-	public City getCity() {
+	public String getCity() {
 		return city;
 	}
 
-	public void setCity(City city) {
+	public void setCity(String city) {
 		this.city = city;
 	}
 

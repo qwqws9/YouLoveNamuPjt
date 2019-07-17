@@ -33,7 +33,7 @@
 		//무한 스크롤로 동적으로 생긴 게시물에 이벤트
 		$(document).ready(function(){
 	        $(document).on("click",".getCommunity",function(){
-			    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").text();
+			    self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").val();
 	        });
 	    }); // end of ready()
 
@@ -62,7 +62,7 @@
 		   	});
 		    
 		    $(".getCommunity").on("click", function(){
-		    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").text();
+		    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").val();
 		    })
 			$(".card.bestCommunity").on("click", function(){
 				self.location="/community/getCommunity?communityCode="+$(this).prev().val();								
@@ -223,7 +223,8 @@
 							<div class="row list">
 								<div class="col-2 col-md-2" style="top: 30px;">
 									<p class="text-center" style="font-size: small; color: #344157;">
-										No.<span class="communityCode">${community.communityCode}</span>
+									<input type="hidden" class="communityCode" value="${community.communityCode}">
+										No.<span class="">${community.communityCode}</span>
 									</p>
 									<p class="text-center communityBoard" style="font-size: small; color: #344157;">
 										<c:if test="${community.communityBoard eq '1'}">자유 게시판</c:if>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.youlove.common.Page;
 import com.youlove.common.Search;
 import com.youlove.service.community.CommunityService;
 import com.youlove.service.domain.Community;
