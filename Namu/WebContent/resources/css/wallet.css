@@ -5,11 +5,11 @@ h2, h3 {margin: 0; padding: 0; font-size: inherit; font-weight: inherit;}
 ul, li {list-style:none;}
 input, button, select {background: none; border: 0 none;}
 input[type=button] {background: transparent; outline: 0; cursor: pointer;}
-input[type="radio"] {position: absolute; overflow: hidden; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; clip: rect(0 0 0 0);}
+input[type=radio], input[type=file] {position: absolute; overflow: hidden; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; clip: rect(0 0 0 0);}
 select {-webkit-appearance: none; -moz-appearance: none; appearance: none;}
 select::-ms-expand {display: none;}
-select:focus {outline: none;}
 select:active {box-shadow: 0;}
+input[type=text]:focus, button:active, select:focus {outline: none;}
 a {color: inherit; text-decoration: none; cursor: pointer;}
 a:hover, a:active {color: inherit; text-decoration:none;}
 
@@ -31,7 +31,8 @@ a:hover, a:active {color: inherit; text-decoration:none;}
 /* 좌측 사이드바 */
 .day_btn {width: 50px; font-weight: 700; text-align: center;}
 a.day_btn:not(:first-child) {margin-top: 10px;}
-a.day_btn {display: block; height: 50px; line-height: 50px; background-color: #282c37;}
+a.day_btn {display: block; height: 50px; line-height: 50px; background-color: #282c37; transition: all 0.6s, background-color 0.3s;}
+a.day_btn:hover {background-color: #cbcbcb; box-shadow: 50px 50px 0 0 rgba(0,0,0,0.3) inset;}
 a.day_btn span {color: #fff;}
 span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border-top: 1px solid #cbcbcb;}
 
@@ -59,23 +60,14 @@ span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border
 .pop_left {margin-right: 30px;}
 
 /* 입력 결과 */
-.result_top {position: relative; width: inherit; height: 120px; border-bottom: 1px solid #cbcbcb;}
-.date_time {width: inherit; height: 28px; line-height: 26px; font-size: 13px; text-align: center; border: 1px solid #f2c029; border-radius: 0.25em; box-sizing: border-box;}
-.unit_selec {position: absolute; top: 50px; left: 0; width: 85px; padding: 7px 12px; background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; border: 1px solid #ccc; border-radius: 0.25em;}
+.result_top {position: relative; width: inherit; height: 110px; margin-bottom: 10px; border-bottom: 1px solid #cbcbcb;}
+.date_time {width: inherit; height: 28px; line-height: 26px; font-size: 13px; text-align: center; border: 1px solid #f2c029; border-radius: 0.25em; box-sizing: border-box; cursor: pointer;}
+.date_time:hover {background-color: #f2c029;}
+.unit_selec {position: absolute; top: 40px; left: 0; width: 85px; padding: 7px 12px; background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; border: 1px solid #ccc; border-radius: 0.25em;}
 .result {position: absolute; right: 0; width: 160px;}
 .price, .krw_price {position: absolute; right: 0; width: 120px; text-align: right;}
 .price {top: 20px; height: 27px; line-height: 27px; font-size: 20px;}
 .krw_price {top: 50px; height: 23px; line-height: 23px; font-size: 12px;}
-
-/* 유형 선택 */
-.pay_option_selec_wrap {margin-top: 15px;}
-.pay_option_selec {height: 40px;}
-.pay_option_selec .pay_option_wrap {display: inline-block; height: inherit; color: #cbcbcb; font-size: 20px;}
-.pay_option_selec .pay_option:checked + label {color: #282c37;}
-.pay_option_selec .pay_option_wrap:nth-child(1) {width: 88px; text-align: left;}
-.pay_option_selec .pay_option_wrap:nth-child(2) {width: 74px; text-align: center;}
-.pay_option_selec .pay_option_wrap:nth-child(3) {width: 74px; margin-right: 5px; text-align: right;}
-.pay_option_selec .pay_option_wrap span {line-height: 25px; font-size: 11px;}
 
 /* 환율 설정 */
 .apply_exchange_rate {position: relative; width: inherit; height: 80px; border: 1px solid #cbcbcb; border-radius: 0.25em;}
@@ -85,14 +77,31 @@ span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border
 .apply_exchange_rate > div > span {line-height: 42px; color: #cbcbcb;}
 .exchange_rate_btn {width: 90px; height: 21px; line-height: 21px; color: #fff; font-size: 11px; text-align: center; background-color: #f2c029 !important; border-radius: 0.7em;}
 
+/* 카테고리 선택 */
+.category_selec {background-color: green;}
+
+
 /* 항목명 */
-.item {width: inherit;}
-.item input {width: inherit; height: 28px; margin-top: 20px; line-height: 28px; text-align: center; font-size: 12px; background-color: #cbcbcb;}
+.item {position: relative; width: inherit; margin-top: 15px; text-align:left;}
+.item input {width: inherit; height: 28px; line-height: 28px; text-align: center; font-size: 12px; background-color: #cbcbcb;}
+
+/* 유형 선택 및 추가 입력 */
+.option_wrap {width: 100%; margin-top: 10px;}
+.pay_option_selec, .add_option_selec {position: relative; float: left;}
+.pay_option_selec {width:50%;}
+.add_option_selec {margin-left: 6%; width:44%;}
+.pay_option_selec > .txt, .add_option_selec > .txt {position: absolute; top: 0; left: 0; font-size: 12px; font-weight: 700; text-align: left;}
+.pay_option_selec .pay_option_wrap, .add_option_selec .add_option_wrap {display: inline-block; font-size: 15px; text-align: center; vertical-align: top;}
+.pay_option_selec .pay_option_wrap {width: 17%; color: #cbcbcb;}
+.add_option_selec .add_option_wrap {width: 24%;}
+.pay_option_selec .pay_option_wrap .txt, .add_option_selec .add_option_wrap .txt {font-size: 10px;}
+.pay_option_selec .pay_option:checked + label {color: #282c37;}
+.add_option_selec .file {margin-left: 6px;}
 
 /* 계산기 */
 .cal_btns > div:first-child {position: relative;}
 .expression, .ac {float: right;}
-.expression {width: 180px; height: 58px; margin-left: 12px; padding: 0 8px; font-size: 13px; text-align: right;}
+.expression {width: 180px; height: 58px; margin-left: 12px; padding: 0 8px; font-size: 15px; text-align: right;}
 .cal_btns .cal_btn {width: 60px; height: 58px; font-size: 20px; border: 1px solid #ccc; border-radius: 0.25em; box-sizing: border-box;}
 .cal_left, .cal_right {float: left;}
 .cal_left > div, .cal_right .cal_btn {margin-top: 4px;}
@@ -100,10 +109,11 @@ span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border
 .cal_right {width: 60px;}
 
 /* 버튼 */
-.act_btn {position: relative; height: 40px; margin-top: 20px;}
-.act_btn a {position: absolute; top: 0; width: 65px; height: inherit; line-height: 40px; color: #fff; text-align: center; background-color: #30a9de; border-radius: 0.25em;}
-.act_btn a:first-child {right: 90px;}
-.act_btn a:last-child {right: 0;}
+.act_btns {position: relative; height: 40px; margin-top: 20px;}
+.act_btns .act_btn {position: absolute; top: 0; width: 65px; height: inherit; line-height: 40px; text-align: center; border-radius: 0.25em;}
+.act_btns .save_btn {right: 90px; color: #fff; background-color: #30a9de;}
+.act_btns .save_btn:active {position: relative; top: 0;}
+.act_btns .close_btn {right: 0; color: #30a9de; border: 1px solid #30a9de; box-sizing: border-box;}
 
 /* 테이블 */
 .detail_table {margin-top: 20px; margin-bottom: 100px; font-size: 14px;}

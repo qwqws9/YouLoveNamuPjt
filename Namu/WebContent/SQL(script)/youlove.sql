@@ -134,16 +134,16 @@ CREATE TABLE POLICE (
 
 CREATE TABLE COMMENTS ( 
    COMMENT_CODE          NUMBER(10) PRIMARY KEY   ,
-   DETAIL_CODE           NUMBER(10)   ,
-   COMMENT_CONTENT       VARCHAR2(1000)   ,
-   COMMENT_DATE          DATE   ,
    BOARD_CODE             NUMBER(10)   ,
-   STAR                   NUMBER(10)   ,
+   DETAIL_CODE           VARCHAR2(100)   ,
+   COMMENT_CONTENT       VARCHAR2(1000)   ,
    STEP                     NUMBER(10)   ,
-    REPLY_CODE                NUMBER(10)
-);  
-
-
+   REPLY_CODE                NUMBER(10),
+   COMMENT_DATE          VARCHAR2(100),
+   WRITER_COMMENT   VARCHAR2(100)  ,
+   COMMENT_DELETE   NUMBER(1)
+   
+);   
 
 CREATE TABLE LIKES ( 
     LIKE_CODE           NUMBER(10) PRIMARY KEY,
@@ -437,6 +437,7 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
+   
 VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
 
 INSERT 

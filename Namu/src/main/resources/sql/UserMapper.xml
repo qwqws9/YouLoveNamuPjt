@@ -49,6 +49,12 @@
 			<if test="phone != null" >
 				NAME = #{findInfo} AND PHONE = #{phone}
 			</if>
+			<if test="nickname != null" >
+				NICKNAME = #{nickname}
+			</if>
+			<if test="userCode != null" >
+				USER_CODE = #{userCode}
+			</if>
 		</where> 
 	 </select>
 	 

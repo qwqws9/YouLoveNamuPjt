@@ -59,6 +59,14 @@
 		<input type="text" id="cityName">
 		<input type="button"  class="btn btn-lg-6 btn-primary btn-block" id="getCity" value="도시가져오기">
 		
+		
+		
+		<jsp:include page="../comment/getComment.jsp" >
+      	<jsp:param value="${boardCode1 }" name="boardCode"/>
+      	<jsp:param value="${detailCode1 }" name="detailCode"/>
+      </jsp:include>
+      
+		
 		<script type="text/javascript">
 		
 		

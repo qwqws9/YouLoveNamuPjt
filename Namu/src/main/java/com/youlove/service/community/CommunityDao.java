@@ -14,12 +14,15 @@ public interface CommunityDao {
 	
 	public List<Community> getCommunityList(Map<String,Object> map) throws Exception;
 	
+	public List<Community> getCommunityBestList(Map<String,Object> map) throws Exception;
+	
 	public void updateCommunity(Community community) throws Exception;
 	
 	public void deleteCommunity(int communityCode) throws Exception;
 	
 	public int getTotalCount(Search search) throws Exception ;
 
-	public void countCommunity(int communityCode) throws Exception;
+	public void countCommunity(Community community) throws Exception;
+	
 }
 	

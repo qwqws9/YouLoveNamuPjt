@@ -1,26 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
+
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>getCommunityBBS</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 	
 	<script>
 		$(function(){
-			var communityCode = encodeURI($("#communityCode"));
+			var communityCode = $("#communityCode").val();
 			
 			$("#update").on("click",function(){
-				self.location = "/community/updateCommunity?communityCode="+communityCode;
+				self.location = "/community/updateCommunityView?communityCode="+$("#communityCode").val();
 			})
 			$("#delete").on("click",function(){
-				self.location = "/community/deleteCommunity?communityCode="+communityCode;
+				self.location = "/community/deleteCommunity?communityCode="+$("#communityCode").val();
 			})
+			
+			
 			
 		})
 		
@@ -29,16 +33,44 @@
 </head>
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
-<!-- <div class="col-xs-1"></div> -->
+<br><br><br><br><br>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        	게시물을 삭제 하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="delete" >삭제</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid col-10">
 
 	<input id="communityCode" type="hidden" value="${community.communityCode}" >
 	<div class="row">
 		<div class="col-12">
-		<h4 style="resize: none; display: inline-blocke">
-			<strong>${community.communityTitle }&nbsp;&nbsp;</strong>
-			<small style="font-size: xx-small;">${community.communityDate }&nbsp;&nbsp;</small>
-		</h4>
+			<div class="col-2 order-1">
+				<a href="#"><img src="/resources/images/dog.JPG"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="60px" height="60px"></a>
+			</div>
+			<div class="col-2 order-2" id="profile-nickname" style="position: absolute; top: 12px; left: 88px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
+				<div class="text-muted" style="font-size:medium;">Writer.</div>
+				<div style="font-size:medium; color:#344157;">${community.writer}</div>
+			</div>
 		</div>
 	</div>
 	
@@ -46,14 +78,13 @@
 	<div class="row" style="margin-bottom: 10px;">
 		<div class="col-12">
 			<div class="row" id="profile" style="position: relative; ">
-				<div class="col-1 order-1" id="profile-image">
-					<a href="#"><img src="/resources/images/dog.JPG"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="45px" height="45px"></a>
+				<div class="col-3 order-1"  id="profile-image">
+					<h4 style="resize: none; display: inline-blocke;">
+						<strong style="font-size: xx-large;">${community.communityTitle }&nbsp;&nbsp;</strong>
+						<small style="font-size: medium;">${community.communityDate }&nbsp;&nbsp;</small>
+					</h4>
 				</div>
-				<div class="col order-2" id="profile-nickname" style="position: absolute; top: 10px; left: 52px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
-					<div class="text-muted" style="font-size:x-small;">Writer.</div>
-					<div style="font-size:small; color:#344157;">${community.writer}</div>
-				</div>
-				<div class="col-1 order-last" id="getCount" style="position: absolute; font-size: x-small; right: 0px; bottom: 0px;"> 
+				<div class="col-2 order-last" align="right" id="getCount" style="position: absolute; font-size: medium; right: 0px; bottom: 0px;"> 
 					조회수&nbsp;${community.views}
 				</div>
 			</div>
@@ -72,20 +103,29 @@
 	
 	<div class="row" style="margin-top: 8px;">
 		<div class="col-6">
-			<span class="badge badge-pill" style="border: 1px solid black;">
+			<div class="badge badge-pill" style="border: 1px solid black;">
 				<button type="button" style="border: none; background: none;">
-					<i class="far fa-heart" ></i>
+					<i class="far fa-heart fa-lg" ></i>
 				</button>
 				<span style="font-size: 11px;">20</span>
-				<button style="border: none; background: none;">
-					<i class="fas fa-ellipsis-v"></i>
-				</button>
-			</span>
+				
+				
+				<div class="btn-group dropright" style="height: 18px;">
+					<button type="button" class="btn" style="position:relative; border: none; background: none;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-ellipsis-v fa-sm" style="position: absolute; bottom: 1px;"></i>
+					</button>
+					<div class="dropdown-menu">
+						<a>신고하기</a>
+					</div>
+				</div>
+				
+				
+			</div>
 		</div>
 		<div class="col-6" align="right" style="bottom: 5px;" >
-			<button style="border: none; background: none;" id="update"><span style="font-size: 10px" >수정</span></button>
+			<button style="border: none; background: none;" id="update"><span style="font-size: 13px" >수정</span></button>
 			<span style="font-size: 8px">|</span>
-			<button style="border: none; background: none;" id="delete"><span style="font-size: 10px" >삭제</span></button>
+			<button style="border: none; background: none;" data-toggle="modal" data-target="#exampleModal"><span style="font-size: 13px" >삭제</span></button>
 		</div>
 	</div>
 	
@@ -93,12 +133,12 @@
 	
 	<div class="row no-gutters">
 		<div class="col-1">
-			<strong style="font-size: 15px;">#Hashtag</strong>
+			<strong style="font-size: 17px;">#Hashtag</strong>
 		</div>
 		<div class="col-11">
 			<div class="alert alert-light" role="alert">
 				<c:forEach var="hashtag" begin="0" end="40" step="1">
-				    <button type="button" class="btn btn-outline-dark " style="height: 20px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
+				    <button type="button" class="btn btn-outline-dark " style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
 				    	<span style="font-size: 13px;">#Paris</span>
 				    </button>
 				</c:forEach>
@@ -110,10 +150,10 @@
 	
 	<div class="row">
 		<div class="col-6">
-			<strong style="font-size: 15px;">관련글</strong>
+			<strong style="font-size: 17px;">관련글</strong>
 		</div>
 		<div class="col-3 offset-3" align="right">
-			<span id="more" style="font-size: 10px; cursor: pointer;">관련글 더보기</span>
+			<span id="more" style="font-size: medium; cursor: pointer;">관련글 더보기</span>
 		</div>
 	</div>
 	
@@ -145,7 +185,7 @@
 				</div>
 				<div class="align-self-start" id="profile-nickname"><!-- style="position: absolute; top: 10px; left: 52px;" -->
 					<div class="col-10 offset-1">
-						<span onclick="#" style="font-size: 13px; color:#3c64a6;">${community.writer}</span>
+						<span style="font-size: 13px; color:#3c64a6;">${community.writer}</span>
 						<span style="font-size: 9px">19.06.27 15:26</span>
 						<span style="font-size: 8px">|</span>
 						<span style="font-size: 9px">신고</span>
