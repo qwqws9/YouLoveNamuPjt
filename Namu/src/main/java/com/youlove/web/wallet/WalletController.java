@@ -26,7 +26,7 @@ public class WalletController {
 		System.out.println(this.getClass());
 	}
 	
-	@RequestMapping(value="walletList", method=RequestMethod.GET)
+	@RequestMapping(value="getWalletList", method=RequestMethod.GET)
 	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode) throws Exception{
 		
 		System.out.println("/wallet/getWalletList : GET");
@@ -35,7 +35,7 @@ public class WalletController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("list", map.get("list"));
-		modelAndView.setViewName("/wallet/walletList.jsp");
+		modelAndView.setViewName("/wallet/getWalletList.jsp");
 		
 		return modelAndView;
 		
