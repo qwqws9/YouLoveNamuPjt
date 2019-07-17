@@ -14,9 +14,9 @@ public class Community {
 	private String openRange;
 	private int views;
 	private int writer;
-	private String city;
+	private City city;
 	private String communityHashtag; 
-	private int communityHashtagCode;
+	private Hashtag communityHashtagCode;
 	
 	
 	///Constructor
@@ -96,11 +96,11 @@ public class Community {
 		this.writer = writer;
 	}
 
-	public String getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 
@@ -112,11 +112,11 @@ public class Community {
 		this.communityHashtag = communityHashtag;
 	}
 
-	public int getCommunityHashtagCode() {
+	public Hashtag getCommunityHashtagCode() {
 		return communityHashtagCode;
 	}
 
-	public void setCommunityHashtagCode(int communityHashtagCode) {
+	public void setCommunityHashtagCode(Hashtag communityHashtagCode) {
 		this.communityHashtagCode = communityHashtagCode;
 	}
 

@@ -81,50 +81,47 @@ public class CommunityController {
 			FileCopyUtils.copy(file.getBytes(),target);
 			safeFile += originFileName;
 		}else { safeFile += "noThumbnail.png"; }
+		
+		Hashtag HashVo = new Hashtag();
+		System.out.println(HashVo.getCommunityCode());
+		//HashVo.setCommunityCode(community.getCommunityCode());
+		HashVo.setHashtag(hashtag);
+		HashVo.setWriter(1);
+		hashtagService.addHashtag(HashVo);
+		
 		community.setCommunityThumbnail(safeFile);
 		community.setWriter(1);
-		community.setCommunityHashtagCode(1);
+		community.setCommunityHashtagCode(HashVo);
 		communityService.addCommunity(community);
 		
 		
-		
-		
-//		HashtagController hashtagController = new HashtagController();
-//		Hashtag HashVo = new Hashtag();
-//		HashVo.setCommunityCode(community.getCommunityCode());
-//		HashVo.setHashtag(hashtag);
-//		HashVo.setWriter(community.getWriter());
-//		hashtagController.addHashtag(HashVo);
-		
-		
-		
-		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode()+"&hashtag="+hashtag);
+		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode());
 		System.out.println("\nCommunityController:::addCommunity() 끝:::");
 		return modelAndView;
 	} 
 	
 	@RequestMapping(value="getCommunity",method= {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView getCommunity(@RequestParam(value="communityCode") int communityCode,
-									 @RequestParam(value="hashtag", required=false)String hashtag)throws Exception {
+	public ModelAndView getCommunity(@RequestParam(value="communityCode") int communityCode)throws Exception {
 		System.out.println("\nCommunityController:::getCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/community/getCommunity.jsp");
-		System.out.println(hashtag);
 		Community community = communityService.getCommunity(communityCode);
+		Hashtag hashtag = community.getCommunityHashtagCode();
+		int hashtagCode = hashtag.getHashtagCode();
 		
-//		HashtagController hashtagController = new HashtagController();
-//		Hashtag HashVo = new Hashtag();
-//		HashVo.setCommunityCode(communityCode);
-//		HashVo.setHashtag(hashtag);
-//		HashVo.setWriter(community.getWriter());
-//		int hashtagCode = hashtagController.addHashtag(HashVo);
-//		System.out.println("hashtagCode = "+hashtagCode);
-//		community.setCommunityHashtagCode(hashtagCode);
-//		
-//		communityService.updateCommunity(community);
-//		
+		Map<String,Object> map = new HashMap<String, Object>(); 
+		System.out.println("1");
+		if(hashtagCode != 0) {
+			System.out.println("2");
+			hashtagService.updateCode(true,communityCode,hashtagCode);
+			System.out.println("3");
+			map = hashtagService.getHashtag(hashtagCode);
+			System.out.println("4");
+		}
+		System.out.println("hashtagCode = "+hashtagCode);
 		
 		
+		modelAndView.addObject("hashtag", map.get("hashtag"));
 		modelAndView.addObject("community", community);
 		System.out.println("\nCommunityController:::getCommunity() 끝:::");
 		return modelAndView;
@@ -140,15 +137,14 @@ public class CommunityController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		System.out.println("end = "+search.getEndRowNum());
-		System.out.println("strat = "+search.getStartRowNum());
 		
 		
 		Map<String,Object> map = new HashMap<String, Object>();
 		map.put("communityBoard", communityBoard);
 		map.put("search", search);
-		
 		map = communityService.getCommunityList(map);
+		
+		
 		
 		/*map.put("search", search);
 		map = communityService.getCommunityList(search);*/
@@ -188,7 +184,7 @@ public class CommunityController {
 		community.setCommunityThumbnail(safeFile);
 		community.setWriter(1);
 		community.setOpenRange("1");
-		community.setCommunityHashtagCode(1);
+		//community.setCommunityHashtagCode(1);
 		communityService.updateCommunity(community);
 		
 		

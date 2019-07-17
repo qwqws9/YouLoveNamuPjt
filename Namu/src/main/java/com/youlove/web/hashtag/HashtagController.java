@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.youlove.service.domain.Hashtag;
@@ -23,7 +24,7 @@ public class HashtagController {
 	@Autowired
 	@Qualifier("hashtagServiceImpl")
 	private HashtagService hashtagService;
-		
+	
 	public HashtagController(){
 		System.out.println(this.getClass());
 	}
@@ -47,10 +48,9 @@ public class HashtagController {
 		
 		System.out.println(hashtag.getCommunityCode());
 		System.out.println("\nHashtagController:::addHashtag() 끝:::");
-		return hashtag.getCommunityCode();
+		return hashtag.getHashtagCode();
 	} 
 	
-
 	
 }//end of class
 

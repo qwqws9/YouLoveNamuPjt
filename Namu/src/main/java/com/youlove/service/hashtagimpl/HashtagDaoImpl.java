@@ -1,6 +1,8 @@
 package com.youlove.service.hashtagimpl;
 
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,8 +33,8 @@ public class HashtagDaoImpl implements HashtagDao {
 		this.sqlSession.insert("HashtagMapper.addHashtag",hashtag);
 	}
 	@Override
-	public void getHashtag(Hashtag hashtag) throws Exception {
-		
+	public Hashtag getHashtag(int hashtagCode) throws Exception {
+		return sqlSession.selectOne("HashtagMapper.getHashtag",hashtagCode);
 	}
 	@Override
 	public void updateHashtag(Hashtag hashtag) throws Exception {
@@ -41,6 +43,10 @@ public class HashtagDaoImpl implements HashtagDao {
 	@Override
 	public void deleteHashtag(Hashtag hashtag) throws Exception {
 		
+	}
+	@Override
+	public void updateCode(Map<String,Object> map) throws Exception {
+		sqlSession.update("HashtagMapper.updateCode", map);
 	}
 
 		
