@@ -1,5 +1,7 @@
 package com.youlove.service.likeImpl;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +33,13 @@ public class LikeDaoImpl implements LikeDao {
 	public Like getCount(Like like) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int checkLike(Map<String, Object> map) throws Exception {
+		
+		
+		return sqlSession.selectOne("LikeMapper.checkLike",map);
 	}
 
 }

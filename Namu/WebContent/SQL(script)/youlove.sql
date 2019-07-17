@@ -203,8 +203,8 @@ CREATE TABLE route (
    city_order                NUMBER(2),
    lat 								VARCHAR2(100),
    lng 							VARCHAR2(100),
-   start_Date                     VARCHAR2(8),
-    end_Date                     VARCHAR2(8),
+   start_Date                     date,
+    end_Date                     date,
   
    PRIMARY KEY(route_code)
 );
@@ -221,7 +221,7 @@ CREATE TABLE schedule(
    SCHE_NAME VARCHAR2(500) NOT NULL,
    SCHE_place VARCHAR2(200),
    SCHE_detail VARCHAR2(2000),
-   accomotadion VARCHAR2(200),
+   accomodation VARCHAR2(200),
    PRIMARY KEY(sche_code)
 );
 
@@ -464,11 +464,11 @@ INTO planner ( planner_code , user_code, planner_name , planner_image , member ,
 VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
 
 
-INSERT INTO wallet VALUES ( seq_w_code, 1, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code, 2, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code, 3, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code, 4, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code, 5, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 5, 'EUR');
 
 
 commit;

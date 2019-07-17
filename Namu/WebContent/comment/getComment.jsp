@@ -81,18 +81,48 @@
 
 
 $(document).on("click",".like",function(){  
-	var userCode = ${user.userCode};
+	var userCode = $('#sessionId').val();
 	
 		//console.log($(this).children().attr('class'));
 		if($(this).children().attr('class') == 'fas fa-heart') {
-			$(this).html('<i class="far fa-heart"></i>추천수들어갈곳');
+			$(this).html('<i class="far fa-heart"></i>');
 			deleteLike($(this).parents('div').children().val(),userCode);
+			
 		}else {
-			$(this).html('<i class="fas fa-heart" style="color:red;"></i>추천수들어갈곳');
+			$(this).html('<i class="fas fa-heart" style="color:red;"></i>');
 			$(this).parents('div').children().val();
 			addLike($(this).parents('div').children().val(),userCode);
 		}
 	});
+	
+	
+function checkLike(commentCode,userCode) {
+	var result;
+	$.ajax ({
+		url : '/like/json/checkLike',
+		method : 'post',
+		async : false,
+		data : JSON.stringify({
+			commentCode : commentCode,
+			likeName : userCode
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+			if(data == true) {
+				result = true;
+				//return true;
+			}else {
+				//return false;
+				result = false;
+			}
+		}
+	})
+	//alert(result);
+	return result;
+}
 
 
 function addLike(commentCode,likeName) {
@@ -105,13 +135,16 @@ function addLike(commentCode,likeName) {
 			likeName : {
 				userCode : likeName
 			}
+			
 		}),
 		headers : {
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-			alert(data);
+			if(data == true) {
+				getComment($('#boardCode').val(),$('#detailCode').val());
+			}
 		}
 	})
 }
@@ -132,7 +165,9 @@ function deleteLike(commentCode,likeName) {
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-			alert(data);
+			if(data == true) {
+				getComment($('#boardCode').val(),$('#detailCode').val());
+			}
 		}
 	})
 }
@@ -153,10 +188,6 @@ function deleteLike(commentCode,likeName) {
 	$(function(){
 		
 		getComment($('#boardCode').val(),$('#detailCode').val());
-		
-		
-		
-		
 	});
 	
 	
@@ -393,7 +424,7 @@ function deleteLike(commentCode,likeName) {
 			    		+'		<span class="apto-'+index+' d-block" style="position:relative;">'
 			    		+'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
 			    		+'       	<button class="like" type="button" style="border:none; background: none">'
-			    		+'        		<i class="far fa-heart"></i>추천수들어갈곳'
+			    		+'        		<i class="far fa-heart"></i>&nbsp;'+item.likeCount
 			    		+'        	</button>'
 			    		+'        	<small>'+item.commentDate+'</small>&nbsp;&nbsp;&nbsp;'
 			    		
@@ -411,6 +442,15 @@ function deleteLike(commentCode,likeName) {
 						if(item.commentDelete == 0) {
 							$('<button class="reply" style="color:#4285F4; border:none; background: none;"><i class="fas fa-reply"></i>답글</button>&nbsp;&nbsp;').appendTo('.apto-'+index);
 						}
+						if(userCode != '') {
+							//alert("들어옴");
+							//alert(result);
+						var result = checkLike(item.commentCode,userCode);
+						if(result == true) {
+							$('.apto-'+index).find('button[class="like"]').children().attr('class','fas fa-heart').css('color','red');
+							//$('<i class="fas fa-heart" style="color:red;"></i>'+item.likeCount).appendTo('.apto-'+index+'.like');
+						}
+						}
 					//대댓글
 					}else {
 						
@@ -423,7 +463,7 @@ function deleteLike(commentCode,likeName) {
 					   +'    	<span class="aptoo-'+index+' d-block" style="position:relative;">'
 					   +'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 
 					   +'       	<button class="like" type="button" style="border:none; background: none">'
-					   +'       		<i class="far fa-heart"></i>추천수들어갈곳'
+					   +'       		<i class="far fa-heart"></i>&nbsp;'+item.likeCount
 					   +'       	</button>'
 					   +'       	<small>'+item.commentDate+'</small>&nbsp;&nbsp;&nbsp;'
 					   +'       </span>'
@@ -437,6 +477,25 @@ function deleteLike(commentCode,likeName) {
 							$('<button class="commentEdit" style="position: absolute; right: 50px; border:none; background: none;">수정</button>').appendTo('.aptoo-'+index);
 							$('<button class="commentDelete" style="position: absolute; right: 0px; border:none; background: none;">삭제</button>').appendTo('.aptoo-'+index);
 						}
+						
+						//유저정보랑 댓글코드를 줘서 일치하는값이 있으면 빨간하트 else 빈하트
+						if(userCode != '') {
+							//alert("들어옴");
+						var result = checkLike(item.commentCode,userCode);
+						//alert(result);
+						if(result == true) {
+							//$('<i class="fas fa-heart" style="color:red;"></i>'+item.likeCount).appendTo('.aptoo-'+index+'.like');
+							$('.aptoo-'+index).find('button[class="like"]').children().attr('class','fas fa-heart').css('color','red');
+						}
+						}
+// 						}else {
+// 							$('<i class="far fa-heart"></i>&nbsp;'+item.likeCount).appendTo('.aptoo-'+index+'.like');
+// 						}
+// 						}else {
+// 							$('<i class="far fa-heart"></i>&nbsp;'+item.likeCount).appendTo('.aptoo-'+index+'.like');
+// 						}
+						
+						
 						//대댓글은 답글이 없음
 // 						if(item.commentDelete == 0) {
 // 							$('<button class="reply" style="color:#4285F4; border:none; background: none;"><i class="fas fa-reply"></i>답글</button>&nbsp;&nbsp;').appendTo('.aptoo-'+index);
@@ -521,7 +580,7 @@ function deleteLike(commentCode,likeName) {
 				if(JSONData % $("#pageSize").val() > 0) {
 					totalPage++;
 				}
-				console.log(totalPage + "ddadad토탈");
+				//console.log(totalPage + "ddadad토탈");
 				$('.pageMent').remove();
 				var currentPage = $('#currentPage').val();
 				var pageCount = $('#pageCount').val();
@@ -545,10 +604,10 @@ function deleteLike(commentCode,likeName) {
 				if(endPage >= totalPage) {
 					endPage = totalPage;
 				}
-				console.log("startPage : " + startPage);
-				console.log("endPage : " + endPage);
-				console.log("currentPage : " + currentPage);
-				console.log("pageCount : " + pageCount);
+				//console.log("startPage : " + startPage);
+				//console.log("endPage : " + endPage);
+				//console.log("currentPage : " + currentPage);
+				//console.log("pageCount : " + pageCount);
 				
 				for(var i = startPage; i <= endPage; i++) {
 					//$('<li class="pageMent page-item"> <button class="viewPage page-link">'+(i+1)+'</button> </li>').appendTo('li.preBtn');
@@ -569,7 +628,7 @@ function deleteLike(commentCode,likeName) {
 				//nexBtn
 				var pageSize = $('#pageSize').val();
 				// pageSize * 밑에 몇개씩 보여줄지 숫자 > 댓글 수
-				console.log(JSONData + " : 댓글 수 ")
+				//console.log(JSONData + " : 댓글 수 ")
 				if( (currentPage * pageCount ) < JSONData ) {
 					
 					

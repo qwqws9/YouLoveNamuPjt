@@ -33,17 +33,17 @@
 	 	</if>
 	 </delete>
 	 
+	 <select id="checkLike" parameterType="map" resultType="int">
+	 SELECT count(*) 
+	 FROM LIKES 
+	 WHERE
+	 <if test="boardCode == null">
+	 COMMENT_CODE = #{commentCode} AND LIKE_NAME = #{likeName}
+	 </if> 
+	 <if test="boardCode != null">
+	 BOARD_CODE = #{boardCode} AND DETAIL_CODE = #{detailCode} AND LIKE_NAME = #{likeName}
+	 </if> 
 	 
-	 <select id="getLike" parameterType="like" resultMap="likeMap">
-	 	select count(*) 
-	 	from likes 
-	 	where 
-	 	<if test="boardCode != 0">
-	 		BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode} and LIKE_NAME = #{likeName.userCode}
-	 	</if>
-	 	<if test="commentCode != 0">
-	 		COMMENT_CODE = #{commentCode}
-	 	</if>
 	 </select>
 	
 	

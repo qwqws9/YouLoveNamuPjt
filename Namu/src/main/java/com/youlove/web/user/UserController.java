@@ -1,6 +1,11 @@
 package com.youlove.web.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +32,33 @@ public class UserController {
 	public UserController() {
 		System.out.println(this.getClass());
 	}
+	
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+	public String login(@ModelAttribute User user,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		
+		System.out.println("/user/login : POST");
+		
+		System.out.println(user.getUserId() + "  qweqwewqeqeqeqweqweqweqweqweqwe");
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("login", user.getUserId());
+		
+		User dbUser = userService.getUser(map);
+		
+		
+		session.setAttribute("user", dbUser);
+		
+
+		Cookie c = new Cookie("users",dbUser.getNickname());
+		c.setMaxAge(365 * 24 * 60 * 60);
+		c.setPath("/");
+		response.addCookie(c);
+		
+		
+		
+		return "redirect:/";
+	}
+	
 	
 	@RequestMapping(value="/loginView",method=RequestMethod.GET)
 	public String loginView(HttpServletRequest request,Model model) throws Exception{

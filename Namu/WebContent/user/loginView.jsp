@@ -25,9 +25,9 @@
 		  				<h1 class="h3 mb-3 font-weight-normal">You Love</h1>
 					</div>
 					<div class="col">
-			  			<input type="text" id="userId"  class="form-control" placeholder="Email Address & Phone Number" style="width: 400px;" autofocus>
+			  			<input type="text" id="userId" name="userId"  class="form-control" placeholder="Email Address & Phone Number" style="width: 400px;" autofocus>
 			  			<br>
-			  			<input type="password" id="password" class="form-control" placeholder="Password" >
+			  			<input type="password" id="password" name="password" class="form-control" placeholder="Password" >
 			  			<br>
 			  			<div id="errorMessage" style="font-size: 12px; color: red"></div>
 			  			<br>
@@ -158,7 +158,9 @@
 					//alert(JSONData);
 					if(JSONData != "") {
 						//alert("정보가있음");
-						self.location = '/';
+						//self.location = '/';
+						//alert(JSONData.userCode);
+						login();
 					}else {
 						//alert("정보가없음");
 						$('#errorMessage').text('아이디 또는 비밀번호를 확인해주세요');
@@ -175,6 +177,10 @@
 		}); // end login event
 		
 	});
+	
+	function login() {
+		$('form').attr('method','post').attr('action','/user/login').submit();
+	}
 </script>
 
 </body>
