@@ -1,6 +1,6 @@
 package com.youlove.service.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 public class Route {
@@ -15,8 +15,9 @@ public class Route {
 	private String lng;
 	private int stayDay;
 	private int cityOrder;
-	private String startDate;
-	private String endDate;
+	
+	private Date startDate;
+	private Date endDate;
 	
 	
 	///Constructor
@@ -103,21 +104,21 @@ public class Route {
 	}
 
 
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

@@ -1,5 +1,7 @@
 package com.youlove.service.plannerimpl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,14 +26,34 @@ public class PlannerDaoImpl implements PlannerDao{
 		this.sqlSession = sqlSession;
 	}
 	
-
+	//1. planner
 	@Override
 	public void addPlanner(Planner planner) throws Exception {
 		sqlSession.insert("PlannerMapper.addPlanner", planner);
 		
-	}@Override
+	}
+	@Override
+	public Planner getPlanner(int plannerCode) throws Exception {
+			return sqlSession.selectOne("PlanMapper.getPlanner", plannerCode);
+		}
+	
+	
+	//2. route 
+	@Override
 	public void addRoute(Route route) throws Exception {
 		sqlSession.insert("PlannerMapper.addRoute", route);
 	}
+
+	@Override
+	public Route getRoute(int routeCode) throws Exception {
+		return sqlSession.selectOne("RouteMapper.getRoute",routeCode);
+	}
+
+	@Override
+	public List<Route> getRouteList(int plannerCode) throws Exception {
+	
+		return sqlSession.selectList("RouteMapper.getRouteList",plannerCode);
+}
+	
 	
 }
