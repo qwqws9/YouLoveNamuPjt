@@ -76,180 +76,11 @@
 				</div><!-- //total_table -->
 				
 				<div class="plus_btns">
-					<a href="javascript:void(0);" class="modal_btn">예산 추가 <i class="fas fa-plus-square"></i></a>
-					<form class="pop_wrap_parent" id="save_income_form">
-						<input type="hidden" name="walletCode" value="2" />
-						<input type="hidden" name="part" value="0" />
-						<input type="hidden" name="category" value="0" />
-						<div class="pop_wrap clear">
-							<div class="pop_left">
-								<div class="result_top">
-									<input type="text" class="date_time" name="regDate" readonly />
-								
-									<select class="unit_selec" name="moneyUnit">
-										<option value="KRW">KRW</option>
-										<option value="EUR">EUR</option>
-									</select>
-									<div class="result">
-										<input type="text" class="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
-										<span class="krw_price">KRW 6,204.08</span>
-									</div>
-								</div><!-- //result_top -->
-								
-								<div class="apply_exchange_rate">
-									<span>환율</span>
-									<div>
-										<span>EUR 1.00 = KRW <span>1,312.22</span></span><br/>
-										<input type="hidden" class="exchange_rate" name="exchangeRate" value="1312.22">
-										<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
-									</div>
-								</div><!-- //apply_exchange_rate -->
-								
-								<div class="item">
-									<input type="text" name="item" placeholder="항목명을 기입해주세요." />
-								</div>
-								
-								<div class="option_wrap clear">
-									<div class="pay_option_selec">
-										<span class="txt">유형 선택</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="no" class="pay_option" name="payOption" value="0" checked /><label for="no"><i class="fas fa-wallet"></i><br/><span class="txt">구분<br/>없음</span></label>
-										</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="cash" class="pay_option" name="payOption" value="1" /><label for="cash"><i class="fas fa-money-bill-alt"></i><br/><span class="txt">현금</span></label>
-										</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="card" class="pay_option" name="payOption" value="2" /><label for="card"><i class="fas fa-credit-card"></i><br/><span class="txt">카드</span></label>
-										</span>
-									</div><!-- //pay_option_selec -->
-									
-									<div class="add_option_selec">
-										<span class="txt">추가 입력</span>
-										<span class="add_option_wrap">
-											<a href="javascript:void(0);"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span></a>
-										</span>
-										<span class="add_option_wrap">
-											<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
-											<input type="file" name="file" id="file">
-										</span>
-									</div><!-- //add_option_selec -->
-								</div><!-- //option_wrap -->
-							</div><!-- //pop_left -->
-							
-							<div class="cal_btns">
-								<div class="clear">
-									<input type="text" class="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
-								</div>
-								<div class="clear">
-									<div class="cal_left">
-										<div>
-											<input type="button" class="cal_btn" value="1"><input type="button" class="cal_btn" value="2"><input type="button" class="cal_btn" value="3">
-										</div>
-										<div>
-											<input type="button" class="cal_btn" value="4"><input type="button" class="cal_btn" value="5"><input type="button" class="cal_btn" value="6">
-										</div>
-										<div>
-											<input type="button" class="cal_btn" value="7"><input type="button" class="cal_btn" value="8"><input type="button" class="cal_btn" value="9">
-										</div>
-										<div>
-											<input type="button" class="cal_btn" value="0"><input type="button" class="cal_btn real" value="."><input type="button" class="cal_btn back" value="back">
-										</div>
-									</div>
-									<div class="cal_right">
-										<input type="button" class="cal_btn operator" value="+"><input type="button" class="cal_btn operator" value="-"><input type="button" class="cal_btn operator" value="*"><input type="button" class="cal_btn operator" value="/">
-									</div>
-								</div>
-								<div class="act_btns">
-									<button class="act_btn save_btn">저장</button><a href="javascript:void(0);" class="act_btn close_btn">취소</a>
-								</div>
-							</div><!-- //cal_btns -->
-						</div><!-- //pop_wrap -->
-					</form><!-- //pop_wrap_parent -->
+					<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
+					<form class="pop_wrap_add" id="save_income_form"></form>
 					&nbsp;&nbsp;&nbsp;
-					<a href="javascript:void(0);" class="modal_btn">지출 추가 <i class="fas fa-plus-square"></i></a>
-					<form class="pop_wrap_parent" id="save_expenditure_form">
-						<input type="hidden" name="walletCode" value="2" />
-						<input type="hidden" name="part" value="0" />
-						<input type="hidden" name="category" value="0" />
-						<div class="pop_wrap clear">
-							<div class="pop_left">
-								<div class="result_top">
-									<input type="text" class="date_time" name="regDate" readonly />
-
-									<select class="unit_selec" name="moneyUnit">
-										<option value="KRW">KRW</option>
-										<option value="EUR">EUR</option>
-									</select>
-									<div class="result">
-										<input type="text" class="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
-										<span class="krw_price">KRW 6,204.08</span>
-									</div>
-								</div><!-- //result_top -->
-								
-								<div class="category_selec">
-									<input type="radio" id="category_1" class="category" name="category" value="1" /><label for="category_1">기타</label>
-								</div>
-								
-								<div class="item">
-									<input type="text" name="item" placeholder="항목명을 기입해주세요." />
-								</div>
-								
-								<div class="option_wrap clear">
-									<div class="pay_option_selec">
-										<span class="txt">유형 선택</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="no" class="pay_option" name="payOption" value="0" checked /><label for="no"><i class="fas fa-wallet"></i><br/><span class="txt">구분<br/>없음</span></label>
-										</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="cash" class="pay_option" name="payOption" value="1" /><label for="cash"><i class="fas fa-money-bill-alt"></i><br/><span class="txt">현금</span></label>
-										</span>
-										<span class="pay_option_wrap">
-											<input type="radio" id="card" class="pay_option" name="payOption" value="2" /><label for="card"><i class="fas fa-credit-card"></i><br/><span class="txt">카드</span></label>
-										</span>
-									</div><!-- //pay_option_selec -->
-									
-									<div class="add_option_selec">
-										<span class="txt">추가 입력</span>
-										<span class="add_option_wrap">
-											<a href="javascript:void(0);"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span></a>
-										</span>
-										<span class="add_option_wrap">
-											<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
-											<input type="file" name="file" id="file">
-										</span>
-									</div><!-- //add_option_selec -->
-								</div><!-- //option_wrap -->
-							</div><!-- //pop_left -->
-							
-							<div class="cal_btns">
-								<div class="clear">
-									<input type="text" class="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
-								</div>
-								<div class="clear">
-									<div class="cal_left">
-										<div>
-											<input type="button" class="cal_btn" value="1"><input type="button" class="cal_btn" value="2"><input type="button" class="cal_btn" value="3">
-										</div>
-										<div>
-											<input type="button" class="cal_btn" value="4"><input type="button" class="cal_btn" value="5"><input type="button" class="cal_btn" value="6">
-										</div>
-										<div>
-											<input type="button" class="cal_btn" value="7"><input type="button" class="cal_btn" value="8"><input type="button" class="cal_btn" value="9">
-										</div>
-										<div>
-											<input type="button" class="cal_btn" value="0"><input type="button" class="cal_btn real" value="."><input type="button" class="cal_btn back" value="back">
-										</div>
-									</div>
-									<div class="cal_right">
-										<input type="button" class="cal_btn operator" value="+"><input type="button" class="cal_btn operator" value="-"><input type="button" class="cal_btn operator" value="*"><input type="button" class="cal_btn operator" value="/">
-									</div>
-								</div>
-								<div class="act_btns">
-									<button class="act_btn save_btn">저장</button><a href="javascript:void(0);" class="act_btn close_btn">취소</a>
-								</div>
-							</div><!-- //cal_btns -->
-						</div><!-- //pop_wrap -->
-					</form><!-- //pop_wrap_parent -->
+					<a href="javascript:void(0);" class="modal_btn" id="expenditure_modal">지출 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
+					<form class="pop_wrap_add" id="save_expenditure_form"></form>
 				</div><!-- //plus_btns -->
 				
 				<div class="detail_table">
@@ -269,51 +100,74 @@
 						<c:forEach var="wallet" items="${list}">
 							<c:set var="i" value="${i+1}" />
 							<li class="table_row">
-								<span class="table_col">${i}</span>
-								<span class="table_col">
-									${wallet.regDate}
-								</span>
-								<span class="table_col">
-									<c:if test="${wallet.part eq 0}">
-										<span>
-											<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
-											<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-											<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
-											<c:if test="${wallet.payOption eq 2}">
-												&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
+								<a class="detail_line">
+									<span class="table_col">${i}</span>
+									<span class="table_col">
+										${wallet.regDate}
+									</span>
+									<span class="table_col">
+										<c:if test="${wallet.part eq 0}">
+											<span>
+												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+												<c:if test="${wallet.payOption eq 2}">
+													&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
+												</c:if>
+											</span>
+											<span>
+												<c:if test="${wallet.moneyUnit ne 'KRW'}">
+													<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+												</c:if>
+											</span>
+										</c:if>
+									</span>
+									<span class="table_col">
+										<c:if test="${wallet.part eq 1}">
+											<span>
+												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+											</span>
+											<span>
+												<c:if test="${wallet.moneyUnit ne 'KRW'}">
+													<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+												</c:if>
+											</span>
+										</c:if>
+									</span>
+									<span class="table_col">
+										<c:if test="${! empty wallet.item}">
+											${wallet.item}
+										</c:if>
+										<c:if test="${empty wallet.item}">
+											<c:if test="${wallet.part eq 0}">
+												예산 추가
 											</c:if>
-										</span>
-										<span>
-											<c:if test="${wallet.moneyUnit ne 'KRW'}">
-												<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
-											</c:if>
-										</span>
-									</c:if>
-								</span>
-								<span class="table_col">
-									<c:if test="${wallet.part eq 1}">
-										<span>
-											<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-											<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
-										</span>
-										<span>
-											<c:if test="${wallet.moneyUnit ne 'KRW'}">
-												<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
-											</c:if>
-										</span>
-									</c:if>
-								</span>
-								<span class="table_col">
-									${wallet.item}
-								</span>
-								<span class="table_col">
-									<c:if test="${! empty wallet.walletImage}">
-										<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.category}" class="rounded-circle">
-									</c:if>
-									<c:if test="${empty wallet.walletImage}">
-										<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
-									</c:if>
-								</span>
+										</c:if>
+									</span>
+									<span class="table_col">
+										<c:if test="${! empty wallet.walletImage}">
+											<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.category}" class="rounded-circle">
+										</c:if>
+										<c:if test="${empty wallet.walletImage}">
+											<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
+											<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
+											<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
+											<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
+											<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
+											<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
+											<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
+											<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
+											<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+										</c:if>
+									</span>
+								</a>
+								<div class="pop_wrap_contain">
+									<div class="pop_wrap_get">
+										
+									</div>
+								</div>
 							</li>
 						</c:forEach>
 					</ul>
