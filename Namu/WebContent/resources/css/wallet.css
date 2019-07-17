@@ -158,5 +158,11 @@ a.day_btn span {color: #fff;}
 .table_col img {width: 60px; height: 60px; border: 1px solid #6c757d;}
 
 /* 수입 및 지출 get 팝업 */
-.pop_wrap_contain {display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0,0,0,0.4); z-index: 100;}
-.pop_wrap_get {position:fixed; width: 200px; height: 300px; background-color: green;}
+.pop_wrap_contain {display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0,0,0,0.4); z-index: 100;overflow: auto;}
+.pop_wrap_get {position:fixed; overflow: auto; width: 600px; height: 600px; padding: 30px 30px; background-color: #fff; border: 1px solid #343a40; border-radius: 0.8em;}
+
+.big_image {max-width: 300px; height: auto;}
+
+
+
+

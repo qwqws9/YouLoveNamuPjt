@@ -7,7 +7,7 @@
 	<div class="pop_left">
 		<div class="result_top">
 			<input type="text" class="date_time" name="regDate" readonly />
-		
+			
 			<select class="unit_selec" name="moneyUnit">
 				<option value="KRW">KRW</option>
 				<option value="EUR">EUR</option>

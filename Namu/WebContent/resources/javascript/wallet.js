@@ -49,10 +49,12 @@ $(function(){
 	
 	// get 모달창 오픈
 	$('.detail_line').on('click', function(){
-		var modalWidth = $(this).next().find('.pop_wrap_get').width();
-		var modalHeight = $(this).next().find('.pop_wrap_get').height();
-
-		centerPopUp($(this).next().find('.pop_wrap_get'), modalWidth, modalHeight);
+		var modalWidth = $(this).next().children().width();
+		var modalHeight = $(this).next().children().height();
+		
+		console.log('모달창 넓이 : ' + modalWidth + 'px, 높이 : ' + modalHeight + 'px');
+		
+		centerPopUp($(this).next().children(), modalWidth, modalHeight);
 	});
 });
 
@@ -83,11 +85,12 @@ function addAjax(form){
 	// file이 담긴 FORM 태그를 @ModelAttribute, MultipartFile 로 전달
 	var formData = new FormData(form);
 	
+	/*
 	for(var pair of formData.entries()){
 		console.log(pair[0] + ' = '+ pair[1]); 
 	}
 	console.log(formData.get('file'));
-	
+	*/
 	
 	$.ajax({
 		url			: '/wallet/json/addWallet',
@@ -142,6 +145,8 @@ function addAjax(form){
 }
 
 //addWallet Business Logic
+/*
 function getListAjax(walletCode){
 	
 }
+*/

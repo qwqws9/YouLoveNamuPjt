@@ -19,7 +19,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
 	
 	<!-- Font Awesome SVG with JavaScript -->
-	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -162,12 +162,59 @@
 											<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
 										</c:if>
 									</span>
-								</a>
+								</a><!-- //detail_line -->
 								<div class="pop_wrap_contain">
 									<div class="pop_wrap_get">
-										
-									</div>
-								</div>
+										<div>${wallet.regDate}</div>
+										<div>
+											<div>
+												<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
+												<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
+												<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
+												<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
+												<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
+												<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
+												<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
+												<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
+												<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+											</div>
+											<div>
+												<div>
+													<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
+													<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+													<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+												</div>
+												<div>
+													<c:if test="${wallet.moneyUnit ne 'KRW'}">
+														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+													</c:if>
+												</div>
+											</div>
+											<c:if test="${wallet.part eq 0}">
+												<div>
+													<span>화폐 단위</span><span>${wallet.moneyUnit}</span>
+													<c:if test="${wallet.moneyUnit ne 'KRW'}">
+														<span>적용 환율</span><span>${wallet.moneyUnit} = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
+													</c:if>
+												</div>
+											</c:if>
+											<%-- <c:if test="${! empty wallet.payer}">
+												<div>
+													<span>결제자</span><span>${wallet.payer.nickname}</span>
+												</div>
+											</c:if> --%>
+											<div>
+												${wallet.item}
+											</div>
+											<c:if test="${! empty wallet.walletImage}">
+												<div><img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.item} 이미지" class="big_image"></div>
+											</c:if>
+											<c:if test="${! empty wallet.content}">
+												<div>${wallet.content}</div>
+											</c:if>
+										</div>
+									</div><!-- //pop_wrap_get -->
+								</div><!-- //pop_wrap_get -->
 							</li>
 						</c:forEach>
 					</ul>
