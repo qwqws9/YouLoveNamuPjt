@@ -27,6 +27,9 @@
   	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
   	
   	<style>
+  		.btn.btn-outline-dark:not(:first-child){
+  			margin-left:5px;
+  		}
     </style>
 	 
 </head>
@@ -88,9 +91,6 @@
 						  			<div class="col-lg-2"></div>
 						  			<div class="col-lg-10">
 						  				<div class="alert alert-light" role="alert" style=" background: none; border: none;">
-						  					<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
-										    	<span style="font-size: 14px;">#Paris</span>
-										    </button>
 										</div>
 						  			</div>
 						  		</div>

@@ -1,5 +1,8 @@
 package com.youlove.web.planner;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -32,36 +35,71 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.User;
 import com.youlove.service.domain.Planner;
 
 import com.youlove.service.planner.PlannerService;
+import com.youlove.service.user.UserService;
 
 @Controller
 @RequestMapping("/planner/*")
 public class PlannerController {
 	
+
 	///Field
 	@Autowired
 	@Qualifier("plannerServiceImpl")
 	private PlannerService plannerService;
 	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	public PlannerController(){
 		System.out.println(this.getClass());
 	}
 
+	@RequestMapping( value="addPlanner", method=RequestMethod.GET )
+	public String addPlanner() throws Exception {
+
+		System.out.println("PlannerController ------addPlanner:GET start");
+
+		return "forward:/planner/addPlanner.jsp";
+	}
 	
 	@RequestMapping( value="addPlanner", method=RequestMethod.POST )
-	//@RequestMapping("/addRoute.do")
-	public String addPlanner( @ModelAttribute("planner") Planner planner, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String addPlanner( @ModelAttribute("planner") Planner planner, @RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
 
-		System.out.println("PlannerController :: addPlanner start");
+		System.out.println("PlannerController -----addPlanner:POST start");
 
-		//Business Logic	
+		User user= (User)session.getAttribute("user");
 		
-		//plan.setManuDate(route.getManuDate().replace("-", ""));
-		//routeService.addRoute(route);
+		planner.setUser(user);
+		System.out.println(user);
+		String path="//Users//minikim//eclipse-workspace//YouLovePlanMini2//WebContent//resources//images//plannerImage";
+		//String path="//Users//minikim//git//YouLovePlanMini//WebContent//resources//images//plannerImage";
 		
+		String fileName=file.getOriginalFilename();
+		planner.setPlannerImage(fileName);
+		FileOutputStream fileOutputStream;
+		
+		try {
+			//nf.createNewFile();
+			//fileOutputStream= new FileOutputStream(path+"\\"+fileName);
+			fileOutputStream= new FileOutputStream(path+"//"+fileName);
+			fileOutputStream.write(file.getBytes());
+			fileOutputStream.close();
+		}
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}	
+		
+		//planner.setDepartDate(planner.getDepartDate().replace("-", ""));
+		System.out.println(planner);
+		plannerService.addPlanner(planner);
+		System.out.println("plannerController --------addPlanner:POST  end");
 		return "forward:/planner/addRoute.jsp";
 	}
 	
@@ -74,7 +112,7 @@ public class PlannerController {
 		Date date=null;
 		
 		try {
-			date=dateFormat.parse("20190801");
+			date=dateFormat.parse("20190801");     //getDepartDate 로 변경하기!!!!!
 			
 		}catch(ParseException e) {
 			e.printStackTrace();
@@ -88,7 +126,7 @@ public class PlannerController {
 		//String[] cityOrders = request.getParameterValues("cityOrder");
 		String[] stayDays = request.getParameterValues("stayDay");
 		
-		route.setPlannerCode(1);
+		route.setPlannerCode(1);    //getPlannerCode로!!!!!!!!! 변경 
 		route.setPlannerVer(1);
 
 
@@ -102,28 +140,37 @@ public class PlannerController {
 		route.setLng(lngs[i]);
 		route.setCityOrder(i+1);
 		route.setStayDay(Integer.parseInt(stayDays[i]));
-		String startDate = dateFormat.format(cal.getTime());
+		//String startDate = dateFormat.format(cal.getTime());
+		//cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+		//String endDate = dateFormat.format(cal.getTime());
+		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
-		String endDate = dateFormat.format(cal.getTime());
-		route.setStartDate(startDate);
-		route.setEndDate(endDate);
+		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
 		}
 
-	return "forward:/planner/getSchedule.jsp";
+		return "forward:/planner/getRoute.jsp";
+			
+		}
+	@RequestMapping(value="getRoute" , method= RequestMethod.GET)
+	public String getRoute( @RequestParam("routeCode") int routeCode , Model model) throws Exception {
 		
+		System.out.println("PlannerRestController--------getRoute:GET");
+		
+		Route route = plannerService.getRoute(routeCode);
+
+		model.addAttribute("route", route);
+		
+		return "forward:/planner/getRoute.jsp";
 	}
 
-//@RequestMapping(value="getInterestedEventList")
-//public String getRouteList(@RequestParam int plannerCode, Model model) throws Exception {
-//	System.out.println("PlannerRestController--------getRouteList");
-//	
-//	List<Route> list = plannerService.getRouteList(plannerCode);
-//	model.addAttribute("routeList", list);
-//	
-//	return "forward:/planner/getRoute.jsp";
-	
-//}
+
+	//일정작성 
+	@RequestMapping(value = "/planner/addSchedule", method = RequestMethod.GET)
+	public String addSchedule(HttpServletRequest request) {
+	System.out.println("PlannerController ---------- addSchedule:GET start");
+		return "planner/addSchedule";
+		}
 
 }

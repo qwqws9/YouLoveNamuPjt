@@ -16,6 +16,7 @@ public class Comment {
 	private User writerComment;
 	private String commentDelete;
 	private Search search;
+	private int likeCount;
 	
 	
 	
@@ -24,6 +25,12 @@ public class Comment {
 	
 
 	
+	public int getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 	public Search getSearch() {
 		return search;
 	}
@@ -89,7 +96,7 @@ public class Comment {
 		return "Comment [commentCode=" + commentCode + ", boardCode=" + boardCode + ", detailCode=" + detailCode
 				+ ", commentContent=" + commentContent + ", step=" + step + ", replyCode=" + replyCode
 				+ ", commentDate=" + commentDate + ", writerComment=" + writerComment + ", commentDelete="
-				+ commentDelete + ", search=" + search + "]";
+				+ commentDelete + ", search=" + search + ", likeCount=" + likeCount + "]";
 	}
 	
 	

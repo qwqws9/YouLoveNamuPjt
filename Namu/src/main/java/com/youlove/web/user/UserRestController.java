@@ -3,6 +3,8 @@ package com.youlove.web.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -65,11 +67,14 @@ public class UserRestController {
 		
 		if(dbUser != null) {
 			if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
+			//session.setAttribute("user", dbUser);
+			
 			}else {
 				dbUser = null;
 			}
 		}
+		
+	
 		
 		return dbUser;
 	}
