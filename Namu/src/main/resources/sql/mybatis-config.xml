@@ -21,8 +21,8 @@
 		<!-- <typeAlias alias="party" type="com.youlove.service.domain.Party" /> -->
 		<!-- <typeAlias alias="message" type="com.youlove.service.domain.Message" /> -->
 		<typeAlias alias="search" type="com.youlove.common.Search" />
-		<!-- 	<typeAlias alias="planner" type="com.youlove.service.domain.Planner" /> -->
-		<!-- 	<typeAlias alias="route" type="com.youlove.service.domain.Route" /> -->
+			<typeAlias alias="planner" type="com.youlove.service.domain.Planner" /> 
+			<typeAlias alias="route" type="com.youlove.service.domain.Route" /> 
 		<!-- 	<typeAlias alias="schedule" type="com.youlove.service.domain.Schedule" /> -->
 	</typeAliases>
 	
@@ -36,7 +36,7 @@
 		<mapper resource="sql/HashtagMapper.xml"/>
 		<!-- <mapper resource="sql/PartyMapper.xml"/> -->
 		<!-- <mapper resource="sql/MessageMapper.xml"/> -->
-		<!-- <mapper resource="sql/PlannerMapper.xml"/> -->
+		 <mapper resource="sql/PlannerMapper.xml"/> 
 		
 		
 	</mappers>
