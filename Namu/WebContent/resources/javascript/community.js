@@ -165,7 +165,8 @@ function callCommunityList(page){
 	      					}
 	      					$(".col-10.col-md-10.append").append( '<div class="row list"><div class="col-2 col-md-2" style="top: 30px;">'
 	      														+'<p class="text-center" style="font-size: small; color: #344157;">'
-	      														+'No.<span class="communityCode">'+item.communityCode+'</span>'
+	      														+'<input type="hidden" class="communityCode" value="'+item.communityCode+'">'
+	      														+'No.<span class="">'+item.communityCode+'</span>'
 	      														+'</p>'
 	      														+'<p class="text-center communityBoard" style="font-size: small; color: #344157;">'
 	      														+ appendBoard

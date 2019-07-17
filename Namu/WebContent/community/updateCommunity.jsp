@@ -26,6 +26,9 @@
   	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
   	
   	<style>
+  	.btn.btn-outline-dark:not(:first-child){
+  			margin-left:5px;
+  		}
     </style>
 	 
 </head>
