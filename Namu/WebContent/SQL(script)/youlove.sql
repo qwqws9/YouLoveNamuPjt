@@ -147,10 +147,10 @@ CREATE TABLE COMMENTS (
 
 CREATE TABLE LIKES ( 
     LIKE_CODE           NUMBER(10) PRIMARY KEY,
-   BOARD_CODE          CHAR(1)   ,
+   BOARD_CODE          NUMBER(10)   ,
    DETAIL_CODE       NUMBER(10)   ,
     COMMENT_CODE        NUMBER(10)  ,
-   LIKE_NAME          VARCHAR2(1000)   
+   LIKE_NAME          VARCHAR2(100)   
 );
 
 
@@ -246,7 +246,7 @@ CREATE TABLE hashtag (
    hashtag         VARCHAR2(500) NOT NULL,
    community_code   NUMBER(10),
    party_code      NUMBER(10),
-   user_code      VARCHAR2(10) NOT NULL,
+   user_code      NUMBER(10) NOT NULL,
    PRIMARY KEY(hashtag_code)
 );
 
@@ -297,8 +297,8 @@ CREATE TABLE message (
 );
 
 
-ALTER TABLE likes add CONSTRAINT detail_fk FOREIGN KEY(detail_code)  REFERENCES community(community_code);
-ALTER TABLE likes add CONSTRAINT commentlike_fk FOREIGN KEY(comment_code)  REFERENCES comments(COMMENT_CODE);
+--ALTER TABLE likes add CONSTRAINT detail_fk FOREIGN KEY(detail_code)  REFERENCES community(community_code);
+--ALTER TABLE likes add CONSTRAINT commentlike_fk FOREIGN KEY(comment_code)  REFERENCES comments(COMMENT_CODE);
 
 ALTER TABLE message add CONSTRAINT sender_fk FOREIGN KEY(sender)  REFERENCES users(user_code);
 
@@ -316,29 +316,32 @@ ALTER TABLE community add CONSTRAINT hashtagcommunity_fk FOREIGN KEY(hashtag_cod
 
 
 CREATE TABLE wallet ( 
-   w_code                   NUMBER(10)      NOT NULL,
-   planner_code             NUMBER(10)      NOT NULL       REFERENCES planner(planner_code),
-   use_money_unit           VARCHAR2(30)    DEFAULT 'KRW',
+   w_code			NUMBER(10)		NOT NULL,
+   planner_code		NUMBER(10)		NOT NULL		REFERENCES planner(planner_code),
+   use_money_unit		VARCHAR2(30)		DEFAULT 'KRW',
    PRIMARY KEY(w_code)
 );
 
+
+
 CREATE TABLE wallet_detail ( 
-   w_detail_code         NUMBER(10)      NOT NULL,
-   w_code          NUMBER(10)      NOT NULL      REFERENCES wallet(w_code),
-   part            CHAR(1)      NOT NULL,
-   money_unit         VARCHAR2(30)      NOT NULL,
-   expression         VARCHAR2(30)      NOT NULL,
-   price            NUMBER(15)      NOT NULL,
-   reg_date         VARCHAR2(20)      NOT NULL,
-   item            VARCHAR2(30),
-   content            VARCHAR2(100),
-   pay_option            CHAR(1)      NOT NULL,
-   exchange_rate            NUMBER(10),
-   category            CHAR(1),
-   w_image            VARCHAR2(30),
-   payer            NUMBER(10),
+   w_detail_code		NUMBER(10)		NOT NULL,
+   w_main_code		NUMBER(10)		NOT NULL		REFERENCES wallet(w_code),
+   part			CHAR(1)			NOT NULL,
+   money_unit		VARCHAR2(30)		NOT NULL,
+   expression		VARCHAR2(30)		NOT NULL,
+   price			NUMBER(15, 2)		NOT NULL,
+   reg_date		VARCHAR2(20)		NOT NULL,
+   item			VARCHAR2(30),
+   content			VARCHAR2(100),
+   pay_option		CHAR(1)			DEFAULT 0,
+   exchange_rate		NUMBER(10, 2),
+   category		CHAR(1)			DEFAULT 0,
+   w_image		VARCHAR2(30),
+   payer			NUMBER(10),
    PRIMARY KEY(w_detail_code)
 );
+
 
 
 INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','qwqws9@naver.com','01090720802','김성용','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','관리자입니다',sysdate,null,null);
@@ -437,26 +440,35 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4',to_date('2019/08/01 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+   
+VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4',to_date('2019/08/07 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+VALUES ( seq_planner_code.nextval, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4',to_date('2019/08/10 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+VALUES ( seq_planner_code.nextval, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', to_date('2019/08/12 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate); 
+VALUES ( seq_planner_code.nextval, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
 INSERT 
 INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4',to_date('2019/08/19 10:48:43', 'YYYY/MM/DD HH24:MI:SS'),sysdate);
+VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
+
+
+INSERT INTO wallet VALUES ( seq_w_code, 1, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code, 2, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code, 3, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code, 4, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code, 5, 'EUR');
+
 
 commit;
