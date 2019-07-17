@@ -1,5 +1,7 @@
 package com.youlove.service.guideimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,5 +20,10 @@ public class GuideServiceImpl implements GuideService {
 	@Override
 	public City getCity(String cityName) throws Exception {
 		return guideDao.getCity(cityName);
+	}
+
+	@Override
+	public List<City> getCityList(String value) throws Exception {
+		return guideDao.getCityList(value);
 	}
 }

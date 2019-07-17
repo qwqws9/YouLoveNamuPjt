@@ -74,17 +74,17 @@
 		
 		$('#getCity').on('click',function(){
 			$.ajax({
-				url : "/guide/json/getCity",
+				url : "/guide/json/getCityList/"+$('#cityName').val().trim(),
 				method : "POST" ,
 				headers : {
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 				},
-				data : JSON.stringify({
-					cityName : $('#cityName').val().trim()
-				}),
+// 				data : JSON.stringify({
+// 					cityName : $('#cityName').val().trim()
+// 				}),
 				success : function(JSONData , status) {
-					alert(JSONData.lat);
+					alert(JSONData);
 				}
 		})
 		});
