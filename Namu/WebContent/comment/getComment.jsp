@@ -65,7 +65,7 @@
 		    
 		    
 		    <li class="nexBtn page-item disabled" >
-<!-- 		      <button class="nextBtn page-link">Next</button> -->
+		      <button class="nextBtn page-link">Next</button>
 		    </li>
 		    
 		  </ul>
@@ -74,6 +74,75 @@
 	<br><br><br><br><br><br>
 
 <script type="text/javascript">
+
+
+////////////////////////////////////////추천 /////////////////////////////////////
+
+
+
+$(document).on("click",".like",function(){  
+	var userCode = ${user.userCode};
+	
+		//console.log($(this).children().attr('class'));
+		if($(this).children().attr('class') == 'fas fa-heart') {
+			$(this).html('<i class="far fa-heart"></i>추천수들어갈곳');
+			deleteLike($(this).parents('div').children().val(),userCode);
+		}else {
+			$(this).html('<i class="fas fa-heart" style="color:red;"></i>추천수들어갈곳');
+			$(this).parents('div').children().val();
+			addLike($(this).parents('div').children().val(),userCode);
+		}
+	});
+
+
+function addLike(commentCode,likeName) {
+	
+	$.ajax ({
+		url : '/like/json/addLike',
+		method : 'post',
+		data : JSON.stringify({
+			commentCode : commentCode,
+			likeName : {
+				userCode : likeName
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+			alert(data);
+		}
+	})
+}
+
+function deleteLike(commentCode,likeName) {
+	
+	$.ajax ({
+		url : '/like/json/deleteLike',
+		method : 'post',
+		data : JSON.stringify({
+			commentCode : commentCode,
+			likeName : {
+				userCode : likeName
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+			alert(data);
+		}
+	})
+}
+
+
+
+
+
+////////////////////////////////////////댓글 /////////////////////////////////////
+	var nextBtn = 1;
 
 	$(document).on("click",".viewPage",function(){  
 		var currentPage = $(this).text().trim();
@@ -92,24 +161,31 @@
 	
 	
 	$(document).on("click","li.preBtn",function(){  
-		$('#currentPage').val(((Math.floor( $('#currentPage').val() / $('#pageCount').val() ) ) *  $('#pageCount').val() +1) - 5 );
-		getComment($('#boardCode').val(),$('#detailCode').val());
-	})
-	
-	$(document).on("click","li.nexBtn",function(){  
-		$('#currentPage').val(((Math.floor( $('#currentPage').val() / $('#pageCount').val() ) ) *  $('#pageCount').val() +1) +5 );
-		getComment($('#boardCode').val(),$('#detailCode').val());
-	})
-	
-	
-	$(document).on("click",".like",function(){  
-		console.log($(this).children().attr('class'));
-		if($(this).children().attr('class') == 'fas fa-heart') {
-			$(this).html('<i class="far fa-heart"></i>추천수들어갈곳');
-		}else {
-			$(this).html('<i class="fas fa-heart" style="color:red;"></i>추천수들어갈곳');
+		var prev = $(this).attr('class');
+		if(prev == 'preBtn page-item disabled') {
+			return;
 		}
-	});
+		
+		$('#currentPage').val(((Math.floor( $('#currentPage').val() / $('#pageCount').val() ) ) *  $('#pageCount').val() +1) - 5 );
+		nextBtn--;
+		getComment($('#boardCode').val(),$('#detailCode').val());
+	})
+	
+	$(document).on("click","li.nexBtn",function(){
+		var next = $(this).attr('class');
+		if(next == 'nexBtn page-item disabled') {
+			return;
+		}
+		console.log(($(this).prev().children().text().trim() + 1) + "adasdasd@@@@@@@@@@@@@@@@@@@@sad");
+		
+		
+		//$('#currentPage').val(((Math.floor( $('#currentPage').val() / $('#pageCount').val() ) ) *  $('#pageCount').val() +1) +5 );
+		$('#currentPage').val(Number($(this).prev().children().text().trim()) + 1);
+		nextBtn++;
+		getComment($('#boardCode').val(),$('#detailCode').val());
+	})
+	
+	
 	
 	$(document).on("click",".commentDelete",function(){  
 		console.log($(this).parents('div').children().val());
@@ -453,7 +529,15 @@
 					pcurrentPage = totalPage;
 				}
 				
-				var startPage = (Math.floor( currentPage / pageCount ) ) * pageCount +1;
+				var startPage = 1;
+// 				if ((Math.floor( currentPage / pageCount ) ) * pageCount == currentPage) {
+// 					startPage = currentPage - (pageCount - 1)
+// 				}
+				
+				startPage = (Math.floor( currentPage / pageCount ) ) * pageCount +1;
+				if ((Math.floor( currentPage / pageCount ) ) * pageCount == currentPage) {
+					startPage = currentPage - (pageCount - 1)
+				}
 				if(startPage > totalPage) {
 					startPage = totalPage;
 				}
@@ -485,12 +569,21 @@
 				//nexBtn
 				var pageSize = $('#pageSize').val();
 				// pageSize * 밑에 몇개씩 보여줄지 숫자 > 댓글 수
-				if( (pageSize * pageCount ) < JSONData ) {
-					$('li.nexBtn').removeClass('disabled');
-				}
-				if((totalPage - currentPage) > 1) {
+				console.log(JSONData + " : 댓글 수 ")
+				if( (currentPage * pageCount ) < JSONData ) {
+					
+					
+					if(Number($('.nexBtn').prev().children().text().trim()) < Number($('.preBtn ').next().children().text().trim())+4 ) {
+						$('li.nexBtn').addClass('disabled');
+					}else {
+						$('li.nexBtn').removeClass('disabled');
+					}
+				}else {
 					$('li.nexBtn').addClass('disabled');
 				}
+// 				if((totalPage - currentPage) > 1) {
+// 					$('li.nexBtn').addClass('disabled');
+// 				}
 				
 				if(startPage > pageCount ) {
 					$('li.preBtn').removeClass('disabled');
