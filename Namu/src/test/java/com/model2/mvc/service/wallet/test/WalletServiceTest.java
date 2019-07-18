@@ -1,5 +1,8 @@
 package com.model2.mvc.service.wallet.test;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 import com.youlove.service.wallet.WalletService;
 
@@ -52,7 +56,7 @@ public class WalletServiceTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGetWallet() throws Exception{
 		
 		Wallet wallet = new Wallet();
@@ -68,6 +72,27 @@ public class WalletServiceTest {
 		Assert.assertEquals("아이스 아메리카노", wallet.getItem());
 		Assert.assertEquals(1326.7, wallet.getExchangeRate(), 0.01);
 		
+	}
+	
+	@Test
+	public void testGetWalletList() throws Exception{
+		 
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(3);
+		
+		int walletCode = 1;
+	 	
+		Map<String,Object> map = walletService.getWalletList(search, walletCode);
+	 	
+	 	List<Object> list = (List<Object>)map.get("list");
+	 	System.out.println(list);
+	 	
+	 	Assert.assertEquals(3, list.size());
+	
+	 	Integer totalCount = (Integer)map.get("totalCount");
+	 	System.out.println("totalCount : " + totalCount);
+	
 	}
 	
 }

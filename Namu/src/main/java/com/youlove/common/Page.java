@@ -1,84 +1,89 @@
 package com.youlove.common;
 
-
-//==> PageNavigation À» À§ÇÑ Bean
 public class Page {
 	
 	///Field
-	private int currentPage;		// ÇöÀçÆäÀÌÁö
-	private int totalCount;			// ÃÑ °Ô½Ã¹° ¼ö
-	private int pageUnit;			// ÇÏ´Ü ÆäÀÌÁö ¹øÈ£ È­¸é¿¡ º¸¿©Áö´Â ¼ö
-	private int pageSize;			// ÇÑ ÆäÀÌÁö´ç º¸¿©Áö´Â °Ô½Ã¹°¼ö
-	private int maxPage;			// ÃÖ´ë ÆäÀÌÁö ¹øÈ£(ÀüÃ¼ ÆäÀÌÁö)
-	private int beginUnitPage;	//È­¸é¿¡ º¸¿©Áö´Â ÆäÀÌÁö ¹øÈ£ÀÇ ÃÖ¼Ò¼ö
-	private int endUnitPage;		//È­¸é¿¡ º¸¿©Áö´Â ÆäÀÌÁö ¹øÈ£ÀÇ ÃÖ´ë¼ö
+	private int currentPage;		// í˜„ìž¬ íŽ˜ì´ì§€
+	private int totalCount;			// ì´ ê²Œì‹œë¬¼ ìˆ˜
+	private int pageUnit;			// í•˜ë‹¨ íŽ˜ì´ì§€ ë²ˆí˜¸ í™”ë©´ì— ë³´ì—¬ì§€ëŠ” ìˆ˜
+	private int pageSize;			// í•œ íŽ˜ì´ì§€ë‹¹ ë³´ì—¬ì§€ëŠ” ê²Œì‹œë¬¼ ìˆ˜
+	private int maxPage;			// ìµœëŒ€ íŽ˜ì´ì§€ ë²ˆí˜¸ (ì „ì²´ íŽ˜ì´ì§€)
+	private int beginUnitPage;		// í™”ë©´ì— ë³´ì—¬ì§€ëŠ” íŽ˜ì´ì§€ ë²ˆí˜¸ì˜ ìµœì†Œ ìˆ˜
+	private int endUnitPage;		// í™”ë©´ì— ë³´ì—¬ì§€ëŠ” íŽ˜ì´ì§€ ë²ˆí˜¸ì˜ ìµœëŒ€ ìˆ˜
 	
 	///Constructor
 	public Page() {
 	}
-	public Page( int currentPage, int totalCount,	int pageUnit, int pageSize ) {
+	public Page(int currentPage, int totalCount, int pageUnit, int pageSize) {
 		this.totalCount = totalCount;
 		this.pageUnit = pageUnit;
 		this.pageSize = pageSize;
 		
-		this.maxPage = (pageSize == 0) ? totalCount :  (totalCount-1)/pageSize +1;
+		this.maxPage = (pageSize == 0) ? totalCount : (totalCount-1)/pageSize + 1;
 		this.currentPage = ( currentPage > maxPage) ? maxPage : currentPage;
 		
-		this.beginUnitPage = ( (currentPage-1) / pageUnit ) * pageUnit +1 ;
+		this.beginUnitPage = ((currentPage-1)/pageUnit) * pageUnit + 1 ;
 		
-		if( maxPage <= pageUnit ){
+		if(maxPage <= pageUnit){
 			this.endUnitPage = maxPage;
 		}else{
-			this.endUnitPage = beginUnitPage + (pageUnit -1);
-			if( maxPage <= endUnitPage){
+			this.endUnitPage = beginUnitPage + (pageUnit-1);
+			if(maxPage <= endUnitPage){
 				this.endUnitPage = maxPage;
 			}
 		}
 	}
 	
-	///Mehtod
+	///Method
 	public int getCurrentPage() {
 		return currentPage;
 	}
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
+	
 	public int getTotalCount() {
 		return totalCount;
 	}
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
+	
 	public int getPageUnit() {
 		return pageUnit;
 	}
 	public void setPageUnit(int pageUnit) {
 		this.pageUnit = pageUnit;
 	}
+	
 	public int getPageSize() {
 		return pageSize;
 	}
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	
 	public int getMaxPage() {
 		return maxPage;
 	}
 	public void setMaxPage(int maxPage) {
 		this.maxPage = maxPage;
 	}
+	
 	public int getBeginUnitPage() {
 		return beginUnitPage;
 	}
 	public void setBeginUnitPage(int beginUnitPage) {
 		this.beginUnitPage = beginUnitPage;
 	}
+	
 	public int getEndUnitPage() {
 		return endUnitPage;
 	}
 	public void setEndUnitPage(int endUnitPage) {
 		this.endUnitPage = endUnitPage;
 	}
+	
 	@Override
 	public String toString() {
 		return "Page [currentPage=" + currentPage + ", totalCount="
@@ -86,4 +91,5 @@ public class Page {
 				+ pageSize + ", maxPage=" + maxPage + ", beginUnitPage="
 				+ beginUnitPage + ", endUnitPage=" + endUnitPage + "]";
 	}
+	
 }

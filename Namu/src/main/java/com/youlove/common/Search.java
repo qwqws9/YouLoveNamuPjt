@@ -1,7 +1,5 @@
 package com.youlove.common;
 
-
-//==>����Ʈȭ���� �𵨸�(�߻�ȭ/ĸ��ȭ)�� Bean 
 public class Search {
 	
 	///Field
@@ -9,10 +7,7 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private int pageSize;
-	//==> ����Ʈȭ�� currentPage�� �ش��ϴ� ȸ�������� ROWNUM ��� SELECT ���� �߰��� Field 
-	//==> UserMapper.xml �� 
-	//==> <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	//==> ����
+	//==> 리스트 화면 currentPage에 해당하는 정보를 ROWNUM을 사용해 SELECT하기 위해 추가
 	private int endRowNum;
 	private int startRowNum;
 	
@@ -49,11 +44,11 @@ public class Search {
 		this.searchKeyword = searchKeyword;
 	}
 	
-	//==> Select Query �� ROWNUM ������ �� 
+	//==> Select Query 시 ROWNUM 마지막 값
 	public int getEndRowNum() {
 		return getCurrentPage()*getPageSize();
 	}
-	//==> Select Query �� ROWNUM ���� ��
+	//==> Select Query 시 ROWNUM 시작 값
 	public int getStartRowNum() {
 		return (getCurrentPage()-1)*getPageSize()+1;
 	}
@@ -65,4 +60,5 @@ public class Search {
 				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum + "]";
 	}
+	
 }
