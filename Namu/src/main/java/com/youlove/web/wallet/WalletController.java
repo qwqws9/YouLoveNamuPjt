@@ -1,5 +1,6 @@
 package com.youlove.web.wallet;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,16 @@ public class WalletController {
 		search.setCurrentPage(1);
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = walletService.getWalletList(search, walletCode);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("walletCode", walletCode);
+		map.put("search", search);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Map<String, Object> mapResult = walletService.getWalletList(map);
+		
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)mapResult.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("list", mapResult.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.setViewName("/wallet/getWalletList.jsp");
 		

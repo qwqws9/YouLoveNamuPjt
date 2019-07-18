@@ -74,7 +74,7 @@ public class WalletServiceTest {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void testGetWalletList() throws Exception{
 		 
 		Search search = new Search();
@@ -94,5 +94,5 @@ public class WalletServiceTest {
 	 	System.out.println("totalCount : " + totalCount);
 	
 	}
-	
+	*/
 }

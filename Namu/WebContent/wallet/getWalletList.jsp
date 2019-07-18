@@ -27,8 +27,9 @@
     <!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
-	<script type="text/javascript" src="/resources/javascript/wallet_modal.js"></script>
+	
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
+	<script type="text/javascript" src="/resources/javascript/wallet_modal.js"></script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -46,7 +47,6 @@
 			
 			
 			<form class="search_form" name="search_form">
-				<input type="hidden" id="currentPage" name="currentPage" value="" />
 				<input type="hidden" id="pageSize" name="pageSize" value="" />
 				
 				<label for="searchKeyword" class="skip">검색어</label>

@@ -25,6 +25,6 @@ public interface WalletService {
 	
 	public void deleteWallet(int walletDetailCode) throws Exception;
 	*/
-	public Map<String, Object> getWalletList(Search search, int walletCode) throws Exception;
+	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception;
 	
 }

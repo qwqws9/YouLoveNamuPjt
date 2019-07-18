@@ -1,26 +1,18 @@
 // 네비게이션
 $(function() {
+	// 페이지 이동
 	$('.paging_wrap li').on("click", function() {
 		var currentPage = $(this).children().text().trim();
 		
-		//console.log('현재 페이지' + currentPage);
-		
 		if($(this).has('.left')){
-			fncGetList(currentPage - 1);
+			getListAjax(currentPage - 1);
 		}else if($(this).has('.right')){
-			fncGetList(currentPage + 1);
+			getListAjax(currentPage + 1);
 		}else{
-			fncGetList(currentPage);
+			getListAjax(currentPage);
 		}
 	});
 });
-
-// 검색
-function fncGetList(currentPage) {
-	$('#currentPage').val(currentPage);
-	
-	getListAjax($('form.search_form'));
-}
 
 // addWallet Business Logic
 function addAjax(form) {
@@ -85,28 +77,20 @@ function addAjax(form) {
 	});
 	*/
 }
-
 // getWalletList Business Logic
-function getListAjax(form) {
-	var walletCode = $('.walletCode').text().trim();
-	
-	console.log(form.serialize());
-	console.log(form.serializeArray());
-	console.log(JSON.stringify(form.serializeArray()));
-	
-	var data = {};
-
-	$.each(form.serializeArray(), function(index, object) {
-		data[object.name] = object.value;
-    });
-    
-    console.log(data);
-    console.log(JSON.stringify(data));
-	
+function getListAjax(currentPage) {
 	$.ajax({
-		url			: '/wallet/json/getWalletList',
+		url			: '/wallet/json/getWalletList/'+$('.walletCode').text().trim(),
 		type		: 'POST',
-		data		: JSON.stringify(data),
+		data		: JSON.stringify({
+			
+				currentPage : currentPage,
+				pageSize : 5
+			
+			
+			
+			
+		}),
 		dataType	: 'json',
 		contentType	: 'application/json',
 		success		: function(JSONData, status) {

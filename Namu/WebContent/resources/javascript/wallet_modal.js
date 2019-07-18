@@ -58,8 +58,12 @@ $(function() {
 	});
 	
 	// 수입/지출 상세내역 모달창 닫기 버튼
-	$('.pop_wrap_get .act_btns .close_btn, .pop_wrap_contain').on('click', function() {
-		$('.pop_wrap_contain').css({'display':'none'});
+	$('.pop_wrap_contain').on('click', function(e) {
+		var container = $('.pop_wrap_get');
+		
+		if(container.has(e.target).length === 0 || $(e.target).is('.pop_wrap_get .act_btns .close_btn')){
+			$('.pop_wrap_contain').css({'display':'none'});
+		}
 	});
 });
 
