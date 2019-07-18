@@ -8,16 +8,18 @@ public class Schedule {
 		private int scheCode;
 		private int plannerVer;
 		private Date scheDay;
-		private int timeHour;
-		private int timeMin;
+		private String timeHour;
+		private String timeMin;
 		
 		private String scheName;
 		private String schePlace;
 		private String scheDetail;
 	
 		private String accomodation;
-		private Planner plannerCode;
-		private Route routeCode;
+//		private Planner plannerCode;
+//		private Route routeCode;
+		private int plannerCode;
+		private int routeCode;
 		private String color;
 		
 		///Constructor
@@ -48,19 +50,19 @@ public class Schedule {
 			this.scheDay = scheDay;
 		}
 
-		public int getTimeHour() {
+		public String getTimeHour() {
 			return timeHour;
 		}
 
-		public void setTimeHour(int timeHour) {
+		public void setTimeHour(String timeHour) {
 			this.timeHour = timeHour;
 		}
 
-		public int getTimeMin() {
+		public String getTimeMin() {
 			return timeMin;
 		}
 
-		public void setTimeMin(int timeMin) {
+		public void setTimeMin(String  timeMin) {
 			this.timeMin = timeMin;
 		}
 
@@ -96,19 +98,19 @@ public class Schedule {
 			this.accomodation = accomodation;
 		}
 
-		public Planner getPlannerCode() {
+		public int getPlannerCode() {
 			return plannerCode;
 		}
 
-		public void setPlannerCode(Planner plannerCode) {
+		public void setPlannerCode(int plannerCode) {
 			this.plannerCode = plannerCode;
 		}
 
-		public Route getRouteCode() {
+		public int getRouteCode() {
 			return routeCode;
 		}
 
-		public void setRouteCode(Route routeCode) {
+		public void setRouteCode(int routeCode) {
 			this.routeCode = routeCode;
 		}
 
