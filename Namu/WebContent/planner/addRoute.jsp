@@ -314,7 +314,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 						$('<td>').append( "<input name='lat' type='text' id='lat' value="+myMarker.position.lat()+" readonly>"),
 						
 						$('<td>').append( "<input name='lng' type='text' id='lng' value="+(myMarker.position.lng()).toFixed(6)+" readonly>"),
-						$('<td>').append( "<input name='stayDay' type='text' id='stayDay' value=''>"),
+						$('<td>').append( "<select name='stayDay' id='stayDay'><option value='1' selected='selected'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"),
 						$('<td>').append(
 								 "<input class='deletebtn' type='button' value = 'delete' id='delete' />")
 					)
