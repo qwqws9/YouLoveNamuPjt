@@ -123,9 +123,10 @@ function addCommunity(){
 		
 		var Role = $("#update").val();
 		if(Role == "update"){
-			$("form").attr("method","POST").attr("action","/community/updateCommunity").submit();
+			
+			$("form").attr("method","POST").attr("action","/community/updateCommunity").attr("enctype" , "multipart/form-data").submit();
 		}else{
-			$("form").attr("method","POST").attr("action","/community/addCommunity").submit();
+			$("form").attr("method","POST").attr("action","/community/addCommunity").attr("enctype" , "multipart/form-data").submit();
 		}
 	}	
 

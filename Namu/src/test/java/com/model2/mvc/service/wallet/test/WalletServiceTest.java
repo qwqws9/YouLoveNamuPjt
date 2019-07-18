@@ -1,5 +1,6 @@
 package com.model2.mvc.service.wallet.test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,20 +80,24 @@ public class WalletServiceTest {
 		 
 		Search search = new Search();
 		search.setCurrentPage(1);
-		search.setPageSize(3);
+		search.setPageSize(5);
 		
-		int walletCode = 1;
-	 	
-		Map<String,Object> map = walletService.getWalletList(search, walletCode);
+		Map<String,Object> map = new HashMap<>();
+		map.put("walletCode", 1);
+		map.put("search", search);
+		
+		map = walletService.getWalletList(map);
 	 	
 	 	List<Object> list = (List<Object>)map.get("list");
+	 	
 	 	System.out.println(list);
 	 	
-	 	Assert.assertEquals(3, list.size());
+	 	Assert.assertEquals(5, list.size());
 	
 	 	Integer totalCount = (Integer)map.get("totalCount");
+	 	
 	 	System.out.println("totalCount : " + totalCount);
-	
+	 	
 	}
 	
 }

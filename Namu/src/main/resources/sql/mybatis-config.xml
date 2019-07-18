@@ -19,14 +19,16 @@
 		<typeAlias alias="wallet" type="com.youlove.service.domain.Wallet" />
 		<!-- 중현 -->
 		<typeAlias alias="community" type="com.youlove.service.domain.Community" />
+
 		<typeAlias alias="hashtag" type="com.youlove.service.domain.Hashtag" />
 		<!--  <typeAlias alias="party" type="com.youlove.service.domain.Party" />
 		 <typeAlias alias="message" type="com.youlove.service.domain.Message" />  -->
+
 		<typeAlias alias="search" type="com.youlove.common.Search" />
 		
-			<typeAlias alias="planner" type="com.youlove.service.domain.Planner" /> 
-			<typeAlias alias="route" type="com.youlove.service.domain.Route" /> 
-			<typeAlias alias="schedule" type="com.youlove.service.domain.Schedule" />
+		<typeAlias alias="planner" type="com.youlove.service.domain.Planner" />
+		<typeAlias alias="route" type="com.youlove.service.domain.Route" />
+		<typeAlias alias="schedule" type="com.youlove.service.domain.Schedule" />
 	</typeAliases>
 	
 	<!-- SQL Definition :: file include -->
@@ -38,14 +40,13 @@
 		<mapper resource="sql/WalletMapper.xml"/>
 		<!-- 중현 -->
 		<mapper resource="sql/CommunityMapper.xml"/>
+
+
 		<mapper resource="sql/HashtagMapper.xml"/>
-		<!--  <mapper resource="sql/PartyMapper.xml"/>  -->
-		<!--  <mapper resource="sql/MessageMapper.xml"/> -->
-		 
-		 
-		 <mapper resource="sql/PlannerMapper.xml"/> 
-		
-		
+		<!-- <mapper resource="sql/PartyMapper.xml"/> -->
+		<!-- <mapper resource="sql/MessageMapper.xml"/> -->
+		 <mapper resource="sql/PlannerMapper.xml"/>
+
 	</mappers>
 
 </configuration>

@@ -212,16 +212,17 @@ CREATE TABLE route (
 
 CREATE TABLE schedule( 
    sche_code               NUMBER(10)          NOT NULL,
-   route_code                  NUMBER(10)       NOT NULL REFERENCES route(route_code),
+   route_code                  NUMBER(10)        REFERENCES route(route_code),
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL REFERENCES planner(planner_code),
    sche_day DATE,
-   time_hour NUMBER(2),
-   time_min NUMBER(2),
+   time_hour VARCHAR2(10),
+   time_min VARCHAR2(10),
    SCHE_NAME VARCHAR2(500) NOT NULL,
    SCHE_place VARCHAR2(200),
    SCHE_detail VARCHAR2(2000),
    accomodation VARCHAR2(200),
+   color VARCHAR2(10),
    PRIMARY KEY(sche_code)
 );
 
@@ -273,7 +274,7 @@ CREATE TABLE community (
 	community_title			VARCHAR2(100) 	NOT NULL,
 	community_content		VARCHAR2(4000),
 	community_date			VARCHAR2(30),
-	community_thumbnail		VARCHAR2(100),
+	community_thumbnail		VARCHAR2(1000),
 	open_range				CHAR(1)		DEFAULT '2'	NOT NULL,
 	views					NUMBER(10),
 	writer					NUMBER(10) 		NOT NULL,
@@ -337,7 +338,7 @@ CREATE TABLE wallet_detail (
    pay_option		CHAR(1)			DEFAULT 0,
    exchange_rate		NUMBER(10, 2),
    category		CHAR(1)			DEFAULT 0,
-   w_image		VARCHAR2(30),
+   w_image		VARCHAR2(1000),
    payer			NUMBER(10),
    PRIMARY KEY(w_detail_code)
 );
@@ -415,21 +416,21 @@ INSERT INTO city VALUES ( '부다페스트','HU',47.497912,19.040235,'헝가리'
 INSERT INTO city VALUES ( '브라티슬라바','SK',48.1485965,17.1077478,'슬로바키아','SK.png','EUR');
 
 
-
+--
 INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ddd#eeee',1,null,1);
-INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ddfff#3434',2,null,2);
-INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#33432#ddd#qqq',3,null,3);
-INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ff#eeee',4,null,4);
-INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#89888#ddd#fgf',5,null,5);
-INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#jghj#ggg#rrr',6,null,1);
-
-
+--INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ddfff#3434',2,null,2);
+--INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#33432#ddd#qqq',3,null,3);
+--INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#paris#ff#eeee',4,null,4);
+--INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#89888#ddd#fgf',5,null,5);
+--INSERT INTO hashtag VALUES (seq_hashtag_code.nextval,'#jghj#ggg#rrr',6,null,1);
+--
+--
 INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,1,1,'세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,2,2,'세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,3,3,'세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,4,4,'세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,5,5,'세비야');
-INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,1,6,'세비야');
+--INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,2,2,'세비야');
+--INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,3,3,'세비야');
+--INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,4,4,'세비야');
+--INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,5,5,'세비야');
+--INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,1,6,'세비야');
 
 
 
@@ -472,3 +473,6 @@ INSERT INTO wallet VALUES ( seq_w_code.nextval, 5, 'EUR');
 
 
 commit;
+
+
+select * from users;

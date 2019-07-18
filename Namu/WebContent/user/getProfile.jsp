@@ -17,7 +17,8 @@
 
 <button class="userCode">3</button>
 
-<div class="profileInfo" style="display: none">
+<div class="popup_wrap">
+<div class="popup_contain">
 	<div class="card bg-light mb-3" style="max-width: 540px;">
 	  <div class="row no-gutters">
 	    <div class="col-md-4">
@@ -39,6 +40,7 @@
 	    </div>
 	  </div>
 	</div>
+</div>
 </div>
 <script type="text/javascript">
 

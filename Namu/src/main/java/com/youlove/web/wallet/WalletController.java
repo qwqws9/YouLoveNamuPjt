@@ -1,5 +1,6 @@
 package com.youlove.web.wallet;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,11 @@ public class WalletController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['pageUnit']}")
-	int pageUnit;
-	
-	@Value("#{commonProperties['pageSize']}")
-	int pageSize;
-	
 	@RequestMapping(value="getWalletList", method=RequestMethod.GET)
 	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode) throws Exception{
+		
+		int pageUnit = 5;
+		int pageSize = 5;
 		
 		System.out.println("/wallet/getWalletList : GET");
 		
@@ -45,7 +43,11 @@ public class WalletController {
 		search.setCurrentPage(1);
 		search.setPageSize(pageSize);
 		
-		Map<String, Object> map = walletService.getWalletList(search, walletCode);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("walletCode", walletCode);
+		map.put("search", search);
+		
+		map = walletService.getWalletList(map);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
