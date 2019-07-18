@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
 
@@ -29,14 +30,12 @@ public class PlannerDaoImpl implements PlannerDao{
 	//1. planner
 	@Override
 	public void addPlanner(Planner planner) throws Exception {
-		sqlSession.insert("PlannerMapper.addPlanner", planner);
-		
+		sqlSession.insert("PlannerMapper.addPlanner", planner);		
 	}
 	@Override
 	public Planner getPlanner(int plannerCode) throws Exception {
-			return sqlSession.selectOne("PlanMapper.getPlanner", plannerCode);
+			return sqlSession.selectOne("PlannerMapper.getPlanner", plannerCode);
 		}
-	
 	
 	//2. route 
 	@Override
@@ -46,14 +45,26 @@ public class PlannerDaoImpl implements PlannerDao{
 
 	@Override
 	public Route getRoute(int routeCode) throws Exception {
-		return sqlSession.selectOne("RouteMapper.getRoute",routeCode);
+		return sqlSession.selectOne("PlannerMapper.getRoute",routeCode);
 	}
 
 	@Override
 	public List<Route> getRouteList(int plannerCode) throws Exception {
+		return sqlSession.selectList("PlannerMapper.getRouteList",plannerCode);
+	}
 	
-		return sqlSession.selectList("RouteMapper.getRouteList",plannerCode);
-}
+	//3. schedule
+	@Override
+	public void addSchedule(Schedule schedule) throws Exception {
+		sqlSession.insert("PlannerMapper.addSchedule", schedule);
+	}
 	
+	@Override
+	public List<Schedule> getScheduleList(int plannerCode) throws Exception {
+		return sqlSession.selectList("PlannerMapper.getScheduleList",plannerCode);
+	}
 	
+	public Schedule getSchedule(int scheCode)  throws Exception{
+		return sqlSession.selectOne("PlannerMapper.getSchedule",scheCode);
+	}
 }

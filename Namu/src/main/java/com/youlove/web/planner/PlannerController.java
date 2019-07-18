@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.User;
 import com.youlove.service.domain.Planner;
 
@@ -59,6 +60,7 @@ public class PlannerController {
 		System.out.println(this.getClass());
 	}
 
+	// 1. planner
 	@RequestMapping( value="addPlanner", method=RequestMethod.GET )
 	public String addPlanner() throws Exception {
 
@@ -103,6 +105,7 @@ public class PlannerController {
 		return "forward:/planner/addRoute.jsp";
 	}
 	
+	// 2. route
 	@RequestMapping(value = "addRoute")
 	public String addRoute(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("route") Route route) throws Exception{
 
@@ -167,10 +170,14 @@ public class PlannerController {
 
 
 	//일정작성 
-	@RequestMapping(value = "/planner/addSchedule", method = RequestMethod.GET)
-	public String addSchedule(HttpServletRequest request) {
-	System.out.println("PlannerController ---------- addSchedule:GET start");
-		return "planner/addSchedule";
+	@RequestMapping(value = "addSchedule")
+	public String addSchedule(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("schedule") Schedule schedule, @ModelAttribute("route") Route route) throws Exception{
+
+		System.out.println("PlannerController :: addSchedule :POST start");
+		//route.setRouteCode(10073);  ~~~route code route... 
+		plannerService.addSchedule(schedule);
+
+		return "forward:/plan/Calendar11.jsp";
 		}
 
 }

@@ -1,10 +1,11 @@
 package com.youlove.service.planner;
 
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.Schedule;
+import com.youlove.service.domain.Planner;
 
 import java.util.List;
 
-import com.youlove.service.domain.Planner;
 
 public interface PlannerDao {
 
@@ -20,6 +21,10 @@ public interface PlannerDao {
 	
 	public List<Route> getRouteList(int plannerCode) throws Exception;
 	
+	//3.schedule
+	public void addSchedule(Schedule schedule) throws Exception ;
 	
+	public List<Schedule> getScheduleList(int plannerCode) throws Exception;
 	
+	public Schedule getSchedule(int scheCode)  throws Exception;
 }
