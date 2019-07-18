@@ -124,6 +124,16 @@ public class UserController {
 		return "/";
 	}
 	
+	@RequestMapping("/getUser")
+	public String getUser(HttpSession session) throws Exception {
+		
+		System.out.println("/user/getUser");
+		
+		//session.removeAttribute("user");
+		
+		return "forward:/user/getUser.jsp";
+	}
+	
 	
 	
 }

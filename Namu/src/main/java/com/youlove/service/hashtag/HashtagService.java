@@ -13,7 +13,7 @@ public interface HashtagService {
 	
 	public void updateHashtag(Hashtag hashtag)throws Exception;
 	
-	public void deleteHashtag(Hashtag hashtag)throws Exception;
+	public void deleteHashtag(int hashtagCode)throws Exception;
 	
 	public void updateCode(Boolean where, int theCode , int hashtagCode)throws Exception;
 }

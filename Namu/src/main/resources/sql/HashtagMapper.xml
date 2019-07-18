@@ -20,7 +20,7 @@
 		</selectKey>
 		INSERT 
 		INTO hashtag(hashtag_code, hashtag, community_code, party_code, user_code) 
-		VALUES (seq_hashtag_code.nextval,#{hashtag},#{communityCode:INTEGER},#{partyCode:INTEGER},#{writer})
+		VALUES (seq_hashtag_code.nextval,#{hashtag:VARCHAR},#{communityCode:INTEGER},#{partyCode:INTEGER},#{writer})
 	</insert>
 	 
 	<select 	id="getHashtag"		parameterType="int"		resultMap="hashtagMap">
@@ -31,8 +31,18 @@
 	
 	</select>
 	 
-	<update		id="updateHashtag"	parameterType="string" >
-		
+	<update		id="updateHashtag"	parameterType="hashtag" >
+		UPDATE hashtag
+		<set>
+			hashtag	= #{hashtag},
+			<if test="communityCode != null">
+				community_code	= #{communityCode:INTEGER},
+			</if>
+			<if test="partyCode != null">
+				party_code		= #{partyCode:INTEGER},
+			</if>
+		</set>
+		WHERE community_code = #{communityCode}
 	</update>
 	<update id="updateCode" parameterType="map">
 		UPDATE hashtag
@@ -46,8 +56,10 @@
 		</set>
 		WHERE hashtag_code = #{hashtagCode}
 	</update> 
-	<delete 	id="deleteHashtag" 	parameterType="string">
-	
+	<delete 	id="deleteHashtag" 	parameterType="int">
+		DELETE
+		FROM hashtag
+		WHERE hashtag_code = #{hashtagCode}
 	</delete>
 	
 </mapper>

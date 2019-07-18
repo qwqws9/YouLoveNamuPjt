@@ -84,7 +84,7 @@
 						    		<span class="align-text-bottom" style="font-size:x-small; color: white;">${user.nickname }</span>
 								</button>
 									<div class="dropdown-menu">
-								  		<a class="dropdown-item" href="#">내 정보</a>
+								  		<a class="dropdown-item" href="/user/getUser">내 정보</a>
 									    <a class="dropdown-item" href="#">내 작성글/댓글</a>
 									    <a class="dropdown-item" href="#">결제내역</a>
 									    <c:if test="${user.role eq 'admin' }">

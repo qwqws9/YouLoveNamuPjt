@@ -55,7 +55,7 @@
 					  		<div class="card-body" style="border: 1px solid #cbcbcb;">
 					  			<div class="row">
 									<div class="col-lg-2">
-										<select class="selectpicker form-control" id="communityBoard" name="communityBoard">
+										<select class="form-control" id="communityBoard" name="communityBoard">
 										  <option value="1" >자유 게시판</option>
 										  <option value="2" id="selectedCity">도시별 게시판</option>
 										  <option value="3" >QnA 게시판</option>
@@ -112,8 +112,8 @@
 						  				<strong style="font-style: inherit;" >공개설정</strong>
 						  			</div>
 						  			<div class="col-lg-2 offset-8 text-right">
-						  				<select class="selectpicker form-control" id="openRange" name="openRange">
-										  <option value="1" selected="selected">전체</option>
+						  				<select class="form-control" id="openRange" name="openRange">
+										  <option value="1" >전체</option>
 										  <option value="2" >회원만</option>
 										</select>
 						  			</div>
