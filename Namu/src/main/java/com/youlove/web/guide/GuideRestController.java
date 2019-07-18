@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,27 @@ public class GuideRestController {
 		
 		return city;
 	}
+	
+	/*
+			******** getCityList 사용법  ************
+			
+			/json/getCityList/{value}
+			 * {all}		전체 정보조회
+			 * {country} 	국가 정보 조회
+			 * {국가명}  	해당 국가에 속하는 도시정보 조회
+	
+	 */
+	@RequestMapping("/json/getCityList/{value}")
+	public List<City> getCityList(@PathVariable String value) throws Exception {
+		
+		
+		System.out.println("/json/getCityList");
+		System.out.println("들어온 값 : "+value);
+		
+		return guideService.getCityList(value);
+	}
+	
+	
 	
 	
 	@RequestMapping(value = "/json/selectTourPage", method=RequestMethod.POST)

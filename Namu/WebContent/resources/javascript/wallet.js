@@ -1,46 +1,34 @@
-// 모달창
-$(function(){
-	$('.pop_wrap_parent').hide();
-	
-	// 모달창 오픈
-	$('.modal_btn').on('click', function(){
-		currentTime();
+// 네비게이션
+$(function() {
+	$('.paging_wrap li').on("click", function() {
+		var currentPage = $(this).children().text().trim();
 		
-		$('.pop_wrap_parent').hide();
-		$(this).next('.pop_wrap_parent').show('slow');
-	});
-	
-	// 모달창 세이브
-	$('form#save_income_form').on('submit', function(event){
-		event.preventDefault();
+		//console.log('현재 페이지' + currentPage);
 		
-		addAjax($(this)[0]);
-	});
-	
-	// 모달창 클로즈
-	$('.close_btn').on('click', function(){
-		$('.pop_wrap_parent').hide('fast');
+		if($(this).has('.left')){
+			fncGetList(currentPage - 1);
+		}else if($(this).has('.right')){
+			fncGetList(currentPage + 1);
+		}else{
+			fncGetList(currentPage);
+		}
 	});
 });
 
-// 현재 날짜 및 시간 입력
-function currentTime(){
-	var date = new Date();
-	var nowDay = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-	var nowTime = date.getHours() + ':' + date.getMinutes();
+// 검색
+function fncGetList(currentPage) {
+	$('#currentPage').val(currentPage);
 	
-	console.log('현재시각 : ' + nowDay + ' ' + nowTime);
-	
-	$('input.date_time').val(nowDay + ' ' + nowTime);
+	getListAjax($('form.search_form'));
 }
 
 // addWallet Business Logic
-function addAjax(form){
+function addAjax(form) {
 	// file이 담긴 FORM 태그를 @ModelAttribute, MultipartFile 로 전달
 	var formData = new FormData(form);
 	
 	/*
-	for(var pair of formData.entries()){
+	for(var pair of formData.entries()) {
 		console.log(pair[0] + ' = '+ pair[1]); 
 	}
 	console.log(formData.get('file'));
@@ -56,14 +44,12 @@ function addAjax(form){
 		processData	: false,
 		cache		: false,
 		timeout		: 600000,
-		success		: function(JSONData, status){
+		success		: function(JSONData, status) {
 			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
-			
-			$('.save_btn').prop('disabled', true);
-			$('.pop_wrap_parent').hide();
 			form.reset();
+			$('.pop_wrap_add').html('');
 		},
-		error		: function(request, status, error){
+		error		: function(request, status, error) {
 			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);
 	    }
 	});
@@ -77,7 +63,7 @@ function addAjax(form){
 	
 	var data = {};
 
-	$.each(form.serializeArray(), function(index, object){
+	$.each(form.serializeArray(), function(index, object) {
 		data[object.name] = object.value;
     });
     
@@ -90,17 +76,46 @@ function addAjax(form){
 		data		: JSON.stringify(data),
 		dataType	: 'json',
 		contentType	: 'application/json',
-		success		: function(JSONData, status){
+		success		: function(JSONData, status) {
 			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
 		},
-		error	: function(request, status, error){
+		error	: function(request, status, error) {
 			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);
 		}
 	});
 	*/
 }
 
-//addWallet Business Logic
-function getListAjax(walletCode){
+// getWalletList Business Logic
+function getListAjax(form) {
+	var walletCode = $('.walletCode').text().trim();
 	
+	console.log(form.serialize());
+	console.log(form.serializeArray());
+	console.log(JSON.stringify(form.serializeArray()));
+	
+	var data = {};
+
+	$.each(form.serializeArray(), function(index, object) {
+		data[object.name] = object.value;
+    });
+    
+    console.log(data);
+    console.log(JSON.stringify(data));
+	
+	$.ajax({
+		url			: '/wallet/json/getWalletList',
+		type		: 'POST',
+		data		: JSON.stringify(data),
+		dataType	: 'json',
+		contentType	: 'application/json',
+		success		: function(JSONData, status) {
+			console.log(status);
+			console.log(JSONData);
+			
+			/*if(JSONData.reviewNo != null) {
+				alert(status);
+			}*/
+		}
+	});
 }

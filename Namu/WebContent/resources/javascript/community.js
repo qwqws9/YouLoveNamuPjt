@@ -58,10 +58,10 @@ $(function(){
 	/*$('#openRange').change(function() {
 		if($(this).prop('checked') == true){
 			//여기가 전체
-			alert("off"+$("#openRange").val())
+			alert("전체"+$("#openRange").val())
 		}else{
 			//여기가 회원
-			alert("on"+$("#openRange").val());
+			alert("회원"+$("#openRange").val());
 		}
 	});*/
 	
@@ -90,6 +90,14 @@ function addHashtag(){
 	}else{
 		alert("값을 입력하세요.");
 	}
+	//openRange 유효성체크
+	$('#openRange').change(function() {
+		if($(this).prop('checked') == true){ $("#openRange").val('1');
+		}else if('#openRange' == null){ $("#openRange").val('1');
+		}else{ $("#openRange").val('2') }
+	});
+
+	
 	console.log($(".btn.btn-outline-dark").text().trim());
 }
 
@@ -126,6 +134,9 @@ function addCommunity(){
 //무한 스크롤
 function callCommunityList(page){
 		    	var communityBoard = document.location.href.split("=")[1];
+		    	//여기여기역이ㅕ기아겨ㅓㅣㅏ
+		    	var searchCondition = document.location.href.split("=")[2];
+		    	var searchKeyword = document.location.href.split("=")[3];
 				
 		    	if(communityBoard === undefined || communityBoard === null){
 		    		communityBoard = 0;
@@ -153,19 +164,20 @@ function callCommunityList(page){
 	      					var appendCity = '';
 	      					var communityBoard =  item.communityBoard;
 	      					var content = $(item.communityContent).text($(item.communityContent).text().trim());
-	      					if(communityBoard == 1){
-	      						appendBoard = '자유게시판';
-	      					}else if(communityBoard == 2){
-	      						appendBoard = '도시별 게시판';
-	      					}else if(communityBoard == 3){
-	      						appendBoard = 'QnA 게시판';
-	      					}
+	      					
+	      					if(communityBoard == 1){ appendBoard = '자유게시판';
+	      					}else if(communityBoard == 2){ appendBoard = '도시별 게시판';
+	      					}else if(communityBoard == 3){ appendBoard = 'QnA 게시판'; }
+	      					
+	      					
+	      					
 	      					if(communityBoard == 2){
 	      						appendCity = '<p class="text-center"style="font-size: x-small; color: #344157;">['+item.city+']</p>';
 	      					}
 	      					$(".col-10.col-md-10.append").append( '<div class="row list"><div class="col-2 col-md-2" style="top: 30px;">'
 	      														+'<p class="text-center" style="font-size: small; color: #344157;">'
-	      														+'No.<span class="communityCode">'+item.communityCode+'</span>'
+	      														+'<input type="hidden" class="communityCode" value="'+item.communityCode+'">'
+	      														+'No.<span class="">'+item.communityCode+'</span>'
 	      														+'</p>'
 	      														+'<p class="text-center communityBoard" style="font-size: small; color: #344157;">'
 	      														+ appendBoard

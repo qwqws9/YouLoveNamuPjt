@@ -27,6 +27,9 @@
   	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
   	
   	<style>
+  		.btn.btn-outline-dark:not(:first-child){
+  			margin-left:5px;
+  		}
     </style>
 	 
 </head>
@@ -52,7 +55,7 @@
 					  		<div class="card-body" style="border: 1px solid #cbcbcb;">
 					  			<div class="row">
 									<div class="col-lg-2">
-										<select class="selectpicker form-control" id="communityBoard" name="communityBoard">
+										<select class="form-control" id="communityBoard" name="communityBoard">
 										  <option value="1" >자유 게시판</option>
 										  <option value="2" id="selectedCity">도시별 게시판</option>
 										  <option value="3" >QnA 게시판</option>
@@ -88,9 +91,6 @@
 						  			<div class="col-lg-2"></div>
 						  			<div class="col-lg-10">
 						  				<div class="alert alert-light" role="alert" style=" background: none; border: none;">
-						  					<button onclick="remove()" type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
-										    	<span style="font-size: 14px;">#Paris</span>
-										    </button>
 										</div>
 						  			</div>
 						  		</div>
@@ -112,8 +112,8 @@
 						  				<strong style="font-style: inherit;" >공개설정</strong>
 						  			</div>
 						  			<div class="col-lg-2 offset-8 text-right">
-						  				<select class="selectpicker form-control" id="openRange" name="openRange">
-										  <option value="1" selected="selected">전체</option>
+						  				<select class="form-control" id="openRange" name="openRange">
+										  <option value="1" >전체</option>
 										  <option value="2" >회원만</option>
 										</select>
 						  			</div>

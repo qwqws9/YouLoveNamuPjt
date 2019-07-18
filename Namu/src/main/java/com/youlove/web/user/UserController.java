@@ -1,6 +1,11 @@
 package com.youlove.web.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +33,61 @@ public class UserController {
 		System.out.println(this.getClass());
 	}
 	
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+	public String login(@ModelAttribute User user,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		
+		System.out.println("/user/login : POST");
+		
+		System.out.println(user.getUserId() + "  qweqwewqeqeqeqweqweqweqweqweqwe");
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("login", user.getUserId());
+		
+		User dbUser = userService.getUser(map);
+		
+		
+		session.setAttribute("user", dbUser);
+		String sessionId = "";
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for(int i =0; i < cookies.length; i++) {
+				Cookie js = cookies[i];
+				if(js.getName().equals("JSESSIONID")) {
+					sessionId = js.getValue();
+				}
+			}
+		}
+		map.clear();
+		map.put("userCode", dbUser.getUserCode());
+		map.put("target", "token");
+		map.put("value", sessionId);
+		userService.updateUser(map);
+		Cookie c = new Cookie("users",dbUser.getNickname());
+		//c.setDomain("http://192.168.0.13:8005");
+		c.setMaxAge(365 * 24 * 60 * 60);
+		c.setPath("/");
+		response.addCookie(c);
+		
+		
+		
+		return "redirect:/";
+	}
+	
+	
 	@RequestMapping(value="/loginView",method=RequestMethod.GET)
 	public String loginView(HttpServletRequest request,Model model) throws Exception{
 		
 		System.out.println("/user/loginView : GET");
+		System.out.println();
 		System.out.println(request.getRealPath("/"));
+		System.out.println();
+		System.out.println(request.getSession().getServletContext().getRealPath("/"));
+		System.out.println();
+		System.out.println(request.getSession().getServletContext().getRealPath("resources"));
+		System.out.println();
+		System.out.println(request.getSession().getServletContext().getRealPath("images"));
+		System.out.println();
 		
 		model.addAttribute("boardCode",5);
 		model.addAttribute("detailCode","12345");
@@ -57,11 +112,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/addUser", method= RequestMethod.POST)
-	public String addUserA(@ModelAttribute User user, MultipartFile profileImage) throws Exception {
+	public String addUserA(@ModelAttribute User user, MultipartFile profileImage,HttpServletRequest request) throws Exception {
 		
 		System.out.println("/user/addUser : POST");
 		
-		String fileName = FileNameUUId.convert(profileImage,"profileImage");
+		String fileName = FileNameUUId.convert(profileImage,"profile",request);
 		
 		if(fileName.equals("NotImage")) {
 			fileName = "7877e8c81ac0a942265a9b65a049b784.jpg";
@@ -90,6 +145,16 @@ public class UserController {
 		session.removeAttribute("user");
 		
 		return "/";
+	}
+	
+	@RequestMapping("/getUser")
+	public String getUser(HttpSession session) throws Exception {
+		
+		System.out.println("/user/getUser");
+		
+		//session.removeAttribute("user");
+		
+		return "forward:/user/getUser.jsp";
 	}
 	
 	

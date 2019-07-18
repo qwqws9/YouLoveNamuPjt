@@ -68,13 +68,27 @@
 		</where>
 	</delete>
 	
-	<select id="getWalletList" parameterType="int" resultMap="walletSelectMap">
+	<select id="getWalletList" parameterType="map" resultMap="walletSelectMap">
 		SELECT *
-		FROM wallet_detail
-		<where>
-			w_main_code = #{value}
-		</where>
-		ORDER BY reg_date DESC
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+			   FROM ( SELECT *
+					  FROM wallet_detail
+					  <where>
+							w_main_code = #{walletCode}
+					  </where>
+					  ORDER BY reg_date DESC ) inner_table
+			   WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+	</select>
+	
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM ( SELECT *
+			   FROM wallet_detail
+			   <where>
+					w_main_code = #{walletCode}
+			   </where>
+			   ORDER BY reg_date DESC ) countTable					
 	</select>
 	
 </mapper>

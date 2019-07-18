@@ -14,6 +14,7 @@ public interface UserDao {
 	
 	public String getCheckUser(String nickname) throws Exception;
 
+	public int updateUser(Map<String,Object> map) throws Exception;
 	
 
 	

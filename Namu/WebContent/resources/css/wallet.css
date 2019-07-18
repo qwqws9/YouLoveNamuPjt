@@ -17,29 +17,45 @@ a:hover, a:active {color: inherit; text-decoration:none;}
 .wrap {position: relative; max-width: 1200px; margin: auto; padding-top: 30px;}
 .skip {overflow: hidden; position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; clip: rect(0 0 0 0);}
 .clear::after {content: ''; display: block; clear: both;}
+.disabled_a a {color: #cbcbcb; cursor: auto; pointer-events: none;}
+.disabled_a:hover {color: #cbcbcb !important; background-color: inherit !important;}
 
-/* walletListView.jsp */
+/* getWalletList.jsp */
 .pre_btn {margin-left: 10px; font-size: 18px; font-weight: 700;}
 .pre_btn i {font-size: 21px;}
 .pre_btn span {line-height: 30px;}
 
 .sec_wrap {width: 100%; padding-top: 80px;}
-.left_nav, .right_table {float: left;}
-.left_nav {width: 10%; padding-left: 20px;}
-.right_table {width: 90%; text-align: center;}
+.left_nav {padding-left: 20px;}
+@media(max-width:714px){
+	.right_table {margin-top: 40px;}
+}
+@media(min-width:715px){
+	.left_nav, .right_table {float: left;}
+	.left_nav {width: 10%;}
+	.right_table {width: 90%; text-align: center;}
+}
 
 /* 좌측 사이드바 */
 .day_btn {width: 50px; font-weight: 700; text-align: center;}
-a.day_btn:not(:first-child) {margin-top: 10px;}
-a.day_btn {display: block; height: 50px; line-height: 50px; background-color: #282c37; transition: all 0.6s, background-color 0.3s;}
-a.day_btn:hover {background-color: #cbcbcb; box-shadow: 50px 50px 0 0 rgba(0,0,0,0.3) inset;}
+a.day_btn {height: 50px; line-height: 50px; background-color: #282c37;}
+a.day_btn:hover {background-color: #cbcbcb; box-shadow: 50px 50px 0 0 rgba(0,0,0,.3) inset;}
 a.day_btn span {color: #fff;}
-span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border-top: 1px solid #cbcbcb;}
+@media(max-width:714px){
+	a.day_btn {display: inline-block; transition: all .6s, background-color .3s;}
+	a.day_btn:not(:first-child) {margin-left: 10px;}
+	span.day_btn {margin-left: 25px; padding-left: 25px; border-left: 1px solid #cbcbcb;}
+}
+@media(min-width:715px){
+	a.day_btn {display: block;}
+	a.day_btn:not(:first-child) {margin-top: 10px;}
+	span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border-top: 1px solid #cbcbcb;}
+}
 
 /* 검색 */
 .search_form {position: absolute; top: 30px; right: 10px; height: 40px; margin-right: 1.5%;}
-.search_txt, .search_btn {height: inherit; padding: 7px 12px; border-top-right-radius: 0.25em; border-bottom-right-radius: 0.25em; box-sizing: border-box;}
-.search_txt {width: 250px; border: 1px solid #ccc; border-radius: 0.25em;}
+.search_txt, .search_btn {height: inherit; padding: 7px 12px; border-top-right-radius: .25em; border-bottom-right-radius: .25em; box-sizing: border-box;}
+.search_txt {width: 250px; border: 1px solid #ccc; border-radius: .25em;}
 .search_btn {margin-left: -7px; color: #fff; background-color: #30a9de;}
 
 /* 우측 콘텐츠 */
@@ -51,39 +67,50 @@ span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border
 .total_floating {float: left; width: 50%; height: 44px; line-height: 44px;}
 .total_floating span {display: inline-block; width: 50%;}
 .total_floating span:first-child {background-color: #cbcbcb;}
+.page_info {position: absolute; top: 0; left: 0;}
 
-/* 예산 및 지출 추가 팝업 */
-.plus_btns {position: relative; margin-top: 30px; margin-right: 2.5%; font-size: 16px; text-align: right;}
-.pop_wrap_parent {position: absolute; top: 25px; right: 0; width: auto; height: auto;}
-.pop_wrap {padding: 30px 30px; background-color: #fff; border: 2px solid #343a40; border-radius: 0.25em; z-index: 1;}
-.pop_left, .cal_btns {float: left; width: 252px;}
-.pop_left {margin-right: 30px;}
+/* 예산 및 지출 add 팝업 */
+.plus_btns {position: relative; margin: 25px 2.5%; font-size: 16px; text-align: right;}
+.pop_wrap_add {position: absolute; top: 25px; right: 0; width: auto; height: auto;}
+.pop_wrap {padding: 30px 30px; background-color: #fff; border: 2px solid #343a40; border-radius: .25em;}
+.pop_left, .cal_btns {transition: all .6s;}
+@media(max-width:799px){
+	.cal_btns {margin-top: 20px;}
+}
+@media(min-width:800px){
+	.pop_left, .cal_btns {float: left; width: 252px;}
+	.pop_left {margin-right: 30px;}
+}
 
 /* 입력 결과 */
 .result_top {position: relative; width: inherit; height: 110px; margin-bottom: 10px; border-bottom: 1px solid #cbcbcb;}
-.date_time {width: inherit; height: 28px; line-height: 26px; font-size: 13px; text-align: center; border: 1px solid #f2c029; border-radius: 0.25em; box-sizing: border-box; cursor: pointer;}
+.date_time {width: 100%; height: 28px; line-height: 26px; font-size: 13px; text-align: center; border: 1px solid #f2c029; border-radius: .25em; box-sizing: border-box; cursor: pointer;}
 .date_time:hover {background-color: #f2c029;}
-.unit_selec {position: absolute; top: 40px; left: 0; width: 85px; padding: 7px 12px; background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; border: 1px solid #ccc; border-radius: 0.25em;}
+.unit_selec {position: absolute; top: 40px; left: 0; width: 85px; padding: 7px 12px; background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; border: 1px solid #ccc; border-radius: .25em;}
 .result {position: absolute; right: 0; width: 160px;}
 .price, .krw_price {position: absolute; right: 0; width: 120px; text-align: right;}
 .price {top: 20px; height: 27px; line-height: 27px; font-size: 20px;}
 .krw_price {top: 50px; height: 23px; line-height: 23px; font-size: 12px;}
 
 /* 환율 설정 */
-.apply_exchange_rate {position: relative; width: inherit; height: 80px; border: 1px solid #cbcbcb; border-radius: 0.25em;}
+.apply_exchange_rate {position: relative; width: inherit; height: 80px; border: 1px solid #cbcbcb; border-radius: .25em;}
 .apply_exchange_rate > span, .apply_exchange_rate > div {position: absolute;}
 .apply_exchange_rate > span {left: 15px; line-height: 80px;}
 .apply_exchange_rate > div {top: 0; right: 15px; font-size: 12px;}
 .apply_exchange_rate > div > span {line-height: 42px; color: #cbcbcb;}
-.exchange_rate_btn {width: 90px; height: 21px; line-height: 21px; color: #fff; font-size: 11px; text-align: center; background-color: #f2c029 !important; border-radius: 0.7em;}
+.exchange_rate_btn {width: 90px; height: 21px; line-height: 21px; color: #fff; font-size: 11px; text-align: center; background-color: #f2c029 !important; border-radius: .7em;}
 
 /* 카테고리 선택 */
-.category_selec {background-color: green;}
-
+.category_wrap {width: inherit; margin-top: 15px;}
+.category_wrap > div {width: inherit; text-align: center;}
+.category_wrap > div:last-child {margin-top: 5px;}
+.category_wrap .category_selec {display: inline-block; width: 23%; color: #cbcbcb; vertical-align: top;}
+.category_wrap .category_selec .txt {font-size: 10px;}
+.category_wrap .category:checked + label {color: #282c37;}
 
 /* 항목명 */
 .item {position: relative; width: inherit; margin-top: 15px; text-align:left;}
-.item input {width: inherit; height: 28px; line-height: 28px; text-align: center; font-size: 12px; background-color: #cbcbcb;}
+.item input {width: 100%; height: 28px; line-height: 28px; text-align: center; font-size: 12px; background-color: #cbcbcb;}
 
 /* 유형 선택 및 추가 입력 */
 .option_wrap {width: 100%; margin-top: 10px;}
@@ -102,7 +129,7 @@ span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border
 .cal_btns > div:first-child {position: relative;}
 .expression, .ac {float: right;}
 .expression {width: 180px; height: 58px; margin-left: 12px; padding: 0 8px; font-size: 15px; text-align: right;}
-.cal_btns .cal_btn {width: 60px; height: 58px; font-size: 20px; border: 1px solid #ccc; border-radius: 0.25em; box-sizing: border-box;}
+.cal_btns .cal_btn {width: 60px; height: 58px; font-size: 20px; border: 1px solid #ccc; border-radius: .25em; box-sizing: border-box;}
 .cal_left, .cal_right {float: left;}
 .cal_left > div, .cal_right .cal_btn {margin-top: 4px;}
 .cal_left > div .cal_btn {margin-right: 4px;}
@@ -110,21 +137,68 @@ span.day_btn {display: inline-block; margin-top: 25px; padding-top: 25px; border
 
 /* 버튼 */
 .act_btns {position: relative; height: 40px; margin-top: 20px;}
-.act_btns .act_btn {position: absolute; top: 0; width: 65px; height: inherit; line-height: 40px; text-align: center; border-radius: 0.25em;}
+.act_btns .act_btn {position: absolute; top: 0; width: 65px; height: inherit; line-height: 40px; text-align: center; border-radius: .25em;}
 .act_btns .save_btn {right: 90px; color: #fff; background-color: #30a9de;}
 .act_btns .save_btn:active {position: relative; top: 0;}
+.act_btns .update_btn {right: 90px; color: #fff; background-color: #30a9de;}
 .act_btns .close_btn {right: 0; color: #30a9de; border: 1px solid #30a9de; box-sizing: border-box;}
 
 /* 테이블 */
 .detail_table {margin-top: 20px; margin-bottom: 100px; font-size: 14px;}
 .table_header {height: 50px; line-height: 47px; border-top: 2px solid #ccc; border-bottom: 2px solid #ccc;}
-.table_row {height: 75px; line-height: 74px; vertical-align: middle; border-bottom: 1px solid #ccc;}
+
+.table_row {height: 75px; line-height: 75px; vertical-align: middle; border-bottom: 1px solid #ccc;}
 .table_row:last-child {border-bottom: 2px solid #ccc;}
+.detail_line {display: block; width: 100%;}
+.detail_line:hover {background-color: #cbcbcb; cursor: default;}
 .table_col {display: inline-block;}
 .table_header .table_col:nth-child(2), .table_row .table_col:nth-child(1) {width: 3%;}
 .table_header .table_col:nth-child(3), .table_row .table_col:nth-child(2) {width: 15%;}
 .table_header .table_col:nth-child(4), .table_header .table_col:nth-child(5),
-.table_row .table_col:nth-child(3), .table_row .table_col:nth-child(4) {width: 18%; font-weight: 700;}
+.table_row .table_col:nth-child(3), .table_row .table_col:nth-child(4) {width: 18%;}
 .table_header .table_col:nth-child(6), .table_row .table_col:nth-child(5) {width: 25%;}
 .table_header .table_col:nth-child(7), .table_row .table_col:nth-child(6) {width: 6%;}
+.table_row .table_col:nth-child(3), .table_row .table_col:nth-child(4) {font-weight: 700;}
 .table_col img {width: 60px; height: 60px; border: 1px solid #6c757d;}
+
+/* 수입 및 지출 get 팝업 */
+.pop_wrap_contain {display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 100;}
+.pop_wrap_get {position:fixed; width: 600px; height: 600px; padding: 10px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em;}
+.scroller {overflow: auto; width: 100%; height: 100%; margin-bottom: 40px;}
+.padding_boxing {width: 100%; padding: 30px 0;}
+.text_width {width:500px; margin: auto;}
+.input_date {font-size: 16px;}
+.top_input {width: 80%; margin: auto; padding-top: 20px;}
+.top_input > .input_category, .top_input > .input_money {float: left; height: 70px;}
+.top_input > .input_category {width: 35%; line-height: 70px; font-size: 46px; text-align: left;}
+.top_input > .input_money {width: 65%;}
+.input_money div {position: relative;}
+.input_money div span {position: absolute; right: 0; font-weight: 700;}
+.input_money div:first-child {height: 70%;}
+.input_money div:first-child span {bottom: 10px; font-size: 19px;}
+.input_money div:last-child {height: 30%;}
+.input_money div:last-child span {bottom: 0;}
+
+.input_payer {width: 100%; margin-top: 100px; font-size: 17px;}
+.input_payer > span {display: inline-block; width: 50%; height: 25px; line-height: 25px;}
+.input_payer > span:first-child {text-align: left;}
+.input_payer > span:last-child {text-align: right;}
+
+.input_item {margin-top: 30px; padding: 10px; border: 1px solid #cbcbcb; border-radius: .3em; box-sizing: border-box;}
+.input_content {margin-top: 5px; padding: 20px; background-color: #cbcbcb;}
+.big_image {max-width: 500px; height: auto; margin-top: 5px;}
+
+.pop_wrap_get .act_btns {margin-right: -10px;}
+.pop_wrap_get .act_btns .update_btn {color: rgba(0,0,0,.6); background-color: #cbcbcb;}
+.pop_wrap_get .act_btns .close_btn {color: #cbcbcb; border-color: #cbcbcb;}
+
+/* 페이지 네비게이션 */
+.paging_wrap {width: 100%;}
+.paging_wrap ul {display: flex; justify-content: center !important;}
+.paging_wrap li {padding: .8rem 1rem; color: #282c37; font-size: 15px; background-color: #fff; border: 1px solid #cbcbcb;}
+.paging_wrap li:not(:first-child) {margin-left: -2px;}
+.paging_wrap li:first-child {border-top-left-radius: .3em; border-bottom-left-radius: .3em;}
+.paging_wrap li:last-child {border-top-right-radius: .3em; border-bottom-right-radius: .3em;}
+.paging_wrap li:hover {color: #fff; background-color: #30a9de;}
+.paging_wrap li a {display: inline-block;}
+.paging_wrap .current_page {color: #fff; background-color: #30a9de;}

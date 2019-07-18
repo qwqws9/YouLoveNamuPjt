@@ -41,6 +41,16 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public boolean updateUser(Map<String, Object> map) throws Exception {
+		int res = userDao.updateUser(map);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
+	}
+
 	
 //	public boolean checkDuplication(String userId) throws Exception {
 //		boolean result=true;

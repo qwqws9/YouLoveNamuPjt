@@ -16,7 +16,6 @@
 	<script>
 		$(function(){
 			var communityCode = $("#communityCode").val();
-			
 			$("#update").on("click",function(){
 				self.location = "/community/updateCommunityView?communityCode="+$("#communityCode").val();
 			})
@@ -24,12 +23,22 @@
 				self.location = "/community/deleteCommunity?communityCode="+$("#communityCode").val();
 			})
 			
-			
+			$(".btn.btn-outline-dark").on("click", function(){
+				var hash = $(this).children().text();
+				var last = hash.length;
+				var hashtag = hash.substring(1,last);
+				self.location = "/community/getCommunityList?communityBoard=0&searchCondition=5&searchKeyword="+hashtag;
+				//alert(hashtag);
+			})
 			
 		})
 		
 	</script>
-	
+	<style>
+		.btn.btn-outline-dark:not(:last-child){
+  			margin-right:5px;
+  		}
+	</style>
 </head>
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
@@ -137,9 +146,9 @@
 		</div>
 		<div class="col-11">
 			<div class="alert alert-light" role="alert">
-				<c:forEach var="hashtag" begin="0" end="40" step="1">
-				    <button type="button" class="btn btn-outline-dark " style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
-				    	<span style="font-size: 13px;">#Paris</span>
+				<c:forEach var="hashtag" items="${hashtag}">
+				    <button type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
+				    	<span class="hashtagVal" style="font-size: 13px;">${hashtag}</span>
 				    </button>
 				</c:forEach>
 			</div>

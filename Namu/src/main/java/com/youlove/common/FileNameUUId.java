@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,12 +13,14 @@ public class FileNameUUId {
 
 	
 	
-	public static String convert(MultipartFile file,String path) throws Exception{
+	public static String convert(MultipartFile file,String path,HttpServletRequest request) throws Exception{
 		
-		
-		String saveName = "NotImage";
+		System.out.println(request.getSession().getServletContext().getRealPath("resources") + "  파일 경로");
 		
 		//업로드된 파일이 없으면 NotImage 리턴
+		String saveName = "NotImage";
+		
+		
 		if(!file.getOriginalFilename().equals("")) {
 		
 		UUID uuid = UUID.randomUUID();
@@ -25,18 +29,13 @@ public class FileNameUUId {
 		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
 		
 		saveName = uuid+"."+ext;
-		File f;
-		if(path.equals("profileImage")) {
-			f = new File("C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\YouLovePlan\\resources\\images\\captcha\\"+saveName);
-			
-		}else {
-			//필요시 path로 적절한 값 넘겨주어 경로 수정하기
-			f = new File("C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\YouLovePlan\\resources\\images\\captcha\\"+saveName);
-		}
-		    f.createNewFile(); 
-		    FileOutputStream fos = new FileOutputStream(f); 
-		    fos.write(file.getBytes());
-		    fos.close(); 
+		
+		File f = new File(request.getSession().getServletContext().getRealPath("resources")+"\\images\\"+path+"\\"+saveName);
+		
+	    f.createNewFile(); 
+	    FileOutputStream fos = new FileOutputStream(f); 
+	    fos.write(file.getBytes());
+	    fos.close(); 
 		}
 	    return saveName;
 	}

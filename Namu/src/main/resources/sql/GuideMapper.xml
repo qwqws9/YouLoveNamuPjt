@@ -24,6 +24,24 @@
 		WHERE CITY_NAME = #{value}
 	 </select>
 	 
+	 <select id="getCityList" parameterType="string" resultMap="cityMap">
+	 	SELECT
+	 	<if test="_parameter.equals('all')" >
+	 	*
+	 	</if>
+	 	<if test="_parameter.equals('country')">
+	 	DISTINCT country_name,flag_image,pay_unit,country_code
+	 	</if>
+	 	<if test="_parameter != 'all' and _parameter != 'country'">
+	 	*
+	 	</if>
+	 	
+	 	FROM city
+	 	<if test="_parameter != 'all' and _parameter != 'country'">
+	 	WHERE COUNTRY_NAME = #{value}
+	 	</if>
+	 </select>
+	 
 	
 	 
 </mapper>

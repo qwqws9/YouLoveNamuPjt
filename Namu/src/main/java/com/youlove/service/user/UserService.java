@@ -13,6 +13,8 @@ public interface UserService {
 	
 	public boolean getCheckUser(String nickname) throws Exception;
 	
+	public boolean updateUser(Map<String,Object> map) throws Exception;
+	
 	
 	
 }

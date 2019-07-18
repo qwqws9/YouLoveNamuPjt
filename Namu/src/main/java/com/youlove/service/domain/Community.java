@@ -16,7 +16,7 @@ public class Community {
 	private int writer;
 	private String city;
 	private String communityHashtag; 
-	private int communityHashtagCode;
+	private Hashtag communityHashtagCode;
 	
 	
 	///Constructor
@@ -112,11 +112,11 @@ public class Community {
 		this.communityHashtag = communityHashtag;
 	}
 
-	public int getCommunityHashtagCode() {
+	public Hashtag getCommunityHashtagCode() {
 		return communityHashtagCode;
 	}
 
-	public void setCommunityHashtagCode(int communityHashtagCode) {
+	public void setCommunityHashtagCode(Hashtag communityHashtagCode) {
 		this.communityHashtagCode = communityHashtagCode;
 	}
 

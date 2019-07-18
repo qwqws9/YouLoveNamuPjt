@@ -15,6 +15,7 @@
 		<typeAlias alias="user" type="com.youlove.service.domain.User" />
 		<typeAlias alias="city" type="com.youlove.service.domain.City" />
 		<typeAlias alias="comment" type="com.youlove.service.domain.Comment" />
+		<typeAlias alias="like" type="com.youlove.service.domain.Like" />
 		<typeAlias alias="wallet" type="com.youlove.service.domain.Wallet" />
 		<!-- 중현 -->
 		<typeAlias alias="community" type="com.youlove.service.domain.Community" />
@@ -33,6 +34,7 @@
 		<mapper resource="sql/UserMapper.xml"/>
 		<mapper resource="sql/GuideMapper.xml"/>
 		<mapper resource="sql/CommentMapper.xml"/>
+		<mapper resource="sql/LikeMapper.xml"/>
 		<mapper resource="sql/WalletMapper.xml"/>
 		<!-- 중현 -->
 		<mapper resource="sql/CommunityMapper.xml"/>

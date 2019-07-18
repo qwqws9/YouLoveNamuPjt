@@ -16,6 +16,7 @@
 		<result property="replyCode" 				column="REPLY_CODE" 				jdbcType="NUMERIC" />
 		<result property="commentDate" 				column="COMMENT_DATE" 				jdbcType="VARCHAR" />
 		<result property="commentDelete" 			column="COMMENT_DELETE" 		jdbcType="VARCHAR" />
+		<result property="likeCount" 			column="CT" 		jdbcType="NUMERIC" />
 		<association property="writerComment" javaType="user">
 			<result property="userCode" column="USER_CODE" />
 			<result property="nickname" column="NICKNAME" />
@@ -48,14 +49,18 @@
 	 </update>
 	 
 	 <select id="getComment" parameterType="map" resultMap="commentMap">
-		SELECT * FROM (
-			select ROWNUM ronum ,innerT.*, u.user_code,u.profile_img,u.nickname
-			FROM ( SELECT * 
-				   FROM comments 
-				   WHERE BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode}
-				   ORDER BY reply_code desc , step) innerT , users u
-			WHERE innerT.writer_comment = u.user_code AND ROWNUM &lt;= #{search.endRowNum} )
-		WHERE ronum BETWEEN #{search.startRowNum} AND #{search.endRowNum}	
+		select ctt.ct, c.*,u.user_code,u.profile_img,u.nickname   from  users u, comments c ,( 
+		    select c.comment_code cttt , count(l.comment_code) ct
+		    from likes l , (select * from (
+		    select ROWNUM ronum ,innerT.* 
+		    from (
+		        select * from comments where BOARD_CODE = #{boardCode} and DETAIL_CODE =  #{detailCode}  order by reply_code desc, step) innerT
+            where ROWNUM &lt;= #{search.endRowNum} )
+		where ronum BETWEEN #{search.startRowNum} AND #{search.endRowNum}) c
+		    where l.comment_code(+) = c.comment_code
+		    group by  c.comment_code) ctt
+		where ctt.cttt = c.comment_code and c.writer_comment = u.user_code
+		order by reply_code desc, step	
 	 </select>
 	 
 	 <select id="countComment" parameterType="comment" resultType="int">
