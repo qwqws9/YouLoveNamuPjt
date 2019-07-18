@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <input type="hidden" name="walletCode" value="1" />
 <input type="hidden" name="part" value="1" />
+
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">

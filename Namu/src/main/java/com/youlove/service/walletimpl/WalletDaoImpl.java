@@ -1,12 +1,15 @@
 package com.youlove.service.walletimpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 import com.youlove.service.wallet.WalletDao;
 
@@ -59,8 +62,20 @@ public class WalletDaoImpl implements WalletDao {
 		sqlSession.delete("WalletMapper.deleteWallet", walletDetailCode);
 	}
 	*/
-	public List<Wallet> getWalletList(int walletCode) throws Exception{
-		return sqlSession.selectList("WalletMapper.getWalletList", walletCode);
+	public List<Wallet> getWalletList(Search search, int walletCode) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("walletCode", walletCode);
+		
+		return sqlSession.selectList("WalletMapper.getWalletList", map);
+	}
+	
+	public int getTotalCount(Search search, int walletCode) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("walletCode", walletCode);
+		
+		return sqlSession.selectOne("WalletMapper.getTotalCount", map);
 	}
 	
 }

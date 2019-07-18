@@ -1,92 +1,34 @@
-// 모달창
-$(function(){
-	// add 모달창 오픈
-	$('#income_modal').on('click', function(){
-		$('.modal_btn').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
-		$(this).children().addClass('fas').css({'color':'#f2c029'});
+// 네비게이션
+$(function() {
+	$('.paging_wrap li').on("click", function() {
+		var currentPage = $('.current_page').text().trim();
 		
-		$('.pop_wrap_add').html('');
+		console.log(currentPage);
 		
-		// innerHTML
-		$($('.pop_wrap_add')[0]).load('/wallet/addWalletIncome.jsp', function(data) {
-			//console.log(data);
-			
-			currentTime();
-			
-			$('.close_btn').on('click', function(){
-				$('#income_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
-				
-				$('.pop_wrap_add').html('');
-			});
-		});
-	});
-	$('#expenditure_modal').on('click', function(){
-		$('.modal_btn').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
-		$(this).children().addClass('fas').css({'color':'#f2c029'});
-		
-		$('.pop_wrap_add').html('');
-		
-		// innerHTML
-		$($('.pop_wrap_add')[1]).load('/wallet/addWalletExpenditure.jsp', function(data) {
-			//console.log(data);
-			
-			currentTime();
-			
-			$('.close_btn').on('click', function(){
-				$('#expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
-				
-				$('.pop_wrap_add').html('');
-			});
-		});
-	});
-	
-	// add 폼 서브밋
-	$('.pop_wrap_add').on('submit', function(event){
-		event.preventDefault();
-		
-		addAjax($(this)[0]);
-	});
-	
-	// get 모달창 오픈
-	$('.detail_line').on('click', function(){
-		var modalWidth = $(this).next().children().width();
-		var modalHeight = $(this).next().children().height();
-		
-		console.log('모달창 넓이 : ' + modalWidth + 'px, 높이 : ' + modalHeight + 'px');
-		
-		centerPopUp($(this).next().children(), modalWidth, modalHeight);
+		if($(this).has('.left')){
+			fncGetList(currentPage - 1);
+		}else if($(this).has('.right')){
+			fncGetList(currentPage + 1);
+		}else{
+			fncGetList(currentPage);
+		}
 	});
 });
 
-// 현재 날짜 및 시간 입력
-function currentTime(){
-	var date = new Date();
-	var nowDay = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-	var nowTime = date.getHours() + ':' + date.getMinutes();
+// 검색
+function fncGetList(currentPage) {
+	$('#currentPage').val(currentPage);
 	
-	console.log('현재시각 : ' + nowDay + ' ' + nowTime);
-	
-	$('input.date_time').val(nowDay + ' ' + nowTime);
-}
-
-// 팝업 중앙에 띄우기
-function centerPopUp(modal, modalWidth, modalHeight){
-	console.log('모달창 넓이 : ' + modalWidth + 'px, 높이 : ' + modalHeight + 'px');
-	
-	var left = Math.ceil((window.screen.width - modalWidth) / 2);
-	var top = Math.ceil((window.screen.height - modalHeight) / 2);
-	
-	modal.parent().css({'display':'block'});
-	modal.css({'top':top, 'left':left});
+	getListAjax($('form.search_form'));
 }
 
 // addWallet Business Logic
-function addAjax(form){
+function addAjax(form) {
 	// file이 담긴 FORM 태그를 @ModelAttribute, MultipartFile 로 전달
 	var formData = new FormData(form);
 	
 	/*
-	for(var pair of formData.entries()){
+	for(var pair of formData.entries()) {
 		console.log(pair[0] + ' = '+ pair[1]); 
 	}
 	console.log(formData.get('file'));
@@ -102,12 +44,12 @@ function addAjax(form){
 		processData	: false,
 		cache		: false,
 		timeout		: 600000,
-		success		: function(JSONData, status){
+		success		: function(JSONData, status) {
 			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
 			form.reset();
 			$('.pop_wrap_add').html('');
 		},
-		error		: function(request, status, error){
+		error		: function(request, status, error) {
 			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);
 	    }
 	});
@@ -121,7 +63,7 @@ function addAjax(form){
 	
 	var data = {};
 
-	$.each(form.serializeArray(), function(index, object){
+	$.each(form.serializeArray(), function(index, object) {
 		data[object.name] = object.value;
     });
     
@@ -134,19 +76,32 @@ function addAjax(form){
 		data		: JSON.stringify(data),
 		dataType	: 'json',
 		contentType	: 'application/json',
-		success		: function(JSONData, status){
+		success		: function(JSONData, status) {
 			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
 		},
-		error	: function(request, status, error){
+		error	: function(request, status, error) {
 			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);
 		}
 	});
 	*/
 }
 
-//addWallet Business Logic
-/*
-function getListAjax(walletCode){
+// getWalletList Business Logic
+function getListAjax(form) {
+	var walletCode = $('');
 	
+	$.ajax({
+		url			: '/review/json/getReview/'+tranNo,
+		method : "GET",
+		dataType : "json",
+		headers : {
+			"Accept" : "application/json",
+		"Content-Type" : "application/json"
+		},
+		success : function(JSONData, status){
+			if(JSONData.reviewNo != null) {
+				$("td:nth-child(9) span").text("리뷰보기");
+				}
+		}
+	});
 }
-*/
