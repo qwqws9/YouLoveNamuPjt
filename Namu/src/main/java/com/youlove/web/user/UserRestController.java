@@ -1,9 +1,11 @@
 package com.youlove.web.user;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.youlove.common.FileNameUUId;
 import com.youlove.common.RandomNumber;
 import com.youlove.common.api.CheckEmailTransfer;
 import com.youlove.common.api.CheckSMSTransfer;
@@ -53,6 +57,21 @@ public class UserRestController {
 	
 	@Value("#{commonProperties['captchaPath']}")
 	String captchaPath;
+	
+	
+	@RequestMapping(value="json/getUser", method=RequestMethod.POST)
+	public User getUser(@RequestBody Map<String,Object> map) throws Exception {
+		
+		System.out.println("/user/json/getUser");
+		
+		User user = userService.getUser(map);
+	
+		
+		return user;
+	}
+
+	
+	
 	
 	
 	@RequestMapping(value="json/login", method=RequestMethod.POST)
@@ -104,7 +123,13 @@ public class UserRestController {
 		if(req.get("target").equals("id") ) {
 			dbUser.setPassword("");
 		}else {
-			dbUser.setPassword(RandomStringUtils.randomAlphabetic(10));
+			String pass = RandomStringUtils.randomAlphabetic(10);
+			map.clear();
+			map.put("userCode", dbUser.getUserCode());
+			map.put("target", "password");
+			map.put("value", pass);
+			userService.updateUser(map);
+			dbUser.setPassword(pass);
 		}
 		
 		
@@ -157,6 +182,8 @@ public class UserRestController {
 		String receiver = (String)param.get("receiver");
 		System.out.println(receiver);
 		
+		
+		//param.get("position") 요청 보내는곳
 		Map<String,Object> map = new HashMap<>();
 		
 		String number = RandomNumber.getRandom();
@@ -217,6 +244,65 @@ public class UserRestController {
 		return result;
 		
 	}
+	
+	@RequestMapping(value="/json/updateImg/{userCode}", method=RequestMethod.POST)
+	public User updateImg(MultipartFile file,HttpServletRequest request,@PathVariable String userCode,Map<String,Object> map,HttpSession session) throws Exception{
+		
+		if(!file.isEmpty() && file != null){
+			String fileName = FileNameUUId.convert(file, "profile", request);
+			System.out.println(fileName + "         파일이름 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			map.put("userCode", userCode);
+			map.put("target", "img");
+			map.put("value", fileName);
+		}
+//		
+		
+		boolean result = userService.updateUser(map);
+		User user;
+		
+		if(result == true) {
+			session.removeAttribute("user");
+			map.clear();
+			map.put("userCode", Integer.parseInt(userCode));
+			user = userService.getUser(map);
+			session.setAttribute("user", user);
+			
+		}else {
+			user = null;
+		}
+		
+		return user;
+		
+	}
+	
+	
+	
+	@RequestMapping(value="/json/updateUser", method=RequestMethod.POST)
+	public User updateUser(@RequestBody Map<String,Object> map,HttpSession session) throws Exception{
+		
+		
+		
+		boolean result = userService.updateUser(map);
+		User user;
+		
+		if(result == true) {
+			session.removeAttribute("user");
+			String userCode = (String)map.get("userCode");
+			map.clear();
+			map.put("userCode", Integer.parseInt(userCode));
+			user = userService.getUser(map);
+			session.setAttribute("user", user);
+			
+		}else {
+			user = null;
+		}
+		
+		return user;
+		
+	}
+	
+	
+	
 	
 	
 	

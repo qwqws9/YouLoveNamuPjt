@@ -65,6 +65,37 @@
 		WHERE NICKNAME = #{value}
 	 </select>
 	 
+	 <update id="updateUser" parameterType="map">
+	 	UPDATE users
+	 	<set>
+	 	<if test="target == 'introduce'">
+	 	INTRODUCE = #{value}
+	 	</if>
+	 	<if test="target == 'password'">
+	 	PASSWORD = #{value}
+	 	</if>
+	 	<if test="target == 'nickname'">
+	 	NICKNAME = #{value}
+	 	</if>
+	 	<if test="target == 'phone'">
+	 	PHONE = #{value}
+	 	</if>
+	 	<if test="target == 'email'">
+	 	EMAIL = #{value}
+	 	</if>
+	 	<if test="target == 'auth'">
+	 	PROFILE_AUTH = #{value}
+	 	</if>
+	 	<if test="target == 'img'">
+	 	PROFILE_IMG = #{value}
+	 	</if>
+	 	<if test="target == 'token'">
+	 	TOKEN = #{value}
+	 	</if>
+	 	</set>
+	 	WHERE USER_CODE = #{userCode}
+	 </update>
+	 
 	
 	 
 </mapper>

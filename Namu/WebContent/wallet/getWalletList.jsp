@@ -7,7 +7,7 @@
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>YouLovePlan</title>
 	
 	<!-- Optional JavaScript -->
@@ -19,7 +19,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
 	
 	<!-- Font Awesome SVG with JavaScript -->
-	<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -27,6 +27,7 @@
     <!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
+	<script type="text/javascript" src="/resources/javascript/wallet_modal.js"></script>
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
 </head>
 <body>
@@ -35,16 +36,19 @@
 	<div class="wrap">
 		<h2 class="skip">내 가계부</h2>
 
-		
 		<a href="javascript:void(0);" class="pre_btn">
 			<i class="fas fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span>내 가계부 목록으로</span>
 		</a>
 		<a href="javascript:void(0);" class="next_btn">결산 보고서 조회</a>
 		
 		<section class="sec_wrap clear">
-			<h3 class="skip">가계부 내역</h3>
+			<h3 class="skip"><span class="walletCode">${param.walletCode}</span>가계부 내역</h3>
+			
 			
 			<form class="search_form" name="search_form">
+				<input type="hidden" id="currentPage" name="currentPage" value="" />
+				<input type="hidden" id="pageSize" name="pageSize" value="" />
+				
 				<label for="searchKeyword" class="skip">검색어</label>
 				<input type="text" class="search_txt" id="searchKeyword" name="searchKeyword" placeholder="내역 항목명을 입력하세요." value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
 				<button type="submit" class="search_btn">검색</button>
@@ -76,7 +80,10 @@
 				</div><!-- //total_table -->
 				
 				<div class="plus_btns">
-					<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
+					<span>
+						<span class="page_info">총  ${resultPage.totalCount} 건 중 현재 ${resultPage.currentPage} 페이지</span>
+						<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
+					</span>
 					<form class="pop_wrap_add" id="save_income_form"></form>
 					&nbsp;&nbsp;&nbsp;
 					<a href="javascript:void(0);" class="modal_btn" id="expenditure_modal">지출 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
@@ -141,9 +148,9 @@
 											${wallet.item}
 										</c:if>
 										<c:if test="${empty wallet.item}">
-											<c:if test="${wallet.part eq 0}">
-												예산 추가
-											</c:if>
+											<c:if test="${wallet.part eq 0}">예산</c:if>
+											<c:if test="${wallet.part eq 1}">지출</c:if>
+											추가
 										</c:if>
 									</span>
 									<span class="table_col">
@@ -163,64 +170,91 @@
 										</c:if>
 									</span>
 								</a><!-- //detail_line -->
+								
 								<div class="pop_wrap_contain">
 									<div class="pop_wrap_get">
-										<div>${wallet.regDate}</div>
-										<div>
-											<div>
-												<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
-												<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
-												<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
-												<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
-												<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
-												<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
-												<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
-												<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
-												<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
-											</div>
-											<div>
-												<div>
-													<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
-													<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-													<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
-												</div>
-												<div>
-													<c:if test="${wallet.moneyUnit ne 'KRW'}">
-														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+										<div class="scroller">
+											<div class="padding_boxing">
+												<div class="text_width">
+													<div class="input_date">${wallet.regDate}</div>
+													<div class="top_input clear">
+														<div class="input_category">
+															<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
+															<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
+															<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
+															<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
+															<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
+															<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
+															<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
+															<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
+															<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+														</div>
+														<div class="input_money">
+															<div>
+																<span>
+																	<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
+																	<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+																	<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+																</span>
+															</div>
+															<div>
+																<span>
+																	<c:if test="${wallet.moneyUnit ne 'KRW'}">
+																		<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+																	</c:if>
+																</span>
+															</div>
+														</div>
+														<%-- <c:if test="${! empty wallet.payer}"> --%>
+															<div class="input_payer">
+																<span>결제자</span><span>미니미니</span>
+															</div>
+														<%-- </c:if> --%>
+													</div><!-- //top_input -->
+													<c:if test="${wallet.part eq 0}">
+														<div>
+															<span>화폐 단위</span><span>${wallet.moneyUnit}</span>
+															<c:if test="${wallet.moneyUnit ne 'KRW'}">
+																<span>적용 환율</span><span>${wallet.moneyUnit} = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
+															</c:if>
+														</div>
 													</c:if>
-												</div>
-											</div>
-											<c:if test="${wallet.part eq 0}">
-												<div>
-													<span>화폐 단위</span><span>${wallet.moneyUnit}</span>
-													<c:if test="${wallet.moneyUnit ne 'KRW'}">
-														<span>적용 환율</span><span>${wallet.moneyUnit} = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
-													</c:if>
-												</div>
-											</c:if>
-											<%-- <c:if test="${! empty wallet.payer}">
-												<div>
-													<span>결제자</span><span>${wallet.payer.nickname}</span>
-												</div>
-											</c:if> --%>
-											<div>
-												${wallet.item}
-											</div>
-											<c:if test="${! empty wallet.walletImage}">
-												<div><img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.item} 이미지" class="big_image"></div>
-											</c:if>
-											<c:if test="${! empty wallet.content}">
-												<div>${wallet.content}</div>
-											</c:if>
+													<div class="input_item">
+														<c:if test="${! empty wallet.item}">
+															${wallet.item}
+														</c:if>
+														<c:if test="${empty wallet.item}">
+															<c:if test="${wallet.part eq 0}">예산</c:if>
+															<c:if test="${wallet.part eq 1}">지출</c:if>
+															추가
+														</c:if>
+													</div>
+													<%-- <c:if test="${! empty wallet.content}"> --%>
+														<div class="input_content">아이스아메리카노 먹고싶은데 디카페인 파는데가 근처에 없어ㅠㅠㅠㅠㅠ<%-- ${wallet.content} --%></div>
+													<%-- </c:if> --%>
+												</div><!-- //text_width -->
+												<c:if test="${! empty wallet.walletImage}">
+													<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.item} 이미지" class="big_image">
+												</c:if>
+											</div><!-- //scroller -->
+										</div><!-- //padding_boxing -->
+										
+										<div class="act_btns">
+											<a href="javascript:void(0);"class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn close_btn">닫기</a>
+											<!-- <a href="javascript:void(0);" class="act_btn close_btn">닫기</a> -->
 										</div>
 									</div><!-- //pop_wrap_get -->
-								</div><!-- //pop_wrap_get -->
+								</div><!-- //pop_wrap_contain -->
 							</li>
 						</c:forEach>
 					</ul>
 				</div><!-- //detail_table -->
 			</div><!-- //right_table -->
 		</section><!-- //sec_wrap -->
+		
+		<nav class="paging_wrap">
+			<jsp:include page="/wallet/pagination.jsp" />
+		</nav>
 	</div><!-- //wrap -->
 </body>
 </html>

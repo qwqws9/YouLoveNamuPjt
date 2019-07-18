@@ -26,7 +26,7 @@
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 	<div class="col-md-12">
 		<div class="my-3 p-3 bg-white rounded shadow-sm">
    			 <h6 class="count border-bottom border-gray pb-2 mb-0"></h6>
@@ -419,7 +419,7 @@ function deleteLike(commentCode,likeName) {
 						$('ul.commentAjax').append('<li>'
 			    		+'<div class="media text-muted pt-3">'
 			    		+'	<input type="hidden" value="'+item.commentCode+'">'
-			    		+'	<img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="32" height="32">'
+			    		+'	<img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
 			    		+'	<p class="media-body pb-3 mb-0 small">'
 			    		+'		<span class="apto-'+index+' d-block" style="position:relative;">'
 			    		+'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
@@ -458,7 +458,7 @@ function deleteLike(commentCode,likeName) {
 						$('ul.commentAjax').append('<li style="padding-left: 30px;">'
 					   +' <div class="media text-muted pt-3">'
 					   +' 	<input type="hidden" value="'+item.commentCode+'">'
-					   +'    <img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="32" height="32">'
+					   +'    <img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
 					   +'    <p class="media-body pb-3 mb-0 small">'
 					   +'    	<span class="aptoo-'+index+' d-block" style="position:relative;">'
 					   +'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 

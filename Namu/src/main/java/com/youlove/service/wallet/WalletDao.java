@@ -2,6 +2,7 @@ package com.youlove.service.wallet;
 
 import java.util.List;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 
 public interface WalletDao {
@@ -24,6 +25,8 @@ public interface WalletDao {
 	
 	public void deleteWallet(int walletDetailCode) throws Exception;
 	*/
-	public List<Wallet> getWalletList(int walletCode) throws Exception;
+	public List<Wallet> getWalletList(Search search, int walletCode) throws Exception;
+	
+	public int getTotalCount(Search search, int walletCode) throws Exception;
 	
 }
