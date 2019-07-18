@@ -17,4 +17,6 @@ public interface CommunityService {
 	public void deleteCommunity(int communityCode) throws Exception;
 	
 	public void countCommunity(int communityCode) throws Exception;
+	
+	public Map<String,Object> getCommunityRelated (String communityBoard, String City)throws Exception;
 }

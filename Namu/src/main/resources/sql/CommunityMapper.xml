@@ -33,9 +33,25 @@
 	 
 	<select 	id="getCommunity"		parameterType="int"		resultMap="communityMap">
 		SELECT
-		community_code, community_board, community_title,community_content, community_date, views, writer, hashtag_code
+		community_code, community_board, community_title,community_content, community_date, views, writer, hashtag_code, city_name
 		FROM community
 		WHERE community_code = #{communityCode}
+	</select>
+	
+	<select  	id="getCommunityRelated"  	parameterType="map"	resultMap="communityMap">
+		SELECT *
+		FROM (SELECT first_table.*, ROWNUM AS row_seq
+		        FROM ( SELECT community_code, community_board, community_title, community_content, community_date,
+		                                community_thumbnail, open_range, views, writer, city_name
+		                FROM community
+		                WHERE community_board = #{communityBoard}
+			                <if test="communityBoard == 2">
+			                	AND city_name = #{city}
+			                </if>
+		                ORDER BY views DESC ) first_table
+		        WHERE ROWNUM  &lt;= 4 )
+		WHERE  row_seq BETWEEN 0 AND 4
+	
 	</select>
 	
 	<update 	id="countCommunity" 	parameterType="community">

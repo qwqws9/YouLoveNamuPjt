@@ -100,16 +100,25 @@ public class CommunityController {
 	public ModelAndView getCommunity(@RequestParam(value="communityCode") int communityCode)throws Exception {
 		System.out.println("\nCommunityController:::getCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
+		Map<String,Object> map = new HashMap<String, Object>(); 
+		//커뮤니티
 		modelAndView.setViewName("/community/getCommunity.jsp");
 		Community community = communityService.getCommunity(communityCode);
+		modelAndView.addObject("community", community);
+		//해쉬태그
 		Hashtag hashtag = community.getCommunityHashtagCode();
 		int hashtagCode = hashtag.getHashtagCode();
-		Map<String,Object> map = new HashMap<String, Object>(); 
-		hashtagService.updateCode(true,communityCode,hashtagCode);
 		map = hashtagService.getHashtag(hashtagCode);
 		modelAndView.addObject("hashtag", map.get("hashtag"));
-		modelAndView.addObject("community", community);
+		hashtagService.updateCode(true,communityCode,hashtagCode);
+		//댓글
+		modelAndView.addObject("boardCode",communityCode );
+		modelAndView.addObject("detailCode", community.getCommunityBoard());
+		//관련글
+		map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity());
+		modelAndView.addObject("related", map.get("related"));//관련글
 		System.out.println("\nCommunityController:::getCommunity() 끝:::");
+		
 		return modelAndView;
 	}
 
