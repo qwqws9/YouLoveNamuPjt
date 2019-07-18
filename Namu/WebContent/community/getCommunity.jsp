@@ -31,6 +31,11 @@
 				//alert(hashtag);
 			})
 			
+			$(".col-3.related").on("click", function(){
+				alert($(this).children(".relatedCode").val());
+				self.location="/community/getCommunity?communityCode="+$(this).children(".relatedCode").val();
+			})
+			
 		})
 		
 	</script>
@@ -167,91 +172,24 @@
 	</div>
 	
 	<br>
-	
+	<!-- 관련글 -->
 	<div class="row" align="center">
-		<c:forEach var="i" begin="0" end="3">
-			<div class="col-3">
-				<a href="#"><img src="/resources/images/dog.JPG" id="bbsImage1" name="userImage" alt="글쓴이" class="" width="230px" height="150px" style="border-radius: 6px;"></a>
+		<c:forEach var="related" items="${related}">
+			<div class="col-3 related">
+				<input type="hidden" class="relatedCode" value="${related.communityCode }" >
+				<a href="#"><img src="/resources/images/ThumbNail/${related.communityThumbnail }" class="related" id="related" name=related alt="관련글" class="" width="230px" height="150px" style="border-radius: 6px;"></a>
+				<div class="related" style="">
+					${related.communityTitle }
+				</div>
 			</div>
 		</c:forEach>
 	</div>
-	
 	<br><br><br>
-	
-	<div class="row" style="border: 1px solid red;" >
-		<div class="col-6">
-			<span><strong>댓글</strong>&nbsp;</span>
-			<span><strong style="color: #3f6eba;">2</strong></span>
-		</div>
-	</div>
-	<hr align="center">
-	
-	<div class="row">
-		<div class="container col-12">
-			<div class="row col-md-6" id="profile-box" style="border: 1px solid red;"><!-- style="position: relative; left: 20px" -->
-				<div class="col-1"id="profile-image">
-					<a href="#"><img src="/resources/images/dog.JPG"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="45px" height="45px"></a>
-				</div>
-				<div class="align-self-start" id="profile-nickname"><!-- style="position: absolute; top: 10px; left: 52px;" -->
-					<div class="col-10 offset-1">
-						<span style="font-size: 13px; color:#3c64a6;">${community.writer}</span>
-						<span style="font-size: 9px">19.06.27 15:26</span>
-						<span style="font-size: 8px">|</span>
-						<span style="font-size: 9px">신고</span>
-					</div>
-					<!-- <div class="row">
-						<p style="font-size:small; border: 1px solid black; width: 96%">
-						나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이
-						나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이
-						나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이
-						</p>
-					</div >
-					<div class="row">
-						<span style="font-size: 9px; right: 0px;">답글하기</span>
-					</div> -->
-				</div>
-			</div>
-		</div>
-	</div>
-		<br><br>
-		
-		
-	<!-- <div>
-		<div class="row">대댓글
-			<div class="col-xs-12">
-				<div class="row" id="profile-box" style="position: relative; left: 50px">
-					<div id="profile-image">
-						<a href="#"><img src="../images/dog.JPG" id="userImage" name="userImage" alt="글쓴이" class="img-circle" width="45px" height="45px"></a>
-					</div>
-					<div id="profile-nickname" style="position: absolute; top: 10px; left: 52px;">
-						<div>
-							<span onclick="#" style="font-size: 13px; color:#3c64a6;">아ㅇ라다더라ㅏㅓㅇ</span>
-							<span style="font-size: 9px">19.06.27 15:26</span>
-							<span style="font-size: 8px">|</span>
-							<span style="font-size: 9px">신고</span>
-						</div>
-						<div>
-							<p style="font-size:small; border: 1px solid black; width: 96%">
-							나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이나무발발이
-							</p>
-						</div >
-						<div>
-							<span onclick="#" style="font-size: 10px">수정</span>
-							<span style="font-size: 8px">|</span>
-							<span style="font-size: 10px">삭제</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-		<br><br><br><br>
-		<div class="row">댓글창
-			<div class="col-xs-12">
-				<textarea class="form-control" rows="3" placeholder="댓글을 입력해주세요"></textarea>
-			</div>
-		</div> -->
-	<br><br><br>
+	<!-- 댓글 -->
+	<jsp:include page="../comment/getComment.jsp" >
+      	<jsp:param value="${boardCode}" name="boardCode"/>
+      	<jsp:param value="${detailCode}" name="detailCode"/>
+    </jsp:include>
 	<br><br><br>
 	
 	
@@ -260,7 +198,6 @@
 	
 	
 </div>
-	
 	
 	
 	

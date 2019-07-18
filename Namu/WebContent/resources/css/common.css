@@ -2,5 +2,5 @@
 
 html, body{font-family: 'Noto Sans KR', sans-serif; font-color: #282c37; font-weight: 400;}
 
-.popup_wrap {display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 100;}
-.popup_contain {position:fixed; width: 450px; height: 700px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em;}
+.popup_wrap {display: none; overflow: auto; position: fixed; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 100;}
+.popup_contain {position:fixed ; width: 600px; height: 600px; padding: 10px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em;}

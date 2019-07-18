@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="/resources/css/common.css" >
 
 </head>
 
@@ -76,9 +77,10 @@
       
       
       
-				      
-				     <div class="profileInfo" style="display: none">
-					<div class="card bg-light mb-3" style="max-width: 540px;">
+				      <div class="popup_wrap">
+						<div class="popup_contain">
+				     <div class="profileInfo" >
+					<div class="card bg-light mb-3">
 					  <div class="row no-gutters">
 					    <div class="col-md-4">
 					      <img src="/resources/images/dog.JPG" class="userProfile card-img" alt="...">
@@ -100,6 +102,37 @@
 					  </div>
 					</div>
 				</div>
+      </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
 		
@@ -107,9 +140,35 @@
 		
 		//////
 		$(function(){
-	$('.useruser').on('click',function(){
+		$('.useruser').on('click',function(){
 		getUserProfile($(this).val());
+		$(".popup_wrap").css('display','block');
+		centerPopUp($(".popup_contain"), $(".popup_contain").width(), $(".popup_contain").height() );
+		
+		
+		// 수입/지출 추가 모달창 닫기 버튼
+		$('.popup_wrap').on('click', function(e) {
+			var container = $('.popup_wrap');
+			console.log(container.has(e.target).length);
+			if(container.has(e.target).length === 0){
+				$(".popup_wrap").css('display','none');
+			}
+		});
+		
+		
+		
 	})
+	
+	// 팝업 중앙에 띄우기
+function centerPopUp(modal, modalWidth, modalHeight) {
+	console.log('모달창 넓이 : ' + modalWidth + 'px, 높이 : ' + modalHeight + 'px');
+
+	var left = Math.ceil((window.screen.width - modalWidth) / 2);
+	var top = Math.ceil(((window.screen.height - modalHeight) / 2) - 50);
+	
+	modal.css({'display':'block'});
+	modal.css({'top':top, 'left':left});
+}
 	
 	
 	function getUserProfile(codeUser) {

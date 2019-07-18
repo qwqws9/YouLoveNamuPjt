@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript">
+	//성용
 	$(function(){
 		$("#ooo").on("click",function(){
 			if($("#beforeLogin").css("display") == "block"){
@@ -12,19 +13,23 @@
 				$("#beforeLogin").show();
 			}
 		});
-	});
-	
-	$(function(){
 		$('button:contains("로그인")').on('click',function(){
 			self.location = '/user/loginView';
 		})
-	});
-	
-	$(function(){
 		$("#communityList").on("click",function(){
 			self.location = "/community/getCommunityList"
 		})
-	})
+	});
+	
+	//중현
+	$(function(){
+		$("#addParty").on("click", function(){
+			self.location = '/party/addParty.jsp';
+		})
+		$("#getPartyList").on("click", function(){
+			self.location = '/party/getPartyList';
+		})
+	});
 </script>
 
 <nav class="navbar navbar-dark bg-dark">
@@ -141,8 +146,8 @@
 						    	<span>동행</span>
 							</button>
 						  	<div class="dropdown-menu">
-						  		<a class="dropdown-item" href="#">동행 등록</a>
-							    <a class="dropdown-item" href="#">동행 찾기</a>
+						  		<a class="dropdown-item" id="addParty" href="#">동행 등록</a>
+							    <a class="dropdown-item" id="getPartyList" href="#">동행 찾기</a>
 						  	</div>
 						</div>
 					</div>
