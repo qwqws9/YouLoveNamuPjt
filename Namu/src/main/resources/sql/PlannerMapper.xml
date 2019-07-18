@@ -11,18 +11,19 @@
 		<result property="plannerName"				column="PLANNER_NAME" 				jdbcType="VARCHAR" />
 		<result property="departDate" 			column="DEPART_DATE" 		jdbcType="VARCHAR" />
 		<result property="plannerImage" 				column="PLANNER_IMAGE" 				jdbcType="VARCHAR" />
-		
+
 		<result property="member" 				column="MEMBER" 				jdbcType="CHAR" />
 		<result property="privacy" 				column="PRIVACY" 				jdbcType="CHAR" />
 		<result property="status" 				column="STATUS" 				jdbcType="CHAR"  />
 		<result property="isGroup" 			column="ISGROUP" 			jdbcType="CHAR" />
 		<result property="boardCode" 				column="BOARD_CODE" 				jdbcType="CHAR" />
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
-		<association property="user" column="user_code"  select="UserMapper.getUser" javaType="user"/>
+	<!-- 	<association property="user" column="user_code"  select="UserMapper.getUser" javaType="user"/> -->
 	</resultMap>
 	
 	<resultMap id="routeSelectMap" type="route">
 		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/>
+		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="cityName" 			column="city_name" 			jdbcType="VARCHAR"/>
 		<result property="cityOrder"	column="city_order" 		jdbcType="NUMERIC" />
@@ -31,22 +32,25 @@
 		<result property="lng" 			column="lng" 		jdbcType="VARCHAR" />
 		<result property="startDate" 			column="START_DATE" 		jdbcType="DATE"  />
 		<result property="endDate" 			column="END_DATE" 		jdbcType="DATE" />
-	<association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/>
+	<!-- <association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/> -->
 		</resultMap>
 		
-		<!-- <resultMap id="scheduleSelectMap" type="schedule">
+		 <resultMap id="scheduleSelectMap" type="schedule">
 		<result property="scheCode"				column="SCHE_CODE" 				jdbcType="NUMERIC" />
+		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
+		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/>
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="scheDay"				column="SCHE_DAY" 				jdbcType="DATE" />
-		<result property="timeHour"				column="TIME_HOUR" 				jdbcType="NUMERIC" />
-		<result property="timeMin"				column="TIME_MIN" 				jdbcType="NUMERIC" />
+		<result property="timeHour"				column="TIME_HOUR" 				jdbcType="VARCHAR" />
+		<result property="timeMin"				column="TIME_MIN" 				jdbcType="VARCHAR" />
 		<result property="scheName"				column="SCHE_NAME" 				jdbcType="VARCHAR" />
 		<result property="schePlace"				column="SCHE_PLACE" 				jdbcType="VARCHAR" />
 		<result property="scheDetail" 			column="SCHE_DETAIL" 			jdbcType="VARCHAR"/>	
 		<result property="accomodation" 			column="ACCOMODATION" 			jdbcType="VARCHAR"/>	
-	<association property="PLANNER" column="PLANNER_CODE"  select="PlannerMapper.getPlanner" javaType="planner"/>
-	<association property="ROUTE" column="ROUTE_CODE"  select="PlannerMapper.getRoute" javaType="route"/>
-	</resultMap> -->	
+		<result property="color" 			column="COLOR " 			jdbcType="VARCHAR"/>	
+	<!-- <association property="PLANNER" column="PLANNER_CODE"  select="PlannerMapper.getPlanner" javaType="planner"/>
+	<association property="ROUTE" column="ROUTE_CODE"  select="PlannerMapper.getRoute" javaType="route"/> -->
+	</resultMap> 
 	
 	 	<!-- 1. planner -->
 	 	
@@ -59,7 +63,7 @@
  		</selectKey>
 	 </insert>
 	 
-	 
+	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
 		user_code, planner_name , planner_image,member, privacy, status, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE
@@ -94,11 +98,11 @@
 	  					
 	</select>
 	 <!-- 3. route -->
-	 	<!-- 
+	 
 		<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
 		INTO route (sche_code, route_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail) 
-		VALUES	 (seq_schedule_code.nextval,#{routeCode:INTEGER}, #{plannerVer:INTEGER}, #{plannerCode:INTEGER}, #{scheDay:VARCHAR} ,#{timeHour:INTEGER}, #{timeMin:INTEGER} , #{scheName:VARCHAR}, #{schePlace:VARCHAR},#{scheDetail:VARCHAR}, #{accomodation:VARCHAR})
+		VALUES	 (seq_schedule_code.nextval,#{routeCode:INTEGER}, #{plannerVer:INTEGER}, #{plannerCode:INTEGER}, #{scheDay:DATE} ,#{timeHour:INTEGER}, #{timeMin:INTEGER} , #{scheName:VARCHAR}, #{schePlace:VARCHAR},#{scheDetail:VARCHAR}, #{accomodation:VARCHAR})
 	 </insert>
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">
@@ -125,6 +129,14 @@
 	  	FROM schedule 
 	  	WHERE sche_code = #{scheCode}
   	</delete>
-  	 -->
-  	
+ 
+  	<select  id="getScheduleList"  parameterType="hashmap"	resultMap="scheduleSelectMap">
+
+	  	SELECT
+		sche_code, sche_day, sche_name, color
+	  	FROM schedule
+	  	<where>
+	  	planner_code = #{plannerCode}
+		</where>
+			</select>
 </mapper>

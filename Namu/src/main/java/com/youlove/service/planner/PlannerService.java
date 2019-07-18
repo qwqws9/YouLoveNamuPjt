@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.youlove.service.domain.Planner;
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.Schedule;
 
 public interface PlannerService {
 
@@ -19,6 +20,13 @@ public interface PlannerService {
 	public Route getRoute(int routeCode) throws Exception;
 	
 	public List<Route> getRouteList(int plannerCode) throws Exception;
+	
+	//3. schedule
+	public void addSchedule(Schedule schedule) throws Exception;
+	
+	public List<Schedule> getScheduleList(int plannerCode) throws Exception;
+
+	public Schedule getSchedule(int scheCode) throws Exception;
 	
 	
 }

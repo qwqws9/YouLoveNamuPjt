@@ -18,6 +18,7 @@ public class Schedule {
 		private String accomodation;
 		private Planner plannerCode;
 		private Route routeCode;
+		private String color;
 		
 		///Constructor
 		public Schedule(){
@@ -111,13 +112,22 @@ public class Schedule {
 			this.routeCode = routeCode;
 		}
 
+		
+		
+		public String getColor() {
+			return color;
+		}
+
+		public void setColor(String color) {
+			this.color = color;
+		}
+
 		@Override
 		public String toString() {
 			return "Schedule [scheCode=" + scheCode + ", plannerVer=" + plannerVer + ", scheDay=" + scheDay
 					+ ", timeHour=" + timeHour + ", timeMin=" + timeMin + ", scheName=" + scheName + ", schePlace="
 					+ schePlace + ", scheDetail=" + scheDetail + ", accomodation=" + accomodation + ", plannerCode="
-					+ plannerCode + ", routeCode=" + routeCode + "]";
+					+ plannerCode + ", routeCode=" + routeCode + ", color=" + color + "]";
 		}
-
 
 }
