@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.youlove.common.FileNameUUId;
 import com.youlove.common.Page;
 import com.youlove.common.Search;
 import com.youlove.service.community.CommunityService;
@@ -68,28 +69,30 @@ public class CommunityController {
 	@RequestMapping(value="addCommunity",method=RequestMethod.POST)
 	public ModelAndView addCommunity(@ModelAttribute("community") Community community,
 									 @RequestParam(value="Thumbnail") MultipartFile file,
-									 @RequestParam(value="hashtag", required=false)String hashtag)throws Exception{
+									 @RequestParam(value="hashtag", required=false)String hashtag,
+									 HttpServletRequest request)throws Exception{
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
 		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
 		String safeFile ="";
 		if(file.isEmpty() != true) {
-			String originFileName = file.getOriginalFilename(); 
-			File target = new File(uploadPathThumbNail, originFileName);
-			FileCopyUtils.copy(file.getBytes(),target);
-			safeFile += originFileName;
+			safeFile = FileNameUUId.convert(file, "ThumbNail", request);
+//			String originFileName = file.getOriginalFilename(); 
+//			File target = new File(uploadPathThumbNail, originFileName);
+//			FileCopyUtils.copy(file.getBytes(),target);
+//			safeFile += originFileName;
 		}else { safeFile += "noThumbnail.png"; }
-		Hashtag HashVo = new Hashtag();
 		
+		
+		Hashtag HashVo = new Hashtag();
 		HashVo.setHashtag(hashtag);
 		HashVo.setWriter(1);
 		hashtagService.addHashtag(HashVo);
-		community.setCommunityHashtagCode(HashVo);
 		
+		community.setCommunityHashtagCode(HashVo);
 		community.setWriter(1);
 		community.setCommunityThumbnail(safeFile);
 		communityService.addCommunity(community);
-		
 		
 		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode());
 		System.out.println("\nCommunityController:::addCommunity() 끝:::");
@@ -218,6 +221,7 @@ public class CommunityController {
 		JSONObject json = new JSONObject();
 		OutputStream out = null;
 		PrintWriter printWriter = null;
+		//String Path = FileNameUUId.convert(upload, "ThumbNail", request);
 		String Path = request.getSession().getServletContext().getRealPath("/resources/images/Content");
 		System.out.println(Path);
 		response.setCharacterEncoding("UTF-8");
