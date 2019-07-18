@@ -35,6 +35,12 @@ public class UserDaoImpl implements UserDao{
 	public String getCheckUser(String nickname) throws Exception {
 		return sqlSession.selectOne("UserMapper.getCheckUser", nickname);
 	}
+
+	@Override
+	public int updateUser(Map<String, Object> map) throws Exception {
+			
+		return sqlSession.update("UserMapper.updateUser",map);
+	}
 	
 	
 }
