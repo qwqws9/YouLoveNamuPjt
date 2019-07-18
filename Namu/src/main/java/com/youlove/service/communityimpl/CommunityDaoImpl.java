@@ -77,6 +77,11 @@ public class CommunityDaoImpl implements CommunityDao {
 		return sqlSession.selectList("CommunityMapper.getCommunityBestList", map);
 	}
 
+	@Override
+	public List<Community> getCommunityRelated(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList("CommunityMapper.getCommunityRelated", map);
+	}
+
 	
 		
 }

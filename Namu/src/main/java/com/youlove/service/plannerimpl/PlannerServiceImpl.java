@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
 import com.youlove.service.planner.PlannerService;
@@ -62,7 +63,18 @@ import com.youlove.service.user.UserDao;
 			return plannerDao.getRouteList(plannerCode);
 		}
 	
+		//3.schedule
+		@Override
+		public void addSchedule(Schedule schedule) throws Exception {
+			plannerDao.addSchedule(schedule);
+		}
 		
+		@Override
+		public List<Schedule> getScheduleList(int plannerCode) throws Exception{
+			return plannerDao.getScheduleList(plannerCode);
+		}
 		
-		
+		public Schedule getSchedule(int scheCode) throws Exception{
+			return plannerDao.getSchedule(scheCode);
+		}
 }

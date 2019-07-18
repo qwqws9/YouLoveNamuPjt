@@ -42,11 +42,12 @@
 		<a href="javascript:void(0);" class="next_btn">결산 보고서 조회</a>
 		
 		<section class="sec_wrap clear">
-			<h3 class="skip">가계부 내역</h3>
+			<h3 class="skip"><span class="walletCode">${param.walletCode}</span>가계부 내역</h3>
+			
 			
 			<form class="search_form" name="search_form">
-				<input type="hidden" name="walletCode" value="${param.walletCode}" />
 				<input type="hidden" id="currentPage" name="currentPage" value="" />
+				<input type="hidden" id="pageSize" name="pageSize" value="" />
 				
 				<label for="searchKeyword" class="skip">검색어</label>
 				<input type="text" class="search_txt" id="searchKeyword" name="searchKeyword" placeholder="내역 항목명을 입력하세요." value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
@@ -80,7 +81,7 @@
 				
 				<div class="plus_btns">
 					<span>
-						<span class="page_info">총  ${resultPage.totalCount} 건 중 현재 <span class="current_page">${resultPage.currentPage}</span> 페이지</span>
+						<span class="page_info">총  ${resultPage.totalCount} 건 중 현재 ${resultPage.currentPage} 페이지</span>
 						<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
 					</span>
 					<form class="pop_wrap_add" id="save_income_form"></form>

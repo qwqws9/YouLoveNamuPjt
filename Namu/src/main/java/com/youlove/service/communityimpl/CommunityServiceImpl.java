@@ -1,5 +1,6 @@
 package com.youlove.service.communityimpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,19 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDao.getCommunity(communityCode);
 	}
 	@Override
+	public Map<String, Object> getCommunityRelated(String communityBoard, String City) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("communityBoard", communityBoard);
+		if(communityBoard.equals("2")) {
+			map.put("city", City);
+		}
+		List<Community> related = communityDao.getCommunityRelated(map);
+		map.put("related", related);
+		return map;
+	}
+	
+	@Override
 	public Map<String, Object> getCommunityList(Map<String,Object> map) throws Exception {
 		Search search = (Search) map.get("search");
 		List<Community> list = communityDao.getCommunityList(map);
@@ -63,6 +77,7 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void countCommunity(int communityCode) throws Exception {
 	}
+
 
 
 
