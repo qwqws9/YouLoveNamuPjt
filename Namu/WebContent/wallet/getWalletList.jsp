@@ -81,7 +81,7 @@
 				
 				<div class="plus_btns">
 					<span>
-						<span class="page_info">총  ${resultPage.totalCount} 건 중 현재 ${resultPage.currentPage} 페이지</span>
+						<span class="page_info">총 <span class="totalCount">${resultPage.totalCount}</span> 건 중 현재 ${resultPage.currentPage} 페이지</span>
 						<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
 					</span>
 					<form class="pop_wrap_add" id="save_income_form"></form>
@@ -104,9 +104,9 @@
 					
 					<ul>
 						<c:set var="i" value="0" />
-						<c:forEach var="wallet" items="${list}">
+						<c:forEach varStatus="status" var="wallet" items="${list}">
 							<c:set var="i" value="${i+1}" />
-							<li class="table_row">
+							<li class="table_row ajax-${status.index+1}">
 								<a class="detail_line">
 									<span class="table_col">${i}</span>
 									<span class="table_col">
@@ -134,7 +134,7 @@
 											<span>
 												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
 												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+												${wallet.price}
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
@@ -240,7 +240,7 @@
 										</div><!-- //padding_boxing -->
 										
 										<div class="act_btns">
-											<a href="javascript:void(0);"class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn close_btn">닫기</a>
+											<a href="javascript:void(0);" class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn close_btn">닫기</a>
 											<!-- <a href="javascript:void(0);" class="act_btn close_btn">닫기</a> -->
 										</div>
 									</div><!-- //pop_wrap_get -->

@@ -31,14 +31,11 @@ public class WalletController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['pageUnit']}")
-	int pageUnit;
-	
-	@Value("#{commonProperties['pageSize']}")
-	int pageSize;
-	
 	@RequestMapping(value="getWalletList", method=RequestMethod.GET)
 	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode) throws Exception{
+		
+		int pageUnit = 5;
+		int pageSize = 5;
 		
 		System.out.println("/wallet/getWalletList : GET");
 		
@@ -50,12 +47,12 @@ public class WalletController {
 		map.put("walletCode", walletCode);
 		map.put("search", search);
 		
-		Map<String, Object> mapResult = walletService.getWalletList(map);
+		map = walletService.getWalletList(map);
 		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)mapResult.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("list", mapResult.get("list"));
+		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.setViewName("/wallet/getWalletList.jsp");
 		

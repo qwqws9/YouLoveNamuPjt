@@ -3,7 +3,6 @@ package com.youlove.service.wallet;
 import java.util.List;
 import java.util.Map;
 
-import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 
 public interface WalletDao {

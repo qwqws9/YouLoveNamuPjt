@@ -1,6 +1,5 @@
 package com.youlove.web.wallet;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,9 +32,6 @@ public class WalletRestController {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['walletUploadPath']}")
-	String walletUploadPath;
-	
 	@RequestMapping(value="json/addWallet", method=RequestMethod.POST)
 	public Wallet addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
@@ -57,18 +52,17 @@ public class WalletRestController {
 		
 	}
 	
-	@RequestMapping(value="json/getWalletList/{walletCode}", method=RequestMethod.POST)
-	public Map<String,Object> getWalletList (@RequestBody Search search,@PathVariable int walletCode) throws Exception{
+	@RequestMapping(value="json/getWalletList/{walletCode}")
+	public Map<String, Object> getWalletList (@PathVariable int walletCode, @RequestBody Search search) throws Exception{
 		
+		System.out.println("/wallet/json/getWalletList :: GET / POST");
 		
-		System.out.println(search.toString());
 		System.out.println(walletCode);
-		System.out.println(search.getEndRowNum());
-		System.out.println(search.getStartRowNum());
-		Map<String,Object> map = new HashMap<>();
+		System.out.println(search);
+		
+		Map<String, Object> map = new HashMap<>();
 		map.put("search", search);
 		map.put("walletCode", walletCode);
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		
 		map = walletService.getWalletList(map);
 		
