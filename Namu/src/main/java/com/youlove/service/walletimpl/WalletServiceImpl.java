@@ -63,7 +63,7 @@ public class WalletServiceImpl implements WalletService {
 		walletDao.deleteWallet(walletDetailCode);
 	}
 	*/
-	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception {
+	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception{
 		List<Wallet> list = walletDao.getWalletList(map);
 		int totalCount = walletDao.getTotalCount(map);
 		
