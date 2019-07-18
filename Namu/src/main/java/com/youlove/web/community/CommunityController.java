@@ -175,16 +175,18 @@ public class CommunityController {
 	@RequestMapping(value="updateCommunity",method=RequestMethod.POST)
 	public ModelAndView updateCommunity(@ModelAttribute("community") Community community,
 										@RequestParam(value="Thumbnail") MultipartFile file,
-			 							@RequestParam(value="hashtag", required=false)String hashtag)throws Exception {
+			 							@RequestParam(value="hashtag", required=false)String hashtag,HttpServletRequest request)throws Exception {
 		System.out.println("\nCommunityController:::updateCommunity() 시작:::");
 		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
 		String safeFile ="";
+		
 		if(!file.isEmpty()) {
-			String originFileName = file.getOriginalFilename(); 
-			File target = new File(uploadPathThumbNail, originFileName);
-			FileCopyUtils.copy(file.getBytes(),target);
-			safeFile += originFileName;
+			safeFile = FileNameUUId.convert(file, "ThumbNail", request);
+//			String originFileName = file.getOriginalFilename(); 
+//			File target = new File(uploadPathThumbNail, originFileName);
+//			FileCopyUtils.copy(file.getBytes(),target);
+//			safeFile += originFileName;
 		}else { safeFile += "noThumbnail.png"; }
 		Hashtag HashVo = new Hashtag();
 		if(hashtag != null) {
@@ -221,7 +223,6 @@ public class CommunityController {
 		JSONObject json = new JSONObject();
 		OutputStream out = null;
 		PrintWriter printWriter = null;
-		//String Path = FileNameUUId.convert(upload, "ThumbNail", request);
 		String Path = request.getSession().getServletContext().getRealPath("/resources/images/Content");
 		System.out.println(Path);
 		response.setCharacterEncoding("UTF-8");
@@ -230,10 +231,10 @@ public class CommunityController {
 			String originFileName = upload.getOriginalFilename();
 			byte[] bytes = upload.getBytes();
 			String uploadPath = Path+"/"+uid+"_"+originFileName;
-			//폴더 없으면 만들어줌
-//			if(!destD.exists()) {
-//        		destD.mkdirs();
-//        	}
+			//폴더 없으면 만들어줌 *
+//			if(!destD.exists()) { *
+//        		destD.mkdirs(); *
+//        	} *
 			out = new FileOutputStream(new File(uploadPath));
             out.write(bytes);
             out.flush();//out에 저장된 데이터 전송하고 초기화
@@ -243,6 +244,7 @@ public class CommunityController {
             String fileUrl = "/resources/images/Content/"+uid+"_"+originFileName;
             System.out.println("fileUrl = "+fileUrl);
             System.out.println(request.getContextPath());
+            
             json.put("uploaded", 1);
             json.put("fileName", originFileName);
             json.put("url", fileUrl);
