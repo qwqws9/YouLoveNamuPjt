@@ -1,9 +1,9 @@
 // 네비게이션
 $(function() {
 	$('.paging_wrap li').on("click", function() {
-		var currentPage = $('.current_page').text().trim();
+		var currentPage = $(this).children().text().trim();
 		
-		console.log(currentPage);
+		//console.log('현재 페이지' + currentPage);
 		
 		if($(this).has('.left')){
 			fncGetList(currentPage - 1);
@@ -88,20 +88,34 @@ function addAjax(form) {
 
 // getWalletList Business Logic
 function getListAjax(form) {
-	var walletCode = $('');
+	var walletCode = $('.walletCode').text().trim();
+	
+	console.log(form.serialize());
+	console.log(form.serializeArray());
+	console.log(JSON.stringify(form.serializeArray()));
+	
+	var data = {};
+
+	$.each(form.serializeArray(), function(index, object) {
+		data[object.name] = object.value;
+    });
+    
+    console.log(data);
+    console.log(JSON.stringify(data));
 	
 	$.ajax({
-		url			: '/review/json/getReview/'+tranNo,
-		method : "GET",
-		dataType : "json",
-		headers : {
-			"Accept" : "application/json",
-		"Content-Type" : "application/json"
-		},
-		success : function(JSONData, status){
-			if(JSONData.reviewNo != null) {
-				$("td:nth-child(9) span").text("리뷰보기");
-				}
+		url			: '/wallet/json/getWalletList',
+		type		: 'POST',
+		data		: JSON.stringify(data),
+		dataType	: 'json',
+		contentType	: 'application/json',
+		success		: function(JSONData, status) {
+			console.log(status);
+			console.log(JSONData);
+			
+			/*if(JSONData.reviewNo != null) {
+				alert(status);
+			}*/
 		}
 	});
 }

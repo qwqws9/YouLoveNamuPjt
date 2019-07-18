@@ -53,9 +53,9 @@ public class WalletRestController {
 	}
 	
 	@RequestMapping(value="json/getWalletList", method=RequestMethod.POST)
-	public Map getWalletList (@RequestBody Search search, int walletCode) throws Exception{
+	public Map getWalletList (@ModelAttribute Search search, int walletCode) throws Exception{
 		
-		System.out.println("/wallet/json/getWalletlist : POST");
+		System.out.println("/wallet/json/getWalletList : GET / POST");
 		System.out.println(":: " + search);
 		
 		Map<String, Object> map = walletService.getWalletList(search, walletCode);
