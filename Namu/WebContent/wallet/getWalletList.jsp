@@ -250,9 +250,9 @@
 															추가
 														</c:if>
 													</div>
-													<%-- <c:if test="${! empty wallet.content}"> --%>
-														<div class="input_content">아이스아메리카노 먹고싶은데 디카페인 파는데가 근처에 없어ㅠㅠㅠㅠㅠ<%-- ${wallet.content} --%></div>
-													<%-- </c:if> --%>
+													<c:if test="${! empty wallet.content}">
+														<div class="input_content">${wallet.content}</div>
+													</c:if>
 												</div><!-- //text_width -->
 												<c:if test="${! empty wallet.walletImage}">
 													<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.item} 이미지" class="big_image">
