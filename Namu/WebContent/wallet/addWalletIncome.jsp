@@ -13,16 +13,16 @@
 				<option value="EUR">EUR</option>
 			</select>
 			<div class="result">
-				<input type="text" class="price" name="price" value="" alt="금액 입력칸에 입력해주세요.">
-				<span class="krw_price">KRW 2,644.80</span>
+				<input type="text" class="price" id="price" name="price" value="" alt="금액 입력칸에 입력해주세요.">
+				<span class="krw_price"><span style="display:none;">KRW 2,644.80</span></span>
 			</div>
 		</div><!-- //result_top -->
 		
 		<div class="apply_exchange_rate">
 			<span>환율</span>
 			<div>
-				<span>EUR 1.00 = KRW <span>1,322.40</span></span><br/>
-				<input type="hidden" class="exchange_rate" name="exchangeRate" value="1322.40">
+				<span>EUR 1.00 = KRW <span>1,319.0</span></span><br/>
+				<input type="hidden" class="exchange_rate" name="exchangeRate" value="1319.0">
 				<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
 			</div>
 		</div><!-- //apply_exchange_rate -->
