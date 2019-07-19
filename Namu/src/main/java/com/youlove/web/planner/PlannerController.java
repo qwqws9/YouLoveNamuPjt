@@ -69,7 +69,7 @@ public class PlannerController {
 		
 		return "forward:/planner/addPlanner.jsp";
 	}
-	
+	//
 	@RequestMapping( value="addPlanner", method=RequestMethod.POST )
 	public String addPlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file, HttpServletRequest request) throws Exception {
 
@@ -106,8 +106,6 @@ public class PlannerController {
 		model.addAttribute("plannerCode", planner.getPlannerCode());
 		plannerService.addPlanner(planner);
 		
-		
-		session.setAttribute("planner", "planner");
 
 		System.out.println("plannerController ----------------addPlanner:POST  end");
 		return "forward:/planner/addRoute.jsp";
