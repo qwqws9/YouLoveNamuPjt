@@ -106,8 +106,8 @@ public class PlannerController {
 		model.addAttribute("plannerCode", planner.getPlannerCode());
 		plannerService.addPlanner(planner);
 		
-		
-		session.setAttribute("planner", "planner");
+		plannerService.getPlanner(planner.getPlannerCode());
+		session.setAttribute("planner", "planner");   
 		
 		System.out.println("plannerController ----------------addPlanner:POST  end");
 		return "forward:/planner/addRoute.jsp";
