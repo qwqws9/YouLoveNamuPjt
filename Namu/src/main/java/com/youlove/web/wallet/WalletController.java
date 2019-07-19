@@ -33,7 +33,7 @@ public class WalletController {
 	
 	@RequestMapping(value="getWalletList", method=RequestMethod.GET)
 	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode) throws Exception{
-		
+
 		int pageUnit = 5;
 		int pageSize = 5;
 		
