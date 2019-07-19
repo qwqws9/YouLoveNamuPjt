@@ -110,12 +110,12 @@ public class PlannerController {
 	public String addRoute(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("route") Route route) throws Exception{
 
 		System.out.println("PlannerController :: addRoute start");
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		
 		Date date=null;
 		
 		try {
-			date=dateFormat.parse("20190801");     //getDepartDate 로 변경하기!!!!!
+			date=dateFormat.parse("201908011000");     //getDepartDate 로 변경하기!!!!!
 			
 		}catch(ParseException e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class PlannerController {
 		//String[] cityOrders = request.getParameterValues("cityOrder");
 		String[] stayDays = request.getParameterValues("stayDay");
 		
-		route.setPlannerCode(1);    //getPlannerCode로!!!!!!!!! 변경 
+//		route.setPlannerCode(1);    //getPlannerCode로!!!!!!!!! 변경 
 		route.setPlannerVer(1);
 
 
@@ -148,12 +148,13 @@ public class PlannerController {
 		//String endDate = dateFormat.format(cal.getTime());
 		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+		
 		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
 		}
 
-		return "forward:/planner/getRoute.jsp";
+		return "forward:/planner/getScheduleList.jsp";
 			
 		}
 	@RequestMapping(value="getRoute" , method= RequestMethod.GET)
@@ -165,7 +166,7 @@ public class PlannerController {
 
 		model.addAttribute("route", route);
 		
-		return "forward:/planner/getRoute.jsp";
+		return "forward:/planner/getScheduleList.jsp";
 	}
 
 
@@ -177,7 +178,7 @@ public class PlannerController {
 		//route.setRouteCode(10073);  ~~~route code route... 
 		plannerService.addSchedule(schedule);
 
-		return "forward:/plan/Calendar11.jsp";
+		return "forward:/planner/getScheduleList.jsp";
 		}
 
 }
