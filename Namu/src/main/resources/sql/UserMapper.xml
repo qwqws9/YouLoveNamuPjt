@@ -22,8 +22,8 @@
 		<result property="profileImg" 			column="PROFILE_IMG" 		jdbcType="VARCHAR" />
 		<result property="introduce" 			column="INTRODUCE" 			jdbcType="VARCHAR" />
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
-		<result property="startBlock" 			column="START_BLOCK" 		jdbcType="DATE" />
-		<result property="endBlock" 			column="END_BLOCK" 			jdbcType="DATE" />
+		<result property="startBlock" 			column="START_BLOCK" 		jdbcType="VARCHAR" />
+		<result property="endBlock" 			column="END_BLOCK" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -31,7 +31,7 @@
 	 	INSERT
 		INTO users( USER_CODE , TOKEN , PROFILE_AUTH , ROLE , NICKNAME, EMAIL, PHONE, NAME , PASSWORD,BIRTH,GENDER,PROFILE_IMG,INTRODUCE,REG_DATE,START_BLOCK,END_BLOCK) 
 		VALUES	 (	seq_user_code.nextval , #{token:VARCHAR} , #{profileAuth} , 'user' , #{nickname} , 
-					#{email} , #{phone} , #{name} ,#{password},#{birth},#{gender},#{profileImg:VARCHAR},#{introduce:VARCHAR}, SYSDATE,#{startBlock:DATE},#{endBlock:DATE} )
+					#{email} , #{phone} , #{name} ,#{password},#{birth},#{gender},#{profileImg:VARCHAR},#{introduce:VARCHAR}, SYSDATE,#{startBlock:VARCHAR},#{endBlock:VARCHAR} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -96,6 +96,16 @@
 	 	WHERE USER_CODE = #{userCode}
 	 </update>
 	 
+	<select id="getUserList" parameterType="map" resultMap="userSelectMap">
+		SELECT * from USERS
+		<if test="role != null">
+			<where>
+				role = #{role}
+			</where>
+		</if>
+		order by ${order}
+	</select>
+	
 	
 	 
 </mapper>

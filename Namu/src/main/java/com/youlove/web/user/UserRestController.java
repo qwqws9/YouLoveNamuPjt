@@ -2,6 +2,7 @@ package com.youlove.web.user;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +17,7 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -299,6 +301,18 @@ public class UserRestController {
 		
 		return user;
 		
+	}
+	
+	
+	//전체 회원조회
+	@RequestMapping("json/getUserList")
+	public List<User> getUserList(@RequestBody Map<String,Object> map) throws Exception {
+		
+		System.out.println("/user/json/getUserList");
+		
+		List<User> list = userService.getUserList(map);
+		System.out.println(list.toString());
+		return list;
 	}
 	
 	

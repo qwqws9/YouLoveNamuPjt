@@ -79,7 +79,7 @@
 			</nav>
 	</div>
 </div>
-
+<form></form>
 <script type="text/javascript">
 	$(function(){
 		$('body').oLoader({
@@ -133,7 +133,10 @@
 			var url = '/guide/selectTourDetail/'+$(this).children().val().trim();
 			var name = "_blank";
 			var option = "width = 1150,height = 1000,marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no,location = no"
-			window.open(url,name,option);
+			//window.open(url,name,option);
+			self.location = url;
+			//$('form').attr('action','/guide/selectTourDetail/'+$(this).children().val().trim()).submit();
+			//self.location = '/user/addUser';
 			//alert($(this).children().val().trim());
 			
 			//컨트롤러로 가야지.......................
