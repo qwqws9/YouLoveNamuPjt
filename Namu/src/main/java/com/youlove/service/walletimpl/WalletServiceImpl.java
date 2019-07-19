@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 import com.youlove.service.wallet.WalletDao;
 import com.youlove.service.wallet.WalletService;
@@ -63,11 +64,11 @@ public class WalletServiceImpl implements WalletService {
 		walletDao.deleteWallet(walletDetailCode);
 	}
 	*/
-	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception{
-		List<Wallet> list = walletDao.getWalletList(map);
-		int totalCount = walletDao.getTotalCount(map);
+	public Map<String, Object> getWalletList(Search search, int walletCode) throws Exception {
+		List<Wallet> list = walletDao.getWalletList(search, walletCode);
+		int totalCount = walletDao.getTotalCount(search, walletCode);
 		
-		map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		

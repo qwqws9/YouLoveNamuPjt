@@ -13,7 +13,7 @@
 				<option value="EUR">EUR</option>
 			</select>
 			<div class="result">
-				<input type="text" class="price" id="price" name="price" value="" alt="금액 입력칸에 입력해주세요.">
+				<input type="text" class="price" name="price" value="" alt="금액 입력칸에 입력해주세요.">
 				<span class="krw_price">KRW 2,644.80</span>
 			</div>
 		</div><!-- //result_top -->
@@ -60,7 +60,7 @@
 	
 	<div class="cal_btns">
 		<div class="clear">
-			<input type="text" class="expression" id="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
+			<input type="text" class="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
 		</div>
 		<div class="clear">
 			<div class="cal_left">

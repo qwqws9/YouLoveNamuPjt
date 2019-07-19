@@ -21,9 +21,6 @@
 	<!-- leaglet -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
    	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" ></script>
-   	
-   	<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
 	<style>
 		#map {
 			height: 500px;
@@ -223,7 +220,6 @@
 			</div>
 			<div class="col-1"></div><!-- 사이드바 -->
 		</div>
-			<div id='map' style='width: 400px; height: 300px;'></div>
 	</div>
 	
 	<!-- Modal -->
@@ -251,11 +247,12 @@
 			
 		}
 		$(function(){
-			mapboxgl.accessToken = 'pk.eyJ1Ijoia29zNTY2NyIsImEiOiJjank4cG8yM2cwY3VrM2ZwOTRmaXdweXRwIn0.pmirns4XMt_92FQMsndgyg';
-			var map = new mapboxgl.Map({
-			container: 'map',
-			style: 'mapbox://styles/mapbox/streets-v11'
-			});
+			var map = L.map('map').setView([51.505, -0.09], 13);
+
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map)
+			
 		});	
 		
 		
