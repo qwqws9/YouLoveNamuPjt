@@ -8,7 +8,7 @@ public class Hashtag {
 	private String hashtag;
 	private int communityCode;
 	private int partyCode;
-	private int writer;
+	private User writer;
 
 	///Constructor
 	public Hashtag(){
@@ -47,12 +47,12 @@ public class Hashtag {
 		this.partyCode = partyCode;
 	}
 
-	public int getWriter() {
+	public User getWriter() {
 		return writer;
 	}
 
-	public void setWriter(int writer) {
-		this.writer = writer;
+	public void setWriter(User user) {
+		this.writer = user;
 	}
 
 	@Override

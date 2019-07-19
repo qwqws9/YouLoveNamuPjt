@@ -23,10 +23,6 @@
 <!-- jQuerty -->
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-<!-- Our Own Resources -->
-
 
 	<script>
 	
@@ -40,12 +36,14 @@
 
 
 	
-		$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+		//$.fn.selectpicker.Constructor.BootstrapVersion = '4';
 			
 		$( function() {
+			//게시물 등록
 			$( "#addCommunity" ).on("click" , function() {
 				self.location = "/community/addCommunity.jsp"
 			});
+			//게시판 유형
 		    $(".board").on("click", function(){
 		    	if($(this).children().text() == $(".free").text()){
 		    		self.location = "/community/getCommunityList?communityBoard=1"			
@@ -57,13 +55,15 @@
 		    		self.location = "/community/getCommunityList?communityBoard=0"
 		    	}
 		    })
+		    //모달
 		    $('a[href$="#Modal"]').on( "click", function() {
 		    	   $('#Modal').modal('show');
 		   	});
-		    
+		    //게시물 상세조회
 		    $(".getCommunity").on("click", function(){
 		    	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").val();
 		    })
+		    //베스트 게시물 상세조회
 			$(".card.bestCommunity").on("click", function(){
 				self.location="/community/getCommunity?communityCode="+$(this).prev().val();								
 			})		    
@@ -77,16 +77,39 @@
 		    $.each($(".card-body"),function(){
 		    	$(this).text($(this).text().trim());
 		    })
-		    
-		    $("#searchSelect").change(function(){
-				var selected = $("#searchSelect option:selected").val();
+		    //도시
+ 		    $("#searchSelect").change(function(){
+				 var selected = $("#searchSelect option:selected").val();
 				if(selected == 0){
-					$("#selectCity").show();			
+					$("#selectCity").show();		
+					$.ajax({
+						url : "/guide/json/getCityList/all",
+					    method : "POST",
+					    dataType : "json",
+					    headers : {
+			     			 "Accept" : "application/json",
+			                 "Content-Type" : "application/json"
+			     		},
+			     		success : function(JSONData, status){
+		     				alert($("#City"));
+			     			$.each(JSONData,function(index,item){
+			     				console.log(item.cityName);
+			     				$("#City").append('<option value="'+index+'">'+item.cityName+'</option>');
+			     			});
+			     		},
+			     		error:function(jqXHR, textStatus, errorThrown){
+			    			alert( textStatus );
+			    			alert( errorThrown );
+			    		}
+					});
 				}else{
 					$("#selectCity").hide();
 				}
-				
+				 
 			});
+		   
+		    
+		    
 		 });
 			
 		
@@ -103,7 +126,38 @@
 		    }//end of if
 		});//end of scroll
 				
-		
+// 		$(document).on("change","#searchSelect",function(){ 
+			
+// 			$('#currentPage').val($(this).text().trim());
+// 			var selected = $("#searchSelect option:selected").val();
+// 			if(selected == 0){
+// 				$("#selectCity").show();		
+// 				$.ajax({
+// 					url : "/guide/json/getCityList/all",
+// 				    method : "POST",
+// 				    dataType : "json",
+// 				    headers : {
+// 		     			 "Accept" : "application/json",
+// 		                 "Content-Type" : "application/json"
+// 		     		},
+// 		     		success : function(JSONData, status){
+// 	     				alert($("#City"));
+// 		     			$.each(JSONData,function(index,item){
+// 		     				console.log(item.cityName);
+// 		     				$("#City").append('<option value="'+index+'">'+item.cityName+'</option>');
+// 		     			});
+// 		     		},
+// 		     		error:function(jqXHR, textStatus, errorThrown){
+// 		    			alert( textStatus );
+// 		    			alert( errorThrown );
+// 		    		}
+// 				});
+// 			}else{
+// 				$("#selectCity").hide();
+// 			}
+			
+// 		});
+			
 		
 			
 			
@@ -204,12 +258,10 @@
 										</select>
 									</div>
 									<div id="selectCity" class="col" style="display:  none;">
-										<select id="selectCity" class="selectpicker" data-live-search="true" data-width="100px" title="City" style="border: 1px solid #30a9de; background: white;">
-											<c:set var="i" value="0"/>
-											<c:forEach var="city" begin="0" end="5">
-												<c:set var="i" value="${i+1}"/>
-													<option value="${i}">${i}</option>
-											</c:forEach>
+										<select name="city" id="City" class="" data-live-search="true" data-width="100px" title="City" style="border: 1px solid #30a9de; background: white;">
+											<option value="">111</option>
+											<option value=""></option>
+											<option value="">111</option>
 										</select>
 									</div>
 								</div>

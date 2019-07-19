@@ -49,6 +49,7 @@
 			</div>
 			<br>
 			<form enctype="multipart/form-data" method="post">
+				<input type="hidden" name="writer" value="${writer.userName }" />
 				<div class="row justify-content-center">
 					<div class="col-lg-10">
 						<div class="card">
