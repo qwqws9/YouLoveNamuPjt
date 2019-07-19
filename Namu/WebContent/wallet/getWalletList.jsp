@@ -123,9 +123,9 @@
 												</c:if>
 											</span>
 											<span>
-												<c:if test="${wallet.moneyUnit ne 'KRW'}">
+												<%-- <c:if test="${wallet.moneyUnit ne 'KRW'}">
 													<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
-												</c:if>
+												</c:if> --%>
 											</span>
 										</c:if>
 									</span>
@@ -137,9 +137,9 @@
 												${wallet.price}
 											</span>
 											<span>
-												<c:if test="${wallet.moneyUnit ne 'KRW'}">
+												<%-- <c:if test="${wallet.moneyUnit ne 'KRW'}">
 													<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
-												</c:if>
+												</c:if> --%>
 											</span>
 										</c:if>
 									</span>
