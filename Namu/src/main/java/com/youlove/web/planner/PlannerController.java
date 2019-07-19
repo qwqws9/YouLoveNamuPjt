@@ -106,9 +106,7 @@ public class PlannerController {
 		model.addAttribute("plannerCode", planner.getPlannerCode());
 		plannerService.addPlanner(planner);
 		
-		plannerService.getPlanner(planner.getPlannerCode());
-		session.setAttribute("planner", "planner");   
-		
+
 		System.out.println("plannerController ----------------addPlanner:POST  end");
 		return "forward:/planner/addRoute.jsp";
 	}
@@ -127,8 +125,8 @@ public class PlannerController {
 	public String addRoute(HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route) throws Exception{
 
 		System.out.println("PlannerController ----------------------- addRoute start");
-	Planner planner= (Planner)session.getAttribute("planner");
-		
+		Planner planner= (Planner)session.getAttribute("planner");
+
 		route.setPlannerCode(planner);    //getPlannerCode로!!!!!!!!! 변경 
 		route.setPlannerVer(1);
 		System.out.println(planner);
@@ -164,10 +162,10 @@ public class PlannerController {
 		//String startDate = dateFormat.format(cal.getTime());
 		//cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
 		//String endDate = dateFormat.format(cal.getTime());
-		route.setStartDate(cal.getTime()); 
-		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));   
+		route.setStartDate(cal.getTime());
+		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
 		route.setEndDate(cal.getTime());
-	
+		
 		plannerService.addRoute(route);
 		}
 
@@ -181,6 +179,7 @@ public class PlannerController {
 		System.out.println("PlannerRestController--------getRoute:GET");
 		
 		Route route = plannerService.getRoute(routeCode);
+
 		model.addAttribute("route", route);
 		
 		return "forward:/planner/getScheduleList.jsp";

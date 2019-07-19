@@ -14,9 +14,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="/resources/javascript/jquery.oLoader.min.js"></script>
+<link rel="stylesheet" href="/resources/css/common.css" >
 
 </head>
 <body  >
+<header><%@ include file="/layout/header.jsp" %></header>
+<br><br><br>
 <div class="text-center">
 <div class="container">
 		<div class="col-md-12">
@@ -112,6 +115,8 @@
       	<jsp:param value="${detailCode}" name="detailCode"/>
       </jsp:include>
       
+      
+      
       <script type="text/javascript">
       		$(function(){
       			
@@ -138,6 +143,7 @@
       		
       		$(window).load(function(){
       			$('body').oLoader('hide');
+      			$('div[class="container-fluid"]').attr('class','container');
       		});
       
       </script>             

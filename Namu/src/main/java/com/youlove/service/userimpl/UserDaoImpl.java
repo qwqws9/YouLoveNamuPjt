@@ -1,5 +1,6 @@
 package com.youlove.service.userimpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -40,6 +41,11 @@ public class UserDaoImpl implements UserDao{
 	public int updateUser(Map<String, Object> map) throws Exception {
 			
 		return sqlSession.update("UserMapper.updateUser",map);
+	}
+
+	@Override
+	public List<User> getUserList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList("UserMapper.getUserList", map);
 	}
 	
 	

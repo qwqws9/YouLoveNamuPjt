@@ -27,6 +27,7 @@ public interface PlannerDao {
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception;
 	
 	public Schedule getSchedule(int scheCode)  throws Exception;
-
-//	public void updateSchedule(Schedule schedule) throws Exception ;
+	
+//	public void updateSchedule(Schedule schedule) throws Exception;
 }
+

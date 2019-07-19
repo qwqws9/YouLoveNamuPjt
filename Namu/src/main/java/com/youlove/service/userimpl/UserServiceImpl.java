@@ -1,5 +1,6 @@
 package com.youlove.service.userimpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,11 @@ public class UserServiceImpl implements UserService{
 			result = true;
 		}
 		return result;
+	}
+
+	@Override
+	public List<User> getUserList(Map<String, Object> map) throws Exception {
+		return userDao.getUserList(map);
 	}
 
 	

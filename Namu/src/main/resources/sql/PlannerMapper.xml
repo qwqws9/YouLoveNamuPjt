@@ -18,7 +18,7 @@
 		<result property="isGroup" 			column="ISGROUP" 			jdbcType="CHAR" />
 		<result property="boardCode" 				column="BOARD_CODE" 				jdbcType="CHAR" />
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
-	<association property="user" column="user_code"  select="UserMapper.getUser" javaType="user"/> 
+		<association property="user" column="user_code"  select="UserMapper.getUser" javaType="user"/> 
 	</resultMap>
 	
 	<resultMap id="routeSelectMap" type="route">
@@ -32,7 +32,7 @@
 		<result property="lng" 			column="lng" 		jdbcType="VARCHAR" />
 		<result property="startDate" 			column="START_DATE" 		jdbcType="DATE"  />
 		<result property="endDate" 			column="END_DATE" 		jdbcType="DATE" />
-	<association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/>
+		<association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/>
 		</resultMap>
 		
 		 <resultMap id="scheduleSelectMap" type="schedule">
@@ -60,7 +60,7 @@
 	 	INSERT
 		INTO planner(PLANNER_CODE ,USER_CODE, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
 		VALUES	 (${planner_code} , #{user.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
-	 	
+
 	 </insert>
 	 
 	

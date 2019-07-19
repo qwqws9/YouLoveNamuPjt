@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,11 @@ import com.youlove.common.FileNameUUId;
 import com.youlove.common.Page;
 import com.youlove.common.Search;
 import com.youlove.service.community.CommunityService;
+import com.youlove.service.domain.City;
 import com.youlove.service.domain.Community;
 import com.youlove.service.domain.Hashtag;
+import com.youlove.service.domain.User;
+import com.youlove.service.guide.GuideService;
 import com.youlove.service.hashtag.HashtagService;
 import com.youlove.service.user.UserService;
 
@@ -50,6 +55,9 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	@Autowired
+	@Qualifier("guideServiceImpl")
+	private GuideService guideService;
 	
 	
 	public CommunityController(){
@@ -70,27 +78,28 @@ public class CommunityController {
 	public ModelAndView addCommunity(@ModelAttribute("community") Community community,
 									 @RequestParam(value="Thumbnail") MultipartFile file,
 									 @RequestParam(value="hashtag", required=false)String hashtag,
-									 HttpServletRequest request)throws Exception{
+									 HttpServletRequest request,HttpSession session)throws Exception{
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
-		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
+		//ThumbNail업로드
 		String safeFile ="";
 		if(file.isEmpty() != true) {
 			safeFile = FileNameUUId.convert(file, "ThumbNail", request);
-//			String originFileName = file.getOriginalFilename(); 
-//			File target = new File(uploadPathThumbNail, originFileName);
-//			FileCopyUtils.copy(file.getBytes(),target);
-//			safeFile += originFileName;
-		}else { safeFile += "noThumbnail.png"; }
-		
-		
+		}else { 
+			safeFile += "noThumbnail.png"; 
+		}
+		//회원정보
+		User user = (User) session.getAttribute("user");
+		System.out.println("user="+user);
+		//도시
+		//해시태그
 		Hashtag HashVo = new Hashtag();
 		HashVo.setHashtag(hashtag);
-		HashVo.setWriter(1);
-		hashtagService.addHashtag(HashVo);
-		
+		HashVo.setWriter(user);
+		//hashtagService.addHashtag(HashVo);
+		//게시글작성
 		community.setCommunityHashtagCode(HashVo);
-		community.setWriter(1);
+		community.setWriter(user);
 		community.setCommunityThumbnail(safeFile);
 		communityService.addCommunity(community);
 		
@@ -118,7 +127,7 @@ public class CommunityController {
 		modelAndView.addObject("boardCode",communityCode );
 		modelAndView.addObject("detailCode", community.getCommunityBoard());
 		//관련글
-		map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity());
+		//map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity()); 여기서부터
 		modelAndView.addObject("related", map.get("related"));//관련글
 		System.out.println("\nCommunityController:::getCommunity() 끝:::");
 		
@@ -127,23 +136,29 @@ public class CommunityController {
 
 	@RequestMapping(value="getCommunityList")
 	public ModelAndView getCommunityList(@ModelAttribute("Search") Search search,
-										 @RequestParam(value="communityBoard",required=false, defaultValue = "0")int communityBoard)throws Exception {
+										 @RequestParam(value="communityBoard",required=false, defaultValue = "0")int communityBoard,
+										 HttpSession session)throws Exception {
 		System.out.println("\nCommunityController:::getCommunityList() 시작:::");
-		System.out.println("search = "+search.getSearchCondition());
-		System.out.println("search = "+search.getSearchKeyword());
+		//System.out.println("search = "+search.getSearchCondition());
+		//System.out.println("search = "+search.getSearchKeyword());
 		ModelAndView modelAndView = new ModelAndView();
+		Map<String,Object> map = new HashMap<String, Object>();
 		modelAndView.setViewName("/community/getCommunityList.jsp");
 		if(search.getCurrentPage() == 0){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
-		Map<String,Object> map = new HashMap<String, Object>();
+		//공개범위
+		User user = (User) session.getAttribute("user");
+		//도시
+		List<City> city = guideService.getCityList("all");
+		System.out.println(city);
 		map.put("communityBoard", communityBoard);
 		map.put("search", search);
 		map = communityService.getCommunityList(map);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
 		modelAndView.addObject("resultPage",resultPage);
 		modelAndView.addObject("bestlist", map.get("bestlist"));
 		modelAndView.addObject("list", map.get("list"));
@@ -180,21 +195,19 @@ public class CommunityController {
 		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
 		String safeFile ="";
-		
 		if(!file.isEmpty()) {
 			safeFile = FileNameUUId.convert(file, "ThumbNail", request);
-//			String originFileName = file.getOriginalFilename(); 
-//			File target = new File(uploadPathThumbNail, originFileName);
-//			FileCopyUtils.copy(file.getBytes(),target);
-//			safeFile += originFileName;
 		}else { safeFile += "noThumbnail.png"; }
 		Hashtag HashVo = new Hashtag();
 		if(hashtag != null) {
 			HashVo.setHashtag(hashtag);
 			hashtagService.updateHashtag(HashVo);
 		}
+		User user = new User();
+		community.setWriter(user);
+		
+		
 		community.setCommunityThumbnail(safeFile);
-		community.setWriter(1);
 		community.setOpenRange("1");//이거 문제
 		communityService.updateCommunity(community);
 		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode());

@@ -11,9 +11,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="../resources/javascript/jquery.oLoader.min.js"></script>
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 <script src="/resources/javascript/jquery.oLoader.min.js"></script>
+<link rel="stylesheet" href="/resources/css/common.css" >
+<script src="/resources/javascript/getProfile.js"></script>
 
 <style type="text/css">
 .replyAdda {width: 100%;}
@@ -72,6 +73,8 @@
 			</nav>
 	</div>
 	<br><br><br><br><br><br>
+	
+	<jsp:include page="../user/getProfile.jsp"></jsp:include>
 
 <script type="text/javascript">
 
@@ -348,9 +351,14 @@ function deleteLike(commentCode,likeName) {
 	});
 		
 	
-	
-	
-	
+		
+	//닉네임 클릭시 회원코드로 프로필 출력
+	$(document).on("click",".prof",function(){ 
+		console.log("유저코드 : " + $(this).parents('div').next().val());
+		getProfile($(this).parents('div').next().val());
+		
+		
+	});
 	
 	
 	
@@ -419,10 +427,10 @@ function deleteLike(commentCode,likeName) {
 						$('ul.commentAjax').append('<li>'
 			    		+'<div class="media text-muted pt-3">'
 			    		+'	<input type="hidden" value="'+item.commentCode+'">'
-			    		+'	<img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
+			    		+'	<img class="prof" alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
 			    		+'	<p class="media-body pb-3 mb-0 small">'
 			    		+'		<span class="apto-'+index+' d-block" style="position:relative;">'
-			    		+'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
+			    		+'        	<strong class="prof text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
 			    		+'       	<button class="like" type="button" style="border:none; background: none">'
 			    		+'        		<i class="far fa-heart"></i>&nbsp;'+item.likeCount
 			    		+'        	</button>'
@@ -432,6 +440,7 @@ function deleteLike(commentCode,likeName) {
 			    		+'		 <span>'+item.commentContent+'</span>'
 			    		+'	</p>'
 			    		+'</div>'
+			    		+'<input type="hidden" value="'+item.writerComment.userCode+'">'
 			    		+' </li>');
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
 							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.apto-'+index);
@@ -458,10 +467,10 @@ function deleteLike(commentCode,likeName) {
 						$('ul.commentAjax').append('<li style="padding-left: 30px;">'
 					   +' <div class="media text-muted pt-3">'
 					   +' 	<input type="hidden" value="'+item.commentCode+'">'
-					   +'    <img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
+					   +'    <img class="prof" alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
 					   +'    <p class="media-body pb-3 mb-0 small">'
 					   +'    	<span class="aptoo-'+index+' d-block" style="position:relative;">'
-					   +'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 
+					   +'        	<strong class="prof text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 
 					   +'       	<button class="like" type="button" style="border:none; background: none">'
 					   +'       		<i class="far fa-heart"></i>&nbsp;'+item.likeCount
 					   +'       	</button>'
@@ -470,6 +479,7 @@ function deleteLike(commentCode,likeName) {
 					   +'   	<span>'+item.commentContent+'</span>'
 					   +'	</p>'
 					   +' </div>'
+					   +'<input type="hidden" value="'+item.writerComment.userCode+'">'
 					   +'</li>' );
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
 							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.aptoo-'+index);
