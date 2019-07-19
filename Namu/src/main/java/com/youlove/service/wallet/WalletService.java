@@ -2,7 +2,6 @@ package com.youlove.service.wallet;
 
 import java.util.Map;
 
-import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 
 public interface WalletService {
@@ -25,6 +24,6 @@ public interface WalletService {
 	
 	public void deleteWallet(int walletDetailCode) throws Exception;
 	*/
-	public Map<String, Object> getWalletList(Search search, int walletCode) throws Exception;
+	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception;
 	
 }

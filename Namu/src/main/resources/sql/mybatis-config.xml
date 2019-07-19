@@ -39,8 +39,8 @@
 		<!-- 중현 -->
 		<mapper resource="sql/CommunityMapper.xml"/>
 		<mapper resource="sql/HashtagMapper.xml"/>
-		 <!-- <mapper resource="sql/PartyMapper.xml"/>  -->
-		 <!-- <mapper resource="sql/MessageMapper.xml"/> -->
+<!-- 		 <mapper resource="sql/PartyMapper.xml"/>  -->
+<!-- 		 <mapper resource="sql/MessageMapper.xml"/> -->
 		 
 		 
 		 <mapper resource="sql/PlannerMapper.xml"/> 
