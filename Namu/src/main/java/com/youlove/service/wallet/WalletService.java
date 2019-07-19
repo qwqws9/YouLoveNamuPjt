@@ -2,7 +2,6 @@ package com.youlove.service.wallet;
 
 import java.util.Map;
 
-import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
 
 public interface WalletService {

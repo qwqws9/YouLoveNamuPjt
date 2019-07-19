@@ -2695,7 +2695,7 @@ exports.globalDefaults = {
     // editable: false,
     // nowIndicator: false,
     scrollTime: '06:00:00',
-    minTime: '01:00:00',
+    minTime: '10:00:00',
     maxTime: '24:00:00',
     showNonCurrentDates: true,
     // event ajax
@@ -2706,7 +2706,7 @@ exports.globalDefaults = {
     timezone: false,
     // allDayDefault: undefined,
     // locale
-    locale: null,
+    locale: 'ko',
     isRTL: false,
     buttonText: {
         prev: 'prev',
