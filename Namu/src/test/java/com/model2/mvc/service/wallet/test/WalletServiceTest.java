@@ -1,5 +1,6 @@
 package com.model2.mvc.service.wallet.test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class WalletServiceTest {
 		wallet.setExpression("5*2");
 		wallet.setPrice(10);
 		wallet.setRegDate("2018-08-25 11:02");
-		wallet.setItem("아이스 아메리카노");
+		wallet.setItem("�븘�씠�뒪 �븘硫붾━移대끂");
 		wallet.setPayOption("0");
 		wallet.setExchangeRate(1326.70);
 		wallet.setCategory("0");
@@ -51,7 +52,7 @@ public class WalletServiceTest {
 		Assert.assertEquals("5*2", wallet.getExpression());
 		Assert.assertEquals(10.0, wallet.getPrice(), 0.01);
 		Assert.assertEquals("2018-08-25 11:02", wallet.getRegDate());
-		Assert.assertEquals("아이스 아메리카노", wallet.getItem());
+		Assert.assertEquals("�븘�씠�뒪 �븘硫붾━移대끂", wallet.getItem());
 		Assert.assertEquals(1326.7, wallet.getExchangeRate(), 0.01);
 		
 	}
@@ -69,30 +70,34 @@ public class WalletServiceTest {
 		Assert.assertEquals("5*2", wallet.getExpression());
 		Assert.assertEquals(10.0, wallet.getPrice(), 0.01);
 		Assert.assertEquals("2018-08-25 11:02", wallet.getRegDate());
-		Assert.assertEquals("아이스 아메리카노", wallet.getItem());
+		Assert.assertEquals("�븘�씠�뒪 �븘硫붾━移대끂", wallet.getItem());
 		Assert.assertEquals(1326.7, wallet.getExchangeRate(), 0.01);
 		
 	}
 	
-	/*@Test
+	@Test
 	public void testGetWalletList() throws Exception{
 		 
 		Search search = new Search();
 		search.setCurrentPage(1);
-		search.setPageSize(3);
+		search.setPageSize(5);
 		
-		int walletCode = 1;
-	 	
-		Map<String,Object> map = walletService.getWalletList(search, walletCode);
+		Map<String,Object> map = new HashMap<>();
+		map.put("walletCode", 1);
+		map.put("search", search);
+		
+		map = walletService.getWalletList(map);
 	 	
 	 	List<Object> list = (List<Object>)map.get("list");
+	 	
 	 	System.out.println(list);
 	 	
-	 	Assert.assertEquals(3, list.size());
+	 	Assert.assertEquals(5, list.size());
 	
 	 	Integer totalCount = (Integer)map.get("totalCount");
+	 	
 	 	System.out.println("totalCount : " + totalCount);
-	
+
 	}
-	*/
+	
 }

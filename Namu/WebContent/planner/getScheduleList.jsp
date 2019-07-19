@@ -136,20 +136,13 @@ a.btn-layerClose:hover {
 <script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
 <link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
 
-
-<link rel="stylesheet" type="text/css" href="/resources/javascript/spectrum.css">
-
-
+<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
 <script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
 
 <script>
 function onchangeDay(yy,mm,dd,ss){ 
 	 $("#nows").html(yy+"."+mm+"."+dd+".("+ss+")"); 
 	}
-
- 
-
- 
 
 function layer_open(el){
 	//var temp = $('#'+el);
@@ -217,10 +210,10 @@ $(function () {
 	                }
 	            });
 		    },  */
-		        $.ajax({
+		        /* $.ajax({
    	                url: '/planner/getRouteList',
    	                type : 'post',
-   	                data : { startDate :  start.format('YYYY-MM-DD hh:mm'), endDate :  end.format('YYYY-MM-DD hh:mm') },
+   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'), endDate :  end.format('YYYY-MM-DD HH:MM') },
    	                dataType: 'json',
    	               	
    	                success: function(data) {
@@ -231,21 +224,20 @@ $(function () {
    	                            start:moment( $(this).attr('start')),
    	                         color: $(this).attr('color'),
    	                            id: $(this).attr('id') ,
-   	                         end: $(this).attr('end') 
-   	                        });
-   	                     
+   	                         end:  moment($(this).attr('end')) 
+   	                  
    	                    });
                     callback(events2);
                 }
                    }); 
        
-     }, 	
+     }, 	 */
         
 		   /////////////////////////////////////////////////////////////////
-	       /*    $.ajax({
+	       $.ajax({
 	   	                url: '/planner/getScheduleList',
 	   	                type : 'post',
-	   	                data : { startDate :  start.format('YYYY-MM-DD hh:mm') },
+	   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'),endDate :  end.format('YYYY-MM-DD HH:MM') },
 	   	                dataType: 'json',
 	   	               	
 	   	                success: function(data) {
@@ -264,7 +256,7 @@ $(function () {
 	                }
 	                   }); 
 	       
-	     }, 	 */
+	     }, 	 
 	        
 		      header: {
 		        left: 'prev,next today',
@@ -285,8 +277,8 @@ $(function () {
 		        	   var mm=date.format("MM");
 		        	   var dd=date.format("DD");
 		        	   var ss=date.format("dd");
-		        	  // var date = (moment(date).format('YYYY-MM-DD'));
-		        	 // document.getElementById("scheDay").value=date;
+		        	  var date = (moment(date).format('YYYY-MM-DD'));
+		        	  document.getElementById("scheDay").value=date;
 		        	   layer_open('layer1');
 		        	   onchangeDay(yy,mm,dd,ss);
 		        	     },  
@@ -295,7 +287,7 @@ $(function () {
 		    
 		     ////////////////////////////////////////////////////////
 		   eventClick: function(event, element) {
-		    	 alert(event.id);
+		    	/*  alert(event.id); */
 		    	 var scheCode=event.id;
 	
 					$.ajax( 
@@ -310,12 +302,13 @@ $(function () {
 								success : function(JSONData , status) {
 
 									var displayValue = "<h6>"
-																+"아이디 : "+JSONData.scheName+"<br/>"
-																+"이  름 : "+JSONData.scheDetail+"<br/>"
+																+"일정 : "+JSONData.scheName+"<br/>"
+																+"장소 : "+JSONData.scheDetail+"<br/>"
+																+"일정상세내용 : "+JSONData.scheDetail+"<br/>"
 																;
 																 $('#getSchedule' ).html(displayValue);
 			
-									alert(displayValue);
+							/* 		alert(displayValue); */
 				
 								}
 						});
@@ -365,7 +358,7 @@ $(function () {
     		<br/><br/>
            <p> 날짜 &nbsp;&nbsp;&nbsp;&nbsp;  <input type="date" name="scheDay" id="scheDay"/> 
           <p>  일정 &nbsp;&nbsp;&nbsp;&nbsp;  <input type="text" name="scheName"/>    
-           <p> 일정시작시간 &nbsp;&nbsp;&nbsp;<input type="time" step="1800" name="timeHour" id="scheDay"/>
+           <p> 일정시작시간 &nbsp;&nbsp;&nbsp;<input type="text" step="1800" name="timeHour"/>
            <p> 일정장소 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="schePlace"/>
            <p> 일정상세 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="scheDetail"/>
            <p> 표시 색상 선택&nbsp;&nbsp; <input type="color" name="color" id="color"  style="width:100px;">
@@ -389,8 +382,7 @@ $(function () {
             <div class="schedule">
           <h3 class="title"> 일정 상세   </h3> 
     		<div id="getSchedule"></div>
-        <p><input type ="submit" value="등록" id="submit">
-        <input type ="reset" value="취소" id="reset">	
+        <p><input type ="submit" value="수정" id="submit">
        	<input type='button' id="close"  value='닫기'/>
 	
 		</div></div> </div></div></div>

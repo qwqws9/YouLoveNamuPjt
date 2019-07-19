@@ -13,8 +13,8 @@ public class Community {
 	private String communityThumbnail;
 	private String openRange;
 	private int views;
-	private int writer;
-	private String city;
+	private User writer;
+	private City city;
 	private String communityHashtag; 
 	private Hashtag communityHashtagCode;
 	
@@ -88,19 +88,19 @@ public class Community {
 		this.views = views;
 	}
 
-	public int getWriter() {
+	public User getWriter() {
 		return writer;
 	}
 
-	public void setWriter(int writer) {
+	public void setWriter(User writer) {
 		this.writer = writer;
 	}
 
-	public String getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 

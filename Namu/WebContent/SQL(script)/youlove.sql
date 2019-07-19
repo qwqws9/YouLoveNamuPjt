@@ -81,8 +81,8 @@ CREATE TABLE users (
     PROFILE_IMG           VARCHAR2(1000),
     INTRODUCE             VARCHAR2(1000),
     REG_DATE    DATE,
-    START_BLOCK   DATE,
-    END_BLOCK DATE
+    START_BLOCK   VARCHAR2(100),
+    END_BLOCK VARCHAR2(100)
 );
 
 
@@ -243,8 +243,8 @@ CREATE TABLE groups (
 
 
 CREATE TABLE hashtag (
-   hashtag_code   NUMBER(10) NOT NULL,
-   hashtag         VARCHAR2(500) NOT NULL,
+   hashtag_code   NUMBER(10) ,
+   hashtag         VARCHAR2(500) ,
    community_code   NUMBER(10),
    party_code      NUMBER(10),
    user_code      NUMBER(10) NOT NULL,
@@ -274,7 +274,7 @@ CREATE TABLE community (
 	community_title			VARCHAR2(100) 	NOT NULL,
 	community_content		VARCHAR2(4000),
 	community_date			VARCHAR2(30),
-	community_thumbnail		VARCHAR2(1000),
+	community_thumbnail		VARCHAR2(100),
 	open_range				CHAR(1)		DEFAULT '2'	NOT NULL,
 	views					NUMBER(10),
 	writer					NUMBER(10) 		NOT NULL,
@@ -308,7 +308,7 @@ ALTER TABLE party add CONSTRAINT user_fk FOREIGN KEY(party_user)  REFERENCES use
 --ALTER TABLE party add CONSTRAINT hashtagparty_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
 
 ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES users(user_code);
-ALTER TABLE community add CONSTRAINT hashtagcommunity_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
+--ALTER TABLE community add CONSTRAINT hashtagcommunity_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
 --ALTER TABLE community add CONSTRAINT comment_fk FOREIGN KEY(comment_code)  REFERENCES comments(comment_code);
 --ALTER TABLE community add CONSTRAINT commcity_fk FOREIGN KEY(city_name)  REFERENCES city(city_name);
 
@@ -473,6 +473,3 @@ INSERT INTO wallet VALUES ( seq_w_code.nextval, 5, 'EUR');
 
 
 commit;
-
-
-select * from users;

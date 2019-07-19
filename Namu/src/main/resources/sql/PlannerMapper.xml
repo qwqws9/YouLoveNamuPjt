@@ -23,7 +23,7 @@
 	
 	<resultMap id="routeSelectMap" type="route">
 		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/>
-		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
+		<!-- <result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/> -->
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="cityName" 			column="city_name" 			jdbcType="VARCHAR"/>
 		<result property="cityOrder"	column="city_order" 		jdbcType="NUMERIC" />
@@ -37,8 +37,8 @@
 		
 		 <resultMap id="scheduleSelectMap" type="schedule">
 		<result property="scheCode"				column="SCHE_CODE" 				jdbcType="NUMERIC" />
-		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
-		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/>
+		<!-- <result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
+		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/> -->
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="scheDay"				column="SCHE_DAY" 				jdbcType="DATE" />
 		<result property="timeHour"				column="TIME_HOUR" 				jdbcType="VARCHAR" />
@@ -48,6 +48,7 @@
 		<result property="scheDetail" 			column="SCHE_DETAIL" 			jdbcType="VARCHAR"/>	
 		<result property="accomodation" 			column="ACCOMODATION" 			jdbcType="VARCHAR"/>	
 		<result property="color" 			column="COLOR " 			jdbcType="VARCHAR"/>	
+
 	<!-- <association property="PLANNER" column="PLANNER_CODE"  select="PlannerMapper.getPlanner" javaType="planner"/>
 	<association property="ROUTE" column="ROUTE_CODE"  select="PlannerMapper.getRoute" javaType="route"/> -->
 	</resultMap> 
@@ -77,12 +78,12 @@
 	<insert 	id="addRoute"		parameterType="route" >
 	 	INSERT
 		INTO route (route_code, planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng, start_date, end_date) 
-		VALUES	 (seq_route_code.nextval, #{plannerVer:INTEGER}, #{planner.plannerCode}, #{cityName:VARCHAR} ,#{stayDay:INTEGER}, #{cityOrder:INTEGER} , #{lat:VARCHAR}, #{lng:VARCHAR},#{startDate:DATE}, #{endDate:DATE})
+		VALUES	 (seq_route_code.nextval, #{plannerVer:INTEGER}, 1, #{cityName:VARCHAR} ,#{stayDay:INTEGER}, #{cityOrder:INTEGER} , #{lat:VARCHAR}, #{lng:VARCHAR},#{startDate:DATE}, #{endDate:DATE})
 	 </insert>
 	
 		 <select 	id="getRoute"	parameterType="string"	resultMap="routeSelectMap">
 		SELECT
-		planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng, start_date, end_date
+		planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng
 		FROM route
 		WHERE route_code = #{routeCode}
 	 </select>
@@ -90,7 +91,7 @@
 	 <select  id="getRouteList"  parameterType="hashmap"	resultMap="routeSelectMap">
 
 	  	SELECT
-		route_code , city_name ,city_order, stay_day, start_Date,end_Date 
+		city_name ,city_order, stay_day, start_Date,end_Date 
 	  	FROM route 
 	  	<where>
 	  	planner_code = #{plannerCode}
@@ -101,8 +102,8 @@
 	 
 		<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
-		INTO route (sche_code, route_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail) 
-		VALUES	 (seq_schedule_code.nextval,#{routeCode:INTEGER}, #{plannerVer:INTEGER}, #{plannerCode:INTEGER}, #{scheDay:DATE} ,#{timeHour:INTEGER}, #{timeMin:INTEGER} , #{scheName:VARCHAR}, #{schePlace:VARCHAR},#{scheDetail:VARCHAR}, #{accomodation:VARCHAR})
+		INTO schedule (sche_code, route_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail,accomodation, color ) 
+		VALUES	 (seq_schedule_code.nextval,1, 1, 1, #{scheDay:DATE} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
 	 </insert>
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">

@@ -1,6 +1,7 @@
 package com.youlove.web.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -156,6 +157,22 @@ public class UserController {
 		
 		return "forward:/user/getUser.jsp";
 	}
+	
+	@RequestMapping("/getUserList")
+	public String getUserList(Model model,Map<String,Object> map) throws Exception {
+		
+		System.out.println("/user/getUserList");
+		
+		map.put("order", "1");
+		map.put("role", "user");
+		List<User> list = userService.getUserList(map);
+		
+		model.addAttribute("list",list);
+		
+		
+		return "forward:/user/getUserList.jsp";
+	}
+	
 	
 	
 	
