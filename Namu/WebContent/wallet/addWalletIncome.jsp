@@ -14,7 +14,7 @@
 			</select>
 			<div class="result">
 				<input type="text" class="price" id="price" name="price" value="" alt="금액 입력칸에 입력해주세요.">
-				<span class="krw_price"><span style="display:none;">KRW 2,644.80</span></span>
+				<span class="krw_price">KRW 2,644.80</span>
 			</div>
 		</div><!-- //result_top -->
 		

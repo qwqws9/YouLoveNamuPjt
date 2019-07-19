@@ -52,12 +52,9 @@ $(function() {
 	
 	// 수입/지출 상세내역 버튼
 	$('.detail_line').on('click', function() {
-		var modalWidth = $(this).next().children().width(); // 모달창 가로길이
-		var modalHeight = $(this).next().children().height(); // 모달창 세로길이
+		console.log('모달창 넓이 : ' + $(this).next().children().width() + 'px, 길이 : ' + $(this).next().children().height() + 'px');
 		
-		//console.log('모달창 넓이 : ' + modalWidth + 'px, 높이 : ' + modalHeight + 'px');
-		
-		centerPopUp($(this).next().children(), modalWidth, modalHeight);
+		centerPopUp($(this).next().children());
 	});
 	
 	// 수입/지출 상세내역 모달창 닫기 버튼
@@ -68,26 +65,36 @@ $(function() {
 			$('.pop_wrap_contain').css({'display':'none'});
 		}
 	});
+	
 });
 
 // 팝업 중앙에 띄우기
-function centerPopUp(modal, modalWidth, modalHeight) {
-	//console.log('모달창 넓이 : ' + modalWidth + 'px, 높이 : ' + modalHeight + 'px');
-
-	var left = Math.ceil((window.screen.width - modalWidth) / 2);
-	var top = Math.ceil(((window.screen.height - modalHeight) / 2) - 80);
+function centerPopUp(modal) {
+	realCenterPopUp(modal);
 	
 	modal.parent().css({'display':'block'});
+	
+	// 윈도우창 크기 변화 감지
+	$(window).resize(function() {
+		realCenterPopUp(modal);
+	});
+}
+function realCenterPopUp(modal) {
+	// var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) + $(window).scrollTop()) + 'px';
+	var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2)) + 'px';
+	var left = Math.max(0, (($(window).width() - modal.outerWidth()) / 2) + $(window).scrollLeft()) + 'px';
+	
+	console.log('모달창 위치 : 위쪽 ' + top + ', 왼쪽 ' + left);
+
 	modal.css({'top':top, 'left':left});
 }
 
-//현재 날짜 및 시간 입력
+// 현재 날짜 및 시간 입력
 function currentTime() {
 	var date = new Date();
 	var nowDay = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 	var nowTime = date.getHours() + ':' + date.getMinutes();
-	
-	//console.log('현재시각 : ' + nowDay + ' ' + nowTime);
+	//console.log('현재 시각 : ' + nowDay + ' ' + nowTime);
 	
 	$('input.date_time').val(nowDay + ' ' + nowTime);
 }
