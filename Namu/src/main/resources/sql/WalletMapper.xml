@@ -18,7 +18,7 @@
 		<result property="exchangeRate"		column="EXCHANGE_RATE"	jdbcType="NUMERIC" />
 		<result property="category"			column="CATEGORY"		jdbcType="CHAR" />
 		<result property="walletImage"		column="W_IMAGE"		jdbcType="VARCHAR" />
-		<result property="payer"			column="PAYER"			jdbcType="NUMERIC" />
+		<result property="payer.userCode"	column="PAYER"			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- walletList.jsp -->
@@ -28,7 +28,7 @@
 							 item, content, pay_option, exchange_rate, category, w_image, payer )
 		VALUES ( seq_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
 				 #{price}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
-				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer:NUMERIC} )
+				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer.userCode:NUMERIC} )
 	</insert>
 	
 	<select id="getWallet" parameterType="int" resultMap="walletSelectMap">
@@ -53,7 +53,7 @@
 			exchange_rate = #{exchangeRate:NUMERIC},
 			category = #{category},
 			w_image = #{walletImage:VARCHAR},
-			payer = #{payer:NUMERIC}
+			payer = #{payer.userCode:NUMERIC}
 		</set>
 	  	<where>
 	  		w_detail_code = #{walletDetailCode}

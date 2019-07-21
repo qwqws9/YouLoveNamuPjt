@@ -8,21 +8,26 @@
 		<div class="result_top">
 			<input type="text" class="date_time" name="regDate" readonly />
 			
-			<select class="unit_selec" name="moneyUnit">
+			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
-				<option value="EUR">EUR</option>
+				<option value="EUR" selected>EUR</option>
+				<option value="CHF">CHF</option>
+				<option value="GBP">GBP</option>
+				<option value="CZK">CZK</option>
+				<option value="HUF">HUF</option>
 			</select>
 			<div class="result">
 				<input type="text" class="price" id="price" name="price" value="" alt="금액 입력칸에 입력해주세요.">
-				<span class="krw_price">KRW 2,644.80</span>
+				<span class="krw_price">KRW <span class="exchange_plus_result"></span></span>
+				<input type="hidden" class="exchange_rate" id="exchange_rate" name="exchangeRate" value="">
+				<input type="hidden" class="exchange_price" id="exchange_price" name="exchangePrice" value="">
 			</div>
 		</div><!-- //result_top -->
 		
 		<div class="apply_exchange_rate">
 			<span>환율</span>
 			<div>
-				<span>EUR 1.00 = KRW <span>1,319.0</span></span><br/>
-				<input type="hidden" class="exchange_rate" name="exchangeRate" value="1319.0">
+				<span>EUR 1.0 = KRW <span id="exchange_result"></span></span><br/>
 				<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
 			</div>
 		</div><!-- //apply_exchange_rate -->

@@ -15,7 +15,7 @@ public class Wallet {
 	private double exchangeRate;
 	private String category;
 	private String walletImage;
-	private int payer;
+	private User payer;
 	// 환율 적용한 한화 값
 	private double exchangePrice;
 	
@@ -110,10 +110,10 @@ public class Wallet {
 		this.walletImage = walletImage;
 	}
 	
-	public int getPayer() {
+	public User getPayer() {
 		return payer;
 	}
-	public void setPayer(int payer) {
+	public void setPayer(User payer) {
 		this.payer = payer;
 	}
 	

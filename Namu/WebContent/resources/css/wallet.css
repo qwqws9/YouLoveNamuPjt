@@ -88,7 +88,7 @@ a.day_btn span {color: #fff;}
 .date_time:hover {background-color: #f2c029;}
 .unit_selec {position: absolute; top: 40px; left: 0; width: 85px; padding: 7px 12px; background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; border: 1px solid #ccc; border-radius: .25em;}
 .result {position: absolute; right: 0; width: 160px;}
-.price, .krw_price {position: absolute; right: 0; width: 120px; text-align: right;}
+.price, .krw_price {position: absolute; right: 0; width: 150px; text-align: right;}
 .price {top: 20px; height: 27px; line-height: 27px; font-size: 20px;}
 .krw_price {top: 50px; height: 23px; line-height: 23px; font-size: 12px;}
 
@@ -146,7 +146,7 @@ a.day_btn span {color: #fff;}
 .act_btns .save_btn {right: 90px; color: #fff; background-color: #30a9de;}
 .act_btns .save_btn:active {position: relative; top: 0;}
 .act_btns .update_btn {right: 90px; color: #fff; background-color: #30a9de;}
-.act_btns .close_btn {right: 0; color: #30a9de; border: 1px solid #30a9de; box-sizing: border-box;}
+.act_btns .close_btn, .act_btns .delete_btn {right: 0; color: #30a9de; border: 1px solid #30a9de; box-sizing: border-box;}
 
 /* 테이블 */
 .detail_table {margin-top: 20px; margin-bottom: 100px; font-size: 14px;}
@@ -156,6 +156,7 @@ a.day_btn span {color: #fff;}
 .table_row:last-child {border-bottom: 2px solid #ccc;}
 .detail_line {display: block; width: 100%;}
 .detail_line:hover {background-color: #cbcbcb; cursor: default;}
+.walletDetailCode {display: none;}
 .table_col {display: inline-block;}
 .table_header .table_col:nth-child(2), .table_row .table_col:nth-child(1) {width: 3%;}
 .table_header .table_col:nth-child(3), .table_row .table_col:nth-child(2) {width: 15%;}
@@ -167,9 +168,10 @@ a.day_btn span {color: #fff;}
 .table_col img {width: 60px; height: 60px; border: 1px solid #6c757d;}
 
 /* 수입 및 지출 get 팝업 */
-.pop_wrap_contain {display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 1;}
-.pop_wrap_get {position:fixed; width: 600px; height: 600px; padding: 10px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em;}
-.scroller {overflow: auto; width: 100%; height: 100%; margin-bottom: 40px;}
+.pop_wrap_contain {display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 1; transition: all .8s;}
+.pop_wrap_get {position:fixed; width: 600px; height: 600px; padding: 10px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em; transition: all .8s;}
+.pop_wrap_get > div {position: relative; width: 100%; height: 100%;}
+.scroller {overflow: auto; width: inherit; height: inherit; margin-bottom: 40px;}
 .padding_boxing {width: 100%; padding: 30px 0;}
 .text_width {width:500px; margin: auto;}
 .input_date {font-size: 16px;}
@@ -189,19 +191,25 @@ a.day_btn span {color: #fff;}
 .input_payer > span:first-child {text-align: left;}
 .input_payer > span:last-child {text-align: right;}
 
+.what_unit {margin-top: 25px; padding: 20px; background-color: #a3daff;}
+.what_unit > div > span {font-size: 16px; line-height: 25px;}
+.what_unit > div > span:first-child {float:left;}
+.what_unit > div > span:last-child {float:right;}
+
 .input_item {margin-top: 30px; padding: 10px; border: 1px solid #cbcbcb; border-radius: .3em; box-sizing: border-box;}
 .input_content {margin-top: 5px; padding: 20px; background-color: #cbcbcb;}
 .big_image {max-width: 500px; height: auto; margin-top: 5px;}
 
 .pop_wrap_get .act_btns {margin-right: -10px;}
+.pop_wrap_get .close_btnn {position: absolute; top: -45px; right: -5px; color: #fff; font-size: 20px;}
 
 /* 페이지 네비게이션 */
 .paging_wrap {width: 100%;}
 .paging_wrap ul {display: flex; justify-content: center !important;}
-.paging_wrap li {padding: .8rem 1rem; color: #282c37; font-size: 15px; background-color: #fff; border: 1px solid #cbcbcb;}
+.paging_wrap li {padding: .8rem 1.7rem; color: #282c37; font-size: 15px; background-color: #fff; border: 1px solid #cbcbcb;}
 .paging_wrap li:not(:first-child) {margin-left: -2px;}
 .paging_wrap li:first-child {border-top-left-radius: .3em; border-bottom-left-radius: .3em;}
 .paging_wrap li:last-child {border-top-right-radius: .3em; border-bottom-right-radius: .3em;}
 .paging_wrap li:hover {color: #fff; background-color: #30a9de;}
-.paging_wrap li a {display: inline-block;}
-.paging_wrap .current_page {color: #fff; background-color: #30a9de;}
+.paging_wrap li.disabled {color: #cbcbcb; pointer-events: none;}
+/* .paging_wrap .current_page {color: #fff; background-color: #30a9de;} */
