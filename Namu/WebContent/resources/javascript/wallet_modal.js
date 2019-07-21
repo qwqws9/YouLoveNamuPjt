@@ -11,7 +11,10 @@ $(function() {
 		$($('.pop_wrap_add')[0]).load('/wallet/addWalletIncome.jsp', function(data) {
 			//console.log(data);
 			
+			$('#expression').focus();
+			
 			currentTime();
+			memoPopUp();
 			calculation();
 		});
 	});
@@ -27,7 +30,10 @@ $(function() {
 		$($('.pop_wrap_add')[1]).load('/wallet/addWalletExpenditure.jsp', function(data) {
 			//console.log(data);
 			
+			$('#expression').focus();
+			
 			currentTime();
+			memoPopUp();
 			calculation();
 		});
 	});
@@ -44,7 +50,7 @@ $(function() {
 		var container = $('.pop_wrap_add');
 		
 		if(container.has(e.target).length === 0 || $(e.target).is('.pop_wrap_add .close_btn')){
-			$('#income_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+			$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
 			
 			$('.pop_wrap_add').html('');
 		}
@@ -52,7 +58,7 @@ $(function() {
 	
 	// 수입/지출 상세내역 버튼
 	$('.detail_line').on('click', function() {
-		console.log('모달창 넓이 : ' + $(this).next().children().width() + 'px, 길이 : ' + $(this).next().children().height() + 'px');
+		//console.log('모달창 넓이 : ' + $(this).next().children().width() + 'px, 길이 : ' + $(this).next().children().height() + 'px');
 		
 		centerPopUp($(this).next().children());
 	});
@@ -81,22 +87,51 @@ function centerPopUp(modal) {
 }
 function realCenterPopUp(modal) {
 	// var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) + $(window).scrollTop()) + 'px';
-	var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2)) + 'px';
+	var top = Math.max(0, ((($(window).height() - modal.outerHeight()) / 2)) - 20) + 'px';
 	var left = Math.max(0, (($(window).width() - modal.outerWidth()) / 2) + $(window).scrollLeft()) + 'px';
-	
-	console.log('모달창 위치 : 위쪽 ' + top + ', 왼쪽 ' + left);
+	//console.log('모달창 위치 : 위쪽 ' + top + ', 왼쪽 ' + left);
 
 	modal.css({'top':top, 'left':left});
 }
 
 // 현재 날짜 및 시간 입력
 function currentTime() {
-	var date = new Date();
-	var nowDay = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-	var nowTime = date.getHours() + ':' + date.getMinutes();
+	var day = new Date();
+	
+	var month = slice(day.getMonth()+1);
+	var date = slice(day.getDate());
+	var hours = slice(day.getHours());
+	var minutes = slice(day.getMinutes());
+	
+	var nowDay = day.getFullYear() + '-' + month + '-' + date;
+	var nowTime = hours + ':' + minutes;
 	//console.log('현재 시각 : ' + nowDay + ' ' + nowTime);
 	
 	$('input.date_time').val(nowDay + ' ' + nowTime);
+}
+function slice(day) {
+	var str = String(day);
+	//console.log(str.length);
+	
+	if(str.length == 1){
+		return '0' + str;
+	}else{
+		return str;
+	}
+}
+
+// 메모장
+function memoPopUp() {
+	$('.add_option_selec #memo_btn').on('click', function() {
+		//console.log($('#memo_btn').html());
+		
+		$('#memo_btn').next().show();
+		$('.memo_modal > textarea').focus();
+	});
+	
+	$('.add_option_selec .close_btn').on('click', function() {
+		$('#memo_btn').next().hide();
+	});
 }
 
 // 계산기

@@ -2,17 +2,17 @@
 $(function() {
 	// 페이지 이동
 	$('.paging_wrap li').on('click', function() {
-		//console.log('현재 페이지 : ' + $(this).text().trim());
+		console.log('현재 페이지 : ' + $(this).text().trim());
 		
 		if($(this).text().trim() == '<'){
 			var nextPage = parseInt($(this).next().text().trim()) - 1;
-			//console.log('이동할 페이지 : ' + nextPage);
+			console.log('이동할 페이지 : ' + nextPage);
 		}else if($(this).text().trim() == '>'){
 			var nextPage = parseInt($(this).prev().text().trim()) + 1;
-			//console.log('이동할 페이지 : ' + nextPage);
+			console.log('이동할 페이지 : ' + nextPage);
 		}else{
-			var nextPage = $(this).prev().text().trim();
-			//console.log('이동할 페이지 : ' + $(this).text().trim());
+			var nextPage = $(this).text().trim();
+			console.log('이동할 페이지 : ' + $(this).text().trim());
 		}
 		
 		getListAjax(nextPage);
@@ -87,7 +87,7 @@ function addAjax(form) {
 
 // getWalletList Business Logic
 function getListAjax(currentPage) {
-	//console.log(currentPage);
+	console.log(currentPage);
 	
 	$.ajax({
 		url			: '/wallet/json/getWalletList/' + $('.walletCode').text().trim(),
@@ -108,12 +108,12 @@ function getListAjax(currentPage) {
 			$.each(JSONData.list, function(index, item) {
 				//console.log(item.walletDetailCode);
 				
-				var list = $('.ajax-' + (index+1) + ' .detail_line');
+				var list = $('.ajax-' + (index+1) + '.detail_line');
 				//console.log(list.html());
 				
 				list.children('span.table_col:eq(0)').html(index+1);
 				list.children('span.table_col:eq(1)').html(item.regDate);
-				
+				/*
 				if(item.part == 0){
 					if(item.moneyUnit == 'KRW'){
 						list.children('span.table_col:eq(2)').children('span:eq(0) > span:eq(0)').html('<i class="fas fa-won-sign"></i>');
@@ -180,46 +180,16 @@ function getListAjax(currentPage) {
 					}else if(item.category == 8){
 						list.children('span.table_col:eq(5)').children('span:eq(1)').html('<i class="fas fa-ellipsis-h"></i>');
 					}
-				}
-				
-				
-				
-				/*
-				
-				
-				if(item.walletImage != null){
-					list.children('span.table_col:eq(6)').val('<img src="/resources/images/wallet/'+item.walletImage+'" alt="${wallet.category}" class="rounded-circle">');
-				}else{
-					if(item.category == 0){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-coins"></i>');
-					}else if(item.category == 1){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-utensils"></i>');
-					}else if(item.category == 2){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-shopping-cart"></i>');
-					}else if(item.category == 3){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-landmark"></i>');
-					}else if(item.category == 4){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-plane"></i>');
-					}else if(item.category == 5){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-subway"></i>');
-					}else if(item.category == 6){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-bed"></i>');
-					}else if(item.category == 7){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-skating"></i>');
-					}else if(item.category == 8){
-						list.children('span.table_col:eq(6)').val('<i class="fas fa-ellipsis-h"></i>');
-					}
 				}*/
-				
 				$('.totalCount').html(JSONData.totalCount);
 			});
 			
 			// 기존 데이터 삭제
-			$('li[class^=ajax-]').each(function(idx) { // idx는 0부터 시작
+			/*$('li[class^=ajax-]').each(function(idx) { // idx는 0부터 시작
 	 			if(JSONData.length <= idx){
 	 				$('.ajax-' + (idx+1)).remove();
 	 			}
-	 		});
+	 		});*/
 		}
 	});
 }

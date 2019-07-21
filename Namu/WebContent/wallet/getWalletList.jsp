@@ -27,7 +27,6 @@
     <!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
-	
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
 	<script type="text/javascript" src="/resources/javascript/wallet_modal.js"></script>
 </head>
@@ -103,28 +102,22 @@
 					</div>
 					
 					<ul>
-						<c:set var="i" value="0" />
 						<c:forEach varStatus="status" var="wallet" items="${list}">
-							<c:set var="i" value="${i+1}" />
 							<li class="table_row ajax-${status.index+1}">
 								<a class="detail_line">
-									<span class="table_col">${i}</span>
+									<span class="table_col">${status.index+1}</span>
 									<span class="table_col">
 										${wallet.regDate}
 									</span>
 									<span class="table_col">
 										<c:if test="${wallet.part eq 0}">
 											<span>
-												<span>
-													<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
-													<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-												</span>
-												<span><fmt:formatNumber value="${wallet.price}" pattern="#,###.00" /></span>
-												<span>
-													<c:if test="${wallet.payOption eq 2}">
-														&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
-													</c:if>
-												</span>
+												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+												<c:if test="${wallet.payOption eq 2}">
+													&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
+												</c:if>
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
@@ -136,16 +129,9 @@
 									<span class="table_col">
 										<c:if test="${wallet.part eq 1}">
 											<span>
-												<span>
-													<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
-													<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-												</span>
-												<span><fmt:formatNumber value="${wallet.price}" pattern="#,###.00" /></span>
-												<span>
-													<c:if test="${wallet.payOption eq 2}">
-														&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
-													</c:if>
-												</span>
+												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
@@ -155,40 +141,30 @@
 										</c:if>
 									</span>
 									<span class="table_col">
-										<span>
-											<c:if test="${! empty wallet.item}">
-												${wallet.item}
-											</c:if>
-										</span>
-										<span>
-											<c:if test="${empty wallet.item}">
-												<span>
-													<c:if test="${wallet.part eq 0}">예산</c:if>
-													<c:if test="${wallet.part eq 1}">지출</c:if>
-												</span>
-												추가
-											</c:if>
-										</span>
+										<c:if test="${! empty wallet.item}">
+											${wallet.item}
+										</c:if>
+										<c:if test="${empty wallet.item}">
+											<c:if test="${wallet.part eq 0}">예산</c:if>
+											<c:if test="${wallet.part eq 1}">지출</c:if>
+											추가
+										</c:if>
 									</span>
 									<span class="table_col">
-										<span>
-											<c:if test="${! empty wallet.walletImage}">
-												<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.category}" class="rounded-circle">
-											</c:if>
-										</span>
-										<span>
-											<c:if test="${empty wallet.walletImage}">
-												<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
-												<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
-												<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
-												<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
-												<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
-												<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
-												<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
-												<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
-												<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
-											</c:if>
-										</span>
+										<c:if test="${! empty wallet.walletImage}">
+											<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.category}" class="rounded-circle">
+										</c:if>
+										<c:if test="${empty wallet.walletImage}">
+											<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
+											<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
+											<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
+											<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
+											<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
+											<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
+											<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
+											<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
+											<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+										</c:if>
 									</span>
 								</a><!-- //detail_line -->
 								
@@ -250,9 +226,9 @@
 															추가
 														</c:if>
 													</div>
-													<%-- <c:if test="${! empty wallet.content}"> --%>
-														<div class="input_content">아이스아메리카노 먹고싶은데 디카페인 파는데가 근처에 없어ㅠㅠㅠㅠㅠ<%-- ${wallet.content} --%></div>
-													<%-- </c:if> --%>
+													<c:if test="${! empty wallet.content}">
+														<div class="input_content">${wallet.content}</div>
+													</c:if>
 												</div><!-- //text_width -->
 												<c:if test="${! empty wallet.walletImage}">
 													<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.item} 이미지" class="big_image">

@@ -29,6 +29,9 @@
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    
+    <!-- Our Own Resources -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
