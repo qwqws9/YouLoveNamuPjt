@@ -19,9 +19,19 @@
 	
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	
+	<link rel="stylesheet" href="/resources/css/common.css" >
+	<!-- 날씨,시차,환율 정보를 위한 국가 도시 리스트 출력 -->
+	<script src="/resources/javascript/getProfile.js"></script>
+	<script src="/resources/javascript/index.js"></script>
+	
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    
+    <!-- Our Own Resources -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -41,5 +51,12 @@
 			<a href="/party/getPartyList">중현 동행 리스트</a>
 		</h4>
 	</div>
+	
+	
+	
+	
+	<button id="callCountry">국가 정보 호출</button>
+	
+	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
 </body>
 </html>

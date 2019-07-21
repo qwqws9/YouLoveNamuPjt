@@ -69,10 +69,14 @@
 			<div class="add_option_selec">
 				<span class="txt">추가 입력</span>
 				<span class="add_option_wrap">
-					<a href="javascript:void(0);"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span></a>
+					<a href="javascript:void(0);"  id="memo_btn"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span><span class="skip">등록</span></a>
+					<span class="memo_modal">
+						<textarea name="content"></textarea>
+						<a href="javascript:void(0);" class="close_btn"><i class="fas fa-times-circle"></i><span class="skip">취소</span></a>
+					</span>
 				</span>
 				<span class="add_option_wrap">
-					<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
+					<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span><span class="skip">등록</span></label>
 					<input type="file" name="file" id="file">
 				</span>
 			</div><!-- //add_option_selec -->

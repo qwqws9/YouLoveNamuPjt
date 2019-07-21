@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
 import com.youlove.service.user.UserDao;
 import com.youlove.service.user.UserService;;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean updateUser(Map<String, Object> map) throws Exception {
+		System.out.println(map.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@");
 		int res = userDao.updateUser(map);
 		boolean result = false;
 		if(res != 0) {
@@ -55,6 +57,21 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<User> getUserList(Map<String, Object> map) throws Exception {
 		return userDao.getUserList(map);
+	}
+
+	@Override
+	public List<Pay> getPayList(int userCode) throws Exception {
+		return userDao.getPayList(userCode);
+	}
+
+	@Override
+	public boolean addPay(Pay pay) throws Exception {
+		int res = userDao.addPay(pay);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
 	}
 
 	

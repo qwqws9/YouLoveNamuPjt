@@ -27,7 +27,7 @@
 		  				<h1 class="h3 mb-3 font-weight-normal">You Love</h1>
 					</div>
 					<div class="col">
-			  			<input type="text" id="userId" name="userId"  class="form-control" placeholder="Email Address & Phone Number" style="width: 400px;" autofocus>
+			  			<input type="text" id="userId" name="userId"  class="form-control" placeholder="Email Address & Phone Number" style="width: 400px;" autofocus value="${saveId }">
 			  			<br>
 			  			<input type="password" id="password" name="password" class="form-control" placeholder="Password" >
 			  			<br>
@@ -36,11 +36,11 @@
 					</div>
 		 			 <div class="checkbox">
 		  				<label>
-		     			 	<input type="checkbox" id="saveId"> 아이디 저장
+		     			 	<input type="checkbox" name="saveId" id="saveId"> 아이디 저장
 		      			</label>
 		      			&nbsp;&nbsp;&nbsp;
 		     			 <label>
-		      				<input type="checkbox" id="autoLogin"> 자동 로그인
+		      				<input type="checkbox" name="autoLogin" id="autoLogin"> 자동 로그인
 		      			</label>
 		  			</div>
 		  				<div class="row">
@@ -58,137 +58,11 @@
 			</div>
 		</div>
 	</div>
-		<input type="text" id="cityName">
-		<input type="button"  class="btn btn-lg-6 btn-primary btn-block" id="getCity" value="도시가져오기">
-		<input type="button"  class="useruser btn btn-lg-6 btn-primary btn-block"  value="1">
-		<input type="button"  class="useruser btn btn-lg-6 btn-primary btn-block"  value="2">
-		<input type="button"  class="useruser btn btn-lg-6 btn-primary btn-block"  value="3">
-		<input type="button"  class="useruser btn btn-lg-6 btn-primary btn-block"  value="4">
-		<input type="button"  class="useruser btn btn-lg-6 btn-primary btn-block"  value="5">
-		
-		
-		
-		<jsp:include page="../comment/getComment.jsp" >
-      	<jsp:param value="${boardCode1 }" name="boardCode"/>
-      	<jsp:param value="${detailCode1 }" name="detailCode"/>
-      </jsp:include>
-      
-      
-      <jsp:include page="../user/getProfile.jsp" />
-      
-      
-      
-<!-- 				      <div class="popup_wrap"> -->
-<!-- 						<div class="popup_contain"> -->
-<!-- 				     <div class="profileInfo" > -->
-<!-- 					<div class="card bg-light mb-3"> -->
-<!-- 					  <div class="row no-gutters"> -->
-<!-- 					    <div class="col-md-4"> -->
-<!-- 					      <img src="/resources/images/dog.JPG" class="userProfile card-img" alt="..."> -->
-<!-- 					    </div> -->
-<!-- 					    <div class="col-md-8"> -->
-<!-- 					    <input type="hidden" id="inviteUserCode"> -->
-<!-- 					      <div class="card-body"> -->
-<!-- 					        <p class="userNick card-text">닉네임 : 나무발발이</p> -->
-<!-- 					        <p class="userGend card-text">성별 : 남</p> -->
-<!-- 					        <p class="userAge card-text">나이 : 20</p> -->
-<!-- 					        <p class="card-text">자기소개</p> -->
-<!-- 					        <p class="userIntro card-text"></p> -->
-<!-- 					        <button type="button" class="phone7 btn btn-outline-info btn-sm" >채팅초대</button> -->
-<!-- 					        <button type="button" class="phone7 btn btn-outline-info btn-sm" >쪽지전송</button> -->
-<!-- 					        <button type="button" class="phone7 btn btn-outline-info btn-sm" >친구추가</button> -->
-<!-- 					        <button type="button" class="phone7 btn btn-outline-info btn-sm" >그룹초대</button> -->
-<!-- 					      </div> -->
-<!-- 					    </div> -->
-<!-- 					  </div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!--       </div> -->
-<!--       </div> -->
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
 		
 <script type="text/javascript">
 		
 	$(function(){
 		
-		$('#userCode').on('click',function(){
-			$($('body')).load('/user/getProfile.jsp', function() {
-				
-				
-			});
-		})
-		
-		
-		$('#getCity').on('click',function(){
-			$.ajax({
-				url : "/guide/json/getCityList/"+$('#cityName').val().trim(),
-				method : "POST" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-// 				data : JSON.stringify({
-// 					cityName : $('#cityName').val().trim()
-// 				}),
-				success : function(JSONData , status) {
-					alert(JSONData);
-				}
-		})
-		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
 		$('#findInfo').on('click',function(){
 			var url = '/user/findInfo';
 			var name = "_blank";

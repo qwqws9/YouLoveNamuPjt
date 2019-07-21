@@ -26,6 +26,30 @@
 		<result property="endBlock" 			column="END_BLOCK" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
+	
+	<resultMap id="payMap" type="pay">
+		<result property="paymentCode" 				column="PAYMENT_CODE" 				jdbcType="NUMERIC"/>
+		<result property="paymentDate"				column="PAYMENT_DATE" 				jdbcType="DATE" />
+		<result property="paymentPrice" 			column="PAYMENT_PRICE" 				jdbcType="VARCHAR" />
+		<result property="paymentOption" 			column="PAYMENT_OPTION" 			jdbcType="VARCHAR" />
+		<result property="hotelName" 				column="HOTEL_NAME" 				jdbcType="VARCHAR" />
+		<result property="hotelAddress" 			column="HOTEL_ADDRESS" 				jdbcType="VARCHAR" />
+		<result property="hotelImage" 				column="HOTEL_IMAGE" 				jdbcType="VARCHAR" />
+		<result property="hotelCode" 				column="HOTEL_CODE" 				jdbcType="VARCHAR"  />
+		<result property="startDate" 				column="START_DATE" 				jdbcType="VARCHAR" />
+		<result property="endDate" 					column="END_DATE" 					jdbcType="VARCHAR" />
+		<result property="startWay" 				column="START_WAY" 					jdbcType="VARCHAR" />
+		<result property="endWay" 					column="END_WAY" 					jdbcType="VARCHAR" />
+		<result property="flightTime" 				column="FLIGHT_TIME" 				jdbcType="VARCHAR" />
+		<result property="returnStartWay" 			column="RETURN_START_WAY" 			jdbcType="VARCHAR" />
+		<result property="returnEndWay" 			column="RETURN_END_WAY" 			jdbcType="VARCHAR" />
+		<result property="returnFlightTime" 		column="RETURN_FLIGHT_TIME" 		jdbcType="VARCHAR" />
+		<association property="paymentUser" javaType="user">
+			<result property="userCode" column="USER_CODE" />
+			<result property="nickname" column="NICKNAME" />
+		</association>
+	</resultMap>
+	
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
@@ -54,6 +78,9 @@
 			</if>
 			<if test="userCode != null" >
 				USER_CODE = #{userCode}
+			</if>
+			<if test="nick != null">
+				NICKNAME LIKE &apos;%${nick}%&apos; 
 			</if>
 		</where> 
 	 </select>
@@ -92,13 +119,24 @@
 	 	<if test="target == 'token'">
 	 	TOKEN = #{value}
 	 	</if>
+	 	<if test="target == 'block'">
+	 	START_BLOCK = #{start:VARCHAR},
+	 	END_BLOCK = #{end:VARCHAR}
+	 	<if test="start == null">
+	 	,role = 'user'
+	 	</if>
+	 	<if test="start != null">
+	 	,role = 'block'
+	 	</if>
+	 	</if>
 	 	</set>
 	 	WHERE USER_CODE = #{userCode}
 	 </update>
 	 
 	<select id="getUserList" parameterType="map" resultMap="userSelectMap">
-		SELECT * from USERS
-		<if test="role != null">
+		SELECT USER_CODE , TOKEN , PROFILE_AUTH , ROLE , NICKNAME, EMAIL, PHONE, NAME , PASSWORD,BIRTH,GENDER,PROFILE_IMG,INTRODUCE,REG_DATE,NVL(START_BLOCK,'-') START_BLOCK ,NVL(END_BLOCK,'-') END_BLOCK 
+		from USERS
+		<if test="role != 'all'">
 			<where>
 				role = #{role}
 			</where>
@@ -106,6 +144,29 @@
 		order by ${order}
 	</select>
 	
+	
+	<select id="getPayList"	parameterType="int"	resultMap="payMap">
+		select * 
+		from paylist p, users u
+		where p.payment_user = u.user_code and payment_user = #{value}
+	 </select>
+	 
+	 <insert id="addPay" parameterType="pay">
+	 INSERT INTO paylist 
+	 <if test="hotelCode != null">
+	 (payment_code,payment_user,payment_date,payment_price,payment_option,hotel_name,hotel_address,start_date,end_date,hotel_code)
+	 </if>
+	 <if test="startWay != null">
+	 (payment_code,payment_user,payment_date,payment_price,payment_option,start_date,end_date,start_way,end_way,flight_time,return_flight_time)
+	 </if>
+	 VALUES 
+	 <if test="hotelCode != null">
+	 (seq_paylist_code.nextval,#{paymentUser.userCode},sysdate,#{paymentPrice},'카카오페이',#{hotelName},#{hotelAddress},#{startDate},#{endDate},#{hotelCode})
+	  </if>
+	  <if test="startWay != null">
+	 (seq_paylist_code.nextval,#{paymentUser.userCode},sysdate,#{paymentPrice},'카카오페이',#{startDate},#{endDate},#{startWay},#{endWay},#{flightTime},#{returnFlightTime})
+	 </if>
+	 </insert>
 	
 	 
 </mapper>

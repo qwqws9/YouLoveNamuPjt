@@ -16,6 +16,8 @@
 		<typeAlias alias="city" type="com.youlove.service.domain.City" />
 		<typeAlias alias="comment" type="com.youlove.service.domain.Comment" />
 		<typeAlias alias="like" type="com.youlove.service.domain.Like" />
+		<typeAlias alias="pay" type="com.youlove.service.domain.Pay" />
+		<typeAlias alias="hotel" type="com.youlove.service.domain.Hotel" />
 		<typeAlias alias="wallet" type="com.youlove.service.domain.Wallet" />
 		<!-- 중현 -->
 		<typeAlias alias="community" type="com.youlove.service.domain.Community" />

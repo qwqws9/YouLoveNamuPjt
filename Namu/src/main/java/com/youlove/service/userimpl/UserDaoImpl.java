@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
 import com.youlove.service.user.UserDao;
 
@@ -46,6 +47,16 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> getUserList(Map<String, Object> map) throws Exception {
 		return sqlSession.selectList("UserMapper.getUserList", map);
+	}
+
+	@Override
+	public List<Pay> getPayList(int userCode) throws Exception {
+		return sqlSession.selectList("UserMapper.getPayList",userCode);
+	}
+
+	@Override
+	public int addPay(Pay pay) throws Exception {
+		return sqlSession.insert("UserMapper.addPay",pay);
 	}
 	
 	

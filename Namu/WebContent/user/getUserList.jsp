@@ -36,7 +36,7 @@
   <tbody>
   <!-- table-danger tr에 넣기 -->
   <c:forEach  var="item" items="${list }" varStatus="status">
-    <tr class="pre-${status.index+1 } table-danger">
+    <tr class="pre-${status.index+1 }">
       <td>${item.userCode }</td>
       <td>${item.nickname }</td>
       <td>${item.role }</td>
@@ -45,10 +45,11 @@
 	<td>      
 		<label class="mr-sm-1 sr-only" for="inlineFormCustomSelect">Preference</label>
       <select class="custom-select mr-sm-1" id="inlineFormCustomSelect">
-        <option selected>정지해제</option>
-        <option value="1">7일 정지</option>
-        <option value="2">30일 정지</option>
-        <option value="3">영구 정지</option>
+        <option value="0" selected>선택</option>
+        <option value="0">정지 해제</option>
+        <option value="7">7일 정지</option>
+        <option value="30">30일 정지</option>
+        <option value="99">영구 정지</option>
       </select>
       </td>
     </tr>
@@ -63,14 +64,14 @@
 </div>
 
 <!-- 정지 또는 일반회원 조회시 정렬값 -->
-<input id="role" type="hidden" value="user">
+<input id="role" type="hidden" value="all">
 <input id="uCode" type="hidden" value="desc">
 <input id="nick" type="hidden" value="desc">
 
 <script type="text/javascript">
 
-
 $(function(){
+	
 	$('.ord').on('click',function(){
 		var order = $(this).val().trim();
 		var role = $('#role').val().trim();
@@ -92,18 +93,47 @@ $(function(){
 		if(order == '4') {
 			if(role == 'user'){
 				$('#role').val('block');
-			}else {
+			}else if(role == "all") {
 				$('#role').val('user');
+			}else if(role == 'block') {
+				$('#role').val("all");
 			}
 		}
 		
 		getUser(order);
 	})
 });
-
-
 	
+	$(document).on('change','#inlineFormCustomSelect',function(){
+		//alert($(this).val());
+		//alert($(this).parents('tr').children('td:eq(0)').text().trim());
+		blockUser($(this).val(), $(this).parents('tr').children('td:eq(0)').text().trim());
+		
+	})
 
+
+	//정지
+	function blockUser(blockDay,userCode) {
+		
+		$.ajax({
+			url : '/user/json/setUserBlock',
+			method : 'post',
+			data : JSON.stringify({
+				userCode : userCode,
+				startBlock : blockDay
+			}),
+			headers : {
+				"Accpet" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData,status) {
+				//alert(JSONData);
+				getUser(1);
+			}
+		
+	});
+	
+	}
 	//정렬
 	function getUser(orderBy) {
 		
@@ -112,7 +142,7 @@ $(function(){
 			method : 'post',
 			data : JSON.stringify({
 				order : orderBy,
-				role : $('#role').val()
+				role : $('#role').val().trim()
 			}),
 			headers : {
 				"Accpet" : "application/json",
@@ -122,7 +152,7 @@ $(function(){
 				$('tbody').empty();
 				$.each(JSONData,function(index,item){
 					$('tbody').append(
-					'<tr class="pre-'+(index+1)+' table-danger">'
+					'<tr class="pre-'+(index+1)+'">'
 				    + ' <td>'+item.userCode +'</td>'
 				    +  '<td>'+item.nickname +'</td>'
 				      +'<td>'+item.role +'</td>'
@@ -131,10 +161,11 @@ $(function(){
 					+'<td>'      
 					+'	<label class="mr-sm-1 sr-only" for="inlineFormCustomSelect">Preference</label>'
 				    +'  <select class="custom-select mr-sm-1" id="inlineFormCustomSelect">'
-				    +'    <option selected>정지해제</option>'
-				    +'    <option value="1">7일 정지</option>'
-				    +'    <option value="2">30일 정지</option>'
-				    +'    <option value="3">영구 정지</option>'
+				    +'    <option value="0" selected>선택</option>'
+				    +'    <option value="0">정지 해제</option>'
+				    +'    <option value="7">7일 정지</option>'
+				    +'    <option value="30">30일 정지</option>'
+				    +'    <option value="99">영구 정지</option>'
 				    +'  </select>'
 				    +'  </td>'
 				    +'</tr>'
@@ -144,9 +175,14 @@ $(function(){
 // 					$('.pre-'+(index+1) + '> td:nth-child(3) ').text(item.role);
 // 					$('.pre-'+(index+1) + '> td:nth-child(4) ').text(item.startBlock);
 // 					$('.pre-'+(index+1) + '> td:nth-child(5) ').text(item.endBlock);
+					if(item.role == 'block') {
+						$('tr[class=pre-'+(index+1)+']').addClass('table-danger');
+						console.log($('tr[class=pre-'+(index+1)+']'));
+					}
 				})
 				
 				$("tr[class^=pre-]").each(function(idx){ // idx 0부터 시작함
+					
 		 			if(JSONData.length <= idx) {
 		 				$(".pre-"+(idx+1)).remove();
 		 			}

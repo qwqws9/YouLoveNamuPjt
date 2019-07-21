@@ -37,6 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.User;
+import com.youlove.service.domain.Wallet;
+import com.youlove.common.FileNameUUId;
 import com.youlove.service.domain.Planner;
 
 import com.youlove.service.planner.PlannerService;
@@ -46,7 +48,6 @@ import com.youlove.service.user.UserService;
 @RequestMapping("/planner/*")
 public class PlannerController {
 	
-
 	///Field
 	@Autowired
 	@Qualifier("plannerServiceImpl")
@@ -64,52 +65,71 @@ public class PlannerController {
 	@RequestMapping( value="addPlanner", method=RequestMethod.GET )
 	public String addPlanner() throws Exception {
 
-		System.out.println("PlannerController ------addPlanner:GET start");
-
+		System.out.println("PlannerController ---------------addPlanner:GET");
+		
 		return "forward:/planner/addPlanner.jsp";
 	}
-	
+	//
 	@RequestMapping( value="addPlanner", method=RequestMethod.POST )
-	public String addPlanner( @ModelAttribute("planner") Planner planner, @RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
+	public String addPlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file, HttpServletRequest request) throws Exception {
 
-		System.out.println("PlannerController -----addPlanner:POST start");
+		System.out.println("PlannerController -------------addPlanner:POST start");
 
 		User user= (User)session.getAttribute("user");
 		
 		planner.setUser(user);
 		System.out.println(user);
-		String path="//Users//minikim//eclipse-workspace//YouLovePlanMini2//WebContent//resources//images//plannerImage";
+		//String path="//Users//minikim//eclipse-workspace//YouLovePlanMini2//WebContent//resources//images//plannerImage";
 		//String path="//Users//minikim//git//YouLovePlanMini//WebContent//resources//images//plannerImage";
 		
-		String fileName=file.getOriginalFilename();
+//		String fileName=file.getOriginalFilename();
+		
+		String fileName = FileNameUUId.convert(file, "planner", request);
 		planner.setPlannerImage(fileName);
-		FileOutputStream fileOutputStream;
+//		FileOutputStream fileOutputStream;
 		
-		try {
-			//nf.createNewFile();
-			//fileOutputStream= new FileOutputStream(path+"\\"+fileName);
-			fileOutputStream= new FileOutputStream(path+"//"+fileName);
-			fileOutputStream.write(file.getBytes());
-			fileOutputStream.close();
-		}
-		catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}	
+//		try {
+//			//nf.createNewFile();
+//			//fileOutputStream= new FileOutputStream(path+"\\"+fileName);
+//			fileOutputStream= new FileOutputStream(path+"//"+fileName);
+//			fileOutputStream.write(file.getBytes());
+//			fileOutputStream.close();
+//		}
+//		catch(FileNotFoundException e) {
+//			e.printStackTrace();
+//		}catch(IOException e) {
+//			e.printStackTrace();
+//		}	
 		
-		//planner.setDepartDate(planner.getDepartDate().replace("-", ""));
+		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
 		System.out.println(planner);
+		model.addAttribute("plannerCode", planner.getPlannerCode());
 		plannerService.addPlanner(planner);
-		System.out.println("plannerController --------addPlanner:POST  end");
+		
+
+		System.out.println("plannerController ----------------addPlanner:POST  end");
 		return "forward:/planner/addRoute.jsp";
 	}
 	
 	// 2. route
-	@RequestMapping(value = "addRoute")
-	public String addRoute(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("route") Route route) throws Exception{
+	
+//	@RequestMapping( value="addRoute", method=RequestMethod.GET )
+//	public String addRoute(@RequestParam("plannerCode") int plannerCode, HttpSession session) throws Exception {
+//
+//		System.out.println("PlannerController -------------------addRoute:GET ");
+//		
+//		return "forward:/planner/addRoute.jsp";
+//	}
+	
+	@RequestMapping(value = "addRoute", method=RequestMethod.POST)
+	public String addRoute(HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route) throws Exception{
 
-		System.out.println("PlannerController :: addRoute start");
+		System.out.println("PlannerController ----------------------- addRoute start");
+		Planner planner= (Planner)session.getAttribute("planner");
+
+		route.setPlannerCode(planner);    //getPlannerCode로!!!!!!!!! 변경 
+		route.setPlannerVer(1);
+		System.out.println(planner);
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		
 		Date date=null;
@@ -129,10 +149,6 @@ public class PlannerController {
 		//String[] cityOrders = request.getParameterValues("cityOrder");
 		String[] stayDays = request.getParameterValues("stayDay");
 		
-//		route.setPlannerCode(1);    //getPlannerCode로!!!!!!!!! 변경 
-		route.setPlannerVer(1);
-
-
 		for (int i = 0; i < cityNames.length; i++) {
 		System.out.println(" city name : "+cityNames[i]+" lat: "+lats[i]+" lng : "+lngs[i]+" order : "+i+" stay day :"+stayDays[i]);
 		System.out.println(cityNames.length+"번 addRoute !!!!!!");
@@ -148,7 +164,6 @@ public class PlannerController {
 		//String endDate = dateFormat.format(cal.getTime());
 		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
-		
 		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
@@ -157,6 +172,7 @@ public class PlannerController {
 		return "forward:/planner/getScheduleList.jsp";
 			
 		}
+	
 	@RequestMapping(value="getRoute" , method= RequestMethod.GET)
 	public String getRoute( @RequestParam("routeCode") int routeCode , Model model) throws Exception {
 		

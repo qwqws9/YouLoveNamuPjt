@@ -39,6 +39,9 @@ public class Tour {
 	private double lngTour;
 	private List<String> spotImage;
 	
+	private String cost;
+	private String checkin;
+	private String checkout;
 	
 	
 	
@@ -49,6 +52,33 @@ public class Tour {
 	
 	
 	
+	
+	
+	
+	public String getCheckin() {
+		return checkin;
+	}
+
+	public void setCheckin(String checkin) {
+		this.checkin = checkin;
+	}
+
+	public String getCheckout() {
+		return checkout;
+	}
+
+	public void setCheckout(String checkout) {
+		this.checkout = checkout;
+	}
+
+	public String getCost() {
+		return cost;
+	}
+
+	public void setCost(String cost) {
+		this.cost = cost;
+	}
+
 	public String getCountryTour() {
 		return countryTour;
 	}
