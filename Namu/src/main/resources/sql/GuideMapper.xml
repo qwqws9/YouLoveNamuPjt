@@ -17,11 +17,16 @@
 			<result property="payUnit" 				column="PAY_UNIT" 			jdbcType="VARCHAR" />
 		</resultMap>
 	
-	<select 	id="getCity"	parameterType="string"	resultMap="cityMap">
+	<select 	id="getCity"	parameterType="city"	resultMap="cityMap">
 		SELECT
-		* 		
-		FROM city 
-		WHERE CITY_NAME = #{value}
+			*
+			FROM city 
+		<if test="cityName != null">
+			WHERE CITY_NAME = #{cityName}
+		</if>
+		<if test="countryName != null">
+			WHERE COUNTRY_NAME = #{countryName}
+		</if>
 	 </select>
 	 
 	 <select id="getCityList" parameterType="string" resultMap="cityMap">

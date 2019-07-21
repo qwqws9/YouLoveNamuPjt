@@ -18,8 +18,8 @@ public class GuideServiceImpl implements GuideService {
 	private GuideDao guideDao;
 
 	@Override
-	public City getCity(String cityName) throws Exception {
-		return guideDao.getCity(cityName);
+	public List<City> getCity(City city) throws Exception {
+		return guideDao.getCity(city);
 	}
 
 	@Override

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
     
-    <div class="popup_wrap">
+    				<div class="popup_wrap">
 						<div class="popup_contain">
 				     <div class="profileInfo" >
 					<div class="card bg-light mb-3">

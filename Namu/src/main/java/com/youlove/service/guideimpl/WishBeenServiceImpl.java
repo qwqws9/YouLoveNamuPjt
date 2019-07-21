@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.youlove.service.domain.Flight;
+import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Tour;
 import com.youlove.service.guide.WishBeenDao;
 import com.youlove.service.guide.WishBeenService;
@@ -31,5 +33,21 @@ public class WishBeenServiceImpl implements WishBeenService {
 	public Tour selectPageDetail(String tourId) throws Exception {
 		return wishBeenDao.selectPageDetail(tourId);
 	}
+
+	@Override
+	public List<Hotel> initHotel(Hotel hotel) throws Exception {
+		return wishBeenDao.initHotel(hotel);
+	}
+
+	@Override
+	public List<Flight> searchFlight(Flight flight) throws Exception {
+		return wishBeenDao.searchFlight(flight);
+	}
+
+	@Override
+	public Tour selectPageDetail(String tourId, String cost,String checkin,String checkout) throws Exception {
+		return wishBeenDao.selectPageDetail(tourId,cost,checkin,checkout);
+	}
+
 
 }

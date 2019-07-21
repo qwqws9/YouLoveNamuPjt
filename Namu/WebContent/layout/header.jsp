@@ -31,7 +31,7 @@
 		})
 	});
 </script>
-
+<jsp:include page="../user/searchUser.jsp"></jsp:include>
 <nav class="navbar navbar-dark bg-dark">
 <div class="container-fluid">
 	<div class="col-lg-1">
@@ -68,7 +68,7 @@
 					<div class="col-lg-4 offset-4">
 						<div class="row">
 							<div class="col-lg-3" style="padding-top: 7px;">
-								<button type="button" style="background: none; border: none;"><i class="fas fa-address-book fa-lg"></i></button>
+								<button type="button" style="background: none; border: none;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-address-book fa-lg"></i></button>
 							</div>
 							<div class="col-lg-3" style="padding-top: 7px;">
 								<button type="button" style="background: none; border: none;"><i class="far fa-calendar fa-lg"></i></button>
@@ -91,7 +91,7 @@
 									<div class="dropdown-menu">
 								  		<a class="dropdown-item" href="/user/getUser">내 정보</a>
 									    <a class="dropdown-item" href="#">내 작성글/댓글</a>
-									    <a class="dropdown-item" href="#">결제내역</a>
+									    <a class="dropdown-item" href="/user/getPayList">결제내역</a>
 									    <c:if test="${user.role eq 'admin' }">
 									    <div class="dropdown-divider"></div>
 									    <a class="dropdown-item" href="/user/getUserList">전체회원 조회</a>
@@ -158,8 +158,8 @@
 							</button>
 						  	<div class="dropdown-menu">
 						  		<a class="dropdown-item" href="/guide/initTour">관광지</a>
-							    <a class="dropdown-item" href="#">숙소</a>
-							    <a class="dropdown-item" href="#">항공권</a>
+							    <a class="dropdown-item" href="/guide/initHotel">숙소</a>
+							    <a class="dropdown-item" href="/guide/searchFlight">항공권</a>
 						  	</div>
 						</div>
 					</div>
