@@ -13,6 +13,9 @@ public class Party {
 	private String partyEnd;
 	private String partyPeople;
 	private String partyWriter;
+	private String partyRecruitment;
+	private double latitude;
+	private double longitude;
 	private int tour;
 	private int country;
 	private int city;
@@ -110,15 +113,39 @@ public class Party {
 		this.regDate = regDate;
 	}
 
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	
+	public String getPartyRecruitment() {
+		return partyRecruitment;
+	}
+
+	public void setPartyRecruitment(String partyRecruitment) {
+		this.partyRecruitment = partyRecruitment;
+	}
+
 	@Override
 	public String toString() {
 		return "Party [partyCode=" + partyCode + ", partyTitle=" + partyTitle + ", partyContent=" + partyContent
 				+ ", partyStart=" + partyStart + ", partyEnd=" + partyEnd + ", partyPeople=" + partyPeople
-				+ ", partyWriter=" + partyWriter + ", tour=" + tour + ", country=" + country + ", city=" + city
+				+ ", partyWriter=" + partyWriter + ", partyRecruitment=" + partyRecruitment + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", tour=" + tour + ", country=" + country + ", city=" + city
 				+ ", regDate=" + regDate + "]";
 	}
-	
-	
+
 	
 	
 }

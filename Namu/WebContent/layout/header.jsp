@@ -17,7 +17,7 @@
 			self.location = '/user/loginView';
 		})
 		$("#communityList").on("click",function(){
-			self.location = "/community/getCommunityList"
+			self.location = "/community/getCommunityList?communityBoard=0"
 		})
 	});
 	

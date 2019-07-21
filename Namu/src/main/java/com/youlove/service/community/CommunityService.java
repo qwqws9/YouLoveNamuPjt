@@ -2,6 +2,7 @@ package com.youlove.service.community;
 
 import java.util.Map;
 
+import com.youlove.service.domain.City;
 import com.youlove.service.domain.Community;
 
 public interface CommunityService {
@@ -18,5 +19,5 @@ public interface CommunityService {
 	
 	public void countCommunity(int communityCode) throws Exception;
 	
-	public Map<String,Object> getCommunityRelated (String communityBoard, String City)throws Exception;
+	public Map<String,Object> getCommunityRelated (String communityBoard, City city)throws Exception;
 }

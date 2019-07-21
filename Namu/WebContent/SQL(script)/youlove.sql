@@ -275,7 +275,7 @@ CREATE TABLE community (
 	community_content		VARCHAR2(4000),
 	community_date			VARCHAR2(30),
 	community_thumbnail		VARCHAR2(100),
-	open_range				CHAR(1)		DEFAULT '2'	NOT NULL,
+	open_range				CHAR(1)		DEFAULT '1'	NOT NULL,
 	views					NUMBER(10),
 	writer					NUMBER(10) 		NOT NULL,
 	hashtag_code			NUMBER(10),

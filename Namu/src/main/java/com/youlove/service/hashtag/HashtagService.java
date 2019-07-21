@@ -9,7 +9,7 @@ public interface HashtagService {
 	
 	public void addHashtag(Hashtag hashtag)throws Exception;
 	
-	public Map<String, Object> getHashtag(int hashtagCode)throws Exception;
+	public Map<String, Object> getHashtag(int theCode)throws Exception;
 	
 	public void updateHashtag(Hashtag hashtag)throws Exception;
 	
