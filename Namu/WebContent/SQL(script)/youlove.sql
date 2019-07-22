@@ -181,6 +181,7 @@ CREATE TABLE PAYLIST (
 
 CREATE TABLE planner ( 
    planner_code          NUMBER(10)            NOT NULL,
+   planner_ver     NUMBER(2)    NOT NULL,
    user_code    NUMBER(10)    NOT NULL  REFERENCES users(user_code),
    planner_name       VARCHAR2(2000)   NOT NULL,
    planner_image       VARCHAR2(100),
@@ -210,10 +211,8 @@ CREATE TABLE route (
    PRIMARY KEY(route_code)
 );
 
-
 CREATE TABLE schedule( 
    sche_code               NUMBER(10)          NOT NULL,
-   route_code                  NUMBER(10)        REFERENCES route(route_code),
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL REFERENCES planner(planner_code),
    sche_day DATE,
@@ -259,11 +258,15 @@ CREATE TABLE party (
    party_content   VARCHAR2(1000),   
    party_start      VARCHAR2(20),
    party_end      VARCHAR2(20),
-   hashtag_code   NUMBER(10),
-   party_people   NUMBER(10),
-   party_user      NUMBER(10)      NOT NULL,
-   tour_code      NUMBER(10),
+   latitude         NUMBER(10),
+   longitude       NUMBER(10),
+   party_people   VARCHAR2(100),
+   writer           NUMBER(10)      NOT NULL,
+   party_recruitment CHAR(1) DEFAULT '1'	NOT NULL,
+   gerder           CHAR(1),
+   age              NUMBER(4),
    city_name      VARCHAR2(50),
+   hashtag_code   NUMBER(10),
    reg_date      DATE,
    PRIMARY KEY(party_code)
 );
@@ -304,8 +307,7 @@ CREATE TABLE message (
 
 ALTER TABLE message add CONSTRAINT sender_fk FOREIGN KEY(sender)  REFERENCES users(user_code);
 
-ALTER TABLE party add CONSTRAINT city_fk FOREIGN KEY(city_name)  REFERENCES city(city_name);
-ALTER TABLE party add CONSTRAINT user_fk FOREIGN KEY(party_user)  REFERENCES users(user_code);
+ALTER TABLE party add CONSTRAINT user_fk FOREIGN KEY(writer)  REFERENCES users(user_code);
 --ALTER TABLE party add CONSTRAINT hashtagparty_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
 
 ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES users(user_code);
@@ -432,6 +434,7 @@ INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',t
 --INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,4,4,'세비야');
 --INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,5,5,'세비야');
 --INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,1,6,'세비야');
+INSERT INTO party VALUES (seq_party_code.nextval,'제목', '내용', to_date('2019.10.25','yyyy-mm-dd'), to_date(sysdate,'yyyy-mm-dd'),51.53178425571119,51.53178425571119,'중현',2,'1','3',1990,'베를린',12,sysdate);
 
 
 
@@ -440,30 +443,31 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','3','안녕','1');
 INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
    
-VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
+VALUES ( seq_planner_code.nextval,1, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
+VALUES ( seq_planner_code.nextval,1, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver,user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
+VALUES ( seq_planner_code.nextval,1, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
+VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
+VALUES ( seq_planner_code.nextval, 1,2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
+
 
 
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
