@@ -42,7 +42,7 @@
 	
 	<div style="width: 100%;">
 		<h4 style="margin: auto;">
-			<a href="/wallet/getWalletListView">규리 가계부 목록</a><br>
+			<a href="/wallet/getWalletList?walletCode=1">규리 가계부 목록</a><br>
 			<a href="http://192.168.0.13:8005/">상욱 채팅</a><br>
 			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
 			<a href="/planner/addRoute.jsp"> 민희 구글맵 루트</a> <br>

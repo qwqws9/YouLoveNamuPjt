@@ -77,7 +77,7 @@
 				<span class="add_option_wrap">
 					<a href="javascript:void(0);"  id="memo_btn"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span><span class="skip">등록</span></a>
 					<span class="memo_modal">
-						<textarea name="content"></textarea>
+						<textarea class="memo_cont" name="content"></textarea>
 						<a href="javascript:void(0);" class="close_btn"><i class="fas fa-times-circle"></i><span class="skip">취소</span></a>
 					</span>
 				</span>
