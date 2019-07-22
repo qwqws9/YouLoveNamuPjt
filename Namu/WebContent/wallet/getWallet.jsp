@@ -34,8 +34,8 @@
 							<div>
 								<span>
 									<c:if test="${wallet.moneyUnit ne 'KRW'}">
-										<c:if test="${! empty wallet.exchangePrice}">
-											<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+										<c:if test="${! empty wallet.krwPrice}">
+											<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
 										</c:if>
 									</c:if>
 								</span>
@@ -54,7 +54,7 @@
 							</div>
 							<c:if test="${wallet.moneyUnit ne 'KRW'}">
 								<div class="clear">
-									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
+									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.krwRate}" pattern="#,###.00" /></span>
 								</div>
 							</c:if>
 						</div>
@@ -77,6 +77,8 @@
 				</c:if>
 			</div><!-- //padding_boxing -->
 		</div><!-- //scroller -->
+		
+		<span class="walletDetailCode" style="display: none;">${wallet.walletDetailCode}</span>
 		
 		<div class="act_btns">
 			<a href="javascript:void(0);" class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn delete_btn">삭제</a>

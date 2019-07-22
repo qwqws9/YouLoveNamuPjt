@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,9 @@
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
 	
+	<!-- Chart.js built files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
@@ -35,23 +39,27 @@
 	
 	<div class="wrap">
 		<h2 class="skip">내 가계부</h2>
-
-		<a href="javascript:void(0);" class="pre_btn">
-			<i class="fas fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span>내 가계부 목록으로</span>
-		</a>
-		<a href="javascript:void(0);" class="next_btn">결산 보고서 조회</a>
+		
+		<div class="btnns">
+			<a href="javascript:void(0);" class="pre_btn">
+				<i class="fas fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span>내 가계부 목록으로</span>
+			</a>
+			<a href="javascript:void(0);" class="report_btn">결산 보고서 조회</a>
+			<div class="report_wrap"></div>
+		</div>
 		
 		<section class="sec_wrap clear">
 			<h3 class="skip"><span class="walletCode">${param.walletCode}</span>가계부 내역</h3>
 			
-			
+			<!--
 			<form class="search_form" name="search_form">
 				<input type="hidden" id="pageSize" name="pageSize" value="" />
 				
 				<label for="searchKeyword" class="skip">검색어</label>
 				<input type="text" class="search_txt" id="searchKeyword" name="searchKeyword" placeholder="내역 항목명을 입력하세요." value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
 				<button type="submit" class="search_btn">검색</button>
-			</form><!-- //search_form -->
+			</form>
+			-->
 			
 			<nav class="left_nav">
 				<a class="day_btn rounded-circle"><span>All</span></a>
@@ -80,7 +88,7 @@
 				
 				<div class="plus_btns">
 					<span>
-						<span class="page_info">총 <span class="totalCount">${resultPage.totalCount}</span> 건 중 현재 <span class="currentPage">${resultPage.currentPage}</span> 페이지</span>
+						<span class="page_info">총 <span class="totalCount">${resultPage.totalCount}</span> 건 중 현재 <span class="currentPage" id="currentPage">${resultPage.currentPage}</span> 페이지</span>
 						<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
 					</span>
 					<form class="pop_wrap_add" id="save_income_form"></form>
@@ -104,7 +112,7 @@
 					<ul class="ajax-base">
 						<c:forEach varStatus="status" var="wallet" items="${list}">
 							<li class="ajax-${status.index+1} table_row">
-								<span class="walletDetailCode">${wallet.walletDetailCode}</span>
+								<span class="walletDetailCode" style="display: none;">${wallet.walletDetailCode}</span>
 								<a class="detail_line">
 									<span class="table_col">${status.index+1}</span>
 									<span class="table_col">
@@ -126,8 +134,8 @@
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
-													<c:if test="${! empty wallet.exchangePrice}">
-														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+													<c:if test="${! empty wallet.krwPrice}">
+														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
 													</c:if>
 												</c:if>
 											</span>
@@ -149,8 +157,8 @@
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
-													<c:if test="${! empty wallet.exchangePrice}">
-														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+													<c:if test="${! empty wallet.krwPrice}">
+														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
 													</c:if>
 												</c:if>
 											</span>

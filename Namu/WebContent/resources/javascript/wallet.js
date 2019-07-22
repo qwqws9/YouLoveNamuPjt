@@ -4,10 +4,10 @@ $(function() {
 	$('.paging_wrap li').on('click', function() {
 		if($(this).text().trim() == 'PREV'){
 			var nextPage = parseInt($('.currentPage').text().trim()) - 1;
-			console.log('이동할 페이지 : ' + nextPage);
+			//console.log('이동할 페이지 : ' + nextPage);
 		}else if($(this).text().trim() == 'NEXT'){
 			var nextPage = parseInt($('.currentPage').text().trim()) + 1;
-			console.log('이동할 페이지 : ' + nextPage);
+			//console.log('이동할 페이지 : ' + nextPage);
 		}
 		
 		getListAjax(nextPage);
@@ -31,6 +31,7 @@ $(function() {
 
 // 세자리 콤마
 function makeComma(double) {
+	//console.log(double);
 	//console.log(double.toLocaleString(undefined, {maximumFractionDigits : 2}));
 	
 	return double.toLocaleString(undefined, {maximumFractionDigits : 2});
@@ -95,10 +96,12 @@ function addAjax(form) {
 			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 	    },
 		success		: function(JSONData, status) {
-			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
+			//console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
 			
 			form.reset();
 			$('.pop_wrap_add').html('');
+			
+			getListAjax(1);
 		}
 	});
 	
@@ -190,8 +193,8 @@ function getAjax(walletDetailCode) {
 			}
 			list.find('.input_money > div:eq(0) > span').append('&nbsp;' + makeComma(JSONData.price));
 			
-			if(JSONData.moneyUnit != 'KRW' && (JSONData.exchangePrice != null && JSONData.exchangePrice != 0)){
-				list.find('.input_money > div:eq(1) > span').html('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(JSONData.exchangePrice));
+			if(JSONData.moneyUnit != 'KRW' && (JSONData.krwPrice != null && JSONData.krwPrice != 0)){
+				list.find('.input_money > div:eq(1) > span').html('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(JSONData.krwPrice));
 			}
 			
 			if(JSONData.payer != null && JSONData.payer != 0){
@@ -237,6 +240,34 @@ function getAjax(walletDetailCode) {
 			if(JSONData.walletImage != null){
 				list.append('<img src="/resources/images/wallet/' + JSONData.walletImage + '" alt="' + JSONData.item + ' 이미지" class="big_image">');
 			}
+			
+			$('.pop_wrap_get .walletDetailCode').text(JSONData.walletDetailCode);
+		}
+	});
+}
+
+// deleteWallet Business Logic
+function deleteAjax(walletDetailCode) {
+	//console.log(walletDetailCode);
+	
+	$.ajax({
+		url			: '/wallet/json/deleteWallet/' + walletDetailCode,
+		method		: 'GET',
+		headers		: {
+			'Accept'		: 'Application/json',
+			'Content-Type'	: 'Application/json'
+		},
+		error		: function(request, status, error) {
+			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+		},
+		success		: function(JSONData, status) {
+			//console.log(status);
+			//console.log(JSONData);
+			
+			alert('삭제되었습니다.');
+			
+			$('.pop_wrap_contain').html('');
+			$('.pop_wrap_contain').hide();
 		}
 	});
 }
@@ -280,9 +311,10 @@ function getListAjax(currentPage) {
 				});
 				
 				// 새 데이터 삽입
-				$('.table_row > .walletDetailCode').text(item.walletDetailCode);
+				$('.ajax-' + (index+1) + ' > .walletDetailCode').text(item.walletDetailCode);
 				
 				var list = $('.ajax-' + (index+1) + ' .detail_line');
+				
 				list.find('.table_col').empty();
 				
 				list.children().eq(0).html(index+1);
@@ -311,8 +343,8 @@ function getListAjax(currentPage) {
 						list.children().eq(2).find('span:eq(0)').append('&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>');
 					}
 					
-					if(item.moneyUnit != 'KRW' && (item.exchangePrice != null && item.exchangePrice != 0)){
-						list.children().eq(2).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.exchangePrice));
+					if(item.moneyUnit != 'KRW' && (item.krwPrice != null && item.krwPrice != 0)){
+						list.children().eq(2).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.krwPrice));
 					}
 				}
 				
@@ -338,8 +370,8 @@ function getListAjax(currentPage) {
 						list.children().eq(3).find('span:eq(0)').append('&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>');
 					}
 					
-					if(item.moneyUnit != 'KRW' && (item.exchangePrice != null && item.exchangePrice != 0)){
-						list.children().eq(3).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.exchangePrice));
+					if(item.moneyUnit != 'KRW' && (item.krwPrice != null && item.krwPrice != 0)){
+						list.children().eq(3).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.krwPrice));
 					}
 				}
 				
@@ -385,9 +417,8 @@ function getListAjax(currentPage) {
 			}else{
 				$('.paging_wrap ul .left').removeClass('disabled');
 			}
-			
 			// NEXT
-			if(JSONData.list.length < JSONData.pageSize || JSONData.list.length * JSONData.currentPage == JSONData.totalCount){
+			if(JSONData.list.length < JSONData.search.pageSize || JSONData.list.length * currentPage == JSONData.totalCount){
 				$('.paging_wrap ul .right').addClass('disabled');
 			}else{
 				$('.paging_wrap ul .right').removeClass('disabled');

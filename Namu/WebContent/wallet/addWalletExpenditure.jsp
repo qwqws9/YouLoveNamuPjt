@@ -19,7 +19,7 @@
 				<input type="text" class="price" id="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
 				<span class="krw_price">KRW <span class="exchange_plus_result"></span></span>
 				<input type="hidden" class="exchange_rate" id="exchange_rate" name="exchangeRate" value="">
-				<input type="hidden" class="exchange_price" id="exchange_price" name="exchangePrice" value="">
+				<input type="hidden" class="exchange_price" id="exchange_price" name="krwPrice" value="">
 			</div>
 		</div><!-- //result_top -->
 		

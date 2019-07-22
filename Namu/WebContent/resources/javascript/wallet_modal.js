@@ -32,13 +32,15 @@ $(function() {
 	
 	// 수입/지출 추가 폼 제출 버튼
 	$('.pop_wrap_add').on('submit', function(event) {
+		$('.modal_btn').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+		
 		event.preventDefault();
 		
 		addAjax($(this)[0]);
-		getListAjax(1);
 	});
 	
 	// 수입/지출 추가 모달창 닫기 버튼
+	/*
 	$('body').on('click', function(e) {
 		var container = $('.pop_wrap_add');
 		
@@ -48,6 +50,7 @@ $(function() {
 			$('.pop_wrap_add').html('');
 		}
 	});
+	*/
 	
 	// 수입/지출 상세내역 모달창 버튼
 	$('.detail_line').on('click', function() {
@@ -68,11 +71,36 @@ $(function() {
 			$('.pop_wrap_contain').on('click', function(e) {
 				var container = $('.pop_wrap_get');
 				
-				if(container.has(e.target).length === 0 || $(e.target).is('.pop_wrap_contain .pop_wrap_get .close_btnn')){
+				if($(e.target).is('.pop_wrap_contain .pop_wrap_get .close_btnn') || container.has(e.target).length === 0){
 					$('.pop_wrap_contain').html('');
 					$('.pop_wrap_contain').hide();
 				}
 			});
+			
+			// 수입/지출 상세내역 삭제 버튼
+			$('.pop_wrap_get .act_btns .delete_btn').on('click', function(e) {
+				var result = confirm('삭제 후 복구가 불가능 합니다. 정말 삭제하시겠습니까?');
+				
+				if(result){
+					//console.log($(this).parent().prev().text().trim());
+					
+					deleteAjax($(this).parent().prev().text().trim());
+					getListAjax($('#currentPage').text().trim());
+				}
+			});
+		});
+	});
+	
+	// 결산 보고서 모달창 버튼
+	$('.report_btn').on('click', function() {
+		//$('.report_wrap').html('');
+		console.log('ddddddddddd');
+		
+		// innerHTML
+		$($('.report_wrap')).load('/wallet/getWalletReport.jsp', function(data) {
+			console.log(data);
+			
+			$('.report_wrap').show();
 		});
 	});
 });
@@ -88,7 +116,7 @@ function centerPopUp(modal) {
 }
 function realCenterPopUp(modal) {
 	// var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) + $(window).scrollTop()) + 'px';
-	var top = Math.max(0, ((($(window).height() - modal.outerHeight()) / 2)) - 10) + 'px';
+	var top = Math.max(0, ((($(window).height() - modal.outerHeight()) / 2)) - 20) + 'px';
 	var left = Math.max(0, (($(window).width() - modal.outerWidth()) / 2) + $(window).scrollLeft()) + 'px';
 	//console.log('모달창 위치 : 위쪽 ' + top + ', 왼쪽 ' + left);
 
@@ -164,7 +192,7 @@ function multiply() {
 	//console.log(exchangePrice);
 	
 	$('.exchange_plus_result').text(makeComma(exchangePrice));
-	$('#exchange_price').val(Math.floor(exchangePrice));
+	$('#exchange_price').val(Math.round(exchangePrice * 100) / 100);
 }
 
 // 계산기

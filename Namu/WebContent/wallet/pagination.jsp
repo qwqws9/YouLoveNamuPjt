@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- 양쪽 방향 버튼만 -->
 <ul>
-	<li class="left disabled">
+	<li class="left <c:if test="${resultPage.currentPage == 1}"> disabled</c:if>">
 		<a href="javascript:void(0);">PREV</a>
 	</li>
-	<li class="right">
+	<li class="right<c:if test="${fn:length(list) < resultPage.pageSize || fn:length(list) * resultPage.currentPage == resultPage.totalCount}"> disabled</c:if>">
 		<a href="javascript:void(0);">NEXT</a>
 	</li>
 </ul>

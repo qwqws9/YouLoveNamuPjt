@@ -8,6 +8,7 @@ public class Wallet {
 	private String moneyUnit;
 	private String expression;
 	private double price;
+	private double krwPrice;
 	private String regDate;
 	private String item;
 	private String content;
@@ -16,8 +17,6 @@ public class Wallet {
 	private String category;
 	private String walletImage;
 	private User payer;
-	// 환율 적용한 한화 값
-	private double exchangePrice;
 	
 	public int getWalletDetailCode() {
 		return walletDetailCode;
@@ -59,6 +58,13 @@ public class Wallet {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public double getKrwPrice() {
+		return krwPrice;
+	}
+	public void setKrwPrice(double krwPrice) {
+		this.krwPrice = krwPrice;
 	}
 	
 	public String getRegDate() {
@@ -117,20 +123,14 @@ public class Wallet {
 		this.payer = payer;
 	}
 	
-	public double getExchangePrice() {
-		return exchangePrice;
-	}
-	public void setExchangePrice(double exchangePrice) {
-		this.exchangePrice = exchangePrice;
-	}
-	
 	@Override
 	public String toString() {
 		return "WalletVO : [walletDetailCode]" + walletDetailCode + " [walletCode]" + walletCode
 				+ " [part]" + part + " [moneyUnit]" + moneyUnit + " [expression]" + expression
-				+ " [price]" + price + " [regDate]" + regDate + " [item]" + item + " [content]" + content
-				+ " [payOption]" + payOption + " [exchangeRate]" + exchangeRate + " [category]" + category
-				+ " [walletImage]" + walletImage + " [payer]" + payer + " [exchangePrice]" + exchangePrice;
+				+ " [price]" + price + " [krwPrice]" + krwPrice + " [regDate]" + regDate
+				+ " [item]" + item + " [content]" + content + " [payOption]" + payOption
+				+ " [exchangeRate]" + exchangeRate + " [category]" + category
+				+ " [walletImage]" + walletImage + " [payer]" + payer;
 	}
 	
 }
