@@ -11,7 +11,7 @@
 		<result property="hashtag"			column="hashtag" 		jdbcType="VARCHAR" />
 		<result property="communityCode" 	column="community_code" 		jdbcType="INTEGER" />
 		<result property="partyCode" 		column="party_code" 		jdbcType="INTEGER" />
-		<result property="writer" 			column="user_code" 		jdbcType="NUMERIC" />
+		<result property="writer.userCode" 			column="user_code" 		jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<insert id="addHashtag" parameterType="hashtag">
@@ -20,14 +20,14 @@
 		</selectKey>
 		INSERT 
 		INTO hashtag(hashtag_code, hashtag, community_code, party_code, user_code) 
-		VALUES (seq_hashtag_code.nextval,#{hashtag:VARCHAR},#{communityCode:INTEGER},#{partyCode:INTEGER},#{writer})
+		VALUES (seq_hashtag_code.nextval,#{hashtag:VARCHAR},#{communityCode:INTEGER},#{partyCode:INTEGER},#{writer.userCode})
 	</insert>
 	 
 	<select 	id="getHashtag"		parameterType="int"		resultMap="hashtagMap">
 		SELECT
 		hashtag_code, hashtag, community_code, party_code, user_code
 		FROM hashtag
-		WHERE hashtag_code = #{hashtagCode}
+		WHERE community_code = #{communityCode}
 	
 	</select>
 	 

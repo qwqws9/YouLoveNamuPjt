@@ -36,7 +36,16 @@
 				self.location="/community/getCommunity?communityCode="+$(this).children(".relatedCode").val();
 			})
 			
-		})
+		});//end of ready
+		$(window).resize(function (){
+			  // width값을 가져오기
+			  var widthSize = window.outerWidth;
+			  
+			  // 800 이하인지 if문으로 확인
+			  if (width_size <= 800) {
+			    alert('현재 브라우저 크기가 <= 800px');
+			  }
+		});
 		
 	</script>
 	<style>
@@ -73,17 +82,17 @@
 </div>
 
 
-<div class="container-fluid col-10">
+<div class="container-fluid col-md-8">
 
 	<input id="communityCode" type="hidden" value="${community.communityCode}" >
 	<div class="row">
 		<div class="col-12">
 			<div class="col-2 order-1">
-				<a href="#"><img src="/resources/images/dog.JPG"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="60px" height="60px"></a>
+				<a href="#"><img src="/resources/images/profile/${community.writer.profileImg }"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="60px" height="60px"></a>
 			</div>
 			<div class="col-2 order-2" id="profile-nickname" style="position: absolute; top: 12px; left: 88px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
 				<div class="text-muted" style="font-size:medium;">Writer.</div>
-				<div style="font-size:medium; color:#344157;">${community.writer}</div>
+				<div style="font-size:medium; color:#344157;">${community.writer.nickname}</div>
 			</div>
 		</div>
 	</div>
@@ -92,13 +101,13 @@
 	<div class="row" style="margin-bottom: 10px;">
 		<div class="col-12">
 			<div class="row" id="profile" style="position: relative; ">
-				<div class="col-3 order-1"  id="profile-image">
+				<div class="col-9 order-1"  id="profile-image">
 					<h4 style="resize: none; display: inline-blocke;">
 						<strong style="font-size: xx-large;">${community.communityTitle }&nbsp;&nbsp;</strong>
 						<small style="font-size: medium;">${community.communityDate }&nbsp;&nbsp;</small>
 					</h4>
 				</div>
-				<div class="col-2 order-last" align="right" id="getCount" style="position: absolute; font-size: medium; right: 0px; bottom: 0px;"> 
+				<div class="col-3 order-last" align="right" id="getCount" style="position: absolute; font-size: medium; right: 0px; bottom: 0px;"> 
 					조회수&nbsp;${community.views}
 				</div>
 			</div>
@@ -146,10 +155,10 @@
 	<br>
 	
 	<div class="row no-gutters">
-		<div class="col-1">
+		<div class="col-3 col-sm-12">
 			<strong style="font-size: 17px;">#Hashtag</strong>
 		</div>
-		<div class="col-11">
+		<div class="col-9 col-sm-12">
 			<div class="alert alert-light" role="alert">
 				<c:forEach var="hashtag" items="${hashtag}">
 				    <button type="button" class="btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">
@@ -163,21 +172,23 @@
 	<br><br><br>
 	
 	<div class="row">
-		<div class="col-6">
+		<div class="col-3">
 			<strong style="font-size: 17px;">관련글</strong>
-		</div>
-		<div class="col-3 offset-3" align="right">
-			<span id="more" style="font-size: medium; cursor: pointer;">관련글 더보기</span>
 		</div>
 	</div>
 	
 	<br>
 	<!-- 관련글 -->
-	<div class="row" align="center">
+	<div class="row" data-target="#relatedGrid">
+		<div>
+		
+		</div>
+	</div>
+	<div class="row" align="center" id="relatedGrid">
 		<c:forEach var="related" items="${related}">
-			<div class="col-3 related">
+			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 related">
 				<input type="hidden" class="relatedCode" value="${related.communityCode }" >
-				<a href="#"><img src="/resources/images/ThumbNail/${related.communityThumbnail }" class="related" id="related" name=related alt="관련글" class="" width="230px" height="150px" style="border-radius: 6px;"></a>
+				<a href="#"><img class="img-thumbnail" src="/resources/images/ThumbNail/${related.communityThumbnail }" class="related" id="related" name=related alt="관련글" class="" width="230px" height="150px" style="border-radius: 6px;"></a>
 				<div class="related" style="">
 					${related.communityTitle }
 				</div>

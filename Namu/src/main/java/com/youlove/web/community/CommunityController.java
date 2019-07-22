@@ -78,6 +78,7 @@ public class CommunityController {
 	public ModelAndView addCommunity(@ModelAttribute("community") Community community,
 									 @RequestParam(value="Thumbnail") MultipartFile file,
 									 @RequestParam(value="hashtag", required=false)String hashtag,
+									 @RequestParam(value="cityName", required=false)String city,
 									 HttpServletRequest request,HttpSession session)throws Exception{
 		System.out.println("\nCommunityController:::addCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
@@ -90,18 +91,20 @@ public class CommunityController {
 		}
 		//회원정보
 		User user = (User) session.getAttribute("user");
-		System.out.println("user="+user);
-		//도시
-		//해시태그
-		Hashtag HashVo = new Hashtag();
-		HashVo.setHashtag(hashtag);
-		HashVo.setWriter(user);
-		//hashtagService.addHashtag(HashVo);
+		//DomainCity
+		City cityName = new City();
+		cityName.setCityName(city);
 		//게시글작성
-		community.setCommunityHashtagCode(HashVo);
+		community.setCity(cityName);
 		community.setWriter(user);
 		community.setCommunityThumbnail(safeFile);
 		communityService.addCommunity(community);
+		//해시태그
+		Hashtag hashVo = new Hashtag();
+		hashVo.setHashtag(hashtag);
+		hashVo.setWriter(user);
+		hashVo.setCommunityCode(community.getCommunityCode());
+		hashtagService.addHashtag(hashVo);
 		
 		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode());
 		System.out.println("\nCommunityController:::addCommunity() 끝:::");
@@ -112,24 +115,30 @@ public class CommunityController {
 	public ModelAndView getCommunity(@RequestParam(value="communityCode") int communityCode)throws Exception {
 		System.out.println("\nCommunityController:::getCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		Map<String,Object> map = new HashMap<String, Object>(); 
-		//커뮤니티
 		modelAndView.setViewName("/community/getCommunity.jsp");
+		Map<String,Object> map = new HashMap<String, Object>(); 
+		
+		//커뮤니티
 		Community community = communityService.getCommunity(communityCode);
-		modelAndView.addObject("community", community);
+		//유저정보
+		//map.put("userCode", community.getWriter().getUserCode());
+		//User user = userService.getUser(map); 
+		//community.setWriter(user);
+		//DomainCity
+		//City cityName = new City();
+		//cityName.setCityName(city);
+		//community.setCity(cityName);
 		//해쉬태그
-		Hashtag hashtag = community.getCommunityHashtagCode();
-		int hashtagCode = hashtag.getHashtagCode();
-		map = hashtagService.getHashtag(hashtagCode);
+		map = hashtagService.getHashtag(community.getCommunityCode());
 		modelAndView.addObject("hashtag", map.get("hashtag"));
-		hashtagService.updateCode(true,communityCode,hashtagCode);
 		//댓글
-		modelAndView.addObject("boardCode",communityCode );
+		modelAndView.addObject("boardCode",communityCode);
 		modelAndView.addObject("detailCode", community.getCommunityBoard());
 		//관련글
-		//map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity()); 여기서부터
+		map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity());
 		modelAndView.addObject("related", map.get("related"));//관련글
 		System.out.println("\nCommunityController:::getCommunity() 끝:::");
+		modelAndView.addObject("community", community);
 		
 		return modelAndView;
 	}
@@ -139,8 +148,6 @@ public class CommunityController {
 										 @RequestParam(value="communityBoard",required=false, defaultValue = "0")int communityBoard,
 										 HttpSession session)throws Exception {
 		System.out.println("\nCommunityController:::getCommunityList() 시작:::");
-		//System.out.println("search = "+search.getSearchCondition());
-		//System.out.println("search = "+search.getSearchKeyword());
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> map = new HashMap<String, Object>();
 		modelAndView.setViewName("/community/getCommunityList.jsp");
@@ -149,14 +156,15 @@ public class CommunityController {
 		}
 		search.setPageSize(pageSize);
 		//공개범위
-		User user = (User) session.getAttribute("user");
-		//도시
-		List<City> city = guideService.getCityList("all");
-		System.out.println(city);
+		//User user = (User) session.getAttribute("user");
+		//if(user == null) {
+		//	map.put("openRange", 1);
+		//}
+		
 		map.put("communityBoard", communityBoard);
 		map.put("search", search);
 		map = communityService.getCommunityList(map);
-		
+			
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		modelAndView.addObject("resultPage",resultPage);
@@ -170,18 +178,13 @@ public class CommunityController {
 	public ModelAndView updateCommunityView(@RequestParam("communityCode")int communityCode)throws Exception{
 		System.out.println("\nCommunityController:::updateCommunityView() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/updateCommunity.jsp");
-		Community community = communityService.getCommunity(communityCode);
-		Hashtag hashtag = community.getCommunityHashtagCode();
-		int hashtagCode = hashtag.getHashtagCode();
 		Map<String,Object> map = new HashMap<String, Object>(); 
-		if(hashtagCode != 0) {
-			hashtagService.updateCode(true,communityCode,hashtagCode);
-			map = hashtagService.getHashtag(hashtagCode);
-		}
+		modelAndView.setViewName("/community/updateCommunity.jsp");
+		//게시물 정보
+		Community community = communityService.getCommunity(communityCode);
+		//해시태그
+		map = hashtagService.getHashtag(community.getCommunityCode());
 		modelAndView.addObject("hashtag", map.get("hashtag"));
-		
-		
 		modelAndView.addObject("community", community);
 		System.out.println("\nCommunityController:::updateCommunityView() 끝:::");
 		return modelAndView;
@@ -190,25 +193,29 @@ public class CommunityController {
 	@RequestMapping(value="updateCommunity",method=RequestMethod.POST)
 	public ModelAndView updateCommunity(@ModelAttribute("community") Community community,
 										@RequestParam(value="Thumbnail") MultipartFile file,
-			 							@RequestParam(value="hashtag", required=false)String hashtag,HttpServletRequest request)throws Exception {
+										@RequestParam(value="cityName", required=false)String city,
+			 							@RequestParam(value="hashtag" , required=false)String hashtag,HttpServletRequest request)throws Exception {
 		System.out.println("\nCommunityController:::updateCommunity() 시작:::");
-		System.out.println("hashtag = "+hashtag);
 		ModelAndView modelAndView = new ModelAndView();
+		//ThumbNail업로드
 		String safeFile ="";
 		if(!file.isEmpty()) {
 			safeFile = FileNameUUId.convert(file, "ThumbNail", request);
-		}else { safeFile += "noThumbnail.png"; }
-		Hashtag HashVo = new Hashtag();
-		if(hashtag != null) {
-			HashVo.setHashtag(hashtag);
-			hashtagService.updateHashtag(HashVo);
+		}else {
+			safeFile += "noThumbnail.png"; 
 		}
-		User user = new User();
-		community.setWriter(user);
-		
-		
 		community.setCommunityThumbnail(safeFile);
-		community.setOpenRange("1");//이거 문제
+		//해시태그
+		Hashtag hashVo = new Hashtag();
+		hashVo.setHashtag(hashtag);
+		hashVo.setCommunityCode(community.getCommunityCode());
+		hashtagService.updateHashtag(hashVo);
+		//DomainCity
+		City cityName = new City();
+		cityName.setCityName(city);
+		community.setCity(cityName);
+		
+		
 		communityService.updateCommunity(community);
 		modelAndView.setViewName("/community/getCommunity?communityCode="+community.getCommunityCode());
 		System.out.println("\nCommunityController:::updateCommunity() 끝:::");
@@ -219,7 +226,7 @@ public class CommunityController {
 	public ModelAndView daleteCommunity(@RequestParam(value="communityCode")int communityCode)throws Exception{
 		System.out.println("\nCommunityController:::daleteCommunity() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/community/getCommunityList");
+		modelAndView.setViewName("/community/getCommunityList?communityBoard=0");
 		Community community = communityService.getCommunity(communityCode);
 		Hashtag hashtag = community.getCommunityHashtagCode();
 		communityService.deleteCommunity(communityCode);

@@ -36,7 +36,7 @@ DROP SEQUENCE seq_comment_code;
 DROP SEQUENCE seq_like_code;
 DROP SEQUENCE seq_pay_code;
 DROP SEQUENCE seq_friend_code;
-
+DROP SEQUENCE seq_paylist_code;
 
 
 
@@ -61,6 +61,7 @@ CREATE SEQUENCE seq_comment_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_like_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_pay_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_friend_code                  INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_paylist_code                  INCREMENT BY 1 START WITH 1;
 
 
 
@@ -159,20 +160,20 @@ CREATE TABLE PAYLIST (
    PAYMENT_CODE          NUMBER(10)  PRIMARY KEY   ,
    PAYMENT_USER           NUMBER(10)   ,
    PAYMENT_DATE          DATE,
-    PAYMENT_PRICE          NUMBER(10)   ,
+    PAYMENT_PRICE          VARCHAR2(100)   ,
    PAYMENT_OPTION           VARCHAR2(20),
-    HOTEL_NAME              VARCHAR2(100),
-   HOTEL_ADDRESS           VARCHAR2(100),
-    HOTEL_IMAGE          VARCHAR2(100),
+    HOTEL_NAME              VARCHAR2(200),
+   HOTEL_ADDRESS           VARCHAR2(200),
+    HOTEL_IMAGE          VARCHAR2(200),
    START_DATE               VARCHAR2(20),
     END_DATE              VARCHAR2(20),
-   START_WAY               VARCHAR2(20),
-     END_WAY                 VARCHAR2(20),
-   FLIGHT_TIME           VARCHAR2(20),
-     RETURN_START_WAY       VARCHAR2(20),
-   RETURN_END_WAY           VARCHAR2(20),
-    RETURN_FLIGHT_TIME       VARCHAR2(20),
-   HOTEL_CODE               VARCHAR2(20)
+   START_WAY               VARCHAR2(100),
+     END_WAY                 VARCHAR2(100),
+   FLIGHT_TIME           VARCHAR2(200),
+     RETURN_START_WAY       VARCHAR2(100),
+   RETURN_END_WAY           VARCHAR2(100),
+    RETURN_FLIGHT_TIME       VARCHAR2(200),
+   HOTEL_CODE               VARCHAR2(100)
 );
 
 
@@ -275,7 +276,7 @@ CREATE TABLE community (
 	community_content		VARCHAR2(4000),
 	community_date			VARCHAR2(30),
 	community_thumbnail		VARCHAR2(100),
-	open_range				CHAR(1)		DEFAULT '2'	NOT NULL,
+	open_range				CHAR(1)		DEFAULT '1'	NOT NULL,
 	views					NUMBER(10),
 	writer					NUMBER(10) 		NOT NULL,
 	hashtag_code			NUMBER(10),

@@ -39,10 +39,10 @@ public class HashtagServiceImpl implements HashtagService{
 	}
 
 	@Override
-	public Map<String, Object> getHashtag(int hashtagCode) throws Exception {
+	public Map<String, Object> getHashtag(int theCode) throws Exception {
 		System.out.println("\nHashtagService:::getHashtag() 시작:::");
 		Map<String, Object> map = new HashMap<String, Object>();
-		Hashtag hashtag = hashtagDao.getHashtag(hashtagCode);
+		Hashtag hashtag = hashtagDao.getHashtag(theCode);
 		String hashtagParse = hashtag.getHashtag();
 		List<String> hashtagList = new ArrayList<String>();
 		if(hashtag.getHashtag() != null){
