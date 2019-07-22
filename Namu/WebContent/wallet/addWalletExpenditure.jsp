@@ -7,13 +7,19 @@
 		<div class="result_top">
 			<input type="text" class="date_time" name="regDate" readonly />
 
-			<select class="unit_selec" name="moneyUnit">
+			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
-				<option value="EUR">EUR</option>
+				<option value="EUR" selected>EUR</option>
+				<option value="CHF">CHF</option>
+				<option value="GBP">GBP</option>
+				<option value="CZK">CZK</option>
+				<option value="HUF">HUF</option>
 			</select>
 			<div class="result">
 				<input type="text" class="price" id="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
-				<span class="krw_price"><span>KRW 14,564.00</span></span>
+				<span class="krw_price">KRW <span class="exchange_plus_result"></span></span>
+				<input type="hidden" class="exchange_rate" id="exchange_rate" name="exchangeRate" value="">
+				<input type="hidden" class="exchange_price" id="exchange_price" name="krwPrice" value="">
 			</div>
 		</div><!-- //result_top -->
 		

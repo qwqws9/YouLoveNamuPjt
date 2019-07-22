@@ -32,23 +32,8 @@ margin:0 auto
 	<script type="text/javascript">	
 
 	function fncAddPlanner(){
-		// 유효성 검사 
-		
-	 	var plannerName = $("input[name='plannerName']").val();
-		var departDate =$("input[name='departDate']").val();
-		
-		
-		if(plannerName == null || plannerName.length<1){
-			alert("플래너 제목을 입력해주세요.");
-			return;
-		}
-	
-		if(departDate == null || departDate.length<1){
-			alert( "여행시작일을 입력해주세요.");
-			return;
-		}
-		
-		$("form").attr("method" , "POST").attr("action" , "/planner/addPlanner").attr("enctype" , "multipart/form-data").submit();
+		// 유효성 검증
+		$("form").attr("method" , "POST").attr("action" , "/planner/updatePlanner").attr("enctype" , "multipart/form-data").submit();
 	}		
 	
 	$(function(){
@@ -87,7 +72,7 @@ margin:0 auto
 		  <div class="form-group">
 		    <label for="plannerName" class="control-label col-sm-2"> 플래너 Title  </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="plannerName" name="plannerName" >
+		      <input type="text" class="form-control" id="plannerName" name="plannerName" value="${planner.plannerName}" >
 		    </div>
 		  </div>
 		<br/>  
@@ -106,7 +91,7 @@ margin:0 auto
 	<br/>  
 	
 			  <div class="form-group">
-		        <label for="member" class="control-label col-sm-2"> 공개여부 </label>
+		        <label for="privacy" class="control-label col-sm-2"> 공개여부 </label>
 		            <div class="col-sm-4">
 		    <select class="custom-select mr-sm-2" id="privacy" name="privacy" >
 		  	<option value="1" selected="selected"> 비공개  </option>
@@ -122,7 +107,7 @@ margin:0 auto
 		  <div class="form-group">
 		    <label for="departDate" class="control-label col-sm-2">여행 시작일 </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="departDate" name="departDate" >
+		      <input type="text" class="form-control" id="departDate" name="departDate" value="${planner.departDate}"  >
 		    </div>
 		  </div>
 		<br/> 

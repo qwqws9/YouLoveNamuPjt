@@ -466,7 +466,6 @@ VALUES ( seq_planner_code.nextval, 1,2, '그룹 유럽 여행입니다 호호호
 
 
 
-
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
