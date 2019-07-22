@@ -16,11 +16,10 @@
 		<result property="latitude" 		column="latitude" 	jdbcType="NUMERIC" />
 		<result property="longitude" 		column="longitude" 			jdbcType="NUMERIC" />
 		<result property="partyPeople" 		column="party_people" 			jdbcType="VARCHAR"  />
-		<result property="partyWriter" 		column="writer" 		jdbcType="NUMERIC" />
-		<result property="partyRecruitment"	column="party_recruitment" 		jdbcType="VARCHAR" />
-		<result property="gender"			column="gerder" 		jdbcType="VARCHAR" />
+		<result property="partyRecruitment"	column="party_recruitment" 		jdbcType="CHAR" />
+		<result property="gender"			column="gerder" 		jdbcType="CHAR" />
 		<result property="age"				column="age" 		jdbcType="NUMERIC" />
-		<result property="partyHashtagCode"	column="hashtag_code" 		jdbcType="NUMERIC" />
+		<result property="partyHashtagCode.hashtagCode"	column="hashtag_code" 		jdbcType="INTEGER" />
 		<result property="regDate"			column="reg_date" 		jdbcType="DATE" />
 		<association property="partyWriter" javaType="user" >
 			<result property="userCode" 	column="USER_CODE" />
@@ -35,12 +34,12 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addParty"		parameterType="party" >
-		<selectKey keyProperty="party" resultType="int" order="BEFORE">
+	<insert 	id="addParty"	parameterType="party" >
+		<selectKey keyProperty="partyCode" resultType="int" order="BEFORE">
 		     SELECT MAX(party_code)+1 FROM party
 		</selectKey>
 		 	INSERT
-		 	INTO party (seq_party_code.nextval,
+		 	INTO party (party_code,
 		 				party_title,
 		 				party_content,
 		 				party_start,
@@ -48,13 +47,13 @@
 		 				latitude,
 		 				longitude,
 		 				party_people,
-		 				partyWriter,
-		 				partyRecruitment,
+		 				writer,
+		 				party_recruitment,
 		 				gender,
 		 				age,
 		 				city_name,
 		 				hashtag_code,
-		 				sysdate)
+		 				reg_date)
 		 	VALUES (seq_party_code.nextval,
 		 				#{partyTitle},
 		 				#{partyContent},
@@ -62,15 +61,31 @@
 		 				to_date(#{partyEnd},'yyyy-mm-dd'),
 		 				#{latitude},
 		 				#{longitude},
-		 				#{partyPeople},
+		 				#{partyPeople:VARCHAR},
 		 				#{partyWriter.userCode},
 		 				#{partyRecruitment},
 		 				#{gender},
 		 				#{age},
-		 				#{partyHashtagCode},
 		 				#{city.cityName},
+		 				#{partyHashtagCode.hashtagCode:INTEGER},
 		 				sysdate)
 	</insert>
+	
+	<select id="getParty" parameterType="int" resultMap="partyMap">
+		SELECT
+		p.party_code, p.party_title, p.party_content,
+		p.party_start, p.party_end, p.latitude,
+		p.longitude, p.party_people, p.writer,
+		p.party_recruitment, p.gender, p.age,
+		p.hashtag_code, p.reg_date,
+		u.nickname, u.profile_img,
+		c.city_name, c.country_name, c.flag_Image
+		FROM
+		party p, users u, city c
+		WHERE
+		party_code = #{partyCode} AND u.user_code = p.writer AND c.city_name = p.city_name
+	</select>
+	
 	
 </mapper>
 

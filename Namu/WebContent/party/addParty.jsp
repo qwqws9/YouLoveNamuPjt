@@ -435,7 +435,7 @@
 		     		},
 		     		success : function(JSONData, status){
 		     			$.each(JSONData,function(index,item){
-		     				$("#city").append('<option value="'+index+'">'+item.cityName+'</option>');
+		     				$("#city").append('<option value="'+item.cityName+'">'+item.cityName+'</option>');
 		     			});
 		     		},
 		     		error:function(jqXHR, textStatus, errorThrown){
