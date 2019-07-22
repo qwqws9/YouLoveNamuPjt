@@ -128,6 +128,10 @@ public class UserController {
 			}
 		}
 		
+      	
+		model.addAttribute("boardCode","5");
+		model.addAttribute("detailCode","12345");
+		
 		
 		return "forward:/user/loginView.jsp";
 	}

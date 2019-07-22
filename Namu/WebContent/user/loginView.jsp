@@ -13,7 +13,13 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link rel="stylesheet" href="/resources/css/common.css" >
 <script src="/resources/javascript/getProfile.js"></script>
+<script src="http://localhost:9090/socket.io/timeline/server.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var socket = io("http://localhost:9090");
+})
 
+</script>
 </head>
 
 <body class="text-center">
@@ -58,6 +64,11 @@
 			</div>
 		</div>
 	</div>
+	
+	 <jsp:include page="../comment/getComment.jsp" >
+      	<jsp:param value="${boardCode}" name="boardCode"/>
+      	<jsp:param value="${detailCode}" name="detailCode"/>
+      </jsp:include>
 		
 <script type="text/javascript">
 		

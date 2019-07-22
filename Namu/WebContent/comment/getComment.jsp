@@ -146,6 +146,7 @@ function addLike(commentCode,likeName) {
 		},
 		success : function(data,status){
 			if(data == true) {
+				addTimeline(commentCode,likeName,'9');
 				getComment($('#boardCode').val(),$('#detailCode').val());
 			}
 		}
@@ -175,7 +176,31 @@ function deleteLike(commentCode,likeName) {
 	})
 }
 
+//////////////////////////////////추천 했을시 타임라인에 add ///////////////////////////
 
+function addTimeline(commentCode,likeName,protocol) {
+	
+	$.ajax ({
+		url : '/timeline/json/addTimeline',
+		method : 'post',
+		data : JSON.stringify({
+			commentCode : {
+				commentCode : commentCode
+			},
+			protocol : protocol,
+			fromUser : {
+				userCode : likeName
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+				alert(data);
+		}
+	})
+}
 
 
 

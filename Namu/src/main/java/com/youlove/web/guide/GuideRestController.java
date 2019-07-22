@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.youlove.common.api.OpenWeather;
 import com.youlove.service.domain.City;
 import com.youlove.service.domain.Flight;
 import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Tour;
+import com.youlove.service.domain.Weather;
 import com.youlove.service.guide.GuideService;
 import com.youlove.service.guide.WishBeenService;
 
@@ -113,6 +115,16 @@ public class GuideRestController {
 	}
 	
 	
+	@RequestMapping(value = "/json/getWeather", method=RequestMethod.POST)
+	public Weather getWeather(@RequestBody Weather weather) throws Exception {
+		
+		System.out.println("/json/getWeather : POST");
+		
+		weather = OpenWeather.getWeather(weather);
+		
+		
+		return weather;
+	}
 	
 	
 	
