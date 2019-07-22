@@ -9,17 +9,24 @@ import com.youlove.service.domain.Schedule;
 public interface PlannerService {
 
 	//1. planner 
-	public void addPlanner(Planner planner) throws Exception;
+	public void addPlanner(Planner planner) throws Exception; //ok
 	
-	public Planner getPlanner(int plannerCode) throws Exception;
+	public Planner getPlanner(int plannerCode) throws Exception;  
 	
+	public void updatePlanner(Planner planner) throws Exception;
 	
 	//2. route 
 	public void addRoute(Route route) throws Exception;	//ok
 	
-	public Route getRoute(int routeCode) throws Exception;
+	public Route getRoute(int routeCode) throws Exception;  //getPlanner route area 
 	
 	public List<Route> getRouteList(int plannerCode) throws Exception;
+	
+	public List<String> getRouteCityName(int plannerCode) throws Exception;
+	
+	public List<String> getRouteLat(int plannerCode) throws Exception;
+	
+	public List<String> getRouteLng(int plannerCode) throws Exception;
 	
 	//3. schedule
 	public void addSchedule(Schedule schedule) throws Exception;	//ok

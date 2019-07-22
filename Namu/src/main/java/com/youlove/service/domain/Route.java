@@ -6,8 +6,8 @@ import java.util.Date;
 public class Route {
 	
 	///Field
-//	private int plannerCode;
-	private Planner plannerCode;
+	private int plannerCode;
+//	private Planner plannerCode;
 	private int plannerVer;
 	private int routeNo;
 	
@@ -45,12 +45,12 @@ public class Route {
 		this.lng = lng;
 	}
 
-	public Planner getPlannerCode() {
+	public int getPlannerCode() {
 		return plannerCode;
 	}
 
 
-	public void setPlannerCode(Planner plannerCode) {
+	public void setPlannerCode(int plannerCode) {
 		this.plannerCode = plannerCode;
 	}
 

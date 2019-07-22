@@ -1,5 +1,6 @@
 package com.youlove.service.plannerimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ import com.youlove.service.user.UserDao;
 			return plannerDao.getPlanner(plannerCode);
 		}
 	
+		@Override
+		public void updatePlanner(Planner planner) throws Exception {
+			plannerDao.updatePlanner(planner);
+		}
+		
 		//2. route 
 		@Override
 		public void addRoute(Route route) throws Exception {
@@ -77,4 +83,52 @@ import com.youlove.service.user.UserDao;
 		public Schedule getSchedule(int scheCode) throws Exception{
 			return plannerDao.getSchedule(scheCode);
 		}
+		
+		@Override
+		public List<String> getRouteCityName(int plannerCode) throws Exception {
+
+		    List<Route> cityList = plannerDao.getRouteCityName(1);
+		    List<String> citys = new ArrayList<String>();
+		    
+		   for(int i=0;i<cityList.size();i++) {
+			   citys.add(cityList.get(i).getCityName());
+	   }
+		    
+		    System.out.println(citys);
+		   
+			return citys;
+		}
+		
+		@Override
+		public List<String> getRouteLng(int plannerCode) throws Exception {
+
+			
+		    List<Route> lngList = plannerDao.getRouteLng(1);
+		   List<String> lngs = new ArrayList<String>();
+		    
+		   for(int i=0;i<lngList.size();i++) {
+			   lngs.add(lngList.get(i).getLng());
+	   }
+		    
+		    System.out.println(lngs);
+		   
+			return lngs;
+		}
+		
+		@Override
+		public List<String> getRouteLat(int plannerCode) throws Exception {
+			
+		   List<Route> latList = plannerDao.getRouteLat(1);
+		   List<String> lats = new ArrayList<String>();
+		    
+		   for(int i=0;i<latList.size();i++) {
+			   lats.add( latList.get(i).getLat());
+	   }
+		    
+		    System.out.println(lats);
+		   
+			return lats;
+		}
+
+	
 }

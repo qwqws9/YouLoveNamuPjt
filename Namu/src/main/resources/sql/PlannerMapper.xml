@@ -23,7 +23,7 @@
 	
 	<resultMap id="routeSelectMap" type="route">
 		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/>
-		<!-- <result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/> -->
+		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/> 
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="cityName" 			column="city_name" 			jdbcType="VARCHAR"/>
 		<result property="cityOrder"	column="city_order" 		jdbcType="NUMERIC" />
@@ -32,13 +32,12 @@
 		<result property="lng" 			column="lng" 		jdbcType="VARCHAR" />
 		<result property="startDate" 			column="START_DATE" 		jdbcType="DATE"  />
 		<result property="endDate" 			column="END_DATE" 		jdbcType="DATE" />
-		<association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/>
+<!-- 		<association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/> -->
 		</resultMap>
 		
 		 <resultMap id="scheduleSelectMap" type="schedule">
 		<result property="scheCode"				column="SCHE_CODE" 				jdbcType="NUMERIC" />
-		<!-- <result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
-		<result property="routeCode" 			column="route_code" 			jdbcType="NUMERIC"/> -->
+		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/> 
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="scheDay"				column="SCHE_DAY" 				jdbcType="DATE" />
 		<result property="timeHour"				column="TIME_HOUR" 				jdbcType="VARCHAR" />
@@ -56,53 +55,93 @@
 	 	<!-- 1. planner -->
 	 	
 	 <insert 	id="addPlanner"		parameterType="planner" >
-	 
+		<selectKey keyProperty="plannerCode" resultType="int" order="BEFORE">
+		 SELECT MAX(planner_code)+1 FROM planner
+		</selectKey>
 	 	INSERT
 		INTO planner(PLANNER_CODE ,USER_CODE, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
-		VALUES	 (${planner_code} , #{user.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
+		VALUES	 (seq_planner_code.nextval, #{user.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
+	
 
 	 </insert>
 	 
 	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
-		user_code, planner_name , planner_image,member, privacy, status, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE
+		planner_name, planner_image, DEPART_DATE, member, privacy
 		FROM planner
-		WHERE planner_code = #{plannerCode}
+		WHERE planner_code =#{value}
 	 </select>
 	 
+	  <update	id="updatePlanner"	parameterType="planner" >
+	   	UPDATE product
+	   	<set>
+	   		planner_name 	= #{plannerName} ,
+			planner_image	= #{plannerImage},
+			DEPART_DATE = #{departDate} ,
+			member	=	#{member}
+	   	</set>
+	   	WHERE planner_code = #{plannerCode}
+	 </update>
+		 
+		
 	 
 		<!-- 2. route -->
 	 	
 	<insert 	id="addRoute"		parameterType="route" >
+
 	 	INSERT
 		INTO route (route_code, planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng, start_date, end_date) 
-		VALUES	 (seq_route_code.nextval, #{plannerVer:INTEGER}, #{planner.plannerCode}, #{cityName:VARCHAR} ,#{stayDay:INTEGER}, #{cityOrder:INTEGER} , #{lat:VARCHAR}, #{lng:VARCHAR},#{startDate:DATE}, #{endDate:DATE})
+		VALUES	 (seq_route_code.nextval, #{plannerVer:INTEGER}, #{plannerCode:INTEGER}, #{cityName:VARCHAR} ,#{stayDay:INTEGER}, #{cityOrder:INTEGER} , #{lat:VARCHAR}, #{lng:VARCHAR},#{startDate:DATE}, #{endDate:DATE})
 	 </insert>
 	
 		 <select 	id="getRoute"	parameterType="string"	resultMap="routeSelectMap">
 		SELECT
-		planner_ver, planner_code, city_name ,stay_day, city_order,  lat, lng
+		city_name ,stay_day, city_order,  lat, lng
 		FROM route
-		WHERE route_code = #{routeCode}
+		WHERE planner_code = #{plannerCode}
 	 </select>
 	 
 	 <select  id="getRouteList"  parameterType="hashmap"	resultMap="routeSelectMap">
 
 	  	SELECT
-		city_name ,city_order, stay_day, start_Date,end_Date 
+		city_name ,city_order, stay_day, start_Date,end_Date, lat, lng
 	  	FROM route 
 	  	<where>
 	  	planner_code = #{plannerCode}
 		</where>
-	  					
-	</select>
-	 <!-- 3. route -->
+	  </select>			
+	  				
+	   <select 	id="getRouteCityName"	resultMap="routeSelectMap">
+		SELECT city_name
+		FROM  route 
+		<where>
+	  	planner_code = #{plannerCode}
+		</where>
+	 </select>
+	 
+	  	 <select 	id="getRouteLat"	resultMap="routeSelectMap">
+		SELECT lat
+		FROM  route 
+		<where>
+	  	planner_code = #{plannerCode}
+		</where>
+	 </select>
+	 
+	  	 <select 	id="getRouteLng" 	resultMap="routeSelectMap">
+		SELECT lng
+		FROM  route 
+		<where>
+	  	planner_code = #{plannerCode}
+		</where>
+	 </select>			
+	
+	 <!-- 3. schedule -->
 	 
 		<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
 		INTO schedule (sche_code, route_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail,accomodation, color ) 
-		VALUES	 (seq_schedule_code.nextval,1, 1, 1, #{scheDay:DATE} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
+		VALUES	 (seq_schedule_code.nextval,1, 1, #{plannerCode}, #{scheDay:DATE} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
 	 </insert>
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">

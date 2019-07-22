@@ -37,7 +37,7 @@ public class WalletServiceTest {
 		wallet.setExpression("5*2");
 		wallet.setPrice(10);
 		wallet.setRegDate("2018-08-25 11:02");
-		wallet.setItem("�븘�씠�뒪 �븘硫붾━移대끂");
+		wallet.setItem("아이스 아메리카노");
 		wallet.setPayOption("0");
 		wallet.setExchangeRate(1326.70);
 		wallet.setCategory("0");
@@ -52,7 +52,7 @@ public class WalletServiceTest {
 		Assert.assertEquals("5*2", wallet.getExpression());
 		Assert.assertEquals(10.0, wallet.getPrice(), 0.01);
 		Assert.assertEquals("2018-08-25 11:02", wallet.getRegDate());
-		Assert.assertEquals("�븘�씠�뒪 �븘硫붾━移대끂", wallet.getItem());
+		Assert.assertEquals("아이스 아메리카노", wallet.getItem());
 		Assert.assertEquals(1326.7, wallet.getExchangeRate(), 0.01);
 		
 	}
@@ -70,7 +70,7 @@ public class WalletServiceTest {
 		Assert.assertEquals("5*2", wallet.getExpression());
 		Assert.assertEquals(10.0, wallet.getPrice(), 0.01);
 		Assert.assertEquals("2018-08-25 11:02", wallet.getRegDate());
-		Assert.assertEquals("�븘�씠�뒪 �븘硫붾━移대끂", wallet.getItem());
+		Assert.assertEquals("아이스 아메리카노", wallet.getItem());
 		Assert.assertEquals(1326.7, wallet.getExchangeRate(), 0.01);
 		
 	}

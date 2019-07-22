@@ -11,6 +11,7 @@
 		<result property="moneyUnit"		column="MONEY_UNIT"		jdbcType="VARCHAR" />
 		<result property="expression"		column="EXPRESSION"		jdbcType="VARCHAR" />
 		<result property="price"			column="PRICE"			jdbcType="NUMERIC" />
+		<result property="krwPrice"			column="KRW_PRICE"		jdbcType="NUMERIC" />
 		<result property="regDate"			column="REG_DATE"		jdbcType="DATE" />
 		<result property="item"				column="ITEM"			jdbcType="VARCHAR" />
 		<result property="content"			column="CONTENT"		jdbcType="VARCHAR" />
@@ -18,22 +19,22 @@
 		<result property="exchangeRate"		column="EXCHANGE_RATE"	jdbcType="NUMERIC" />
 		<result property="category"			column="CATEGORY"		jdbcType="CHAR" />
 		<result property="walletImage"		column="W_IMAGE"		jdbcType="VARCHAR" />
-		<result property="payer"			column="PAYER"			jdbcType="NUMERIC" />
+		<result property="payer.userCode"	column="PAYER"			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- walletList.jsp -->
 	<insert id="addWallet" parameterType="wallet">
 		INSERT
-		INTO wallet_detail ( w_detail_code, w_main_code, part, money_unit, expression, price, reg_date,
-							 item, content, pay_option, exchange_rate, category, w_image, payer )
+		INTO wallet_detail ( w_detail_code, w_main_code, part, money_unit, expression, price, krw_price,
+							 reg_date, item, content, pay_option, exchange_rate, category, w_image, payer )
 		VALUES ( seq_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
-				 #{price}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
-				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer:NUMERIC} )
+				 #{price}, #{krwPrice}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
+				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer.userCode:NUMERIC} )
 	</insert>
 	
 	<select id="getWallet" parameterType="int" resultMap="walletSelectMap">
-		SELECT w_detail_code, w_main_code, part, money_unit, expression, price, reg_date,
-			   item, content, pay_option, exchange_rate, category, w_image, payer
+		SELECT w_detail_code, w_main_code, part, money_unit, expression, price, krw_price,
+			   reg_date, item, content, pay_option, exchange_rate, category, w_image, payer
 		FROM wallet_detail
 		<where>
 			w_detail_code = #{value}
@@ -46,6 +47,7 @@
 			money_unit = #{moneyUnit},
 			expression = #{expression},
 			price = #{price},
+			krw_price = #{krwPrice},
 			reg_date = #{regDate},
 			item = #{item:VARCHAR},
 			content = #{content:VARCHAR},
@@ -53,13 +55,14 @@
 			exchange_rate = #{exchangeRate:NUMERIC},
 			category = #{category},
 			w_image = #{walletImage:VARCHAR},
-			payer = #{payer:NUMERIC}
+			payer = #{payer.userCode:NUMERIC}
 		</set>
 	  	<where>
 	  		w_detail_code = #{walletDetailCode}
 	  	</where>
 	</update>
 	
+	<!--
 	<delete id="deleteWallet" parameterType="int">
 		DELETE
 		FROM wallet_detail
@@ -67,17 +70,27 @@
 			w_detail_code = #{value}
 		</where>
 	</delete>
+	-->
+	
+	<update	id="deleteWallet" parameterType="int">
+	  	UPDATE wallet_detail
+		<set>
+			category = 9
+		</set>
+	  	<where>
+	  		w_detail_code = #{value}
+	  	</where>
+	</update>
 	
 	<select id="getWalletList" parameterType="map" resultMap="walletSelectMap">
 		SELECT *
 		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
 			   FROM ( SELECT *
 					  FROM wallet_detail
-					  <where>
-							w_main_code = #{walletCode}
-					  </where>
-					  ORDER BY reg_date DESC ) inner_table
-			   WHERE ROWNUM &lt;= #{search.endRowNum} )
+					  WHERE w_main_code = #{walletCode}
+					  AND category <![CDATA[ < ]]> '9'
+					  ORDER BY reg_date DESC, w_detail_code DESC ) inner_table
+			   WHERE ROWNUM <![CDATA[ < ]]>= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	</select>
 	
@@ -85,10 +98,12 @@
 		SELECT COUNT(*)
 		FROM ( SELECT *
 			   FROM wallet_detail
-			   <where>
-					w_main_code = #{walletCode}
-			   </where>
-			   ORDER BY reg_date DESC ) countTable					
+			   WHERE w_main_code = #{walletCode}
+			   AND category <![CDATA[ < ]]> '9'
+			   ORDER BY reg_date DESC, w_detail_code DESC ) countTable
 	</select>
+	
+	<!-- getWalletReport.jsp -->
+	
 	
 </mapper>

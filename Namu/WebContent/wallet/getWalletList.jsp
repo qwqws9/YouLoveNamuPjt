@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,9 @@
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
 	
+	<!-- Chart.js built files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
@@ -35,23 +39,27 @@
 	
 	<div class="wrap">
 		<h2 class="skip">내 가계부</h2>
-
-		<a href="javascript:void(0);" class="pre_btn">
-			<i class="fas fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span>내 가계부 목록으로</span>
-		</a>
-		<a href="javascript:void(0);" class="next_btn">결산 보고서 조회</a>
+		
+		<div class="btnns">
+			<a href="javascript:void(0);" class="pre_btn">
+				<i class="fas fa-angle-left"></i>&nbsp;&nbsp;&nbsp;<span>내 가계부 목록으로</span>
+			</a>
+			<a href="javascript:void(0);" class="report_btn">결산 보고서 조회</a>
+			<div class="report_wrap"></div>
+		</div>
 		
 		<section class="sec_wrap clear">
 			<h3 class="skip"><span class="walletCode">${param.walletCode}</span>가계부 내역</h3>
 			
-			
+			<!--
 			<form class="search_form" name="search_form">
 				<input type="hidden" id="pageSize" name="pageSize" value="" />
 				
 				<label for="searchKeyword" class="skip">검색어</label>
 				<input type="text" class="search_txt" id="searchKeyword" name="searchKeyword" placeholder="내역 항목명을 입력하세요." value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
 				<button type="submit" class="search_btn">검색</button>
-			</form><!-- //search_form -->
+			</form>
+			-->
 			
 			<nav class="left_nav">
 				<a class="day_btn rounded-circle"><span>All</span></a>
@@ -80,7 +88,7 @@
 				
 				<div class="plus_btns">
 					<span>
-						<span class="page_info">총 <span class="totalCount">${resultPage.totalCount}</span> 건 중 현재 ${resultPage.currentPage} 페이지</span>
+						<span class="page_info">총 <span class="totalCount">${resultPage.totalCount}</span> 건 중 현재 <span class="currentPage" id="currentPage">${resultPage.currentPage}</span> 페이지</span>
 						<a href="javascript:void(0);" class="modal_btn" id="income_modal">예산 추가&nbsp;&nbsp;<i class="far fa-plus-square"></i></a>
 					</span>
 					<form class="pop_wrap_add" id="save_income_form"></form>
@@ -101,9 +109,10 @@
 						<span class="skip">순으로 출력</span>
 					</div>
 					
-					<ul>
+					<ul class="ajax-base">
 						<c:forEach varStatus="status" var="wallet" items="${list}">
-							<li class="table_row ajax-${status.index+1}">
+							<li class="ajax-${status.index+1} table_row">
+								<span class="walletDetailCode" style="display: none;">${wallet.walletDetailCode}</span>
 								<a class="detail_line">
 									<span class="table_col">${status.index+1}</span>
 									<span class="table_col">
@@ -114,6 +123,10 @@
 											<span>
 												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
 												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'CHF'}">CHF</c:if>
+												<c:if test="${wallet.moneyUnit eq 'GBP'}"><i class="fas fa-pound-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'CZK'}">CZK</c:if>
+												<c:if test="${wallet.moneyUnit eq 'HUF'}">HUF</c:if>
 												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
 												<c:if test="${wallet.payOption eq 2}">
 													&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
@@ -121,7 +134,9 @@
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
-													<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+													<c:if test="${! empty wallet.krwPrice}">
+														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
+													</c:if>
 												</c:if>
 											</span>
 										</c:if>
@@ -131,11 +146,20 @@
 											<span>
 												<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
 												<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'CHF'}">CHF</c:if>
+												<c:if test="${wallet.moneyUnit eq 'GBP'}"><i class="fas fa-pound-sign"></i></c:if>
+												<c:if test="${wallet.moneyUnit eq 'CZK'}">CZK</c:if>
+												<c:if test="${wallet.moneyUnit eq 'HUF'}">HUF</c:if>
 												<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+												<c:if test="${wallet.payOption eq 2}">
+													&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
+												</c:if>
 											</span>
 											<span>
 												<c:if test="${wallet.moneyUnit ne 'KRW'}">
-													<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
+													<c:if test="${! empty wallet.krwPrice}">
+														<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
+													</c:if>
 												</c:if>
 											</span>
 										</c:if>
@@ -145,9 +169,8 @@
 											${wallet.item}
 										</c:if>
 										<c:if test="${empty wallet.item}">
-											<c:if test="${wallet.part eq 0}">예산</c:if>
-											<c:if test="${wallet.part eq 1}">지출</c:if>
-											추가
+											<c:if test="${wallet.part eq 0}">예산 추가</c:if>
+											<c:if test="${wallet.part eq 1}">지출 추가</c:if>
 										</c:if>
 									</span>
 									<span class="table_col">
@@ -168,80 +191,7 @@
 									</span>
 								</a><!-- //detail_line -->
 								
-								<div class="pop_wrap_contain">
-									<div class="pop_wrap_get">
-										<div class="scroller">
-											<div class="padding_boxing">
-												<div class="text_width">
-													<div class="input_date">${wallet.regDate}</div>
-													<div class="top_input clear">
-														<div class="input_category">
-															<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
-															<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
-															<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
-															<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
-															<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
-															<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
-															<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
-															<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
-															<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
-														</div>
-														<div class="input_money">
-															<div>
-																<span>
-																	<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
-																	<c:if test="${wallet.moneyUnit eq 'EUR'}"><i class="fas fa-euro-sign"></i></c:if>
-																	<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
-																</span>
-															</div>
-															<div>
-																<span>
-																	<c:if test="${wallet.moneyUnit ne 'KRW'}">
-																		<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.exchangePrice}" pattern="#,###.00" />
-																	</c:if>
-																</span>
-															</div>
-														</div>
-														<%-- <c:if test="${! empty wallet.payer}"> --%>
-															<div class="input_payer">
-																<span>결제자</span><span>미니미니</span>
-															</div>
-														<%-- </c:if> --%>
-													</div><!-- //top_input -->
-													<c:if test="${wallet.part eq 0}">
-														<div>
-															<span>화폐 단위</span><span>${wallet.moneyUnit}</span>
-															<c:if test="${wallet.moneyUnit ne 'KRW'}">
-																<span>적용 환율</span><span>${wallet.moneyUnit} = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
-															</c:if>
-														</div>
-													</c:if>
-													<div class="input_item">
-														<c:if test="${! empty wallet.item}">
-															${wallet.item}
-														</c:if>
-														<c:if test="${empty wallet.item}">
-															<c:if test="${wallet.part eq 0}">예산</c:if>
-															<c:if test="${wallet.part eq 1}">지출</c:if>
-															추가
-														</c:if>
-													</div>
-													<c:if test="${! empty wallet.content}">
-														<div class="input_content">${wallet.content}</div>
-													</c:if>
-												</div><!-- //text_width -->
-												<c:if test="${! empty wallet.walletImage}">
-													<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.item} 이미지" class="big_image">
-												</c:if>
-											</div><!-- //scroller -->
-										</div><!-- //padding_boxing -->
-										
-										<div class="act_btns">
-											<a href="javascript:void(0);" class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn close_btn">닫기</a>
-											<!-- <a href="javascript:void(0);" class="act_btn close_btn">닫기</a> -->
-										</div>
-									</div><!-- //pop_wrap_get -->
-								</div><!-- //pop_wrap_contain -->
+								<div class="pop_wrap_contain"></div>
 							</li>
 						</c:forEach>
 					</ul>

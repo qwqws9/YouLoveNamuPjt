@@ -55,11 +55,12 @@ public class WalletDaoImpl implements WalletDao {
 	public void updateWallet(Wallet wallet) throws Exception{
 		sqlSession.update("WalletMapper.updateWallet", wallet);
 	}
-	
-	public void deleteWallet(int walletDetailCode) throws Exception{
-		sqlSession.delete("WalletMapper.deleteWallet", walletDetailCode);
-	}
 	*/
+	public void deleteWallet(int walletDetailCode) throws Exception{
+		// sqlSession.delete("WalletMapper.deleteWallet", walletDetailCode);
+		sqlSession.update("WalletMapper.deleteWallet", walletDetailCode);
+	}
+	
 	public List<Wallet> getWalletList(Map<String, Object> map) throws Exception{
 		return sqlSession.selectList("WalletMapper.getWalletList", map);
 	}

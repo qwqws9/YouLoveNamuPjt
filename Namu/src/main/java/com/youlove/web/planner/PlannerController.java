@@ -37,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.User;
-import com.youlove.service.domain.Wallet;
 import com.youlove.common.FileNameUUId;
 import com.youlove.service.domain.Planner;
 
@@ -64,14 +63,14 @@ public class PlannerController {
 	// 1. planner
 	@RequestMapping( value="addPlanner", method=RequestMethod.GET )
 	public String addPlanner() throws Exception {
-
+		
 		System.out.println("PlannerController ---------------addPlanner:GET");
 		
 		return "forward:/planner/addPlanner.jsp";
 	}
 	//
 	@RequestMapping( value="addPlanner", method=RequestMethod.POST )
-	public String addPlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file, HttpServletRequest request) throws Exception {
+	public String addPlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file,  HttpServletRequest request) throws Exception {
 
 		System.out.println("PlannerController -------------addPlanner:POST start");
 
@@ -79,6 +78,11 @@ public class PlannerController {
 		
 		planner.setUser(user);
 		System.out.println(user);
+		
+		if(user==null) {
+			return "redirect:/user/loginView.jsp";
+		}
+		
 		//String path="//Users//minikim//eclipse-workspace//YouLovePlanMini2//WebContent//resources//images//plannerImage";
 		//String path="//Users//minikim//git//YouLovePlanMini//WebContent//resources//images//plannerImage";
 		
@@ -102,40 +106,84 @@ public class PlannerController {
 //		}	
 		
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
-		System.out.println(planner);
-		model.addAttribute("plannerCode", planner.getPlannerCode());
-		plannerService.addPlanner(planner);
 		
-
+		System.out.println(planner);
+		plannerService.addPlanner(planner);
+		//plannerService.getPlanner(planner.getPlannerCode());
+		session.setAttribute("plannerCode", planner.getPlannerCode());
+		System.out.println(planner.getPlannerCode());
 		System.out.println("plannerController ----------------addPlanner:POST  end");
 		return "forward:/planner/addRoute.jsp";
 	}
 	
+	
+
+	@RequestMapping( value="updatePlanner", method=RequestMethod.GET )
+	public String updatePlanner( @RequestParam("plannerCode") int plannerCode , Model model ) throws Exception{
+
+		System.out.println("plannerController ----------------updatePlanner:GET ");
+		
+		Planner planner = plannerService.getPlanner(plannerCode);
+
+		model.addAttribute("planner", planner);
+
+		return "forward:/planner/updatePlanner.jsp";
+	}
+	
+	
+	@RequestMapping( value="updatePlanner", method=RequestMethod.POST )
+	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
+
+		System.out.println("plannerController ----------------updatePlanner:POST ");
+
+		String fileName = FileNameUUId.convert(file, "planner", request);
+		planner.setPlannerImage(fileName);
+		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
+		
+		System.out.println(planner);
+		
+		session.setAttribute("plannerCode", planner.getPlannerCode());
+		System.out.println(planner.getPlannerCode());
+
+		plannerService.updatePlanner(planner);
+		
+		return "forward:/planner/updateRoute.jsp";
+	
+	}
+	
+	
 	// 2. route
 	
-//	@RequestMapping( value="addRoute", method=RequestMethod.GET )
-//	public String addRoute(@RequestParam("plannerCode") int plannerCode, HttpSession session) throws Exception {
-//
-//		System.out.println("PlannerController -------------------addRoute:GET ");
-//		
-//		return "forward:/planner/addRoute.jsp";
-//	}
+	@RequestMapping( value="addRoute", method=RequestMethod.GET )
+	public String addRoute(@RequestParam("plannerCode") int plannerCode, HttpSession session) throws Exception {
+
+		System.out.println("PlannerController -------------------addRoute:GET ");
+		
+		return "forward:/planner/addRoute.jsp";
+	}
 	
 	@RequestMapping(value = "addRoute", method=RequestMethod.POST)
 	public String addRoute(HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route) throws Exception{
 
 		System.out.println("PlannerController ----------------------- addRoute start");
-		Planner planner= (Planner)session.getAttribute("planner");
-
-		route.setPlannerCode(planner);    //getPlannerCode로!!!!!!!!! 변경 
+		//session에 담긴 plannerCode 받아와서 set 
+		int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();
+		System.out.println(plannerCode);
+		route.setPlannerCode(plannerCode);    
+	
+		//planner 버전 set /!!!!!!!!! 변경하기. 
 		route.setPlannerVer(1);
-		System.out.println(planner);
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		
+		//departDate 받아와서 set 
+		Planner planner=plannerService.getPlanner(plannerCode);
+		String departDate=planner.getDepartDate();
+		System.out.println(departDate);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date=null;
 		
 		try {
-			date=dateFormat.parse("201908011000");     //getDepartDate 로 변경하기!!!!!
+			date=dateFormat.parse(departDate);  
 			
 		}catch(ParseException e) {
 			e.printStackTrace();
@@ -143,6 +191,7 @@ public class PlannerController {
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(date);
 		
+		//addRoute jsp form value 배열에 담기. 
 		String[] cityNames = request.getParameterValues("cityName");
 		String[] lats = request.getParameterValues("lat");
 		String[] lngs = request.getParameterValues("lng");
@@ -152,7 +201,6 @@ public class PlannerController {
 		for (int i = 0; i < cityNames.length; i++) {
 		System.out.println(" city name : "+cityNames[i]+" lat: "+lats[i]+" lng : "+lngs[i]+" order : "+i+" stay day :"+stayDays[i]);
 		System.out.println(cityNames.length+"번 addRoute !!!!!!");
-		//Date start=2019-08-01;
 		
 		route.setCityName(cityNames[i]);
 		route.setLat(lats[i]);
@@ -185,16 +233,109 @@ public class PlannerController {
 		return "forward:/planner/getScheduleList.jsp";
 	}
 
+	
+	@RequestMapping( value="updateRoute", method=RequestMethod.GET )
+	public String updateRoute(@RequestParam("plannerCode") int plannerCode, HttpSession session) throws Exception {
 
-	//일정작성 
+		System.out.println("PlannerController -------------------addRoute:GET ");
+		
+		return "forward:/planner/updateRoute.jsp";  
+	}
+	
+	@RequestMapping(value = "updateRoute", method=RequestMethod.POST)
+	public String updateRoute( HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route) throws Exception {
+		
+		System.out.println("PlannerController ----------------------- updateRoute start");
+		
+		//플래너 코드는 ?????.....가져오는지 ?
+		int plannerCode=route.getPlannerCode();    
+		
+		//planner 버전 업그레이드 
+		route=plannerService.getRoute(plannerCode);
+		int plannerVer=route.getPlannerVer();
+		route.setPlannerVer(plannerVer+1);
+		
+		//departDate 받아와서 set 
+		Planner planner=plannerService.getPlanner(plannerCode);
+		String departDate=planner.getDepartDate();
+		System.out.println(departDate);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		Date date=null;
+		
+		try {
+			date=dateFormat.parse(departDate);   
+			
+		}catch(ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(date);
+		
+		//addRoute jsp form value 배열에 담기. 
+		String[] cityNames = request.getParameterValues("cityName");
+		String[] lats = request.getParameterValues("lat");
+		String[] lngs = request.getParameterValues("lng");
+		//String[] cityOrders = request.getParameterValues("cityOrder");
+		String[] stayDays = request.getParameterValues("stayDay");
+		
+		for (int i = 0; i < cityNames.length; i++) {
+		System.out.println(" city name : "+cityNames[i]+" lat: "+lats[i]+" lng : "+lngs[i]+" order : "+i+" stay day :"+stayDays[i]);
+		System.out.println(cityNames.length+"번 addRoute !!!!!!");
+		
+		route.setCityName(cityNames[i]);
+		route.setLat(lats[i]);
+		route.setLng(lngs[i]);
+		route.setCityOrder(i+1);
+		route.setStayDay(Integer.parseInt(stayDays[i]));
+		//String startDate = dateFormat.format(cal.getTime());
+		//cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+		//String endDate = dateFormat.format(cal.getTime());
+		route.setStartDate(cal.getTime());
+		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+		route.setEndDate(cal.getTime());
+		
+		plannerService.addRoute(route);
+		}
+
+		return "forward:/planner/getScheduleList.jsp";
+			
+		}
+	
+
+	//3. schedule 
+
 	@RequestMapping(value = "addSchedule")
-	public String addSchedule(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("schedule") Schedule schedule, @ModelAttribute("route") Route route) throws Exception{
+	public String addSchedule(HttpSession session, HttpServletRequest request, HttpServletResponse response,@ModelAttribute("schedule") Schedule schedule, @ModelAttribute("route") Route route) throws Exception{
 
-		System.out.println("PlannerController :: addSchedule :POST start");
-		//route.setRouteCode(10073);  ~~~route code route... 
+		System.out.println("PlannerController------------------- addSchedule :POST start");
+		//session에 담긴 plannerCode 받아와서 set 
+		int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();
+		System.out.println(plannerCode);
+		schedule.setPlannerCode(plannerCode);
+		
 		plannerService.addSchedule(schedule);
 
 		return "forward:/planner/getScheduleList.jsp";
+		}
+
+	
+	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
+	public String getPlanner( @RequestParam("plannerCode") int plannerCode , Model model) throws Exception {
+		
+		System.out.println("PlannerRestController--------getPlanner:GET");
+		//Business Logic
+		Planner planner = plannerService.getPlanner(plannerCode);
+//		Route route = plannerService.getRouteList(plannerCode);
+//		Schedule schedule = plannerService.getScheduleList(plannerCode);
+		
+		String page=null;
+		
+		model.addAttribute("planner", planner);
+//		model.addAttribute("route", route);
+//		model.addAttribute("schedule", schedule);
+		
+		return "forward:/planner/getPlanner.jsp";
 		}
 
 }
