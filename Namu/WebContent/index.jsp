@@ -22,6 +22,7 @@
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -33,11 +34,20 @@
 	<div style="width: 100%;">
 		<h4 style="margin: auto;">
 			<a href="/wallet/getWalletList?walletCode=1">규리 가계부 목록</a><br>
-			<a href="http://192.168.0.13:8005/">상욱 채팅</a><br>
+			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
+			<i id="getChat">상욱 채팅</i><br>
 			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
 			<a href="/planner/addRoute.jsp">민희 구글맵 루트</a><br>
 			<a href="/community/getCommunityList">중현 커뮤니티 등록</a>
 		</h4>
 	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $("#getChat").on("click", function(){
+		    window.open("http://192.168.0.13:8005/", "popup_chat", "width=450, height=800, location=no, resizable=no")
+		  });
+		});
+	</script>
 </body>
 </html>
