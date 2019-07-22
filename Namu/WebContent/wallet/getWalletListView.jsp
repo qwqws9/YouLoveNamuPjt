@@ -21,11 +21,16 @@
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    
-    <!-- Our Own Resources -->
+	
+	<!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
+	
+	<script type="text/javascript">
+		// Toggle
+		
+	</script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -41,55 +46,109 @@
 						<div class="plan_name">제목들어간다요</div>
 						<div class="plan_flag">국기</div>
 						<div class="plan_period">날짜들어간다요</div>
-						<div>
-							<input type="checkbox" id="switch1" name="switch1" class="input__on-off">
-							<label for="switch1" class="label__on-off">
-								<span class="marble"></span>
-								<span class="on">on</span>
-								<span class="off">off</span>
-							</label>
-						</div>
+						<div class="wallet_is">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary">
+									<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+								</label>
+								<label class="btn btn-secondary active">
+									<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+								</label>
+							</div>
+						</div><!-- //wallet_is -->
 					</div>
-				</div>
+				</div><!-- //square -->
 				<div class="square">
 					<div>
-						<div>제목들어간다요</div>
-						<div>국기들어간다요</div>
-						<div>날짜들어간다요</div>
-						<div>생성여부 바 들어간다</div>
+						<div class="plan_name">제목들어간다요</div>
+						<div class="plan_flag">국기</div>
+						<div class="plan_period">날짜들어간다요</div>
+						<div class="wallet_is">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary">
+									<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+								</label>
+								<label class="btn btn-secondary active">
+									<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+								</label>
+							</div>
+						</div><!-- //wallet_is -->
 					</div>
-				</div>
+				</div><!-- //square -->
 				<div class="square">
 					<div>
-						<div>제목들어간다요</div>
-						<div>국기들어간다요</div>
-						<div>날짜들어간다요</div>
-						<div>생성여부 바 들어간다</div>
+						<div class="plan_name">제목들어간다요</div>
+						<div class="plan_flag">국기</div>
+						<div class="plan_period">날짜들어간다요</div>
+						<div class="wallet_is">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary">
+									<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+								</label>
+								<label class="btn btn-secondary active">
+									<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+								</label>
+							</div>
+						</div><!-- //wallet_is -->
 					</div>
-				</div>
+				</div><!-- //square -->
 				<div class="square">
 					<div>
-						<div>제목들어간다요</div>
-						<div>국기들어간다요</div>
-						<div>날짜들어간다요</div>
-						<div>생성여부 바 들어간다</div>
+						<div class="plan_name">제목들어간다요</div>
+						<div class="plan_flag">국기</div>
+						<div class="plan_period">날짜들어간다요</div>
+						<div class="wallet_is">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary">
+									<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+								</label>
+								<label class="btn btn-secondary active">
+									<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+								</label>
+							</div>
+						</div><!-- //wallet_is -->
 					</div>
-				</div>
+				</div><!-- //square -->
 				<div class="square">
 					<div>
-						<div>제목들어간다요</div>
-						<div>국기들어간다요</div>
-						<div>날짜들어간다요</div>
-						<div>생성여부 바 들어간다</div>
+						<div class="plan_name">제목들어간다요</div>
+						<div class="plan_flag">국기</div>
+						<div class="plan_period">날짜들어간다요</div>
+						<div class="wallet_is">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary">
+									<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+								</label>
+								<label class="btn btn-secondary active">
+									<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+								</label>
+							</div>
+						</div><!-- //wallet_is -->
 					</div>
-				</div>
+				</div><!-- //square -->
 			</div>
 		</section>
 		
 		<section class="wallet_box">
 			<h3>지난 여행</h3>
 			<div class="square_wrap">
-				<div class="square">gggg</div>
+				<div class="square">
+					<div>
+						<div class="plan_name">제목들어간다요</div>
+						<div class="plan_flag">국기</div>
+						<div class="plan_period">날짜들어간다요</div>
+						<div class="wallet_is">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
+								<label class="btn btn-secondary">
+									<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+								</label>
+								<label class="btn btn-secondary active">
+									<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+								</label>
+							</div>
+						</div><!-- //wallet_is -->
+					</div>
+				</div><!-- //square -->
 			</div>
 		</section>
 	</div><!-- //wrap -->

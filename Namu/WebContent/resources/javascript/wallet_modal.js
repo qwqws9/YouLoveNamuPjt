@@ -94,7 +94,6 @@ $(function() {
 	// 결산 보고서 모달창 버튼
 	$('.report_btn').on('click', function() {
 		//$('.report_wrap').html('');
-		console.log('ddddddddddd');
 		
 		// innerHTML
 		$($('.report_wrap')).load('/wallet/getWalletReport.jsp', function(data) {
