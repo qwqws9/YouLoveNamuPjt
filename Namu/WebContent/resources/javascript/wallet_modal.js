@@ -188,6 +188,9 @@ function exchangeRate() {
 	convert($('#moneyUnit').val());
 	
 	$('#moneyUnit').on('change', function(){
+		
+		$('.apply_exchange_rate .second_unit').text($('#moneyUnit').val());
+		
 		convert($(this).val());
 		multiply();
 	});

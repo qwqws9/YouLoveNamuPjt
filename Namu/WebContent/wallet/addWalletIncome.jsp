@@ -27,7 +27,7 @@
 		<div class="apply_exchange_rate">
 			<span>환율</span>
 			<div>
-				<span>EUR 1.0 = KRW <span id="exchange_result"></span></span><br/>
+				<span><span class="second_unit">EUR</span> 1.0 = KRW <span id="exchange_result"></span></span><br/>
 				<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
 			</div>
 		</div><!-- //apply_exchange_rate -->
