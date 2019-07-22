@@ -37,6 +37,11 @@ public class PlannerDaoImpl implements PlannerDao{
 			return sqlSession.selectOne("PlannerMapper.getPlanner", plannerCode);
 		}
 	
+	@Override
+	public void updatePlanner(Planner planner) throws Exception {
+		sqlSession.update("PlannerMapper.updatePlanner", planner);
+	}
+	
 	//2. route 
 	@Override
 	public void addRoute(Route route) throws Exception {
@@ -51,6 +56,21 @@ public class PlannerDaoImpl implements PlannerDao{
 	@Override
 	public List<Route> getRouteList(int plannerCode) throws Exception {
 		return sqlSession.selectList("PlannerMapper.getRouteList",plannerCode);
+	}
+	
+	@Override
+	public List<Route> getRouteCityName(int plannerCode) throws Exception {
+		return sqlSession.selectList("PlannerMapper.getRouteCityName",plannerCode);
+	}
+	@Override
+	public List<Route> getRouteLat(int plannerCode) throws Exception {
+		return sqlSession.selectList("PlannerMapper.getRouteLat",plannerCode);
+	
+	}
+	@Override
+	public List<Route> getRouteLng(int plannerCode) throws Exception {
+		return sqlSession.selectList("PlannerMapper.getRouteLng",plannerCode);
+	
 	}
 	
 	//3. schedule

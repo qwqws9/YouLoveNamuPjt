@@ -11,134 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		 
-<!-- 	<style>
-	.table-title h3 {
-		   color: #f2c029;
-		   font-size: 30px;
-		   font-weight: 400;
-		   font-style:normal;
-		   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-		   text-transform:uppercase;
-		}
-	.table-fill {
-  background: white;
-  border-radius:3px;
-  border-collapse: collapse;
-  height: 320px;
-  margin: auto;
-  max-width: 600px;
-  padding:5px;
-  width: 100%;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  animation: float 5s infinite;
-}
- 
-th {
-  color:#D5DDE5;;
-  background:#a3daff;
-  border-bottom:4px solid  white;
-  border-right: 1px solid  white;
-  font-size:23px;
-  font-weight: 100;
-  padding:24px;
-  text-align:left;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  vertical-align:middle;
-}
-th:first-child {
-  border-top-left-radius:3px;
-}
- 
-th:last-child {
-  border-top-right-radius:3px;
-  border-right:none;
-}
-  
-tr {
-  border-top: 1px solid white;
-  border-bottom-: 1px solid white;
-  color:#666B85;
-  font-size:16px;
-  font-weight:normal;
-  text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
-}
- 
-tr:hover td {
-  background:#30a9de;
-  color:#FFFFFF;
-  border-top: 1px solid white;
-}
- 
-tr:first-child {
-  border-top:none;
-}
 
-tr:last-child {
-  border-bottom:none;
-}
- 
-tr:nth-child(odd) td {
-  background:#EBEBEB;
-}
- 
-tr:nth-child(odd):hover td {
-  background:#30a9de;
-}
-
-tr:last-child td:first-child {
-  border-bottom-left-radius:3px;
-}
- 
-tr:last-child td:last-child {
-  border-bottom-right-radius:3px;
-}
- 
-td {
-  background:#FFFFFF;
-  padding:20px;
-  text-align:left;
-  vertical-align:middle;
-  font-weight:300;
-  font-size:18px;
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid #C1C3D1;
-}
-
-	</style>
-		 -->
-		
-		<script type="text/javascript">	
-/* 
-		  function fncAddRoute() {
-			  $("form").attr("method" , "POST").attr("action" , "/planner/AddRoute").submit();
-				
-			}  */
-			
-		   /*  var form = document.createElement("form");
-		    form.setAttribute("charset", "UTF-8");
-		    form.setAttribute("method", "Post");  //Post 방식
-		    form.setAttribute("action", "/planner/addRoute"); //요청 보낼 주소
-
-		    var hiddenField = document.createElement("input");
-		    hiddenField.setAttribute("type", "hidden");
-		    hiddenField.setAttribute("cityName", "cityName");
-		    hiddenField.setAttribute("value", array[path.getLength()-1]);
-		    form.appendChild(hiddenField);
-
-		    hiddenField = document.createElement("input");
-		    hiddenField.setAttribute("type", "hidden");
-		    hiddenField.setAttribute("lng", "lng");
-		    hiddenField.setAttribute("value", myMarker.position.lng());
-		    form.appendChild(hiddenField);
-
-		    document.body.appendChild(form);
-		    form.submit();
-		     */
-		// } 
- 
-
-</script>
 </head> 
 <body>
 <label class="sr-only" for="searchKeyword"> 도시명 </label> 
@@ -146,15 +19,14 @@ td {
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 
 <form name="multiForm" id="multiForm" action="/planner/addRoute" method="post">
-<div class="table-title"> 
-<table  class="table-fill" id="list_table">
-<!-- 	<colgroup>
+<table border="1" id="list_table">
+	<colgroup>
 		<col style="width:70px;">
 		<col style="width:200px;">
 		<col style="width:300px;">
 		<col style="width:200px;">
 	</colgroup>
- -->
+
 	<thead>
 		<tr>
 			<th>No</th>
@@ -165,7 +37,7 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 			<th>Action</th>
 		</tr>
 	</thead>
-	<tbody class="table-hover">
+	<tbody>
 
 	</tbody>
  <input type="submit" id="mul_input_submit" name="mul_input_submit" />
@@ -210,7 +82,11 @@ $('#list_table').on("click", ".deletebtn", function () {
   var locations = ['런던','파리','니스','프랑크푸르트','베를린','로마','베니스','바르셀로나','마드리드','부다페스트'];
   var locationLat = ['51.5073509','48.856614','43.7101728','50.1109221','52.52000659999999','41.9027835','45.4408474','41.3850639','40.4167754','47.497912'];
   var locationLng = ['-0.1277583','2.3522219','7.261953200000001','8.6821267','13.404954','12.4963655','12.3155151','2.1734035','-3.7037902','19.040235'];
-    /* var locations = [];
+    var route=[];
+    var routeLat=[];
+    var routeLng=[];
+    
+  /* var locations = [];
     var locationLat = [];
     var locationLng = []; */
     var markers = new Array();
@@ -237,13 +113,12 @@ $('#list_table').on("click", ".deletebtn", function () {
     var infowindow;
     var map;
    	var myMarkerId;
-   	var day = ["1","2","3","4","5","6","7","8","9","10"];
-   	var option=day;
+   	
    	
   $(function() {
-    	
- 	/* $.ajax({
- 	url : "/latlng/json/getAllCityName",
+    var plannerCode=1;
+ 	 $.ajax({
+ 	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
  	dataType : "json",
  	headers : {
@@ -253,18 +128,18 @@ $('#list_table').on("click", ".deletebtn", function () {
 
  	success : function(JSONData) {
 
- 	locations = JSONData;
+ 	route = JSONData;
  	
 
  	$("#searchKeyword").autocomplete({
- 	source : locations
+ 	source : route
 
  	});
  	}
  	});
  	
   	$.ajax({
-  	url : "/latlng/json/getLat",
+  	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
   	dataType : "json",
   	headers : {
@@ -274,14 +149,14 @@ $('#list_table').on("click", ".deletebtn", function () {
 
   	success : function(JSONData2) {
 
-  	locationLat = JSONData2;
+  	routeLat = JSONData2;
 
   	}
   	});
   	
 
    	$.ajax({
-   	url : "/latlng/json/getLng",
+   	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
    	dataType : "json",
    	headers : {
@@ -291,13 +166,13 @@ $('#list_table').on("click", ".deletebtn", function () {
 
    	success : function(JSONData3) {
 
-   	locationLng = JSONData3;
+   	routeLng = JSONData3;
 
    	}
    	});
  	
- 
-   alert(locations); */
+	 alert(route);
+   /* alert(locations); */ 
     
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 5,
@@ -332,17 +207,32 @@ $('#list_table').on("click", ".deletebtn", function () {
    	
    	//////////////////marker/////////////////////
    	$(function(){
+   	   for (var i = 0; i < route.length; i++) {
+		      var myMarker = new google.maps.Marker({
+		        position: new google.maps.LatLng(routeLat[i], routeLng[i]),
+		        map: map,
+		        id:route[i],
+		      });     
+	      markers.push(myMarker);
+	      var path=poly.getPath();
+	      path.push(new google.maps.LatLng(routeLat[i], routeLng[i]));
+	     // flightPath.setMap(map);
+   	   }
+ 
+       flightPath.setMap(map);
+     
+   	
    		for (var i = 0; i < locations.length; i++) {
    		      var marker = new google.maps.Marker({
    		        position: new google.maps.LatLng(locationLat[i], locationLng[i]),
    		        map: map,
    		        id:locations[i],
-   		        icon: icons[iconCounter]
+   		    	 icon: icons[iconCounter]
    		      });
-   		      markers.push(marker);
-   		 
-   		      
-   		      
+   		   markers.push(marker);
+   		   
+   		
+   	   
    		   google.maps.event.addListener(marker, 'mouseover', function(){
    			
    			//var isFirst=true;
@@ -351,8 +241,11 @@ $('#list_table').on("click", ".deletebtn", function () {
 	   				infowindow.setContent(this.id+ '</p>' +"도시설명");
 			        infowindow.open(map, marker);
    		   });
-			        //isFirst = false;	
-				  // }
+			     
+   		   
+   		   
+   		   
+   		   
 			   google.maps.event.addListener(marker, 'click', function(){
 				   var marker= this;
 			   array.push(this.id);
@@ -371,6 +264,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 
 	// Handles click events on a map, and adds a new point to the Polyline.
 
+	
+	
 	 function addLatLng(event) {
 	        var path=poly.getPath();
 
@@ -426,42 +321,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 	 		}
 		 poly.setMap();
 		}
-	  
-	 
-	  function clearMarkers() {
-	        setMapOnAll(null);
-	      }
 
-	      // Shows any markers currently in the array.
-	      function showMarkers() {
-	        setMapOnAll(map);
-	      }
-
-	      // Deletes all markers in the array by removing references to them.
-	      function deleteMarkers() {
-	    	  
-	        clearMarkers();
-	      	myMarkers = [];
-	      	 poly.setPath(null);
-	 			
-	      }
 	
-	 
-        /////////////////////////        ////////////////////////        ////////////////////////
-	 /*  function DeleteMarker(myMarkerId){  */
-	/*  function DeleteMarker(myMarkerId) { */
-	        //Find and remove the marker from the Array
-	        //myMarker.id=myMarkerId;
-	
-	      //no =$(this).parent().parent().children().eq(0).text();
-	       // no=$(this).closest('tr').prevAll().length;
-
-			
-	        //poly.setPath(null);
-	
-	     
-        ////////////////////////        ////////////////////////        ////////////////////////  
-	 
 	</script> 
 	</body>
 
