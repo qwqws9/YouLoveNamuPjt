@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.youlove.service.comment.CommentService;
 import com.youlove.service.domain.Comment;
+import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Tour;
 import com.youlove.service.guide.GuideService;
 import com.youlove.service.guide.WishBeenService;
@@ -43,11 +44,6 @@ public class GuideController {
 		
 		List<Tour> list = wishBeenService.initTour();
 		
-		//댓글 구현되면 완성시키기
-		for(Tour t : list) {
-			t.getTourId();
-		}
-		
 		model.addAttribute("tourList", list);
 		
 		return "/guide/initTour.jsp";
@@ -70,6 +66,47 @@ public class GuideController {
 		return "forward:/guide/tourDetail.jsp";
 	}
 	
+	@RequestMapping(value = "/selectTourDetail/{tourId}/{cost}/{checkin}/{checkout}")
+	public String selectTourDetail(@PathVariable String tourId,@PathVariable String cost
+			,@PathVariable String checkin,@PathVariable String checkout, Tour tour, Model model) throws Exception {
+	
+		System.out.println("/selectTourDetail ");
+		
+		System.out.println("+++++++++++++++++++++++++++++++++");
+		System.out.println(cost);
+		
+		System.out.println("+++++++++++++++++++++++++++++++++");
+		
+		tour = wishBeenService.selectPageDetail(tourId,cost,checkin,checkout);
+		
+		//map.put("boardCode", 5);
+		//map.put("detailCode", tour.getTourId());
+		//List<Comment> list = commentService.getComment(map);
+		model.addAttribute("boardCode",5);
+		model.addAttribute("detailCode",tour.getTourId());
+		//model.addAttribute("comment",list);
+		model.addAttribute("tour",tour);
+		return "forward:/guide/tourDetail.jsp";
+	}
+	
+	
+	@RequestMapping("/initHotel")
+	public String initHotel(Model model,Hotel hotel) throws Exception {
+		hotel.setKeyword("init");
+		
+		List<Hotel> list = wishBeenService.initHotel(hotel);
+		
+		model.addAttribute("hotelList", list);
+		
+		return "forward:/guide/initHotel.jsp";
+	}
+	
+	@RequestMapping("/searchFlight")
+	public String searchFlight() throws Exception {
+		
+		
+		return "forward:/guide/searchFlight.jsp";
+	}
 	
 
 }

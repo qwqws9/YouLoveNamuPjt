@@ -15,9 +15,18 @@
 		<result property="communityThumbnail" 	column="community_thumbnail" 	jdbcType="VARCHAR" />
 		<result property="openRange" 			column="open_range" 			jdbcType="CHAR" />
 		<result property="views" 				column="views" 					jdbcType="NUMERIC"  />
-		<result property="writer.userCode"		 		column="writer" 				jdbcType="NUMERIC" />
-		<result property="communityHashtagCode.hashtagCode" column="hashtag_code" 			jdbcType="NUMERIC" />
-		<result property="city.cityName" 				column="city_name" 				jdbcType="VARCHAR" />
+		<result property="communityHashtagCode.hashtagCode" column="hashtag_code" 	jdbcType="NUMERIC" />
+		<result property="city.cityName" 					column="city_name" 		jdbcType="VARCHAR" />
+		<association property="writer" javaType="user" >
+			<result property="userCode" 	column="USER_CODE" />
+			<result property="nickname" 	column="NICKNAME" />
+			<result property="profileImg"	column="PROFILE_IMG" />
+		</association>
+		<association property="city" javaType="city" >
+			<result property="cityName" 	column="CITY_NAME" 	 />
+			<result property="countryName" 	column="COUNTRY_NAME"/>
+			<result property="flagImage" 	column="FLAG_IMAGE"/>
+		</association>
 	</resultMap>
 	
 	<insert id="addCommunity" parameterType="community">
@@ -33,9 +42,10 @@
 	 
 	<select 	id="getCommunity"		parameterType="int"		resultMap="communityMap">
 		SELECT
-		community_code, community_board, community_title,community_content, community_date, views, writer, hashtag_code, city_name
-		FROM community
-		WHERE community_code = #{communityCode}
+		community_code, community_board, community_title, community_content, community_date, community_thumbnail, open_range, views, writer, hashtag_code, city_name,
+		u.user_code, u.nickname, u.profile_img
+		FROM community c,users u
+		WHERE community_code = #{communityCode} AND u.user_code = c.writer
 	</select>
 	
 	<select  	id="getCommunityRelated"  	parameterType="map"	resultMap="communityMap">
@@ -70,7 +80,7 @@
 			community_content	= <![CDATA[#{communityContent}]]>,
 			community_thumbnail	= #{communityThumbnail:VARCHAR},
 			open_range			= #{openRange},
-			city_name           = #{city:VARCHAR}
+			city_name           = #{city.cityName:VARCHAR}
 		</set>
 		WHERE community_code = #{communityCode}
 	</update>
@@ -79,10 +89,10 @@
 		SELECT *
 		FROM (SELECT first_table.*, ROWNUM AS row_seq
 		            FROM ( SELECT c.community_code, c.community_board, c.community_title, c.community_content, c.community_date, c.community_thumbnail,
-		            				c.open_range, c.views, c.writer, c.hashtag_code, c.city_name
-	                       FROM community c, hashtag h
+		            				c.open_range, c.views, c.writer, c.hashtag_code, c.city_name, u.user_code, u.nickname,u.profile_img, l.country_name, l.flag_Image
+	                       FROM community c, users u, city l
                        	 	<where>
-                       	 		h.hashtag_code = c.hashtag_code 
+                       	 		c.writer = u.user_Code AND l.city_name(+) = c.city_name
 		                        <if test="communityBoard != 0">
 		                       		<if test="communityBoard == 1">
 		                       			AND	community_board = 1
@@ -96,25 +106,19 @@
 		                        </if>
 	                       		<if test="searchCondition != null or searchKeyword != null">
 	                        		<if test="searchCondition == 0 and searchKeyword !='' ">
-				                        AND	city_name LIKE &apos;%${searchKeyword}%&apos;
+				                        AND	c.city_name LIKE &apos;%${searchKeyword}%&apos;
 	                        		</if>
 	                        		<if test="searchCondition == 1 and searchKeyword !='' ">
-				                        AND	community_title LIKE &apos;%${searchKeyword}%&apos;
+				                        AND	c.community_title LIKE &apos;%${searchKeyword}%&apos;
 	                        		</if>
 	                        		<if test="searchCondition == 2 and searchKeyword !='' ">
-				                        AND	community_content LIKE &apos;%${searchKeyword}%&apos;
+				                        AND	c.community_content LIKE &apos;%${searchKeyword}%&apos;
 	                        		</if>
 	                        		<if test="searchCondition == 3 and searchKeyword !='' ">
 				                        AND	c.hashtag_code LIKE &apos;#%${searchKeyword}%&apos;
 	                        		</if>
 	                        		<if test="searchCondition == 4 and searchKeyword !='' ">
-				                        AND	writer LIKE &apos;%${searchKeyword}%&apos;
-	                        		</if>
-	                        		<if test="searchCondition == 5 and searchKeyword !='' ">
-				                        AND city_name LIKE &apos;%${searchKeyword}%&apos;
-				                        OR community_title LIKE &apos;%${searchKeyword}%&apos;
-				                        OR community_content LIKE &apos;%${searchKeyword}%&apos;
-				                        OR c.hashtag_code LIKE &apos;#%${searchKeyword}%&apos;
+				                        AND	c.writer LIKE &apos;%${searchKeyword}%&apos;
 	                        		</if>
 		                       	</if>
                         	</where>

@@ -33,8 +33,8 @@ public class HashtagDaoImpl implements HashtagDao {
 		this.sqlSession.insert("HashtagMapper.addHashtag",hashtag);
 	}
 	@Override
-	public Hashtag getHashtag(int hashtagCode) throws Exception {
-		return sqlSession.selectOne("HashtagMapper.getHashtag",hashtagCode);
+	public Hashtag getHashtag(int theCode) throws Exception {
+		return sqlSession.selectOne("HashtagMapper.getHashtag",theCode);
 	}
 	@Override
 	public void updateHashtag(Hashtag hashtag) throws Exception {

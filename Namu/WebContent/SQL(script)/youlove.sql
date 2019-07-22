@@ -36,7 +36,7 @@ DROP SEQUENCE seq_comment_code;
 DROP SEQUENCE seq_like_code;
 DROP SEQUENCE seq_pay_code;
 DROP SEQUENCE seq_friend_code;
-
+DROP SEQUENCE seq_paylist_code;
 
 
 
@@ -61,6 +61,7 @@ CREATE SEQUENCE seq_comment_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_like_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_pay_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_friend_code                  INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_paylist_code                  INCREMENT BY 1 START WITH 1;
 
 
 
@@ -159,20 +160,20 @@ CREATE TABLE PAYLIST (
    PAYMENT_CODE          NUMBER(10)  PRIMARY KEY   ,
    PAYMENT_USER           NUMBER(10)   ,
    PAYMENT_DATE          DATE,
-    PAYMENT_PRICE          NUMBER(10)   ,
+    PAYMENT_PRICE          VARCHAR2(100)   ,
    PAYMENT_OPTION           VARCHAR2(20),
-    HOTEL_NAME              VARCHAR2(100),
-   HOTEL_ADDRESS           VARCHAR2(100),
-    HOTEL_IMAGE          VARCHAR2(100),
+    HOTEL_NAME              VARCHAR2(200),
+   HOTEL_ADDRESS           VARCHAR2(200),
+    HOTEL_IMAGE          VARCHAR2(200),
    START_DATE               VARCHAR2(20),
     END_DATE              VARCHAR2(20),
-   START_WAY               VARCHAR2(20),
-     END_WAY                 VARCHAR2(20),
-   FLIGHT_TIME           VARCHAR2(20),
-     RETURN_START_WAY       VARCHAR2(20),
-   RETURN_END_WAY           VARCHAR2(20),
-    RETURN_FLIGHT_TIME       VARCHAR2(20),
-   HOTEL_CODE               VARCHAR2(20)
+   START_WAY               VARCHAR2(100),
+     END_WAY                 VARCHAR2(100),
+   FLIGHT_TIME           VARCHAR2(200),
+     RETURN_START_WAY       VARCHAR2(100),
+   RETURN_END_WAY           VARCHAR2(100),
+    RETURN_FLIGHT_TIME       VARCHAR2(200),
+   HOTEL_CODE               VARCHAR2(100)
 );
 
 
@@ -275,7 +276,7 @@ CREATE TABLE community (
 	community_content		VARCHAR2(4000),
 	community_date			VARCHAR2(30),
 	community_thumbnail		VARCHAR2(100),
-	open_range				CHAR(1)		DEFAULT '2'	NOT NULL,
+	open_range				CHAR(1)		DEFAULT '1'	NOT NULL,
 	views					NUMBER(10),
 	writer					NUMBER(10) 		NOT NULL,
 	hashtag_code			NUMBER(10),
@@ -319,7 +320,6 @@ ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES u
 CREATE TABLE wallet ( 
    w_code			NUMBER(10)		NOT NULL,
    planner_code		NUMBER(10)		NOT NULL		REFERENCES planner(planner_code),
-   use_money_unit		VARCHAR2(30)		DEFAULT 'KRW',
    PRIMARY KEY(w_code)
 );
 
@@ -332,6 +332,7 @@ CREATE TABLE wallet_detail (
    money_unit		VARCHAR2(30)		NOT NULL,
    expression		VARCHAR2(30)		NOT NULL,
    price			NUMBER(15, 2)		NOT NULL,
+   krw_price		NUMBER(15, 2)		NOT NULL,
    reg_date		VARCHAR2(20)		NOT NULL,
    item			VARCHAR2(30),
    content			VARCHAR2(100),
@@ -465,11 +466,11 @@ INTO planner ( planner_code , user_code, planner_name , planner_image , member ,
 VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
 
 
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 3, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 5, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 5);
 
 
 commit;
