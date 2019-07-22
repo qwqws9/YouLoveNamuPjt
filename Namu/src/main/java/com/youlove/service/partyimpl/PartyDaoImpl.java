@@ -1,5 +1,8 @@
 package com.youlove.service.partyimpl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,20 +31,17 @@ public class PartyDaoImpl implements PartyDao {
 
 	@Override
 	public void addParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.sqlSession.insert("PartyMapper.addParty", party);
 	}
 
 	@Override
-	public void getParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public Party getParty(int partyCode) throws Exception {
+		return sqlSession.selectOne("PartyMapper.getParty", partyCode);
 	}
 
 	@Override
-	public void getPartyList(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public List<Party> getPartyList(Map<String,Object> map) throws Exception {
+		return null;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class PartyDaoImpl implements PartyDao {
 	}
 
 	@Override
-	public void deleteParty(Party party) throws Exception {
+	public void deleteParty(int partyCode) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
