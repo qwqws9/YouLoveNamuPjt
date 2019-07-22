@@ -93,8 +93,8 @@ $(document).on("click",".like",function(){
 			
 		}else {
 			$(this).html('<i class="fas fa-heart" style="color:red;"></i>');
-			$(this).parents('div').children().val();
-			addLike($(this).parents('div').children().val(),userCode);
+			var writerUser = $(this).parents('li').find('input[class=writerUserCode]').val().trim();
+			addLike($(this).parents('div').children().val(),userCode,writerUser);
 		}
 	});
 	
@@ -128,7 +128,7 @@ function checkLike(commentCode,userCode) {
 }
 
 
-function addLike(commentCode,likeName) {
+function addLike(commentCode,likeName,writerUser) {
 	
 	$.ajax ({
 		url : '/like/json/addLike',
@@ -146,12 +146,15 @@ function addLike(commentCode,likeName) {
 		},
 		success : function(data,status){
 			if(data == true) {
+				socketcall(writerUser);
 				addTimeline(commentCode,likeName,'9');
 				getComment($('#boardCode').val(),$('#detailCode').val());
 			}
 		}
 	})
 }
+
+
 
 function deleteLike(commentCode,likeName) {
 	
@@ -197,7 +200,7 @@ function addTimeline(commentCode,likeName,protocol) {
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-				alert(data);
+				//alert(data);
 		}
 	})
 }
@@ -465,7 +468,7 @@ function addTimeline(commentCode,likeName,protocol) {
 			    		+'		 <span>'+item.commentContent+'</span>'
 			    		+'	</p>'
 			    		+'</div>'
-			    		+'<input type="hidden" value="'+item.writerComment.userCode+'">'
+			    		+'<input type="hidden" class="writerUserCode" value="'+item.writerComment.userCode+'">'
 			    		+' </li>');
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
 							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.apto-'+index);
@@ -504,7 +507,7 @@ function addTimeline(commentCode,likeName,protocol) {
 					   +'   	<span>'+item.commentContent+'</span>'
 					   +'	</p>'
 					   +' </div>'
-					   +'<input type="hidden" value="'+item.writerComment.userCode+'">'
+					   +'<input type="hidden" class="writerUserCode" value="'+item.writerComment.userCode+'">'
 					   +'</li>' );
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
 							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.aptoo-'+index);

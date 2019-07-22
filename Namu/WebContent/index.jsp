@@ -24,7 +24,9 @@
 	<link rel="stylesheet" href="/resources/css/common.css" >
 	<!-- 날씨,시차,환율 정보를 위한 국가 도시 리스트 출력 -->
 	<script src="/resources/javascript/getProfile.js"></script>
+	
 	<script src="/resources/javascript/index.js"></script>
+	
 	
 	
 	<!-- Bootstrap CSS -->
