@@ -319,7 +319,6 @@ ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES u
 CREATE TABLE wallet ( 
    w_code			NUMBER(10)		NOT NULL,
    planner_code		NUMBER(10)		NOT NULL		REFERENCES planner(planner_code),
-   use_money_unit		VARCHAR2(30)		DEFAULT 'KRW',
    PRIMARY KEY(w_code)
 );
 
@@ -332,6 +331,7 @@ CREATE TABLE wallet_detail (
    money_unit		VARCHAR2(30)		NOT NULL,
    expression		VARCHAR2(30)		NOT NULL,
    price			NUMBER(15, 2)		NOT NULL,
+   krw_price		NUMBER(15, 2)		NOT NULL,
    reg_date		VARCHAR2(20)		NOT NULL,
    item			VARCHAR2(30),
    content			VARCHAR2(100),
@@ -465,11 +465,11 @@ INTO planner ( planner_code , user_code, planner_name , planner_image , member ,
 VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
 
 
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 3, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4, 'EUR');
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 5, 'EUR');
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 5);
 
 
 commit;
