@@ -81,7 +81,7 @@ function addParty(){
 	var gender2 = $("#gender2").val();
 	var gender3 = $("#gender3").val();
 	if(gender1 == null  && gender2 == null && gender3 == null){
-		alert("동행 기간을 정해주세요.");
+		alert("희망성별을 선택해주세요.");
 		return;
 	}
 	
@@ -105,6 +105,7 @@ function addParty(){
 			  event.preventDefault();
 			  alert( $( "form" ).serialize() );
 		});*/
-		$("form").attr("method","POST").attr("action","/party/addParty").submit();
+	alert("보낸다");
+	$("form").attr("method","POST").attr("action","/party/addParty").submit();
 	//}
 }	

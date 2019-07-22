@@ -259,11 +259,15 @@ CREATE TABLE party (
    party_content   VARCHAR2(1000),   
    party_start      VARCHAR2(20),
    party_end      VARCHAR2(20),
-   hashtag_code   NUMBER(10),
-   party_people   NUMBER(10),
-   party_user      NUMBER(10)      NOT NULL,
-   tour_code      NUMBER(10),
+   latitude         NUMBER(10),
+   longitude       NUMBER(10),
+   party_people   VARCHAR2(100),
+   writer           NUMBER(10)      NOT NULL,
+   party_recruitment CHAR(1) DEFAULT '1'	NOT NULL,
+   gerder           CHAR(1),
+   age              NUMBER(4),
    city_name      VARCHAR2(50),
+   hashtag_code   NUMBER(10),
    reg_date      DATE,
    PRIMARY KEY(party_code)
 );
@@ -304,8 +308,7 @@ CREATE TABLE message (
 
 ALTER TABLE message add CONSTRAINT sender_fk FOREIGN KEY(sender)  REFERENCES users(user_code);
 
-ALTER TABLE party add CONSTRAINT city_fk FOREIGN KEY(city_name)  REFERENCES city(city_name);
-ALTER TABLE party add CONSTRAINT user_fk FOREIGN KEY(party_user)  REFERENCES users(user_code);
+ALTER TABLE party add CONSTRAINT user_fk FOREIGN KEY(writer)  REFERENCES users(user_code);
 --ALTER TABLE party add CONSTRAINT hashtagparty_fk FOREIGN KEY(hashtag_code)  REFERENCES hashtag(hashtag_code);
 
 ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES users(user_code);
@@ -432,6 +435,7 @@ INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',t
 --INSERT INTO community VALUES (seq_community_code.nextval,'1','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,4,4,'세비야');
 --INSERT INTO community VALUES (seq_community_code.nextval,'2','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','1',33,5,5,'세비야');
 --INSERT INTO community VALUES (seq_community_code.nextval,'3','제목','내용',to_char(sysdate,'yy.mm.dd hh24:mi'),'noThumbnail.png','2',33,1,6,'세비야');
+INSERT INTO party VALUES (seq_party_code.nextval,'제목', '내용', to_date('2019.10.25','yyyy-mm-dd'), to_date(sysdate,'yyyy-mm-dd'),51.53178425571119,51.53178425571119,'중현',2,'1','3',1990,'베를린',12,sysdate);
 
 
 

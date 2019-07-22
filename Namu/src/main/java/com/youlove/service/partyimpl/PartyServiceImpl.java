@@ -26,8 +26,7 @@ public class PartyServiceImpl implements PartyService{
 
 	@Override
 	public void addParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+		partyDao.addParty(party);
 	}
 
 	@Override
