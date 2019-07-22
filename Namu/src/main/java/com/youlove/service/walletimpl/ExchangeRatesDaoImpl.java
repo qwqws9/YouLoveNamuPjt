@@ -44,5 +44,5 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 		return result;
 		
 	}
-		
+	
 }

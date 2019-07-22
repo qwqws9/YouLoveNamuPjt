@@ -1,5 +1,8 @@
 package com.youlove.web.party;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +54,11 @@ public class PartyController {
 									HttpSession session)throws Exception{
 		System.out.println("\nPartyController:::addParty() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/party/getParty");
 		//회원정보
-		User user = (User) session.getAttribute("user");
+		//User user = (User) session.getAttribute("user");
+		//party.setPartyWriter(user);
+		User user = new User();
+		user.setUserCode(2);
 		party.setPartyWriter(user);
 		//국가, 도시
 		City city = new City();
@@ -68,19 +73,35 @@ public class PartyController {
 		hashVo.setCommunityCode(party.getPartyCode());
 		hashtagService.addHashtag(hashVo);
 		
-		
-		System.out.println(party);
+		modelAndView.setViewName("/party/getParty?partyCode="+party.getPartyCode());
 		System.out.println("\nPartyController:::addParty() 끝:::");
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="getParty",method=RequestMethod.GET)
-	public ModelAndView getParty(@ModelAttribute("party") Party party)throws Exception{
-		System.out.println("\nPartyController:::addParty() 시작:::");
+	@RequestMapping(value="getParty",method={RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView getParty(@RequestParam(value="partyCode")int partyCode )throws Exception{
+		System.out.println("\nPartyController:::getParty() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/party/getParty.jsp");
+		Map<String,Object> map = new HashMap<String, Object>();
 		
-		System.out.println("\nPartyController:::addParty() 끝:::");
+		System.out.println("1");
+		System.out.println(partyCode);
+		//동행
+		Party party = partyService.getParty(partyCode);
+		//해쉬태그
+		System.out.println("2");
+		map = hashtagService.getHashtag(partyCode);
+		System.out.println("3");
+		modelAndView.addObject("hashtag", map.get("hashtag"));
+		//댓글
+		//modelAndView.addObject("boardCode",partyCode);
+		//modelAndView.addObject("detailCode",);
+		modelAndView.addObject("party", party);
+		System.out.println("4");
+		System.out.println(party);
+		modelAndView.setViewName("/party/getParty.jsp");
+		System.out.println("5");
+		System.out.println("\nPartyController:::getParty() 끝:::");
 		return modelAndView;
 	}
 	
