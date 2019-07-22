@@ -13,13 +13,9 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link rel="stylesheet" href="/resources/css/common.css" >
 <script src="/resources/javascript/getProfile.js"></script>
-<script src="http://localhost:9090/socket.io/timeline/server.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	var socket = io("http://localhost:9090");
-})
-
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+ 
 </head>
 
 <body class="text-center">
@@ -65,14 +61,65 @@ $(document).ready(function(){
 		</div>
 	</div>
 	
+	<input type="hidden" id="userCode" value="${user.userCode }">
+	
 	 <jsp:include page="../comment/getComment.jsp" >
       	<jsp:param value="${boardCode}" name="boardCode"/>
       	<jsp:param value="${detailCode}" name="detailCode"/>
       </jsp:include>
 		
 <script type="text/javascript">
+window.onload = function () {
+    if (window.Notification) {
+        Notification.requestPermission();
+    }
+}
 		
 	$(function(){
+		var userCode = $('#userCode').val();
+		
+		if(userCode != '') {
+				  
+			    // socket.io 서버에 접속한다
+			    var socket = io("http://127.0.0.1:3000");
+
+			    // 서버로 자신의 정보를 전송한다.
+			    socket.emit("login", {
+			      // name: "ungmo2",
+			      userCode : userCode
+			    });
+			    
+			    socket.on('timeline',function(data) {
+			    	notify(data);
+			    });
+			    
+			    function socketcall() {
+			    	 socket.emit("timeline", { msg: '하이하이', To : '2',img : 'http://localhost:8080/resources/images/profile/7877e8c81ac0a942265a9b65a049b784.jpg' });
+			    	
+			    }
+			}
+		
+		function notify(data) {
+			alert(data.image);
+            if (Notification.permission !== 'granted') {
+                alert('notification is disabled');
+            }
+            else {
+                var notification = new Notification('Notification title', {
+                    icon: data.image,
+                    body: 'Notification text'+data.message,
+                });
+ 
+                notification.onclick = function () {
+                    window.open('http://google.com');
+                };
+            }
+        }
+		
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		
 		$('#findInfo').on('click',function(){
 			var url = '/user/findInfo';
@@ -95,6 +142,7 @@ $(document).ready(function(){
 		})
 		
 		$("#autoLogin").on('click',function(){
+			socketcall();
 			//alert($('#autoLogin').is(':checked'));
 			if($('#autoLogin').is(':checked')) {
 				$("#saveId").prop('disabled',true).prop('checked',true)

@@ -83,6 +83,6 @@
 		<div class="act_btns">
 			<a href="javascript:void(0);" class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn delete_btn">삭제</a>
 		</div>
-		<a href="javascript:void(0);" class="close_btnn"><i class="fas fa-times-circle"></i><span class="skip">닫기</span></a>
+		<a href="javascript:void(0);" class="close_btnn"><i class="fas fa-times-circle close_icon"></i><span class="skip">닫기</span></a>
 	</div>
 </div><!-- //pop_wrap_get -->
