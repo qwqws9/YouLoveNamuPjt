@@ -1,9 +1,12 @@
 package com.youlove.service.walletimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.youlove.service.domain.Exchange;
 import com.youlove.service.wallet.ExchangeRatesDao;
 import com.youlove.service.wallet.ExchangeRatesService;
 
@@ -15,8 +18,13 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 	private ExchangeRatesDao exchangeRatesDao;
 	
 	@Override
-	public double convertExchangeRate(String from, String to, double amount) throws Exception {
-		return exchangeRatesDao.convertExchangeRate(from, to, amount);
+	public List<Exchange> exchangeRates() throws Exception {
+		return exchangeRatesDao.exchangeRates();
+	}
+	
+	@Override
+	public Exchange convertExchangeRate(Exchange exchange) throws Exception {
+		return exchangeRatesDao.convertExchangeRate(exchange);
 	}
 	
 }
