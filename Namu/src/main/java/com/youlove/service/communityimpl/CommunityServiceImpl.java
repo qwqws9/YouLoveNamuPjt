@@ -1,5 +1,6 @@
 package com.youlove.service.communityimpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Service;
 import com.youlove.common.Search;
 import com.youlove.service.community.CommunityDao;
 import com.youlove.service.community.CommunityService;
+import com.youlove.service.domain.City;
 import com.youlove.service.domain.Community;
+import com.youlove.service.domain.User;
+import com.youlove.service.user.UserDao;
 
 @Service("communityServiceImpl")
 public class CommunityServiceImpl implements CommunityService{
@@ -19,6 +23,10 @@ public class CommunityServiceImpl implements CommunityService{
 	@Autowired
 	@Qualifier("communityDaoImpl")
 	private CommunityDao communityDao;
+	@Autowired
+	@Qualifier("userDaoImpl")
+	private UserDao userDao;
+	
 	public void setCommunityDao(CommunityDao communityDao) {
 		this.communityDao = communityDao;
 	}
@@ -39,12 +47,25 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDao.getCommunity(communityCode);
 	}
 	@Override
+	public Map<String, Object> getCommunityRelated(String communityBoard, City city) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("communityBoard", communityBoard);
+		if(communityBoard.equals("2")) {
+			map.put("city", city.getCityName());
+		}
+		List<Community> related = communityDao.getCommunityRelated(map);
+		map.put("related", related);
+		return map;
+	}
+	
+	@Override
 	public Map<String, Object> getCommunityList(Map<String,Object> map) throws Exception {
 		Search search = (Search) map.get("search");
 		List<Community> list = communityDao.getCommunityList(map);
+		
+			System.out.println("list = "+list);
 		List<Community> bestlist = communityDao.getCommunityBestList(map);
 		int totalCount = communityDao.getTotalCount(search);
-		
 		map.put("bestlist", bestlist);
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
@@ -63,6 +84,7 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void countCommunity(int communityCode) throws Exception {
 	}
+
 
 
 

@@ -11,7 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-
+<link rel="stylesheet" href="/resources/css/common.css" >
+<script src="/resources/javascript/getProfile.js"></script>
+ 
 </head>
 
 <body class="text-center">
@@ -25,7 +27,7 @@
 		  				<h1 class="h3 mb-3 font-weight-normal">You Love</h1>
 					</div>
 					<div class="col">
-			  			<input type="text" id="userId" name="userId"  class="form-control" placeholder="Email Address & Phone Number" style="width: 400px;" autofocus>
+			  			<input type="text" id="userId" name="userId"  class="form-control" placeholder="Email Address & Phone Number" style="width: 400px;" autofocus value="${saveId }">
 			  			<br>
 			  			<input type="password" id="password" name="password" class="form-control" placeholder="Password" >
 			  			<br>
@@ -34,11 +36,11 @@
 					</div>
 		 			 <div class="checkbox">
 		  				<label>
-		     			 	<input type="checkbox" id="saveId"> 아이디 저장
+		     			 	<input type="checkbox" name="saveId" id="saveId"> 아이디 저장
 		      			</label>
 		      			&nbsp;&nbsp;&nbsp;
 		     			 <label>
-		      				<input type="checkbox" id="autoLogin"> 자동 로그인
+		      				<input type="checkbox" name="autoLogin" id="autoLogin"> 자동 로그인
 		      			</label>
 		  			</div>
 		  				<div class="row">
@@ -56,39 +58,15 @@
 			</div>
 		</div>
 	</div>
-		<input type="text" id="cityName">
-		<input type="button"  class="btn btn-lg-6 btn-primary btn-block" id="getCity" value="도시가져오기">
-		
-		
-		
-		<jsp:include page="../comment/getComment.jsp" >
-      	<jsp:param value="${boardCode1 }" name="boardCode"/>
-      	<jsp:param value="${detailCode1 }" name="detailCode"/>
-      </jsp:include>
-      
-		
-		<script type="text/javascript">
-		
-		
-	$(function(){
-		
-		$('#getCity').on('click',function(){
-			$.ajax({
-				url : "/guide/json/getCityList/"+$('#cityName').val().trim(),
-				method : "POST" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-// 				data : JSON.stringify({
-// 					cityName : $('#cityName').val().trim()
-// 				}),
-				success : function(JSONData , status) {
-					alert(JSONData);
-				}
-		})
-		});
 	
+	
+<%-- 	 <jsp:include page="../comment/getComment.jsp" > --%>
+<%--       	<jsp:param value="${boardCode}" name="boardCode"/> --%>
+<%--       	<jsp:param value="${detailCode}" name="detailCode"/> --%>
+<%--       </jsp:include> --%>
+		
+<script type="text/javascript">
+		
 		$('#findInfo').on('click',function(){
 			var url = '/user/findInfo';
 			var name = "_blank";
@@ -110,6 +88,7 @@
 		})
 		
 		$("#autoLogin").on('click',function(){
+			socketcall();
 			//alert($('#autoLogin').is(':checked'));
 			if($('#autoLogin').is(':checked')) {
 				$("#saveId").prop('disabled',true).prop('checked',true)

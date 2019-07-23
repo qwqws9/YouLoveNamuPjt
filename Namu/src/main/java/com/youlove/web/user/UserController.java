@@ -1,6 +1,7 @@
 package com.youlove.web.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -13,11 +14,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.common.FileNameUUId;
+import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
 import com.youlove.service.user.UserService;
 
@@ -33,8 +37,31 @@ public class UserController {
 		System.out.println(this.getClass());
 	}
 	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/getPayList",method=RequestMethod.GET)
+	public String getPayList(HttpServletRequest request,Model model,Map<String,Object> map,HttpSession session) throws Exception{
+		
+		User user = (User)session.getAttribute("user");
+		
+		List<Pay> list = userService.getPayList(user.getUserCode());
+		
+		model.addAttribute("list",list);
+		
+		return "forward:/user/payList.jsp";
+	}
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(@ModelAttribute User user,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public String login(@ModelAttribute User user,HttpSession session,HttpServletRequest request,HttpServletResponse response,@RequestParam(required = false) boolean saveId,@RequestParam(required = false) boolean autoLogin) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		
@@ -47,27 +74,64 @@ public class UserController {
 		
 		
 		session.setAttribute("user", dbUser);
+		String sessionId = "";
 		
-
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for(int i =0; i < cookies.length; i++) {
+				Cookie js = cookies[i];
+				if(js.getName().equals("JSESSIONID")) {
+					sessionId = js.getValue();
+				}
+			}
+		}
+		map.clear();
+		map.put("userCode", dbUser.getUserCode());
+		map.put("target", "token");
+		map.put("value", sessionId);
+		userService.updateUser(map);
 		Cookie c = new Cookie("users",dbUser.getNickname());
+		//c.setDomain("http://192.168.0.13:8005");
 		c.setMaxAge(365 * 24 * 60 * 60);
 		c.setPath("/");
 		response.addCookie(c);
-		
-		
+		if(saveId) {
+			c = new Cookie("saveId",dbUser.getEmail());
+			c.setMaxAge(365 * 24 * 60 * 60);
+			c.setPath("/");
+			response.addCookie(c);
+		}
+		if(autoLogin) {
+			c = new Cookie("autoLogin",dbUser.getEmail());
+			c.setMaxAge(365 * 24 * 60 * 60);
+			c.setPath("/");
+			response.addCookie(c);
+		}
 		
 		return "redirect:/";
 	}
 	
 	
 	@RequestMapping(value="/loginView",method=RequestMethod.GET)
-	public String loginView(HttpServletRequest request,Model model) throws Exception{
+	public String loginView(HttpServletRequest request,Model model,Map<String,Object> map,HttpSession session) throws Exception{
 		
 		System.out.println("/user/loginView : GET");
-		System.out.println(request.getRealPath("/"));
+		Cookie[] cookie = request.getCookies();
+		for(Cookie c : cookie) {
+			if(c.getName().equals("autoLogin")) {
+				map.put("login", c.getValue());
+				User user = userService.getUser(map);
+				session.setAttribute("user", user);
+				return "/";
+			}else if(c.getName().equals("saveId")) {
+				model.addAttribute("saveId",c.getValue());
+			}
+		}
 		
-		model.addAttribute("boardCode",5);
+      	
+		model.addAttribute("boardCode","5");
 		model.addAttribute("detailCode","12345");
+		
 		
 		return "forward:/user/loginView.jsp";
 	}
@@ -89,11 +153,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/addUser", method= RequestMethod.POST)
-	public String addUserA(@ModelAttribute User user, MultipartFile profileImage) throws Exception {
+	public String addUserA(@ModelAttribute User user, MultipartFile profileImage,HttpServletRequest request) throws Exception {
 		
 		System.out.println("/user/addUser : POST");
 		
-		String fileName = FileNameUUId.convert(profileImage,"profileImage");
+		String fileName = FileNameUUId.convert(profileImage,"profile",request);
 		
 		if(fileName.equals("NotImage")) {
 			fileName = "7877e8c81ac0a942265a9b65a049b784.jpg";
@@ -115,9 +179,22 @@ public class UserController {
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) throws Exception {
+	public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
 		System.out.println("/user/logout");
+		
+		Cookie[] cookies = request.getCookies();
+
+		if(cookies != null){
+
+			for(Cookie c : cookies) {
+				if(c.getName().equals("autoLogin")) {
+					c.setMaxAge(0);
+					c.setPath("/");
+					response.addCookie(c);
+				}
+			}
+		}
 		
 		session.removeAttribute("user");
 		
@@ -134,6 +211,37 @@ public class UserController {
 		return "forward:/user/getUser.jsp";
 	}
 	
+	@RequestMapping("/getUserList")
+	public String getUserList(Model model,Map<String,Object> map) throws Exception {
+		
+		System.out.println("/user/getUserList");
+		
+		map.put("order", "1");
+		map.put("role", "all");
+		List<User> list = userService.getUserList(map);
+		
+		model.addAttribute("list",list);
+		
+		
+		return "forward:/user/getUserList.jsp";
+	}
+	
+	
+	
+	@RequestMapping("/searchUserClick/{userCode}")
+	public String searchUserClick(@PathVariable int userCode,Map<String,Object> map,Model model) throws Exception {
+		
+		System.out.println("/user/searchUserClick");
+		
+		map.put("userCode", userCode);
+		
+		User user = userService.getUser(map);
+		
+		model.addAttribute("userForm",user);
+		
+		
+		return "forward:/user/searchUserClick.jsp";
+	}
 	
 	
 }

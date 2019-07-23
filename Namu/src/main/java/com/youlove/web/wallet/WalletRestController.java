@@ -1,17 +1,24 @@
 package com.youlove.web.wallet;
 
-import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.youlove.common.FileNameUUId;
+import com.youlove.common.Search;
 import com.youlove.service.domain.Wallet;
+import com.youlove.service.wallet.ExchangeRatesService;
 import com.youlove.service.wallet.WalletService;
 
 @RestController
@@ -22,21 +29,21 @@ public class WalletRestController {
 	@Qualifier("walletServiceImpl")
 	private WalletService walletService;
 	
+	@Autowired
+	@Qualifier("exchangeRatesServiceImpl")
+	private ExchangeRatesService exchangeRatesService;
+	
 	public WalletRestController() {
 		System.out.println(this.getClass());
 	}
 	
-	@Value("#{commonProperties['walletUploadPath']}")
-	String walletUploadPath;
-	
 	@RequestMapping(value="json/addWallet", method=RequestMethod.POST)
-	public Wallet addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file) throws Exception{
+	public Wallet addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/wallet/json/addWallet :: POST");
 		
 		if(!file.isEmpty() && file != null){
-			String fileName = file.getOriginalFilename(); // 파일이름.확장명
-			file.transferTo(new File(walletUploadPath + fileName));
+			String fileName = FileNameUUId.convert(file, "wallet", request);
 			
 			wallet.setWalletImage(fileName);
 		}
@@ -49,89 +56,59 @@ public class WalletRestController {
 		
 	}
 	
-	/*
-	@RequestMapping(value="json/checkNick/{nick}", method=RequestMethod.GET)
-	public boolean checkNick(@PathVariable String nick) throws Exception {
+	@RequestMapping(value = "/json/getWallet/{walletDetailCode}", method=RequestMethod.GET)
+	public Wallet getWallet(@PathVariable int walletDetailCode) throws Exception{
 		
-		System.out.println("/user/json/checkNick/{nick}");
+		System.out.println("/wallet/json/getWallet :: GET");
 		
-		System.out.println(nick);
+		Wallet wallet = walletService.getWallet(walletDetailCode);
+		System.out.println(wallet);
 		
-		boolean	result = userService.getCheckUser(nick);
+		return wallet;
 		
-		
-		
-		return result;
 	}
 	
-	@RequestMapping(value="json/sendNum", method=RequestMethod.POST)
-	public Map<String,Object> sendNum(@RequestBody Map<String, Object> param) throws Exception {
+	@RequestMapping(value = "/json/deleteWallet/{walletDetailCode}", method=RequestMethod.GET)
+	public Wallet deleteWallet(@PathVariable int walletDetailCode) throws Exception{
 		
-		System.out.println("/user/json/sendNum");
+		System.out.println("/wallet/json/deleteWallet :: GET");
 		
-		String target = (String)param.get("target");
-		System.out.println(target);
-		String receiver = (String)param.get("receiver");
-		System.out.println(receiver);
+		walletService.deleteWallet(walletDetailCode);
 		
-		Map<String,Object> map = new HashMap<>();
+		Wallet wallet = walletService.getWallet(walletDetailCode);
 		
-		String number = RandomNumber.getRandom();
-		String content = "YouLovePlan 회원가입 인증번호는 " + number +" 입니다.";
-		String title = "[YouLove]회원가입 인증메일";
+		return wallet;
 		
-		map.put("checkNum", number);
-		
-		if(target.equals("email")) {
-			CheckEmailTransfer.gmailSend(title, content, receiver);
-		
-			map.put("target", "email");
-		
-		}else if(target.equals("phone")) {
-			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
-			System.out.println(result);
-			if(result == true) {
-				map.put("target", "phone");
-			}else {
-				map.put("target", "error");
-			}
-			
-		}
-		return map;
 	}
 	
-	@RequestMapping(value="/json/createCaptcha", method=RequestMethod.POST)
-	public Map<String, Object> createCaptcha() throws Exception{
+	@RequestMapping(value="json/getWalletList/{walletCode}")
+	public Map<String, Object> getWalletList (@PathVariable int walletCode, @RequestBody Search search) throws Exception{
 		
-		StringBuffer str = NaverCaptcha.createKey(captchaId, captchaSecret);
-		JSONObject json = new JSONObject();
-		JSONParser parse = new JSONParser();
-		json = (JSONObject)parse.parse(str.toString());
-		String key = (String)json.get("key");
-		
-		String image = NaverCaptcha.requestImage(captchaId, captchaSecret,key);
+		System.out.println("/wallet/json/getWalletList :: GET / POST");
+		System.out.println(walletCode);
+		System.out.println(search);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("image", image);
-		map.put("key", key);
+		map.put("search", search);
+		map.put("walletCode", walletCode);
+		
+		map = walletService.getWalletList(map);
+		map.put("search", search);
 		
 		return map;
 		
 	}
 	
-	@RequestMapping(value="/json/compareCaptcha", method=RequestMethod.POST)
-	public boolean compareCaptcha(@RequestBody Map<String,Object> map) throws Exception{
-		
-		String key = (String)map.get("key");
-		String userKey = (String)map.get("userKey");
-		StringBuffer str = NaverCaptcha.compareCaptcha(captchaId, captchaSecret, key, userKey);
-		JSONObject json = new JSONObject();
-		JSONParser parse = new JSONParser();
-		json = (JSONObject)parse.parse(str.toString());
-		boolean result = (boolean)json.get("result");
+	@RequestMapping(value = "/json/convert", method=RequestMethod.POST)
+	public double convert(@RequestBody Map<String, Object> map) throws Exception{
+
+		System.out.println("/wallet/json/convert :: POST");
+		System.out.println("변경될 화폐 기준 : " + map.get("from") + ", 변경할 화폐 단위 : " + map.get("to") + ", 금액 : " + map.get("amount"));
+
+		Double result = exchangeRatesService.convertExchangeRate((String)map.get("from"), (String)map.get("to"), Double.parseDouble((map.get("amount")).toString()));
 		
 		return result;
 		
 	}
-	*/
+	
 }

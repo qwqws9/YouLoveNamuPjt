@@ -18,8 +18,8 @@ public class User {
 	private String profileImg;
 	private String introduce;
 	private Date regDate;
-	private Date startBlock;
-	private Date endBlock;
+	private String startBlock;
+	private String endBlock;
 	//로그인시 판별위한 필드
 	private String userId;
 	
@@ -108,16 +108,16 @@ public class User {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-	public Date getStartBlock() {
+	public String getStartBlock() {
 		return startBlock;
 	}
-	public void setStartBlock(Date startBlock) {
+	public void setStartBlock(String startBlock) {
 		this.startBlock = startBlock;
 	}
-	public Date getEndBlock() {
+	public String getEndBlock() {
 		return endBlock;
 	}
-	public void setEndBlock(Date endBlock) {
+	public void setEndBlock(String endBlock) {
 		this.endBlock = endBlock;
 	}
 	public String getUserId() {

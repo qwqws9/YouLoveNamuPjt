@@ -1,19 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <input type="hidden" name="walletCode" value="1" />
 <input type="hidden" name="part" value="1" />
+
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">
 			<input type="text" class="date_time" name="regDate" readonly />
 
-			<select class="unit_selec" name="moneyUnit">
+			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
-				<option value="EUR">EUR</option>
+				<option value="EUR" selected>EUR</option>
+				<option value="CHF">CHF</option>
+				<option value="GBP">GBP</option>
+				<option value="CZK">CZK</option>
+				<option value="HUF">HUF</option>
 			</select>
 			<div class="result">
-				<input type="text" class="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
-				<span class="krw_price">KRW 14,564.00</span>
+				<input type="text" class="price" id="price" name="price" value="" alt="하단 금액 입력칸에 입력해주세요.">
+				<span class="krw_price">KRW <span class="exchange_plus_result"></span></span>
+				<input type="hidden" class="exchange_rate" id="exchange_rate" name="exchangeRate" value="">
+				<input type="hidden" class="exchange_price" id="exchange_price" name="krwPrice" value="">
 			</div>
 		</div><!-- //result_top -->
 		
@@ -69,10 +75,14 @@
 			<div class="add_option_selec">
 				<span class="txt">추가 입력</span>
 				<span class="add_option_wrap">
-					<a href="javascript:void(0);"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span></a>
+					<a href="javascript:void(0);"  id="memo_btn"><i class="far fa-file-alt"></i><br/><span class="txt">메모</span><span class="skip">등록</span></a>
+					<span class="memo_modal">
+						<textarea class="memo_cont" name="content"></textarea>
+						<a href="javascript:void(0);" class="close_btn"><i class="fas fa-times-circle"></i><span class="skip">취소</span></a>
+					</span>
 				</span>
 				<span class="add_option_wrap">
-					<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span></label>
+					<label for="file" class="file"><i class="far fa-image"></i><br/><span class="txt">사진</span><span class="skip">등록</span></label>
 					<input type="file" name="file" id="file">
 				</span>
 			</div><!-- //add_option_selec -->
@@ -81,7 +91,7 @@
 	
 	<div class="cal_btns">
 		<div class="clear">
-			<input type="text" class="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
+			<input type="text" class="expression" id="expression" name="expression" placeholder="금액을 입력해주세요."><input type="button" class="cal_btn ac" value="AC">
 		</div>
 		<div class="clear">
 			<div class="cal_left">

@@ -24,5 +24,6 @@ public interface CommunityDao {
 
 	public void countCommunity(Community community) throws Exception;
 	
+	public List<Community> getCommunityRelated (Map<String,Object> map) throws Exception;
 }
 	

@@ -58,16 +58,18 @@ public class WalletServiceImpl implements WalletService {
 	public void updateWallet(Wallet wallet) throws Exception{
 		walletDao.updateWallet(wallet);
 	}
-	
+	*/
 	public void deleteWallet(int walletDetailCode) throws Exception{
 		walletDao.deleteWallet(walletDetailCode);
 	}
-	*/
-	public Map<String, Object> getWalletList(int walletCode) throws Exception {
-		List<Wallet> list = walletDao.getWalletList(walletCode);
+	
+	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception{
+		List<Wallet> list = walletDao.getWalletList(map);
+		int totalCount = walletDao.getTotalCount(map);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		map = new HashMap<String, Object>();
 		map.put("list", list);
+		map.put("totalCount", new Integer(totalCount));
 		
 		return map;
 	}

@@ -1,12 +1,18 @@
 package com.youlove.service.plannerimpl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Route;
+import com.youlove.service.domain.Schedule;
+import com.youlove.service.domain.Wallet;
+import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
 import com.youlove.service.planner.PlannerService;
@@ -46,6 +52,20 @@ import com.youlove.service.user.UserDao;
 			return plannerDao.getPlanner(plannerCode);
 		}
 	
+		@Override
+		public void updatePlanner(Planner planner) throws Exception {
+			plannerDao.updatePlanner(planner);
+		}
+		
+
+		public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception{
+			List<Planner> list = plannerDao.getPlannerList(map);
+			int totalCount = plannerDao.getTotalCount(map);
+			map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("totalCount", new Integer(totalCount));
+			return map;
+		}
 		//2. route 
 		@Override
 		public void addRoute(Route route) throws Exception {
@@ -62,7 +82,66 @@ import com.youlove.service.user.UserDao;
 			return plannerDao.getRouteList(plannerCode);
 		}
 	
+		//3.schedule
+		@Override
+		public void addSchedule(Schedule schedule) throws Exception {
+			plannerDao.addSchedule(schedule);
+		}
 		
+		@Override
+		public List<Schedule> getScheduleList(int plannerCode) throws Exception{
+			return plannerDao.getScheduleList(plannerCode);
+		}
 		
+		public Schedule getSchedule(int scheCode) throws Exception{
+			return plannerDao.getSchedule(scheCode);
+		}
 		
+		@Override
+		public List<String> getRouteCityName(int plannerCode) throws Exception {
+
+		    List<Route> cityList = plannerDao.getRouteCityName(plannerCode);
+		    List<String> citys = new ArrayList<String>();
+		    
+		   for(int i=0;i<cityList.size();i++) {
+			   citys.add(cityList.get(i).getCityName());
+	   }
+		    
+		    System.out.println(citys);
+		   
+			return citys;
+		}
+		
+		@Override
+		public List<String> getRouteLng(int plannerCode) throws Exception {
+
+			
+		    List<Route> lngList = plannerDao.getRouteLng(plannerCode);
+		   List<String> lngs = new ArrayList<String>();
+		    
+		   for(int i=0;i<lngList.size();i++) {
+			   lngs.add(lngList.get(i).getLng());
+	   }
+		    
+		    System.out.println(lngs);
+		   
+			return lngs;
+		}
+		
+		@Override
+		public List<String> getRouteLat(int plannerCode) throws Exception {
+			
+		   List<Route> latList = plannerDao.getRouteLat(plannerCode);
+		   List<String> lats = new ArrayList<String>();
+		    
+		   for(int i=0;i<latList.size();i++) {
+			   lats.add( latList.get(i).getLat());
+	   }
+		    
+		    System.out.println(lats);
+		   
+			return lats;
+		}
+
+	
 }

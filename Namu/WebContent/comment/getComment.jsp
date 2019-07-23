@@ -7,13 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="../resources/javascript/jquery.oLoader.min.js"></script>
-<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
-<script src="/resources/javascript/jquery.oLoader.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+<!-- <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+<!-- <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script> -->
+<!-- <script src="/resources/javascript/jquery.oLoader.min.js"></script> -->
+<link rel="stylesheet" href="/resources/css/common.css" >
+<script src="/resources/javascript/getProfile.js"></script>
 
 <style type="text/css">
 .replyAdda {width: 100%;}
@@ -26,7 +27,7 @@
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 	<div class="col-md-12">
 		<div class="my-3 p-3 bg-white rounded shadow-sm">
    			 <h6 class="count border-bottom border-gray pb-2 mb-0"></h6>
@@ -72,6 +73,8 @@
 			</nav>
 	</div>
 	<br><br><br><br><br><br>
+	
+	<jsp:include page="../user/getProfile.jsp"></jsp:include>
 
 <script type="text/javascript">
 
@@ -90,8 +93,8 @@ $(document).on("click",".like",function(){
 			
 		}else {
 			$(this).html('<i class="fas fa-heart" style="color:red;"></i>');
-			$(this).parents('div').children().val();
-			addLike($(this).parents('div').children().val(),userCode);
+			var writerUser = $(this).parents('li').find('input[class=writerUserCode]').val().trim();
+			addLike($(this).parents('div').children().val(),userCode,writerUser);
 		}
 	});
 	
@@ -125,7 +128,7 @@ function checkLike(commentCode,userCode) {
 }
 
 
-function addLike(commentCode,likeName) {
+function addLike(commentCode,likeName,writerUser) {
 	
 	$.ajax ({
 		url : '/like/json/addLike',
@@ -143,11 +146,15 @@ function addLike(commentCode,likeName) {
 		},
 		success : function(data,status){
 			if(data == true) {
+				socketcall(writerUser);
+				addTimeline(commentCode,likeName,'9');
 				getComment($('#boardCode').val(),$('#detailCode').val());
 			}
 		}
 	})
 }
+
+
 
 function deleteLike(commentCode,likeName) {
 	
@@ -172,7 +179,31 @@ function deleteLike(commentCode,likeName) {
 	})
 }
 
+//////////////////////////////////추천 했을시 타임라인에 add ///////////////////////////
 
+function addTimeline(commentCode,likeName,protocol) {
+	
+	$.ajax ({
+		url : '/timeline/json/addTimeline',
+		method : 'post',
+		data : JSON.stringify({
+			commentCode : {
+				commentCode : commentCode
+			},
+			protocol : protocol,
+			fromUser : {
+				userCode : likeName
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+				//alert(data);
+		}
+	})
+}
 
 
 
@@ -348,9 +379,14 @@ function deleteLike(commentCode,likeName) {
 	});
 		
 	
-	
-	
-	
+		
+	//닉네임 클릭시 회원코드로 프로필 출력
+	$(document).on("click",".prof",function(){ 
+		console.log("유저코드 : " + $(this).parents('div').next().val());
+		getProfile($(this).parents('div').next().val());
+		
+		
+	});
 	
 	
 	
@@ -419,10 +455,10 @@ function deleteLike(commentCode,likeName) {
 						$('ul.commentAjax').append('<li>'
 			    		+'<div class="media text-muted pt-3">'
 			    		+'	<input type="hidden" value="'+item.commentCode+'">'
-			    		+'	<img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="32" height="32">'
+			    		+'	<img class="prof" alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
 			    		+'	<p class="media-body pb-3 mb-0 small">'
 			    		+'		<span class="apto-'+index+' d-block" style="position:relative;">'
-			    		+'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
+			    		+'        	<strong class="prof text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;'
 			    		+'       	<button class="like" type="button" style="border:none; background: none">'
 			    		+'        		<i class="far fa-heart"></i>&nbsp;'+item.likeCount
 			    		+'        	</button>'
@@ -432,6 +468,7 @@ function deleteLike(commentCode,likeName) {
 			    		+'		 <span>'+item.commentContent+'</span>'
 			    		+'	</p>'
 			    		+'</div>'
+			    		+'<input type="hidden" class="writerUserCode" value="'+item.writerComment.userCode+'">'
 			    		+' </li>');
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
 							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.apto-'+index);
@@ -458,10 +495,10 @@ function deleteLike(commentCode,likeName) {
 						$('ul.commentAjax').append('<li style="padding-left: 30px;">'
 					   +' <div class="media text-muted pt-3">'
 					   +' 	<input type="hidden" value="'+item.commentCode+'">'
-					   +'    <img alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="32" height="32">'
+					   +'    <img class="prof" alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'
 					   +'    <p class="media-body pb-3 mb-0 small">'
 					   +'    	<span class="aptoo-'+index+' d-block" style="position:relative;">'
-					   +'        	<strong class="text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 
+					   +'        	<strong class="prof text-gray-dark">@'+item.writerComment.nickname+'</strong>&nbsp;&nbsp;' 
 					   +'       	<button class="like" type="button" style="border:none; background: none">'
 					   +'       		<i class="far fa-heart"></i>&nbsp;'+item.likeCount
 					   +'       	</button>'
@@ -470,6 +507,7 @@ function deleteLike(commentCode,likeName) {
 					   +'   	<span>'+item.commentContent+'</span>'
 					   +'	</p>'
 					   +' </div>'
+					   +'<input type="hidden" class="writerUserCode" value="'+item.writerComment.userCode+'">'
 					   +'</li>' );
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
 							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.aptoo-'+index);

@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.youlove.common.api.OpenWeather;
 import com.youlove.service.domain.City;
+import com.youlove.service.domain.Flight;
+import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Tour;
+import com.youlove.service.domain.Weather;
 import com.youlove.service.guide.GuideService;
 import com.youlove.service.guide.WishBeenService;
 
@@ -31,14 +35,17 @@ public class GuideRestController {
 	@Qualifier("wishBeenServiceImpl")
 	private WishBeenService wishBeenService;
 	
+	/*
+	 *  	국가명 or 도시명 으로  정보조회
+	 */
 	@RequestMapping("/json/getCity")
-	public City getCity(@RequestBody City city) throws Exception {
+	public List<City> getCity(@RequestBody City city) throws Exception {
 		
 		System.out.println("/json/getCity");
 		
-		city = guideService.getCity(city.getCityName());
+		List<City> list = guideService.getCity(city);
 		
-		return city;
+		return list;
 	}
 	
 	/*
@@ -46,8 +53,8 @@ public class GuideRestController {
 			
 			/json/getCityList/{value}
 			 * {all}		전체 정보조회
-			 * {country} 	국가 정보 조회
-			 * {국가명}  	해당 국가에 속하는 도시정보 조회
+			 * {country} 	국가 리스트  조회
+			
 	
 	 */
 	@RequestMapping("/json/getCityList/{value}")
@@ -59,8 +66,7 @@ public class GuideRestController {
 		
 		return guideService.getCityList(value);
 	}
-	
-	
+
 	
 	
 	@RequestMapping(value = "/json/selectTourPage", method=RequestMethod.POST)
@@ -85,6 +91,40 @@ public class GuideRestController {
 //	}
 	
 	
+	@RequestMapping(value = "/json/searchHotel", method=RequestMethod.POST)
+	public List<Hotel> searchHotel(@RequestBody Hotel hotel) throws Exception {
+		
+		System.out.println("/json/searchHotel : POST");
+		
+		List<Hotel> list = wishBeenService.initHotel(hotel);
+		
+		
+		return list;
+	}
+	
+	
+	@RequestMapping(value = "/json/searchFlight", method=RequestMethod.POST)
+	public List<Flight> searchFlight(@RequestBody Flight flight) throws Exception {
+		
+		System.out.println("/json/searchFlight : POST");
+		
+		List<Flight> list = wishBeenService.searchFlight(flight);
+		
+		
+		return list;
+	}
+	
+	
+	@RequestMapping(value = "/json/getWeather", method=RequestMethod.POST)
+	public Weather getWeather(@RequestBody Weather weather) throws Exception {
+		
+		System.out.println("/json/getWeather : POST");
+		
+		weather = OpenWeather.getWeather(weather);
+		
+		
+		return weather;
+	}
 	
 	
 	

@@ -8,16 +8,18 @@ public class Schedule {
 		private int scheCode;
 		private int plannerVer;
 		private Date scheDay;
-		private int timeHour;
-		private int timeMin;
+		private String timeHour;
+		private String timeMin;
 		
 		private String scheName;
 		private String schePlace;
 		private String scheDetail;
 	
 		private String accomodation;
-		private Planner plannerCode;
-		private Route routeCode;
+//		private Planner plannerCode;
+//		private Route routeCode;
+		private int plannerCode;
+		private String color;
 		
 		///Constructor
 		public Schedule(){
@@ -47,19 +49,19 @@ public class Schedule {
 			this.scheDay = scheDay;
 		}
 
-		public int getTimeHour() {
+		public String getTimeHour() {
 			return timeHour;
 		}
 
-		public void setTimeHour(int timeHour) {
+		public void setTimeHour(String timeHour) {
 			this.timeHour = timeHour;
 		}
 
-		public int getTimeMin() {
+		public String getTimeMin() {
 			return timeMin;
 		}
 
-		public void setTimeMin(int timeMin) {
+		public void setTimeMin(String  timeMin) {
 			this.timeMin = timeMin;
 		}
 
@@ -95,20 +97,20 @@ public class Schedule {
 			this.accomodation = accomodation;
 		}
 
-		public Planner getPlannerCode() {
+		public int getPlannerCode() {
 			return plannerCode;
 		}
 
-		public void setPlannerCode(Planner plannerCode) {
+		public void setPlannerCode(int plannerCode) {
 			this.plannerCode = plannerCode;
 		}
 
-		public Route getRouteCode() {
-			return routeCode;
+		public String getColor() {
+			return color;
 		}
 
-		public void setRouteCode(Route routeCode) {
-			this.routeCode = routeCode;
+		public void setColor(String color) {
+			this.color = color;
 		}
 
 		@Override
@@ -116,8 +118,7 @@ public class Schedule {
 			return "Schedule [scheCode=" + scheCode + ", plannerVer=" + plannerVer + ", scheDay=" + scheDay
 					+ ", timeHour=" + timeHour + ", timeMin=" + timeMin + ", scheName=" + scheName + ", schePlace="
 					+ schePlace + ", scheDetail=" + scheDetail + ", accomodation=" + accomodation + ", plannerCode="
-					+ plannerCode + ", routeCode=" + routeCode + "]";
+					+ plannerCode + ", color=" + color + "]";
 		}
-
 
 }

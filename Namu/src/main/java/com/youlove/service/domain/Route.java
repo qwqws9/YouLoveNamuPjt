@@ -7,6 +7,7 @@ public class Route {
 	
 	///Field
 	private int plannerCode;
+//	private Planner plannerCode;
 	private int plannerVer;
 	private int routeNo;
 	
@@ -113,12 +114,12 @@ public class Route {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public  Date getEndDate() {
 		return endDate;
 	}
 
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate( Date endDate) {
 		this.endDate = endDate;
 	}
 

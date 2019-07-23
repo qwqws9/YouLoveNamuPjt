@@ -14,9 +14,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="/resources/javascript/jquery.oLoader.min.js"></script>
+<link rel="stylesheet" href="/resources/css/common.css" >
+<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 
 </head>
-<body  >
+<body>
+<header><jsp:include page="/layout/header.jsp" /></header>
+<br><br><br>
 <div class="text-center">
 <div class="container">
 		<div class="col-md-12">
@@ -72,6 +76,13 @@
 		<input type="hidden" id="tourId" value="${tour.tourId }">
 		<input type="hidden" id="lat" value="${tour.latTour }">
 		<input type="hidden" id="lng" value="${tour.lngTour }">
+		<input type="hidden" id="checkin" value="${tour.checkin }">
+		<input type="hidden" id="checkout" value="${tour.checkout }">
+		<input type="hidden" id="address" value="${tour.address }">
+		<input type="hidden" id="tourName" value="${tour.tourName }">
+		<input type="hidden" id="cost" value="${tour.cost }">
+		<input type="hidden" id="userCode" value="${user.userCode }">
+		
 		<div class="col-lg-4">
 		<br>
 			<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -83,7 +94,7 @@
 					<hr>
 					</c:if>
 					<c:if test="${!empty tour.openTour }">
-					<div class="mb-1 text-muted">오픈시간</div>
+					<div class="mb-1 text-muted">시간</div>
 					<p class="card-text mb-auto">${tour.openTour }</p>
 					<hr>
 					</c:if>
@@ -101,6 +112,18 @@
 					<div class="mb-1 text-muted">가는 방법</div>
 					<p class="card-text mb-auto">${tour.wayTour }</p>
 					</c:if>
+					<c:if test="${!empty tour.checkin }">
+					<div class="mb-1 text-muted">체크인</div>
+					<p class="card-text mb-auto">${tour.checkin }</p>
+					</c:if>
+					<c:if test="${!empty tour.checkout }">
+					<div class="mb-1 text-muted">체크아웃</div>
+					<p class="card-text mb-auto">${tour.checkout }</p>
+					</c:if>
+					<c:if test="${!empty tour.cost }">
+					<div class="mb-1 text-muted">1박당 가격</div>
+					<button type="button" class="hotelPay btn btn-outline-primary"><p class="card-text mb-auto">${tour.cost }</p></button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -111,6 +134,8 @@
       	<jsp:param value="${boardCode}" name="boardCode"/>
       	<jsp:param value="${detailCode}" name="detailCode"/>
       </jsp:include>
+      
+      
       
       <script type="text/javascript">
       		$(function(){
@@ -134,10 +159,49 @@
       			
       			
       			$('.carousel-item').first().addClass('active');
+      			
+      			
+      			//숙소 결제버튼
+      			$('.hotelPay').on('click',function(){
+      				var tourId = $('#tourId').val().trim();
+      				var tourName = $('#tourName').val().trim();
+      				var checkin = $('#checkin').val().trim();
+      				var checkout = $('#checkout').val().trim();
+      				var address = $('#address').val().trim();
+      				var cost = $('#cost').val().trim();
+      				var userCode = $('#userCode').val().trim();
+      				
+      				$.ajax({
+      					url : '/user/json/addPay',
+      					method : 'post',
+      					data : JSON.stringify({
+      						hotelCode : tourId,
+      						hotelName : tourName,
+      						startDate : checkin,
+      						endDate : checkout,
+      						hotelAddress : address,
+      						paymentPrice : cost,
+      						paymentUser : {
+      							userCode : userCode
+      						}
+      					}),
+      					headers : {
+      						"Accept" : "application/json",
+      						"Content-Type" : "application/json"
+      					},
+      					success : function(data, status){
+      						alert(status);
+      					}
+      				})
+      				
+      			})
+      			
+      			
       		});
       		
       		$(window).load(function(){
       			$('body').oLoader('hide');
+      			$('div[class="container-fluid"]').attr('class','container');
       		});
       
       </script>             

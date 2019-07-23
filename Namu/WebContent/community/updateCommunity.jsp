@@ -14,12 +14,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	<!-- jQuerty -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	
   	<script type="text/javascript" src="/resources/javascript/community.js"></script>
 	<!-- Select Picker -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
   	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
   	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
   	<!-- fontAwsome -->
@@ -47,7 +45,7 @@
 				</div>
 			</div>
 			<br>
-			<form enctype="multipart/form-data" method="post">
+			<form enctype="multipart/form-data">
 			<input type="hidden" name="communityCode" value="${community.communityCode }">
 				<div class="row justify-content-center">
 					<div class="col-lg-10">
@@ -55,7 +53,7 @@
 					  		<div class="card-body" style="border: 1px solid #cbcbcb;">
 					  			<div class="row">
 									<div class="col-lg-2">
-										<select class="selectpicker form-control" id="communityBoard" name="communityBoard">
+										<select class="form-control" id="communityBoard" name="communityBoard">
 										<c:if test="${community.communityBoard eq '1' }">
 										  <option value="1" selected="selected" >자유 게시판</option>
 										  <option value="2" id="selectedCity">도시별 게시판</option>
@@ -63,7 +61,7 @@
 										</c:if>
 										<c:if test="${community.communityBoard eq '2' }">
 										  <option value="1" >자유 게시판</option>
-										  <option value="2" id="selectedCity" selected="selected" >도시별 게시판</option>
+										  <option value="2" id="searchSelect" selected="selected" >도시별 게시판</option>
 										  <option value="3" >QnA 게시판</option>
 										</c:if>
 										<c:if test="${community.communityBoard eq '3' }">
@@ -145,20 +143,28 @@
 						  		</div>
 						  		
 						  		<br>
-						  		
-						  		<div class="row" id="selecCity" style="display: none;">
-						  			<div class="col-lg-2">
-						  				<strong style="font-style: inherit;" >도시 선택</strong>
-						  			</div>
-						  			<div class="col-lg-10 text-right">
-										<select class="selectpicker" data-live-search="true" title="city" name="city" style="right: 0px;">
-											<option value="0" selected="selected" disabled="disabled">검색</option>
-										  	<option value="1">파리</option>
-										  	<option value="2">구리</option>
-										  	<option value="3">보리</option>
-										</select>
-						  			</div>
-						  		</div>
+						  		<c:if test="${community.communityBoard eq '2' }">
+							  		<div class="row" id="selecCity">
+							  			<div class="col-lg-2">
+							  				<strong style="font-style: inherit;" >위치 선택</strong>
+							  			</div>
+							  			<div class="col-lg-10">
+							  				<span>나의 이전 위치는? : ${community.city.cityName}</span>
+							  				<div class="row float-right">
+												<div id="selectCountry" class="col" style="display:  none;">
+													<select name="countryName" id="country" class="form-control" data-live-search="true" data-width="100px" title="City" style="border: 1px solid #30a9de; background: white;">
+														<option>Country</option>
+													</select>
+												</div>
+												<div id="selectCity" class="col" style="display:  none;">
+													<select name="cityName" id="city" class="form-control" data-live-search="true" data-width="100px" title="City" style="border: 1px solid #30a9de; background: white;">
+														<option style="display: none;" value="${community.city.cityName }" selected="selected" >Country</option>
+													</select>
+												</div>
+							  				</div>
+							  			</div>
+							  		</div>
+						  		</c:if>
 						  		
 						  		<br>
 						  		

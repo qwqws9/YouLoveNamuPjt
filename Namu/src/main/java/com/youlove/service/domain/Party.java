@@ -11,11 +11,16 @@ public class Party {
 	private String partyContent;
 	private String partyStart;
 	private String partyEnd;
+	private double latitude;
+	private double longitude;
 	private String partyPeople;
-	private String partyWriter;
-	private int tour;
-	private int country;
-	private int city;
+	private User partyWriter;
+	private String partyRecruitment;
+	private String gender;
+	private String age;
+	private City city;
+	private String hashtag; 
+	private Hashtag partyHashtagCode;
 	private Date regDate;
 
 	///Constructor
@@ -70,35 +75,19 @@ public class Party {
 		this.partyPeople = partyPeople;
 	}
 
-	public String getPartyWriter() {
+	public User getPartyWriter() {
 		return partyWriter;
 	}
 
-	public void setPartyWriter(String partyWriter) {
+	public void setPartyWriter(User partyWriter) {
 		this.partyWriter = partyWriter;
 	}
 
-	public int getTour() {
-		return tour;
-	}
-
-	public void setTour(int tour) {
-		this.tour = tour;
-	}
-
-	public int getCountry() {
-		return country;
-	}
-
-	public void setCountry(int country) {
-		this.country = country;
-	}
-
-	public int getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(int city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 
@@ -110,15 +99,74 @@ public class Party {
 		this.regDate = regDate;
 	}
 
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	
+	public String getPartyRecruitment() {
+		return partyRecruitment;
+	}
+
+	public void setPartyRecruitment(String partyRecruitment) {
+		this.partyRecruitment = partyRecruitment;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getPartyHashtag() {
+		return hashtag;
+	}
+
+	public void setPartyHashtag(String partyHashtag) {
+		this.hashtag = partyHashtag;
+	}
+
+	public Hashtag getPartyHashtagCode() {
+		return partyHashtagCode;
+	}
+
+	public void setPartyHashtagCode(Hashtag partyHashtagCode) {
+		this.partyHashtagCode = partyHashtagCode;
+	}
+
 	@Override
 	public String toString() {
 		return "Party [partyCode=" + partyCode + ", partyTitle=" + partyTitle + ", partyContent=" + partyContent
 				+ ", partyStart=" + partyStart + ", partyEnd=" + partyEnd + ", partyPeople=" + partyPeople
-				+ ", partyWriter=" + partyWriter + ", tour=" + tour + ", country=" + country + ", city=" + city
-				+ ", regDate=" + regDate + "]";
+				+ ", partyWriter=" + partyWriter + ", partyRecruitment=" + partyRecruitment + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", gender=" + gender + ", age=" + age +  ", city="
+				+ city + ", regDate=" + regDate + ", hashtag=" + hashtag + ", partyHashtagCode="
+				+ partyHashtagCode + "]";
 	}
+
 	
-	
+
 	
 	
 }

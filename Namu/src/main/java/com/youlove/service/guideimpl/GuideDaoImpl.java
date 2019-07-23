@@ -18,8 +18,8 @@ public class GuideDaoImpl implements GuideDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public City getCity(String cityName) throws Exception {
-		return sqlSession.selectOne("GuideMapper.getCity",cityName);
+	public List<City> getCity(City city) throws Exception {
+		return sqlSession.selectList("GuideMapper.getCity",city);
 	}
 
 	@Override

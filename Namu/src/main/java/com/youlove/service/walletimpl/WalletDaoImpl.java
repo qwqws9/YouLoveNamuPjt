@@ -1,6 +1,7 @@
 package com.youlove.service.walletimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +55,18 @@ public class WalletDaoImpl implements WalletDao {
 	public void updateWallet(Wallet wallet) throws Exception{
 		sqlSession.update("WalletMapper.updateWallet", wallet);
 	}
-	
-	public void deleteWallet(int walletDetailCode) throws Exception{
-		sqlSession.delete("WalletMapper.deleteWallet", walletDetailCode);
-	}
 	*/
-	public List<Wallet> getWalletList(int walletCode) throws Exception{
-		return sqlSession.selectList("WalletMapper.getWalletList", walletCode);
+	public void deleteWallet(int walletDetailCode) throws Exception{
+		// sqlSession.delete("WalletMapper.deleteWallet", walletDetailCode);
+		sqlSession.update("WalletMapper.deleteWallet", walletDetailCode);
+	}
+	
+	public List<Wallet> getWalletList(Map<String, Object> map) throws Exception{
+		return sqlSession.selectList("WalletMapper.getWalletList", map);
+	}
+	
+	public int getTotalCount(Map<String, Object> map) throws Exception{
+		return sqlSession.selectOne("WalletMapper.getTotalCount", map);
 	}
 	
 }
