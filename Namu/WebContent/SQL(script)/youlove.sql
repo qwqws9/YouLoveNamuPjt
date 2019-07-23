@@ -181,6 +181,7 @@ CREATE TABLE PAYLIST (
 
 CREATE TABLE planner ( 
    planner_code          NUMBER(10)            NOT NULL,
+   planner_ver     NUMBER(2)    NOT NULL,
    user_code    NUMBER(10)    NOT NULL  REFERENCES users(user_code),
    planner_name       VARCHAR2(2000)   NOT NULL,
    planner_image       VARCHAR2(100),
@@ -205,7 +206,7 @@ CREATE TABLE route (
    lat 								VARCHAR2(100),
    lng 							VARCHAR2(100),
    start_Date                     date,
-    end_Date                     date,
+   end_Date                     date,
   
    PRIMARY KEY(route_code)
 );
@@ -213,7 +214,6 @@ CREATE TABLE route (
 
 CREATE TABLE schedule( 
    sche_code               NUMBER(10)          NOT NULL,
-   route_code                  NUMBER(10)        REFERENCES route(route_code),
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL REFERENCES planner(planner_code),
    sche_day DATE,
@@ -440,30 +440,30 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','3','안녕','1');
 INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
    
-VALUES ( seq_planner_code.nextval, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
+VALUES ( seq_planner_code.nextval, 1,2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
+VALUES ( seq_planner_code.nextval, 1,2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
+VALUES ( seq_planner_code.nextval,1, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
+VALUES ( seq_planner_code.nextval, 1,2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
 INSERT 
-INTO planner ( planner_code , user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code, planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
    isgroup, board_code, depart_date, reg_date ) 
-VALUES ( seq_planner_code.nextval, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
+VALUES ( seq_planner_code.nextval,1, 2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
 
 
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);

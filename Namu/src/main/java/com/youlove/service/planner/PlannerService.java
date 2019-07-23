@@ -1,7 +1,9 @@
 package com.youlove.service.planner;
 
 import java.util.List;
+import java.util.Map;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
@@ -14,6 +16,8 @@ public interface PlannerService {
 	public Planner getPlanner(int plannerCode) throws Exception;  
 	
 	public void updatePlanner(Planner planner) throws Exception;
+	
+	public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception;
 	
 	//2. route 
 	public void addRoute(Route route) throws Exception;	//ok

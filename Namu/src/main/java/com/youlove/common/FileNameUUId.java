@@ -27,10 +27,14 @@ public class FileNameUUId {
 		
 		//파일 확장자 추출
 		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
-		
+		File f;
 		saveName = uuid+"."+ext;
-		
-		File f = new File(request.getSession().getServletContext().getRealPath("resources")+"\\images\\"+path+"\\"+saveName);
+		if(path.equals("planner")) {
+			f = new File(request.getSession().getServletContext().getRealPath("resources")+"//images//"+path+"//"+saveName);
+				
+		}else {
+			f = new File(request.getSession().getServletContext().getRealPath("resources")+"\\images\\"+path+"\\"+saveName);	
+		}
 		
 	    f.createNewFile(); 
 	    FileOutputStream fos = new FileOutputStream(f); 

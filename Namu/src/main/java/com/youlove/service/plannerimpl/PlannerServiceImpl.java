@@ -1,7 +1,9 @@
 package com.youlove.service.plannerimpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
+import com.youlove.service.domain.Wallet;
+import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
 import com.youlove.service.planner.PlannerService;
@@ -53,6 +57,15 @@ import com.youlove.service.user.UserDao;
 			plannerDao.updatePlanner(planner);
 		}
 		
+
+		public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception{
+			List<Planner> list = plannerDao.getPlannerList(map);
+			int totalCount = plannerDao.getTotalCount(map);
+			map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("totalCount", new Integer(totalCount));
+			return map;
+		}
 		//2. route 
 		@Override
 		public void addRoute(Route route) throws Exception {
@@ -87,7 +100,7 @@ import com.youlove.service.user.UserDao;
 		@Override
 		public List<String> getRouteCityName(int plannerCode) throws Exception {
 
-		    List<Route> cityList = plannerDao.getRouteCityName(1);
+		    List<Route> cityList = plannerDao.getRouteCityName(plannerCode);
 		    List<String> citys = new ArrayList<String>();
 		    
 		   for(int i=0;i<cityList.size();i++) {
@@ -103,7 +116,7 @@ import com.youlove.service.user.UserDao;
 		public List<String> getRouteLng(int plannerCode) throws Exception {
 
 			
-		    List<Route> lngList = plannerDao.getRouteLng(1);
+		    List<Route> lngList = plannerDao.getRouteLng(plannerCode);
 		   List<String> lngs = new ArrayList<String>();
 		    
 		   for(int i=0;i<lngList.size();i++) {
@@ -118,7 +131,7 @@ import com.youlove.service.user.UserDao;
 		@Override
 		public List<String> getRouteLat(int plannerCode) throws Exception {
 			
-		   List<Route> latList = plannerDao.getRouteLat(1);
+		   List<Route> latList = plannerDao.getRouteLat(plannerCode);
 		   List<String> lats = new ArrayList<String>();
 		    
 		   for(int i=0;i<latList.size();i++) {

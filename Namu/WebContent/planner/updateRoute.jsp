@@ -119,7 +119,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	
    	
   $(function() {
-    var plannerCode=1;
+    var plannerCode=${planner.plannerCode};
  	 $.ajax({
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",

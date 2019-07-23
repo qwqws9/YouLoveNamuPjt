@@ -8,6 +8,7 @@
  	
 	<resultMap id="plannerSelectMap" type="planner">
 		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/>
+		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
 		<result property="plannerName"				column="PLANNER_NAME" 				jdbcType="VARCHAR" />
 		<result property="departDate" 			column="DEPART_DATE" 		jdbcType="VARCHAR" />
 		<result property="plannerImage" 				column="PLANNER_IMAGE" 				jdbcType="VARCHAR" />
@@ -59,8 +60,8 @@
 		 SELECT MAX(planner_code)+1 FROM planner
 		</selectKey>
 	 	INSERT
-		INTO planner(PLANNER_CODE ,USER_CODE, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
-		VALUES	 (seq_planner_code.nextval, #{user.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
+		INTO planner(PLANNER_CODE , planner_ver, USER_CODE, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
+		VALUES	 (seq_planner_code.nextval, 1, #{user.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
 	
 
 	 </insert>
@@ -68,14 +69,15 @@
 	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
-		planner_name, planner_image, DEPART_DATE, member, privacy
+		planner_code, planner_ver, planner_name, planner_image, DEPART_DATE, member, privacy
 		FROM planner
 		WHERE planner_code =#{value}
 	 </select>
 	 
 	  <update	id="updatePlanner"	parameterType="planner" >
-	   	UPDATE product
+	   	UPDATE planner
 	   	<set>
+	   		planner_ver = planner_ver+1,
 	   		planner_name 	= #{plannerName} ,
 			planner_image	= #{plannerImage},
 			DEPART_DATE = #{departDate} ,
@@ -85,7 +87,32 @@
 	 </update>
 		 
 		
+	 	<select  id="getPlannerList"  parameterType="map"	resultMap="plannerSelectMap">
+SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+	  					SELECT planner_Name, planner_code, planner_image, DEPART_DATE, member, privacy
+	  					FROM planner
+	  					 
+	  					  where	user_code = #{user.userCode}
+	  					 ORDER BY planner_code DESC 
+	  						) inner_table
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+			  	 
+	</select>
+	  			 	
+	<select  id="getTotalCount" parameterType="map" resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT planner_code, planner_name, planner_image, DEPART_DATE, member, privacy
+	  					FROM planner
+	  					where user_code = #{user.userCode}
+	  					order by planner_code DESC
+	  				) countTable						
+	 </select>
 	 
+
+		
 		<!-- 2. route -->
 	 	
 	<insert 	id="addRoute"		parameterType="route" >
@@ -140,13 +167,13 @@
 	 
 		<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
-		INTO schedule (sche_code, route_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail,accomodation, color ) 
-		VALUES	 (seq_schedule_code.nextval,1, 1, #{plannerCode}, #{scheDay:DATE} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
+		INTO schedule (sche_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail,accomodation, color ) 
+		VALUES	 (seq_schedule_code.nextval, 1, #{plannerCode}, #{scheDay:DATE} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
 	 </insert>
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">
 		SELECT
-		route_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail
+		planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail
 		FROM schedule
 		WHERE sche_code = #{scheCode}
 	 </select>
@@ -178,4 +205,6 @@
 	  	planner_code = #{plannerCode}
 		</where>
 			</select>
+			
+			
 </mapper>

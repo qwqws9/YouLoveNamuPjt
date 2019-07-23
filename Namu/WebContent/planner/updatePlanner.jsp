@@ -31,11 +31,11 @@ margin:0 auto
      <!--   JavaScript  -->
 	<script type="text/javascript">	
 
-	function fncAddPlanner(){
-		// 유효성 검증
-		$("form").attr("method" , "POST").attr("action" , "/planner/updatePlanner").attr("enctype" , "multipart/form-data").submit();
-	}		
+	function fncUpdatePlanner(){
 	
+		$("form").attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();
+	}		
+
 	$(function(){
 		
 	    $( "#departDate" ).datepicker({
@@ -45,7 +45,7 @@ margin:0 auto
 	    });
 	    
 	    $("button").on("click",function(){    	
-	    	fncAddPlanner();    	
+	    	fncUpdatePlanner();    	
 	    });
 		
 	    $("a[href='#']").on("click",function(){
@@ -122,13 +122,13 @@ margin:0 auto
 		  	  </div>
 		  	  </div>
 		<br/>  
-		  <div class="form-group">
-		    <div class=""col-sm-offset-1 col-sm-3 control-label">
-		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
-		      <button type="button" class="btn btn-default"  > 다음 단계  </button>
-			 </div>
+		    <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary"  > 다음단계 </button>
+			  <a class="btn btn-primary btn" href="#" role="button">취소</a>
 		    </div>
 		  </div>
+		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
