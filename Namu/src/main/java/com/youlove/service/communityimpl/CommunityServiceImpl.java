@@ -62,8 +62,6 @@ public class CommunityServiceImpl implements CommunityService{
 	public Map<String, Object> getCommunityList(Map<String,Object> map) throws Exception {
 		Search search = (Search) map.get("search");
 		List<Community> list = communityDao.getCommunityList(map);
-		
-			System.out.println("list = "+list);
 		List<Community> bestlist = communityDao.getCommunityBestList(map);
 		int totalCount = communityDao.getTotalCount(search);
 		map.put("bestlist", bestlist);

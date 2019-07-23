@@ -3,6 +3,7 @@ package com.youlove.service.party;
 import java.util.List;
 import java.util.Map;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Party;
 
 public interface PartyDao {
@@ -16,5 +17,7 @@ public interface PartyDao {
 	public void updateParty(Party party) throws Exception;
 	
 	public void deleteParty(int partyCode) throws Exception;		
+	
+	public int getTotalCount(Search search) throws Exception ;
 }
 	

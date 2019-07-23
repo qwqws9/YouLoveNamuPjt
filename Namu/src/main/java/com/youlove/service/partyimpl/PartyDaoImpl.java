@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Party;
 import com.youlove.service.party.PartyDao;
 
@@ -41,7 +42,12 @@ public class PartyDaoImpl implements PartyDao {
 
 	@Override
 	public List<Party> getPartyList(Map<String,Object> map) throws Exception {
-		return null;
+		Search search = (Search) map.get("search");
+		map.put("endRowNum", search.getEndRowNum());
+		map.put("startRowNum",search.getStartRowNum());
+		map.put("searchCondition",search.getSearchCondition());
+		map.put("searchKeyword",search.getSearchKeyword());
+		return sqlSession.selectList("PartyMapper.getPartyList", map);
 	}
 
 	@Override
@@ -54,6 +60,11 @@ public class PartyDaoImpl implements PartyDao {
 	public void deleteParty(int partyCode) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getTotalCount(Search search) throws Exception {
+		return sqlSession.selectOne("PartyMapper.getTotalCount", search);
 	}
 	
 		
