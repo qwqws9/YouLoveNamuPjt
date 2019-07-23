@@ -1,11 +1,13 @@
 package com.youlove.service.partyimpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.youlove.common.Search;
 import com.youlove.service.domain.Party;
 import com.youlove.service.party.PartyDao;
 import com.youlove.service.party.PartyService;
@@ -39,7 +41,13 @@ public class PartyServiceImpl implements PartyService{
 
 	@Override
 	public Map<String,Object> getPartyList(Map<String,Object> map) throws Exception {
-		return null;
+		Search search = (Search) map.get("search");
+		List<Party> list = partyDao.getPartyList(map);
+		int totalCount = partyDao.getTotalCount(search);
+		
+		map.put("totalCount", new Integer(totalCount));
+		map.put("list", list);
+		return map;
 	}
 
 	@Override

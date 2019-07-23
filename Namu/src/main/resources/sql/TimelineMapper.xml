@@ -6,7 +6,49 @@
 
 <mapper namespace="TimelineMapper">
  	
- 	
+ 	<resultMap id="timelineMap" type="timeline">
+		<result property="timelineCode" 			column="TIMELINE_CODE" 			jdbcType="NUMERIC"/>
+		<result property="timeDate"					column="TIME_DATE" 				jdbcType="VARCHAR" />
+		<result property="protocol" 				column="PROTOCOL" 				jdbcType="CHAR" />
+		<result property="accept" 					column="ACCEPT" 				jdbcType="CHAR" />
+		<result property="commentCode" 				column="COMMENT_CODE" 			jdbcType="NUMERIC" />
+		<association property="fromUser" 	javaType="user">
+			<result property="userCode" 	column="USER_CODE" />
+			<result property="nickname"		column="NICKNAME" />
+			<result property="profileImg" 	column="PROFILE_IMG" />
+		</association>
+		<association property="toUser" 		javaType="user">
+			<result property="userCode" 	column="USER_CODE" />
+			<result property="nickname" 	column="NICKNAME" />
+			<result property="profileImg" 	column="PROFILE_IMG" />
+		</association>
+	</resultMap>
 	
+	<insert id="addTimeline" parameterType="timeline">
+	INSERT INTO TIMELINE
+	<if test="protocol == 9 or protocol == 8">
+	(timeline_code,from_user,to_user,protocol,accept,time_date,comment_code)
+	</if>
+	
+	
+	VALUES
+	<if test="protocol == 9 or protocol == 8">
+	(seq_timeline_code.nextval,#{fromUser.userCode},(select writer_comment from comments where comment_code = #{commentCode}),#{protocol},'0',#{timeDate},#{commentCode})
+	</if>
+	
+	</insert>
+	
+	
+<!-- 	<select id="getTimelineList" parameterType="user"  resultMap="timelineMap"> -->
+<!-- 		SELECT * -->
+<!-- 		FROM TIMELINE -->
+<!-- 		WHERE TO_USER = #{userCode} -->
+<!-- 		select t.*,u.user_code from timeline t , users u -->
+<!-- where t.from_user = u.user_code and t.from_user = 2 -->
+<!-- union; -->
+
+<!-- select t.*,u.user_code from timeline t , users u -->
+<!-- where t.to_user = u.user_code and t.to_user = 2; -->
+<!-- 	</select> -->
 	 
 </mapper>
