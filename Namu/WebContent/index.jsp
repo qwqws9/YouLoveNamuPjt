@@ -48,18 +48,33 @@
 			<i id="getChat">상욱 채팅</i><br>
 			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
 			<a href="/planner/addRoute.jsp"> 민희 구글맵 루트</a> <br>
-			 <a href="/planner/getScheduleList.jsp"> /</a> <br>
+			<a href="/planner/getScheduleList.jsp"> /</a> <br>
 			<a href="/community/getCommunityList">중현 커뮤니티 등록</a>
 			<a href="/party/getPartyList">중현 동행 리스트</a>
 		</h4>
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-		  $("#getChat").on("click", function(){
-			window.open("http://192.168.0.13:8005/", "popup_chat", "width=450, height=800, location=no, resizable=no")
-		  });
+	//var url = "http://192.168.0.13:8005?nickname=123&profile=123";
+	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
+	//var url = "http://192.168.0.13:8005"
+	
+	$(document).ready(function(){
+		$("#getChat").on("click", function(){
+			window.open(url, "popup_chat", "width=450, height=800, location=no, resizable=no")
 		});
+	});
+	
+	/* $("#getChat").on("click", function(){
+		$.post("http://192.168.0.13:8005/", {
+			data= ${user.nickname},
+		}),
+		function(data, status){
+			alert(data);
+		}
+	}) */
+	
 	</script>
 
 	<!-- 날씨 -->
