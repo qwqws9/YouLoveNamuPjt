@@ -61,7 +61,7 @@ a:link, a:active, a:hover {text-decoration: none;}
 
 /* 좌측 사이드바 */
 .day_btn {width: 50px; font-weight: 700; text-align: center;}
-a.day_btn {height: 50px; line-height: 50px; background-color: #282c37;}
+a.day_btn {height: 50px; line-height: 50px; background-color: #cbcbcb;}
 a.day_btn:hover {background-color: #f2c029;/*box-shadow: 50px 50px 0 0 rgba(0,0,0,.3) inset;*/}
 a.day_btn span {color: #fff;}
 @media(max-width:714px){

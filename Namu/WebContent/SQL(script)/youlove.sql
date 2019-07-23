@@ -115,8 +115,9 @@ CREATE TABLE TIMELINE (
    FROM_USER               NUMBER(10)   ,
    TO_USER              NUMBER(10)   ,
    PROTOCOL             CHAR(1),
-   ACCEPT                CHAR(1),
-   TIME_DATE               DATE
+   INVITE_CODE                CHAR(1),
+   TIME_DATE               VARCHAR(100),
+   COMMENT_CODE         NUMBER(10)
 );
 
 
@@ -417,6 +418,7 @@ INSERT INTO city VALUES ( '할슈타트','AT',47.5622342,13.6492617,'오스트�
 INSERT INTO city VALUES ( '잘츠부르크','AT',47.80949,13.05501,'오스트리아','AT.png','EUR');
 INSERT INTO city VALUES ( '부다페스트','HU',47.497912,19.040235,'헝가리','HU.png','HUF');
 INSERT INTO city VALUES ( '브라티슬라바','SK',48.1485965,17.1077478,'슬로바키아','SK.png','EUR');
+INSERT INTO city VALUES ( '서울','KR',37.499427,127.029422,'대한민국','KR.png','KRW');
 
 
 --
@@ -443,38 +445,30 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','3','안녕','1');
 INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 
 INSERT 
-<<<<<<< HEAD
-INTO planner ( planner_code , planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
-=======
+
+
 INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
->>>>>>> refs/remotes/origin/master
+
    isgroup, board_code, depart_date, reg_date ) 
    
-<<<<<<< HEAD
-VALUES ( seq_planner_code.nextval, 1,2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
-=======
+
+
 VALUES ( seq_planner_code.nextval,1, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
->>>>>>> refs/remotes/origin/master
+
 
 INSERT 
-<<<<<<< HEAD
-INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
-=======
+
 INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
->>>>>>> refs/remotes/origin/master
+
    isgroup, board_code, depart_date, reg_date ) 
-<<<<<<< HEAD
-VALUES ( seq_planner_code.nextval, 1,2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
-=======
+
 VALUES ( seq_planner_code.nextval,1, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
->>>>>>> refs/remotes/origin/master
+
 
 INSERT 
-<<<<<<< HEAD
-INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
-=======
+
 INTO planner ( planner_code , planner_ver,user_code, planner_name , planner_image , member , privacy, status, 
->>>>>>> refs/remotes/origin/master
+
    isgroup, board_code, depart_date, reg_date ) 
 VALUES ( seq_planner_code.nextval,1, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
@@ -487,14 +481,6 @@ INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_imag
 VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
 
-INSERT 
-
-INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
-
-   isgroup, board_code, depart_date, reg_date ) 
-
-VALUES ( seq_planner_code.nextval, 1,2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
-
 
 
 
@@ -502,7 +488,6 @@ INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 5);
 
 
 commit;

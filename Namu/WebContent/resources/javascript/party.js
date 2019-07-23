@@ -105,7 +105,6 @@ function addParty(){
 			  event.preventDefault();
 			  alert( $( "form" ).serialize() );
 		});*/
-	alert("보낸다");
 	$("form").attr("method","POST").attr("action","/party/addParty").submit();
 	//}
 }	

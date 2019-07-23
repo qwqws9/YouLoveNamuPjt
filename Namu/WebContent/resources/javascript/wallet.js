@@ -30,11 +30,11 @@ $(function() {
 });
 
 // 세자리 콤마
-function makeComma(double) {
-	//console.log(double);
-	//console.log(double.toLocaleString(undefined, {maximumFractionDigits : 2}));
+function makeComma(db) {
+	//console.log(db);
+	//console.log(db.toLocaleString(undefined, {maximumFractionDigits : 2}));
 	
-	return double.toLocaleString(undefined, {maximumFractionDigits : 2});
+	return db.toLocaleString(undefined, {maximumFractionDigits : 2});
 }
 
 // https://ko.exchange-rates.org 크롤링
@@ -54,14 +54,14 @@ function convert(unit){
 				to		: 'KRW',
 				amount	: 1
 			}),
-			error		: function(request, status, error) {
+			error	: function(request, status, error) {
 				//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		    },
 			success	: function(JSONData, status) {
 				//console.log('[SUCCESS]\nRESULT : ' + JSONData);
 				
-				$('#exchange_result').text(makeComma(JSONData));
-				$('#exchange_rate').val(JSONData);
+				$('#exchange_result').text(makeComma(JSONData.exchangeRate));
+				$('#exchange_rate').val(JSONData.exchangeRate);
 			}
 		})
 	}else{

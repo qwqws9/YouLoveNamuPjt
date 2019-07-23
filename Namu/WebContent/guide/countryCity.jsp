@@ -6,9 +6,7 @@
 						<div class="popup_contain">
 				     <div class="profileInfo" >
 					<div class="list-group">
-					  <button type="button" class="weatherCountry list-group-item list-group-item-action">
-					    대한민국
-					  </button>
+					  <button type="button" class="KR weatherCountry list-group-item list-group-item-action">대한민국</button>
 					  <button type="button" class="NL weatherCountry list-group-item list-group-item-action">네덜란드</button>
 					  <button type="button" class="DE weatherCountry list-group-item list-group-item-action">독일</button>
 					  <button type="button" class="BE weatherCountry list-group-item list-group-item-action">벨기에</button>

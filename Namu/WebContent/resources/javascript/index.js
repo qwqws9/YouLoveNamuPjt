@@ -12,8 +12,8 @@ $(function(){
 		});
 	
 	// 날씨 init
-	getWeather("48.856614","2.3522219");
-	
+	getWeather("37.499427","127.029422");
+	// 37.499427, 127.029422
 	$('#callCountry').on('click',function(){
 				selectCity();
 	});
@@ -62,7 +62,7 @@ $(function(){
 				$('.mainMinMaxTemp span:last-child').text(data.tempMax);
 				
 				$('.humidity').text(data.humidity);
-				$('.weatherCity').text($('#weatherCountry').val() +'-' + $('#weatherCity').val() );
+				$('.weatherCity').text($('#weatherCountry').val() +' - ' + $('#weatherCity').val() );
 				$(".popup_wrap").css('display','none');
 				
 			}
@@ -140,9 +140,6 @@ $(function(){
 	})
 	
 	
-	
-	
-	
 }).ajaxStart(function(){
 	$('body').oLoader({
 		  wholeWindow: true, //makes the loader fit the window size
@@ -162,3 +159,12 @@ $(window).load(function(){
 	$('body').oLoader('hide');
 });;
 
+// 환율 정보 .jsp 온로드
+$(function() {
+	// innerHTML
+	$($('#exchange_container')).load('/wallet/exchangeRates.jsp', function(data) {
+		//console.log(data);
+		
+		exchangeRatesData();
+	});
+});

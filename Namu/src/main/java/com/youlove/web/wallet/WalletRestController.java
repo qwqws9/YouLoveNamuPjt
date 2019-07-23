@@ -1,6 +1,7 @@
 package com.youlove.web.wallet;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.common.FileNameUUId;
 import com.youlove.common.Search;
+import com.youlove.service.domain.Exchange;
 import com.youlove.service.domain.Wallet;
 import com.youlove.service.wallet.ExchangeRatesService;
 import com.youlove.service.wallet.WalletService;
@@ -99,15 +101,27 @@ public class WalletRestController {
 		
 	}
 	
+	// https://ko.exchange-rates.org CRAWLING
+	@RequestMapping(value = "/json/exchangeRates", method=RequestMethod.POST)
+	public List<Exchange> exchangeRates() throws Exception{
+
+		System.out.println("/wallet/json/exchangeRates :: POST");
+		
+		List<Exchange> list = exchangeRatesService.exchangeRates();
+		
+		return list;
+		
+	}
+	
 	@RequestMapping(value = "/json/convert", method=RequestMethod.POST)
-	public double convert(@RequestBody Map<String, Object> map) throws Exception{
+	public Exchange convert(@RequestBody Exchange exchange) throws Exception{
 
 		System.out.println("/wallet/json/convert :: POST");
-		System.out.println("변경될 화폐 기준 : " + map.get("from") + ", 변경할 화폐 단위 : " + map.get("to") + ", 금액 : " + map.get("amount"));
+		System.out.println(exchange);
 
-		Double result = exchangeRatesService.convertExchangeRate((String)map.get("from"), (String)map.get("to"), Double.parseDouble((map.get("amount")).toString()));
+		exchange = exchangeRatesService.convertExchangeRate(exchange);
 		
-		return result;
+		return exchange;
 		
 	}
 	

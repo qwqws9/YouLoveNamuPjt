@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.youlove.common.Page;
+import com.youlove.common.Search;
 import com.youlove.service.domain.City;
 import com.youlove.service.domain.Hashtag;
 import com.youlove.service.domain.Party;
@@ -84,34 +86,44 @@ public class PartyController {
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String,Object> map = new HashMap<String, Object>();
 		
-		System.out.println("1");
 		System.out.println(partyCode);
 		//동행
 		Party party = partyService.getParty(partyCode);
 		//해쉬태그
-		System.out.println("2");
 		map = hashtagService.getHashtag(partyCode);
-		System.out.println("3");
 		modelAndView.addObject("hashtag", map.get("hashtag"));
 		//댓글
 		//modelAndView.addObject("boardCode",partyCode);
 		//modelAndView.addObject("detailCode",);
 		modelAndView.addObject("party", party);
-		System.out.println("4");
 		System.out.println(party);
 		modelAndView.setViewName("/party/getParty.jsp");
-		System.out.println("5");
 		System.out.println("\nPartyController:::getParty() 끝:::");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value="getPartyList")
-	public ModelAndView getPartyList(@ModelAttribute("party") Party party)throws Exception{
-		System.out.println("\nPartyController:::addParty() 시작:::");
+	public ModelAndView getPartyList(@ModelAttribute("Search") Search search)throws Exception{
+		System.out.println("\nPartyController:::getPartyList() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/party/getPartyList.jsp");
+		Map<String,Object> map = new HashMap<String, Object>();
+		if(search.getCurrentPage() == 0){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		//게시물 리스트
+		map.put("search", search);
+		map = partyService.getPartyList(map);
+		//PageSize[페이징]
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
-		System.out.println("\nPartyController:::addParty() 끝:::");
+		
+		
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("list", map.get("list"));
+		
+		System.out.println("\nPartyController:::getPartyList() 끝:::");
 		return modelAndView;
 	}
 	
