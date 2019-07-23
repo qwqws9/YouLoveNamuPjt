@@ -15,7 +15,6 @@ $(function(){
 	getWeather("48.856614","2.3522219");
 	
 	$('#callCountry').on('click',function(){
-				socketcall();
 				selectCity();
 	});
 	

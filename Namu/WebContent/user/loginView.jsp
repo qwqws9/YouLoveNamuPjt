@@ -66,6 +66,8 @@
 <%--       </jsp:include> --%>
 		
 <script type="text/javascript">
+	$(function(){
+		
 		
 		$('#findInfo').on('click',function(){
 			var url = '/user/findInfo';
