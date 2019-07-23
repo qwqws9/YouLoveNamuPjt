@@ -1,6 +1,8 @@
 package com.youlove.service.plannerimpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
+import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
 
@@ -40,6 +43,17 @@ public class PlannerDaoImpl implements PlannerDao{
 	@Override
 	public void updatePlanner(Planner planner) throws Exception {
 		sqlSession.update("PlannerMapper.updatePlanner", planner);
+	}
+	
+	public List<Planner> getPlannerList(Map<String, Object> map) throws Exception{
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("search", search );
+//		map.put("userCode", userCode);
+		return sqlSession.selectList("PlannerMapper.getPlannerList", map);
+	}
+	
+	public int getTotalCount(Map<String, Object> map) throws Exception{
+		return sqlSession.selectOne("PlannerMapper.getTotalCount", map);
 	}
 	
 	//2. route 

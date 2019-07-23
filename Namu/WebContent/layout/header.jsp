@@ -81,7 +81,7 @@
 								<button type="button" style="background: none; border: none;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-address-book fa-lg"></i></button>
 							</div>
 							<div class="col-lg-3" style="padding-top: 7px;">
-								<button type="button" style="background: none; border: none;"><i class="far fa-calendar fa-lg"></i></button>
+								<button type="button" style="background: none; border: none;" onclick="location.href='/planner/getPlannerList'"><i class="far fa-calendar fa-lg" ></i></button>
 							</div>
 							<div class="col-lg-3" style="padding-top: 7px;">
 								<button type="button" style="background: none; border: none;"><i class="fas fa-money-check-alt fa-lg"></i></button>

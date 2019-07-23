@@ -6,14 +6,15 @@ public class Planner {
 
 	///Field
 	private int plannerCode;
+	private int plannerVer;
 	private String plannerName;
 	private String departDate;
 	private String plannerImage;
 	private User user;
-	private int member;
-	private int privacy;
-	private int status;
-	private int isGroup;
+	private String member;
+	private String privacy;
+	private String status;
+	private String isGroup;
 	private int boardCode;
 	private Date regDate;
 	
@@ -28,6 +29,15 @@ public class Planner {
 		this.plannerCode = plannerCode;
 	}
 
+	public int getPlannerVer() {
+		return plannerVer;
+	}
+
+	public void setPlannerVer(int plannerVer) {
+		this.plannerVer = plannerVer;
+	}
+
+	
 	public String getPlannerName() {
 		return plannerName;
 	}
@@ -61,35 +71,35 @@ public class Planner {
 		this.user = user;
 	}
 
-	public int getMember() {
+	public String getMember() {
 		return member;
 	}
 
-	public void setMember(int member) {
+	public void setMember(String member) {
 		this.member = member;
 	}
 
-	public int getPrivacy() {
+	public String getPrivacy() {
 		return privacy;
 	}
 
-	public void setPrivacy(int privacy) {
+	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public int getIsGroup() {
+	public String getIsGroup() {
 		return isGroup;
 	}
 
-	public void setIsGroup(int isGroup) {
+	public void setIsGroup(String isGroup) {
 		this.isGroup = isGroup;
 	}
 
@@ -111,7 +121,7 @@ public class Planner {
 
 	@Override
 	public String toString() {
-		return "Planner [plannerCode=" + plannerCode + ", plannerName=" + plannerName + ", departDate=" + departDate
+		return "Planner [plannerCode=" + plannerCode + ", plannerVer=" + plannerVer +", plannerName=" + plannerName + ", departDate=" + departDate
 				+ ", plannerImage=" + plannerImage + ", user=" + user + ", member=" + member + ", privacy=" + privacy
 				+ ", status=" + status + ", isGroup=" + isGroup + ", boardCode=" + boardCode + ", regDate=" + regDate
 				+ "]";

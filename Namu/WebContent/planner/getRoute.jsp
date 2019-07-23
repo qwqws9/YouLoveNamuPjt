@@ -116,7 +116,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	
    	
   $(function() {
-    var plannerCode=1;
+    var plannerCode=${planner.plannerCode};
  	 $.ajax({
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
@@ -170,7 +170,36 @@ $('#list_table').on("click", ".deletebtn", function () {
 
    	}
    	});
- 	
+	$.ajax({
+   	  	url:"/planner/json/getRouteList/"+plannerCode,
+   		method : "GET" ,
+        dataType : "json",
+        headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+        success:function(JSONData){
+        	console.log(JSONData);   
+        	
+  
+        	var displayValue;
+        	   $(JSONData).each(function(data,value) {
+        		   
+            	displayValue += ('<tr>');                
+            	displayValue += ('<td>'+''+'</td>');
+            	displayValue += ('<td>'+value.city+'</td>');
+            	displayValue += ('<td>'+value.lat+'</td>');
+            	displayValue += ('<td>'+value.lng+'</td>');    
+            	displayValue += ('<td>'+"<select><option value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
+            	displayValue += ('<td>'+"<input class='deletebtn' type='button' value = 'delete' id='delete' />"+'</td>');  
+            	//displayValue += ('</tr>');                                    
+            /* //}); */});
+            //displayValue += ('</tbody>');
+            //displayValue += ('</table>');
+            $('#list_table' ).html(displayValue);
+        }
+    });          
+            
 	 alert(route);
    /* alert(locations); */ 
     

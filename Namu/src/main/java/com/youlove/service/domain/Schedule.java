@@ -19,7 +19,6 @@ public class Schedule {
 //		private Planner plannerCode;
 //		private Route routeCode;
 		private int plannerCode;
-		private int routeCode;
 		private String color;
 		
 		///Constructor
@@ -106,16 +105,6 @@ public class Schedule {
 			this.plannerCode = plannerCode;
 		}
 
-		public int getRouteCode() {
-			return routeCode;
-		}
-
-		public void setRouteCode(int routeCode) {
-			this.routeCode = routeCode;
-		}
-
-		
-		
 		public String getColor() {
 			return color;
 		}
@@ -129,7 +118,7 @@ public class Schedule {
 			return "Schedule [scheCode=" + scheCode + ", plannerVer=" + plannerVer + ", scheDay=" + scheDay
 					+ ", timeHour=" + timeHour + ", timeMin=" + timeMin + ", scheName=" + scheName + ", schePlace="
 					+ schePlace + ", scheDetail=" + scheDetail + ", accomodation=" + accomodation + ", plannerCode="
-					+ plannerCode + ", routeCode=" + routeCode + ", color=" + color + "]";
+					+ plannerCode + ", color=" + color + "]";
 		}
 
 }

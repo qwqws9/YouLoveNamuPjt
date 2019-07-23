@@ -167,7 +167,7 @@ function layer_open(el){
     }
 
     $el.find('#close').click(function(){
-        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
         return false;
     });
 
@@ -318,14 +318,16 @@ $(function () {
 					/////////////////////////////////////////////////////
 	
 		      drop: function() {
-		        // is the "remove after drop" checkbox checked?
+		 
 		        if ($('#drop-remove').is(':checked')) {
-		          // if so, remove the element from the "Draggable Events" list
+		         
 		          $(this).remove();
 		        }
 		      }
 		    });
 		  });
+		  
+		
 </script>
 
 
@@ -345,6 +347,7 @@ $(function () {
 <!--캘린더  -->
 <div  id="calendar"><p class="date" id="nows"></p>
  </div>
+
 
 <!--일정 등록 팝업  -->
 <div style="height: 300px;"></div>

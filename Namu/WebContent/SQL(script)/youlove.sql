@@ -206,7 +206,7 @@ CREATE TABLE route (
    lat 								VARCHAR2(100),
    lng 							VARCHAR2(100),
    start_Date                     date,
-    end_Date                     date,
+   end_Date                     date,
   
    PRIMARY KEY(route_code)
 );
@@ -443,30 +443,58 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','3','안녕','1');
 INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 
 INSERT 
+<<<<<<< HEAD
+INTO planner ( planner_code , planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+=======
 INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+>>>>>>> refs/remotes/origin/master
    isgroup, board_code, depart_date, reg_date ) 
    
+<<<<<<< HEAD
+VALUES ( seq_planner_code.nextval, 1,2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
+=======
 VALUES ( seq_planner_code.nextval,1, 2, '민희의유럽배낭여행 ', NULL, '1', 'S',  'B','N','4','20190801',sysdate); 
+>>>>>>> refs/remotes/origin/master
 
 INSERT 
+<<<<<<< HEAD
+INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
+=======
 INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+>>>>>>> refs/remotes/origin/master
    isgroup, board_code, depart_date, reg_date ) 
+<<<<<<< HEAD
+VALUES ( seq_planner_code.nextval, 1,2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
+=======
 VALUES ( seq_planner_code.nextval,1, 2, '민희의신혼여행 ', NULL, '2', 'S',  'B','N','4','20190805',sysdate); 
+>>>>>>> refs/remotes/origin/master
 
 INSERT 
+<<<<<<< HEAD
+INTO planner ( planner_code , planner_ver,  user_code, planner_name , planner_image , member , privacy, status, 
+=======
 INTO planner ( planner_code , planner_ver,user_code, planner_name , planner_image , member , privacy, status, 
+>>>>>>> refs/remotes/origin/master
    isgroup, board_code, depart_date, reg_date ) 
 VALUES ( seq_planner_code.nextval,1, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
+
 INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+
    isgroup, board_code, depart_date, reg_date ) 
+
 VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
+
 INSERT 
+
 INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+
    isgroup, board_code, depart_date, reg_date ) 
+
 VALUES ( seq_planner_code.nextval, 1,2, '그룹 유럽 여행입니다 호호호호호호호 ', NULL, '4', 'w',  'B','N','4','20190815',sysdate);
+
 
 
 

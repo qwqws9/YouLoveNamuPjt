@@ -1,21 +1,15 @@
 package com.youlove.web.planner;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,10 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
-import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +30,8 @@ import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.User;
 import com.youlove.common.FileNameUUId;
+import com.youlove.common.Page;
+import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 
 import com.youlove.service.planner.PlannerService;
@@ -68,7 +62,8 @@ public class PlannerController {
 		
 		return "forward:/planner/addPlanner.jsp";
 	}
-	//
+	
+	
 	@RequestMapping( value="addPlanner", method=RequestMethod.POST )
 	public String addPlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file,  HttpServletRequest request) throws Exception {
 
@@ -122,9 +117,9 @@ public class PlannerController {
 	public String updatePlanner( @RequestParam("plannerCode") int plannerCode , Model model ) throws Exception{
 
 		System.out.println("plannerController ----------------updatePlanner:GET ");
-		
+		System.out.println(plannerCode);
 		Planner planner = plannerService.getPlanner(plannerCode);
-
+		
 		model.addAttribute("planner", planner);
 
 		return "forward:/planner/updatePlanner.jsp";
@@ -135,7 +130,8 @@ public class PlannerController {
 	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
 
 		System.out.println("plannerController ----------------updatePlanner:POST ");
-
+		
+		
 		String fileName = FileNameUUId.convert(file, "planner", request);
 		planner.setPlannerImage(fileName);
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
@@ -151,6 +147,58 @@ public class PlannerController {
 	
 	}
 	
+	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
+	public String getPlanner( @RequestParam("plannerCode") int plannerCode , Model model) throws Exception {
+		
+		System.out.println("PlannerRestController--------getPlanner:GET");
+		//Business Logic
+		Planner planner = plannerService.getPlanner(plannerCode);
+		//Route route = plannerService.getRoute(plannerCode);
+//		Schedule schedule = plannerService.getScheduleList(plannerCode);
+		
+		String page=null;
+		
+		model.addAttribute("planner", planner);
+		//model.addAttribute("route", route);
+//		model.addAttribute("schedule", schedule);
+		
+		return "forward:/planner/getPlanner.jsp";
+		}
+	@RequestMapping( value="getPlannerList")
+	public String getPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
+		
+	System.out.println("PlannerRestController------------------getPlannerList");
+	 
+		User user= (User)session.getAttribute("user");
+		int userCode=user.getUserCode();
+		planner.setUser(user);
+		System.out.println("userCode?:"+userCode);
+		
+		int pageUnit = 10;
+		int pageSize = 10;
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		System.out.println("search ??? :"+search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("user", user);
+		map = plannerService.getPlannerList(map);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+//		System.out.println(resultPage);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("search", search);
+		model.addAttribute("resultPage", resultPage);
+		
+		System.out.println(search);
+		System.out.println(map.get("list"));
+		return "forward:/planner/getPlannerList.jsp";
+	}
 	
 	// 2. route
 	
@@ -247,18 +295,18 @@ public class PlannerController {
 		
 		System.out.println("PlannerController ----------------------- updateRoute start");
 		
-		//플래너 코드는 ?????.....가져오는지 ?
-		int plannerCode=route.getPlannerCode();    
+		int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();
+		System.out.println("플래너 코드 :?"+plannerCode);
+		route.setPlannerCode(plannerCode);    
+		
+		Planner planner=plannerService.getPlanner(plannerCode);
 		
 		//planner 버전 업그레이드 
-		route=plannerService.getRoute(plannerCode);
-		int plannerVer=route.getPlannerVer();
-		route.setPlannerVer(plannerVer+1);
+		route.setPlannerVer(planner.getPlannerVer());  
 		
 		//departDate 받아와서 set 
-		Planner planner=plannerService.getPlanner(plannerCode);
 		String departDate=planner.getDepartDate();
-		System.out.println(departDate);
+		System.out.println("여행출발일  :?"+departDate);
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 		Date date=null;
@@ -309,7 +357,7 @@ public class PlannerController {
 	public String addSchedule(HttpSession session, HttpServletRequest request, HttpServletResponse response,@ModelAttribute("schedule") Schedule schedule, @ModelAttribute("route") Route route) throws Exception{
 
 		System.out.println("PlannerController------------------- addSchedule :POST start");
-		//session에 담긴 plannerCode 받아와서 set 
+		//session에 담긴 plannerCode 받아와서 set
 		int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();
 		System.out.println(plannerCode);
 		schedule.setPlannerCode(plannerCode);
@@ -318,24 +366,5 @@ public class PlannerController {
 
 		return "forward:/planner/getScheduleList.jsp";
 		}
-
 	
-	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
-	public String getPlanner( @RequestParam("plannerCode") int plannerCode , Model model) throws Exception {
-		
-		System.out.println("PlannerRestController--------getPlanner:GET");
-		//Business Logic
-		Planner planner = plannerService.getPlanner(plannerCode);
-//		Route route = plannerService.getRouteList(plannerCode);
-//		Schedule schedule = plannerService.getScheduleList(plannerCode);
-		
-		String page=null;
-		
-		model.addAttribute("planner", planner);
-//		model.addAttribute("route", route);
-//		model.addAttribute("schedule", schedule);
-		
-		return "forward:/planner/getPlanner.jsp";
-		}
-
 }

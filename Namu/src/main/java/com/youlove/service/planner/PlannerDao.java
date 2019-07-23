@@ -2,9 +2,11 @@ package com.youlove.service.planner;
 
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
+import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface PlannerDao {
@@ -15,7 +17,11 @@ public interface PlannerDao {
 	public Planner getPlanner(int plannerCode) throws Exception;
 	
 	public void updatePlanner(Planner planner) throws Exception;
+
+	public List<Planner> getPlannerList(Map<String, Object> map)  throws Exception;
 	
+	public int getTotalCount(Map<String, Object> map) throws Exception;
+
 	//2. route
 	public void addRoute(Route route) throws Exception ;
 	
@@ -29,6 +35,7 @@ public interface PlannerDao {
 	public List<Route> getRouteLat(int plannerCode) throws Exception;
 	
 	public List<Route> getRouteLng(int plannerCode) throws Exception;
+	
 	
 	//3.schedule
 	public void addSchedule(Schedule schedule) throws Exception ;

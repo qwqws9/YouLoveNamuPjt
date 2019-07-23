@@ -47,7 +47,7 @@ public class PlannerRestController {
        int cityOrder;
        int stayDay;
        
-       rlist =  plannerService.getRouteList(1);
+       rlist =  plannerService.getRouteList(plannerCode);
           for(int i=0; i<rlist.size(); i++){   
              Map<String, Object> map = new HashMap<String, Object>();
              city = ((Route) rlist.get(i)).getCityName();   
@@ -102,7 +102,7 @@ public class PlannerRestController {
 	//plannerCode 받아오기
 	int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();
 	System.out.println(plannerCode);
-	  
+	 
 	 List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 	 List rlist = new ArrayList();
 	 List slist = new ArrayList();
