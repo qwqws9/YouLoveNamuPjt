@@ -12,5 +12,5 @@ public interface TimelineService {
 	
 	public void addTimeline(Timeline timeline) throws Exception;
 	
-	
+	public List<Timeline> getTimelineList(User user) throws Exception;
 }
