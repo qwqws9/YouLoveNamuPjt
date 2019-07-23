@@ -35,6 +35,14 @@
 			height: 600px;
         	width: 100%;
 		}
+		
+		.marker {
+		  	width: 25px;
+		    height: 25px;
+		    border-radius: 50%;
+		    border:1px solid gray;
+		    background-color:lightblue;
+		}
 	</style>
 </head>
 
@@ -299,33 +307,72 @@
 			});
 		})
 		
-		mapboxgl.accessToken = 'pk.eyJ1Ijoia29zNTY2NyIsImEiOiJjank4cG8yM2cwY3VrM2ZwOTRmaXdweXRwIn0.pmirns4XMt_92FQMsndgyg';
-		var geojson = [
-  			{
-  			    type: 'Feature',
-  			    geometry: {
-  			      type: 'Point',
-  			      coordinates: [-77.031952, 38.913184]
-  			    },
-  			    properties: {
-  			      'marker-color': '#3bb2d0',
-  			      'marker-size': 'large',
-  			      'marker-symbol': 'rocket'
-  			    }
-  			  },
-  			  {
-  			    type: 'Feature',
-  			    geometry: {
-  			      type: 'Point',
-  			      coordinates: [-122.413682, 37.775408]
-  			    },
-  			    properties: {
-  			      'marker-color': '#3bb2d0',
-  			      'marker-size': 'large',
-  			      'marker-symbol': 'rocket'
-  			    }
-  			  }
-  			];
+		
+		
+		
+		
+		mapboxgl.accessToken = 'pk.eyJ1Ijoia29zNTY2NyIsImEiOiJjanlmeDF5dHMwZXFrM25waDY0Nm9kY2o3In0.bXrnQ0ZqZ2ul0OdF-SzW0w';
+		
+		var party = {
+				type: 'FeatureCollection',
+				features: [
+					{
+					type: 'Feature',
+					geometry: {type: 'Point', coordinates: [11,11]},
+					properties:{ title: 'Mapbox', description: 'Washington, D.C.' }
+					}
+				]
+		};
+		/* $.ajax({
+			url : "/party/json/getPartyList",
+		    method : "POST",
+		    dataType : "json",
+		    headers : {
+     			 "Accept" : "application/json",
+                 "Content-Type" : "application/json"
+     		},
+     		success : function(JSONData, status){
+     			$.each(JSONData,function(index,item){
+     				$("#city").append('<option value="'+item.cityName+'">'+item.cityName+'</option>');
+     			});
+     		},
+     		error:function(jqXHR, textStatus, errorThrown){
+    			alert(textStatus );
+    			alert( errorThrown );
+    		}
+		}); */
+		var geojson = {
+				  type: 'FeatureCollection',
+				  features: [{
+				    type: 'Feature',
+				    geometry: {
+				      type: 'Point',
+				      coordinates: [-77.032, 38.913]
+				    },
+				    properties: {
+				      title: 'Mapbox',
+				      description: 'Washington, D.C.'
+				    }
+				  },
+				  {
+				    type: 'Feature',
+				    geometry: {
+				      type: 'Point',
+				      coordinates: [-122.414, 37.776]
+				    },
+				    properties: {
+				      title: 'Mapbox',
+				      description: 'San Francisco, California'
+				    }
+				  }]
+				};
+
+				var map = new mapboxgl.Map({
+					  container: 'map',
+					  style: 'mapbox://styles/mapbox/light-v10',
+					  center: [-96, 37.8],
+					  zoom: 3
+					});
 		var map = new mapboxgl.Map({
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v10',
@@ -357,7 +404,7 @@
 		var lng;
 		var lat;
 	  	var marker = new mapboxgl.Marker()
-		map.on('click', function(e) {
+		/* map.on('click', function(e) {
 	  	lng = e.lngLat.lng;
 	  	lat = e.lngLat.lat;
 	  	console.log(lng + ', ' + lat);
@@ -367,11 +414,11 @@
 		$("#latitude").val(lat);
 		$("#longitude").val(lat);
 	  	
-			});
+			}); */
 	  	
 
 	 	// add markers to map
-	  	geojson.features.forEach(function(marker) {
+	 	geojson.features.forEach(function(marker) {
 	  	  	// create a HTML element for each feature
 	  		var el = document.createElement('div');
 	  	 	el.className = 'marker';
@@ -380,7 +427,14 @@
 	  	  	new mapboxgl.Marker(el)
 	  	    	.setLngLat(marker.geometry.coordinates)
 	  	    	.addTo(map);
-	  	});
+	 		// make a popup
+	  	  	new mapboxgl.Marker(el)
+				.setLngLat(marker.geometry.coordinates)
+				.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+				.setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+				.addTo(map);
+	  	  	
+	 	})
 	 	
 	</script>
 </body>
