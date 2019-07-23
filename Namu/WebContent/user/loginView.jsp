@@ -13,7 +13,7 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link rel="stylesheet" href="/resources/css/common.css" >
 <script src="/resources/javascript/getProfile.js"></script>
-
+ 
 </head>
 
 <body class="text-center">
@@ -58,10 +58,14 @@
 			</div>
 		</div>
 	</div>
+	
+	
+<%-- 	 <jsp:include page="../comment/getComment.jsp" > --%>
+<%--       	<jsp:param value="${boardCode}" name="boardCode"/> --%>
+<%--       	<jsp:param value="${detailCode}" name="detailCode"/> --%>
+<%--       </jsp:include> --%>
 		
 <script type="text/javascript">
-		
-	$(function(){
 		
 		$('#findInfo').on('click',function(){
 			var url = '/user/findInfo';
@@ -84,6 +88,7 @@
 		})
 		
 		$("#autoLogin").on('click',function(){
+			socketcall();
 			//alert($('#autoLogin').is(':checked'));
 			if($('#autoLogin').is(':checked')) {
 				$("#saveId").prop('disabled',true).prop('checked',true)

@@ -13,6 +13,7 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="../resources/javascript/jquery.oLoader.min.js"></script>
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
+<link rel="stylesheet" href="/resources/css/common.css" >
 </head>
 <body>
 <header><%@ include file="/layout/header.jsp" %></header>

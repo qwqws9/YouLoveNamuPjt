@@ -152,7 +152,7 @@
 										</select>
 									</div>
 									<div class="col-3 form-group">
-										<select class="form-control" id="city" title="City">
+										<select class="form-control" id="city" name="cityName" title="City">
 										</select>
 									</div>
 									<div class="col-6 form-group">
@@ -195,19 +195,18 @@
 							</div>
 							<div class="col-md-6 col-lg-6 form-group">
 						    	<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" id="gender1" name="gender" class="custom-control-input gender">
+									<input type="radio" id="gender1" name="gender" class="custom-control-input gender" value="1">
 								  	<label class="custom-control-label" for="gender1">남자</label>
 								</div>
 								<div class="custom-control custom-radio custom-control-inline">
-								  	<input type="radio" id="gender2" name="gender" class="custom-control-input gender">
+								  	<input type="radio" id="gender2" name="gender" class="custom-control-input gender" value="2">
 								  	<label class="custom-control-label" for="gender2">여자</label>
 								</div>
 								<div class="custom-control custom-radio custom-control-inline">
-								  	<input type="radio" id="gender3" name="gender" class="custom-control-input gender">
+								  	<input type="radio" id="gender3" name="gender" class="custom-control-input gender" value="3">
 								  	<label class="custom-control-label" for="gender3">상관없음</label>
 								</div>
 							</div>
-							<div class="col-1"></div>
 						</div>
 						
 						
@@ -218,24 +217,16 @@
 							<div class="col-md-10 col-lg-10 form-group">
 								<div class="row">
 									<div class="col-2">
-										<select class="form-control">
-											<c:forEach var="i" begin="0" end="40">
-											<c:set var="i" value="0"/>
-										  		<option>1980</option>
-											</c:forEach>
+										<select class="form-control" name="age">
+									  		<option value="0">10대</option>
+									  		<option value="1">20대</option>
+									  		<option value="2">30대</option>
+									  		<option value="3">40대</option>
+									  		<option value="4">50대</option>
 										</select>
 									</div>
-							    	<div class="col-1 text-center">
-							    		<span style="font-size: 20px;">~</span>
-							    	</div>
-							    	<div class="col-2">
-							    		<select class="form-control">
-										  	<option>2000</option>
-										</select>
-							    	</div>
 								</div>
 							</div>
-							<div class="col-1"></div>
 						</div>
 						
 						
@@ -266,7 +257,9 @@
 				</div>
 			</form>
 			</div>
-			<div class="col-1"></div><!-- 사이드바 -->
+			<div class="col-1">
+				<button type="button" id="coco" onclick="getSchedule()">ddd</button>
+			</div><!-- 사이드바 -->
 		</div>
 	</div>
 	
@@ -286,19 +279,32 @@
 	      		</div>
 		      	<div class="modal-body" id="calendar">
 		      	</div>
-		      	<div class="modal-footer">
-		      		<span id="s"></span><span id="e"></span>
-		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		        	<button type="button" class="btn btn-primary">확인</button>
-		      	</div>
 	    	</div>
 	  	</div>
 	</div>
 	
 	<script>
+	
 		function getSchedule (){
-			
-			
+			$.ajax({
+				url : "/planner/getScheduleList",
+				method : "POST",
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "appliction/json"
+				},
+				success : function(JSONData, status){
+						console.log("시작");
+					$.each(JSONData,function(index,item){
+						console.log(item);
+					});
+						console.log("끝");
+				},
+				error:function(jqXHR, textStatus, errorThrown){
+					alert(error);	
+				}
+			});
 		}
 		/* function renderCalcEvent(data) {
 			  for (var i = 0; i < data.length; i++) {
@@ -321,27 +327,72 @@
 			    $('#calendar').fullCalendar('renderEvent', event);
 			  }
 			} */
+		
+		var startDate;
+		var endDate;
+		function addDate(startDate,endDate){
+			startDate = startDate;
+			endDate = endDate;
+			    console.log(startDate +" , "+endDate);
+			    $("#partyStart").val(startDate);
+				$("#partyEnd").val(endDate);
+			}
 		$(function(){
+			//현재시간
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			if(dd<10) {
+			    dd='0'+dd
+			} 
+			if(mm<10) {
+			    mm='0'+mm
+			} 
+			today = yyyy+'-'+mm+'-'+dd;
+			console.log(today);
 			//스케줄
 			$("#calendar").fullCalendar({
-				dafaultDate : "2019-07-21",
+				selectable : true,
+				dafaultDate : today,
 				//수정가능
 				editable : true,
 				eventLimit : true,
-				
 				//날짜선택
 				dayClick: function(date, jsEvent, view) {
-
-				    alert('Clicked on: ' + date.format());
-
-				    alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-				    alert('Current view: ' + view.name);
-
-				    // change the day's background color just for fun
-				    $(this).css('background-color', 'red');
-
-				  }
+				    console.log('Clicked on: ' + date.format());
+				    startDate = date.format();
+				    endDate = date.format();
+				    //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+				    //alert('Current view: ' + view.name);
+				    //$(this).css('background-color', 'red');
+				},
+				//드래그
+				select : function(start, end){
+					console.log("select : "+start.format() + 'to' + end.format());
+					startDate = start.format();
+					endDate = end.format();
+					addDate(startDate,endDate);
+					
+				},
+				//Schedule
+			  	events: [
+					    {
+					        title  : 'event1',
+					        start  : '2019-07-05'
+				    	},
+				    	{
+					        title  : 'event2',
+					        start  : '2019-07-05',
+					        end    : '2019-07-07'
+				    	},
+				    	{
+					        title  : 'event3',
+					        start  : '2019-07-09T12:30:00',
+					        allDay : false // will make the time show
+				    	}
+				]
+		
 			    
 			    
 			   
@@ -349,19 +400,20 @@
 				
 				//DB data
 				
-			})
+			});/* end of calender */
+			
 			//도시
 			$.ajax({
 				url : "/guide/json/getCityList/country",
 			    method : "POST",
-			    dataType : "json",
+			    //dataType : "json",
 			    headers : {
 	     			 "Accept" : "application/json",
 	                 "Content-Type" : "application/json"
 	     		},
 	     		success : function(JSONData, status){
 	     			$.each(JSONData,function(index,item){
-	     				$("#country").append('<option value="'+index+'">'+item.countryName+'</option>');
+	     				$("#country").append('<option value="'+item.countryName+'">'+item.countryName+'</option>');
 	     			});
 	     		},
 	     		error:function(jqXHR, textStatus, errorThrown){
@@ -383,11 +435,11 @@
 		     		},
 		     		success : function(JSONData, status){
 		     			$.each(JSONData,function(index,item){
-		     				$("#city").append('<option value="'+index+'">'+item.cityName+'</option>');
+		     				$("#city").append('<option value="'+item.cityName+'">'+item.cityName+'</option>');
 		     			});
 		     		},
 		     		error:function(jqXHR, textStatus, errorThrown){
-		    			alert( textStatus );
+		    			alert(textStatus );
 		    			alert( errorThrown );
 		    		}
 				});
@@ -398,8 +450,6 @@
 			
 			
 		});/* end of ready function */
-		
-		
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia29zNTY2NyIsImEiOiJjank4cG8yM2cwY3VrM2ZwOTRmaXdweXRwIn0.pmirns4XMt_92FQMsndgyg';
 		var map = new mapboxgl.Map({
 		container: 'map',
@@ -416,7 +466,10 @@
 		//search geoCoder
 		map.addControl(new MapboxGeocoder({
 			accessToken: mapboxgl.accessToken,
-			mapboxgl: mapboxgl
+			mapboxgl: mapboxgl,
+			marker : {
+				color : 'orange'
+			}
 			}));
 		//나의 위치 검색
 		map.addControl(new mapboxgl.GeolocateControl({

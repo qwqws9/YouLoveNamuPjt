@@ -1,5 +1,7 @@
 package com.youlove.service.partyimpl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,20 +28,18 @@ public class PartyServiceImpl implements PartyService{
 
 	@Override
 	public void addParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+		partyDao.addParty(party);
 	}
 
 	@Override
-	public void getParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
+	public Party getParty(int partyCode) throws Exception {
 		
+		return partyDao.getParty(partyCode);
 	}
 
 	@Override
-	public void getPartyList(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public Map<String,Object> getPartyList(Map<String,Object> map) throws Exception {
+		return null;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class PartyServiceImpl implements PartyService{
 	}
 
 	@Override
-	public void deleteParty(Party party) throws Exception {
+	public void deleteParty(int partyCode) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}

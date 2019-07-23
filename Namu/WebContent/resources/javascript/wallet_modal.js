@@ -8,9 +8,10 @@ $(function() {
 		$('.pop_wrap_add').html('');
 		
 		// innerHTML
-		$($('.pop_wrap_add')[0]).load('/wallet/addWalletIncome.jsp', function(data) {
+		$($('#save_income_form')).load('/wallet/addWalletIncome.jsp', function(data) {
 			//console.log(data);
 			
+			$('.pop_wrap_add').show();
 			initPopUp();
 		});
 	});
@@ -23,9 +24,10 @@ $(function() {
 		$('.pop_wrap_add').html('');
 		
 		// innerHTML
-		$($('.pop_wrap_add')[1]).load('/wallet/addWalletExpenditure.jsp', function(data) {
+		$($('#save_expenditure_form')).load('/wallet/addWalletExpenditure.jsp', function(data) {
 			//console.log(data);
 			
+			$('.pop_wrap_add').show();
 			initPopUp();
 		});
 	});
@@ -39,18 +41,13 @@ $(function() {
 		addAjax($(this)[0]);
 	});
 	
-	// 수입/지출 추가 모달창 닫기 버튼
-	/*
-	$('body').on('click', function(e) {
-		var container = $('.pop_wrap_add');
+	// 수입/지출 추가 모달창 닫기 버튼 (동적)
+	$(document).on('click', '.pop_wrap_add .act_btns .close_btn', function() {
+		$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
 		
-		if(container.has(e.target).length === 0 || $(e.target).is('.pop_wrap_add .act_btns .close_btn')){
-			$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
-			
-			$('.pop_wrap_add').html('');
-		}
+		$('.pop_wrap_add').html('');
+		$('.pop_wrap_add').hide();
 	});
-	*/
 	
 	// 수입/지출 상세내역 모달창 버튼
 	$('.detail_line').on('click', function() {
@@ -66,42 +63,68 @@ $(function() {
 			
 			centerPopUp($(this).children());
 			getAjax(walletDetailCode);
-			
-			// 수입/지출 상세내역 모달창 닫기 버튼
-			$('.pop_wrap_contain').on('click', function(e) {
-				var container = $('.pop_wrap_get');
-				
-				if($(e.target).is('.pop_wrap_contain .pop_wrap_get .close_btnn') || container.has(e.target).length === 0){
-					$('.pop_wrap_contain').html('');
-					$('.pop_wrap_contain').hide();
-				}
-			});
-			
-			// 수입/지출 상세내역 삭제 버튼
-			$('.pop_wrap_get .act_btns .delete_btn').on('click', function(e) {
-				var result = confirm('삭제 후 복구가 불가능 합니다. 정말 삭제하시겠습니까?');
-				
-				if(result){
-					//console.log($(this).parent().prev().text().trim());
-					
-					deleteAjax($(this).parent().prev().text().trim());
-					getListAjax($('#currentPage').text().trim());
-				}
-			});
 		});
+	});
+	
+	// 수입/지출 상세내역 삭제 버튼 (동적)
+	$(document).on('click', '.pop_wrap_get .act_btns .delete_btn', function() {
+		var result = confirm('삭제 후 복구가 불가능 합니다. 정말 삭제하시겠습니까?');
+		
+		if(result){
+			//console.log($(this).parent().prev().text().trim());
+			
+			deleteAjax($(this).parent().prev().text().trim());
+			getListAjax($('#currentPage').text().trim());
+		}
+	});
+	
+	// 수입/지출 상세내역 모달창 닫기 버튼 (동적)
+	$(document).on('click', '.pop_wrap_contain .pop_wrap_get .close_btnn', function() {
+		$('.pop_wrap_contain').html('');
+		$('.pop_wrap_contain').hide();
 	});
 	
 	// 결산 보고서 모달창 버튼
 	$('.report_btn').on('click', function() {
-		//$('.report_wrap').html('');
-		console.log('ddddddddddd');
+		$('.report_wrap').show();
 		
 		// innerHTML
 		$($('.report_wrap')).load('/wallet/getWalletReport.jsp', function(data) {
-			console.log(data);
+			//console.log(data);
+			//console.log('모달창 넓이 : ' + $(this).children().width() + 'px, 길이 : ' + $(this).children().height() + 'px');
 			
-			$('.report_wrap').show();
+			centerPopUp($(this).children());
 		});
+	});
+	
+	// 결산 보고서 모달창 닫기 버튼 (동적)
+	$(document).on('click', '.report_wrap .get_report .close_btnn', function() {
+		$('.report_wrap').html('');
+		$('.report_wrap').hide();
+	});
+	
+	// 모달창 외부 클릭시 닫기 이벤트
+	$('body').on('click', function(e) {
+		//console.log(':: BODY ONCLICK EVENT ::');
+		
+		if($('#save_income_form').css('display') == 'block' || $('#save_expenditure_form').css('display') == 'block'){
+			if($('.pop_wrap_add').has(e.target).length === 0){
+				$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+				
+				$('.pop_wrap_add').html('');
+				$('.pop_wrap_add').hide();
+			}
+		}else if(e.target.className == 'pop_wrap_contain'){
+			if($('.pop_wrap_get').has(e.target).length === 0){
+				$('.pop_wrap_contain').html('');
+				$('.pop_wrap_contain').hide();
+			}
+		}else if(e.target.className == 'report_wrap'){
+			if($('.get_report').has(e.target).length === 0){
+				$('.report_wrap').html('');
+				$('.report_wrap').hide();
+			}
+		}
 	});
 });
 
@@ -116,7 +139,7 @@ function centerPopUp(modal) {
 }
 function realCenterPopUp(modal) {
 	// var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) + $(window).scrollTop()) + 'px';
-	var top = Math.max(0, ((($(window).height() - modal.outerHeight()) / 2)) - 20) + 'px';
+	var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) - 15) + 'px';
 	var left = Math.max(0, (($(window).width() - modal.outerWidth()) / 2) + $(window).scrollLeft()) + 'px';
 	//console.log('모달창 위치 : 위쪽 ' + top + ', 왼쪽 ' + left);
 
@@ -182,6 +205,19 @@ function memoPopUp() {
 	$('.add_option_selec .close_btn').on('click', function() {
 		$('#memo_btn').next().hide();
 	});
+	
+	
+	
+	$('.memo_cont').on('keyup', function(){
+		console.log($(this).val());
+		
+		$('.memo_cont').val(removeTag($(this).val()));
+	});
+}
+
+// html 태그 제거
+function removeTag(html) {
+	return html.replace(/(<([^>]+)>)/gi, '');
 }
 
 // 금액 X 환율
@@ -277,7 +313,7 @@ function calculation() {
 var operStr = '+-*/.';
 
 function pressNumber(num) {
-	// 25자까지 입력 제한
+	// 15자까지 입력 제한
 	if($('#expression').val().length < 15){
 		// 연산자 중복 클릭시 기존 연산자 삭제
 		if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1 && operStr.indexOf(num) != -1){
@@ -290,6 +326,8 @@ function pressNumber(num) {
 		if(operStr.indexOf(num) == -1 && $('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length) != '.'){
 			answer($('#expression').val());
 		}
+	}else{
+		backspace();
 	}
 }
 function answer(num) {
