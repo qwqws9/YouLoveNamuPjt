@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head> 
@@ -19,7 +20,7 @@
 			  $(".previous").on("click", function(){
 				 
 				  history.go(-1);
-				  
+  
 			  });
 			  
 			  
@@ -74,12 +75,18 @@
 		
 		<div class="row">
 	  		<div class="col-md-8 "><strong> 여행멤버 </strong></div>
-		
-				<div class="col-md-4">${planner.member}  </div>
+		<c:if test="${! empty planner.member && (planner.member eq '1')}">
+		혼자 </c:if>
+		<c:if test="${! empty planner.member && (planner.member eq '2')}">
+		연인과 </c:if>
+		<c:if test="${! empty planner.member && (planner.member eq '3')}">
+		친구들과 </c:if>
+		<c:if test="${! empty planner.member && (planner.member eq '4')}">
+		가족들과 </c:if>
 		</div>
 		
 		<hr/>
-		
+
 		<div class="row">
 	  		<div class="col-md-8 "><strong> 여행출발일 </strong></div>
 			<div class="col-md-4">${planner.departDate}</div>
@@ -94,11 +101,7 @@
   </div>  
   
 		<hr/>
-		
-	
-				
-		
-				
+			
 <form role="form" method="post">
  <input type="hidden" name="plannerCode" value="${planner.plannerCode}" />
  </form>
@@ -112,6 +115,8 @@
 			<jsp:include page="/planner/getScheduleList.jsp" />
 		</nav>
 		
+		
+			
 		<nav>
   <ul class="pager">
   
@@ -123,6 +128,7 @@
   	
   </ul>
 </nav>
-		
+
+
 </body>
 </html>

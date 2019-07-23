@@ -135,7 +135,7 @@
 						  	<div class="dropdown-menu">
 						  		<a class="dropdown-item" href="/planner/addPlanner">첫플래너 시작</a>
 							    <div class="dropdown-divider"></div>
-							    <a class="dropdown-item" href="#">플래너 공유</a>
+							    <a class="dropdown-item" href="/planner/getAllPlannerList">플래너 공유</a>
 						  	</div>
 						</div>
 					</div>					

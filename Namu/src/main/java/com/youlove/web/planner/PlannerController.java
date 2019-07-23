@@ -71,7 +71,7 @@ public class PlannerController {
 
 		User user= (User)session.getAttribute("user");
 		
-		planner.setUser(user);
+		planner.setPlannerWriter(user);
 		System.out.println(user);
 		
 		if(user==null) {
@@ -148,7 +148,7 @@ public class PlannerController {
 	}
 	
 	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
-	public String getPlanner( @RequestParam("plannerCode") int plannerCode , Model model) throws Exception {
+	public String getPlanner( @RequestParam("plannerCode") int plannerCode ,Model model) throws Exception {
 		
 		System.out.println("PlannerRestController--------getPlanner:GET");
 		//Business Logic
@@ -168,11 +168,48 @@ public class PlannerController {
 	public String getPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
-	 
+	int pageUnit = 10;
+	int pageSize = 10;
+	
+	if(search.getCurrentPage() ==0 ){
+		search.setCurrentPage(1);
+	}
+	search.setPageSize(pageSize);
+	System.out.println("search ??? :"+search);
+	
 		User user= (User)session.getAttribute("user");
 		int userCode=user.getUserCode();
-		planner.setUser(user);
+		planner.setPlannerWriter(user);
 		System.out.println("userCode?:"+userCode);
+	
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("userCode", userCode);
+		map = plannerService.getPlannerList(map);
+	
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("search", search);
+		model.addAttribute("resultPage", resultPage);
+		
+		System.out.println(search);
+		System.out.println(map.get("list"));
+	
+		return "forward:/planner/getPlannerList.jsp";
+	}
+	
+	@RequestMapping( value="getAllPlannerList")
+	public String getAllPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
+		
+	System.out.println("PlannerRestController------------------getPlannerList");
+	 
+//		User user= (User)session.getAttribute("user");
+//		int userCode=user.getUserCode();
+//		planner.setUser(user);
+//		System.out.println("userCode?:"+userCode);
 		
 		int pageUnit = 10;
 		int pageSize = 10;
@@ -185,8 +222,8 @@ public class PlannerController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		map.put("user", user);
-		map = plannerService.getPlannerList(map);
+		//map.put("userCode", user);
+		map = plannerService.getAllPlannerList(map);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 //		System.out.println(resultPage);
@@ -197,7 +234,7 @@ public class PlannerController {
 		
 		System.out.println(search);
 		System.out.println(map.get("list"));
-		return "forward:/planner/getPlannerList.jsp";
+		return "forward:/planner/getAllPlannerList.jsp";
 	}
 	
 	// 2. route
@@ -219,7 +256,7 @@ public class PlannerController {
 		System.out.println(plannerCode);
 		route.setPlannerCode(plannerCode);    
 	
-		//planner 버전 set /!!!!!!!!! 변경하기. 
+		//planner 버전 set 
 		route.setPlannerVer(1);
 		
 		//departDate 받아와서 set 

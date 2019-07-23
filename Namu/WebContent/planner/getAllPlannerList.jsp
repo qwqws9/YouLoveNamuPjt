@@ -21,12 +21,6 @@
 
 
 <script type="text/javascript">
-function fncGetList(currentPage) {
-
-	$("#currentPage").val(currentPage)
-	$("form").attr("method", "POST").attr("action","/planner/getPlannerList").submit();
-	}
-
 $(function() {
 
 	$('h5').on("click",function(){
@@ -100,8 +94,8 @@ alt="Generic placeholder image" width="350" height="350" id="img">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/resources/images/profile/${user.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="55px" height="40px">
-${user.nickname}</p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="55px" height="40px">
+${planner.plannerWriter.nickname}</p>
 <p>
 
 </div>

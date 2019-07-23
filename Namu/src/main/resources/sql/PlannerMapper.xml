@@ -19,7 +19,11 @@
 		<result property="isGroup" 			column="ISGROUP" 			jdbcType="CHAR" />
 		<result property="boardCode" 				column="BOARD_CODE" 				jdbcType="CHAR" />
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
-		<association property="user" column="user_code"  select="UserMapper.getUser" javaType="user"/> 
+		<association property="plannerWriter"   javaType="user"> 
+		<result property="userCode" column="USER_CODE" />
+			<result property="nickname" column="NICKNAME" />
+			<result property="profileImg" column="PROFILE_IMG" />
+			</association>
 	</resultMap>
 	
 	<resultMap id="routeSelectMap" type="route">
@@ -60,8 +64,8 @@
 		 SELECT MAX(planner_code)+1 FROM planner
 		</selectKey>
 	 	INSERT
-		INTO planner(PLANNER_CODE , planner_ver, USER_CODE, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
-		VALUES	 (seq_planner_code.nextval, 1, #{user.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
+		INTO planner(PLANNER_CODE , planner_ver, planner_writer, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
+		VALUES	 (seq_planner_code.nextval, 1, #{plannerWriter.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
 	
 
 	 </insert>
@@ -81,7 +85,8 @@
 	   		planner_name 	= #{plannerName} ,
 			planner_image	= #{plannerImage},
 			DEPART_DATE = #{departDate} ,
-			member	=	#{member}
+			member	=	#{member},
+			privacy=#{privacy}
 	   	</set>
 	   	WHERE planner_code = #{plannerCode}
 	 </update>
@@ -91,27 +96,50 @@
 SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(
-	  					SELECT planner_Name, planner_code, planner_image, DEPART_DATE, member, privacy
+	  					SELECT  planner_Name, planner_code, planner_image, DEPART_DATE, member, privacy
 	  					FROM planner
-	  					 
-	  					  where	user_code = #{user.userCode}
+	  				
+										 where	planner_writer = #{userCode}
+									
 	  					 ORDER BY planner_code DESC 
 	  						) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 			  	 
 	</select>
-	  			 	
+	 		
+	 <select  id="getAllPlannerList"  parameterType="map"	resultMap="plannerSelectMap">
+SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(
+	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname 
+	  					FROM planner p, users u 
+	  					where p.planner_writer =u.user_code
+	  					 ORDER BY p.planner_code DESC 
+	  						) inner_table
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+			  	 
+	</select>
+	
 	<select  id="getTotalCount" parameterType="map" resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT planner_code, planner_name, planner_image, DEPART_DATE, member, privacy
-	  					FROM planner
-	  					where user_code = #{user.userCode}
+	  				FROM planner
+						where	planner_writer = #{userCode}
 	  					order by planner_code DESC
 	  				) countTable						
 	 </select>
 	 
-
+	<select  id="getAllTotalCount" parameterType="map" resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname 
+	  					FROM planner p, users u 
+	  					where p.planner_writer =u.user_code
+	  					 ORDER BY p.planner_code DESC 
+	  						) inner_table				
+	 </select>
+	 
 		
 		<!-- 2. route -->
 	 	
