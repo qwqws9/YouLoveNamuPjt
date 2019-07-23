@@ -7,19 +7,30 @@ public class Timeline {
 	private User toUser;
 	private String timeDate;
 	
-	//private String accept;
+	private String accept;
 	
 	private String protocol;
-	private Comment commentCode;
+	private int commentCode;
+	
+	//private String accept;
+	
+	public String getAccept() {
+		return accept;
+	}
+
+	public void setAccept(String accept) {
+		this.accept = accept;
+	}
+
 	
 	
 	
 
-	public Comment getCommentCode() {
+	public int getCommentCode() {
 		return commentCode;
 	}
 
-	public void setCommentCode(Comment commentCode) {
+	public void setCommentCode(int commentCode) {
 		this.commentCode = commentCode;
 	}
 

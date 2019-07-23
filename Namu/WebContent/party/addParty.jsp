@@ -444,6 +444,8 @@
 		    		}
 				});
 			});
+			
+			
 			$("#add").on("click",function(){
 				addParty();
 			});

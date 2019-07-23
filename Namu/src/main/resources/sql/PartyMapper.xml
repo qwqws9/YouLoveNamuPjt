@@ -86,6 +86,45 @@
 		party_code = #{partyCode} AND u.user_code = p.writer AND c.city_name = p.city_name
 	</select>
 	
+	<select id="getPartyList" parameterType="map" resultMap="partyMap">
+		SELECT *
+		FROM ( SELECT first_table.* , ROWNUM AS row_seq
+		            FROM (SELECT    p.party_code,
+		                                    p.party_title,
+		                                    p.party_content,
+		                                    p.party_start,
+		                                    p.party_end,
+		                                    p.latitude,
+		                                    p.longitude,
+		                                    p.party_people,
+		                                    p.party_recruitment,
+		                                    p.gerder,
+		                                    p.age,
+		                                    p.hashtag_code,
+		                                    p.reg_date,
+		                                    u.user_code,
+		                                    u.nickname,
+		                                    u.profile_img,
+		                                    c.city_name,
+		                                    c.country_name,
+		                                    c.flag_image
+		                        FROM party p, users u, city c
+		                        <where>
+			                        p.writer = u.user_code AND p.city_name = c.city_name
+		                        </where>
+		                        ORDER BY p.party_code DESC ) first_table
+		            WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	
+	
+	<select  id="getTotalCount"  parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM party
+	</select>
+	
+	
 	
 </mapper>
 
