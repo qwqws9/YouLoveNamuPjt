@@ -45,7 +45,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 		  $("#getChat").on("click", function(){
-		    window.open("http://192.168.0.13:8005/", "popup_chat", "width=450, height=800, location=no, resizable=no")
+			window.open("http://192.168.0.13:8005/", "popup_chat", "width=450, height=800, location=no, resizable=no")
 		  });
 		});
 	</script>
