@@ -26,14 +26,13 @@
 	<script src="/resources/javascript/getProfile.js"></script>
 	
 	<script src="/resources/javascript/index.js"></script>
-	
-	
-	
+		
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    
+
     <!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -45,7 +44,8 @@
 	<div style="width: 100%;">
 		<h4 style="margin: auto;">
 			<a href="/wallet/getWalletList?walletCode=1">규리 가계부 목록</a><br>
-			<a href="http://192.168.0.13:8005/">상욱 채팅</a><br>
+			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
+			<i id="getChat">상욱 채팅</i><br>
 			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
 			<a href="/planner/addRoute.jsp"> 민희 구글맵 루트</a> <br>
 			 <a href="/planner/getScheduleList.jsp"> /</a> <br>
@@ -53,7 +53,15 @@
 			<a href="/party/getPartyList">중현 동행 리스트</a>
 		</h4>
 	</div>
-	
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+		  $("#getChat").on("click", function(){
+			window.open("http://192.168.0.13:8005/", "popup_chat", "width=450, height=800, location=no, resizable=no")
+		  });
+		});
+	</script>
+
 	<!-- 날씨 -->
 	<div class="row">
   <div class="col-sm-6">
@@ -83,7 +91,7 @@
 	<input type="hidden" id="weatherCountry" value="프랑스">
 	<input type="hidden" id="weatherCity" value="파리">
 	
-	
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
+
 </body>
 </html>
