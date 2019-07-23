@@ -8,6 +8,7 @@ import com.youlove.service.domain.Planner;
 import java.util.List;
 import java.util.Map;
 
+
 public interface PlannerDao {
 
 	// 1. planner
@@ -19,18 +20,20 @@ public interface PlannerDao {
 
 	public List<Planner> getPlannerList(Map<String, Object> map)  throws Exception;
 	
-	public List<Planner> getAllPlannerList(Map<String, Object> map)  throws Exception;
+	public int getAllTotalCount(Map<String, Object> map) throws Exception;
 	
 	public int getTotalCount(Map<String, Object> map) throws Exception;
 
-	public int getAllTotalCount(Map<String, Object> map) throws Exception;
-
+	
+	public List<Planner> getAllPlannerList(Map<String, Object> map) throws Exception;
+	
 	//2. route
 	public void addRoute(Route route) throws Exception ;
 	
 	public Route getRoute(int routeCode) throws Exception;
 	
 	public List<Route> getRouteList(int plannerCode) throws Exception;
+	
 	
 	public List<Route> getRouteCityName(int plannerCode) throws Exception;
 	

@@ -63,6 +63,8 @@ public class Planner {
 		this.plannerImage = plannerImage;
 	}
 
+
+
 	public User getPlannerWriter() {
 		return plannerWriter;
 	}
@@ -122,7 +124,7 @@ public class Planner {
 	@Override
 	public String toString() {
 		return "Planner [plannerCode=" + plannerCode + ", plannerVer=" + plannerVer +", plannerName=" + plannerName + ", departDate=" + departDate
-				+ ", plannerImage=" + plannerImage + ", plannerWriter=" + plannerWriter + ", member=" + member + ", privacy=" + privacy
+				+ ", plannerImage=" + plannerImage + ",  plannerWriter=" +  plannerWriter + ", member=" + member + ", privacy=" + privacy
 				+ ", status=" + status + ", isGroup=" + isGroup + ", boardCode=" + boardCode + ", regDate=" + regDate
 				+ "]";
 	}
