@@ -26,7 +26,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 		*/
 		
 		Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36").get();
-		System.out.println(doc);
+		//System.out.println(doc);
 		
 		Elements element = doc.select("td.text-nowrapX");
 		//System.out.println(element);
@@ -69,8 +69,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 			double db = Math.round(Double.parseDouble(str)*100) / 100.0;
 			exchange.setExchangeRate(db);
 			System.out.println(db);
-			
-			System.out.println();
+
 			index++;
 			
 			list.add(exchange);

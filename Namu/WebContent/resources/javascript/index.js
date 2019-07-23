@@ -62,7 +62,7 @@ $(function(){
 				$('.mainMinMaxTemp span:last-child').text(data.tempMax);
 				
 				$('.humidity').text(data.humidity);
-				$('.weatherCity').text($('#weatherCountry').val() +'-' + $('#weatherCity').val() );
+				$('.weatherCity').text($('#weatherCountry').val() +' - ' + $('#weatherCity').val() );
 				$(".popup_wrap").css('display','none');
 				
 			}
