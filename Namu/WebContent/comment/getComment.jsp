@@ -146,9 +146,9 @@ function addLike(commentCode,likeName,writerUser) {
 		},
 		success : function(data,status){
 			if(data == true) {
-				socketcall(writerUser);
-				addTimeline(commentCode,likeName,'9');
+				addTimelineLike(commentCode,likeName,'9');
 				getComment($('#boardCode').val(),$('#detailCode').val());
+				socketcall(writerUser,'9');
 			}
 		}
 	})
@@ -181,29 +181,29 @@ function deleteLike(commentCode,likeName) {
 
 //////////////////////////////////추천 했을시 타임라인에 add ///////////////////////////
 
-function addTimeline(commentCode,likeName,protocol) {
+// function addTimelineLike(commentCode,likeName,protocol) {
 	
-	$.ajax ({
-		url : '/timeline/json/addTimeline',
-		method : 'post',
-		data : JSON.stringify({
-			commentCode : {
-				commentCode : commentCode
-			},
-			protocol : protocol,
-			fromUser : {
-				userCode : likeName
-			}
-		}),
-		headers : {
-			"Accept" : "application/json",
-			"Content-Type" : "application/json"
-		},
-		success : function(data,status){
-				//alert(data);
-		}
-	})
-}
+// 	$.ajax ({
+// 		url : '/timeline/json/addTimeline',
+// 		method : 'post',
+// 		data : JSON.stringify({
+// 			commentCode : {
+// 				commentCode : commentCode
+// 			},
+// 			protocol : protocol,
+// 			fromUser : {
+// 				userCode : likeName
+// 			}
+// 		}),
+// 		headers : {
+// 			"Accept" : "application/json",
+// 			"Content-Type" : "application/json"
+// 		},
+// 		success : function(data,status){
+// 				alert(data);
+// 		}
+// 	})
+// }
 
 
 
@@ -335,6 +335,9 @@ function addTimeline(commentCode,likeName,protocol) {
 		
 			$(this).text('답글취소').css('color','red').css('border','none').css('background','none');
 			$(this).parents('li').after('<li class="comment replyAdd">'+$('.replyAdda').html()+'<br><br></li>'.trim());
+			//
+			
+			//
 			$('.comment').attr('id', $(this).parents('div').children().val());
 		}
 		
@@ -360,7 +363,10 @@ function addTimeline(commentCode,likeName,protocol) {
 		
 		if($(this).parents('li').length > 0) {
 			//alert("있으므로 대댓글");
-			
+			//바꾸기
+			var parentUser = $(this).parents('li').prev('li[class=parentComment]').find('input[class=writerUserCode]').val().trim();
+			socketcall(parentUser,'8');
+			addTimelineLike($(this).parents('li').attr('id'),$('#nodeUserCode').val().trim(),'8');
 			addComment($(this).parents('li').attr('id'),$(this).prev().val());
 		}else {
 			//alert("없으므로 댓글")
@@ -452,7 +458,7 @@ function addTimeline(commentCode,likeName,protocol) {
 					
 					if(item.step == 0) {
 						
-						$('ul.commentAjax').append('<li>'
+						$('ul.commentAjax').append('<li class="parentComment">'
 			    		+'<div class="media text-muted pt-3">'
 			    		+'	<input type="hidden" value="'+item.commentCode+'">'
 			    		+'	<img class="prof" alt="" src="/resources/images/profile/'+item.writerComment.profileImg+'" width="45" height="45">'

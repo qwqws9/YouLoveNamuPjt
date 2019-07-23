@@ -1,10 +1,13 @@
 package com.youlove.service.timelineimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Timeline;
+import com.youlove.service.domain.User;
 import com.youlove.service.timeline.TimelineDao;
 import com.youlove.service.timeline.TimelineService;;
 
@@ -25,6 +28,12 @@ public class TimelineServiceImpl implements TimelineService{
 	@Override
 	public void addTimeline(Timeline timeline) throws Exception {
 		timelineDao.addTimeline(timeline);
+	}
+
+
+	@Override
+	public List<Timeline> getTimelineList(User user) throws Exception {
+		return timelineDao.getTimelineList(user);
 	}
 
 }
