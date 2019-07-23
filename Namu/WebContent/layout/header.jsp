@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 타임라인을 위한 노드 서버 연결 -->
-<!-- <script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
+<!-- <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script> -->
 <!-- <script src="/resources/javascript/alarmSocket.js"></script> -->
 <!-- 지우지 말것...... -->
 
@@ -87,7 +87,7 @@
 								<button type="button" style="background: none; border: none;"><i class="fas fa-money-check-alt fa-lg"></i></button>
 							</div>
 							<div class="col-lg-3" style="padding-top: 7px;">
-								<button type="button" style="background: none; border: none;"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
+								<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
 							</div>
 						</div>
 					</div>

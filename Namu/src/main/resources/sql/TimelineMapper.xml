@@ -10,24 +10,24 @@
 		<result property="timelineCode" 			column="TIMELINE_CODE" 			jdbcType="NUMERIC"/>
 		<result property="timeDate"					column="TIME_DATE" 				jdbcType="VARCHAR" />
 		<result property="protocol" 				column="PROTOCOL" 				jdbcType="CHAR" />
-		<result property="accept" 					column="ACCEPT" 				jdbcType="CHAR" />
 		<result property="commentCode" 				column="COMMENT_CODE" 			jdbcType="NUMERIC" />
+		<result property="inviteCode" 				column="INVITE_CODE" 				jdbcType="CHAR" />
 		<association property="fromUser" 	javaType="user">
 			<result property="userCode" 	column="USER_CODE" />
 			<result property="nickname"		column="NICKNAME" />
 			<result property="profileImg" 	column="PROFILE_IMG" />
 		</association>
 		<association property="toUser" 		javaType="user">
-			<result property="userCode" 	column="USER_CODE" />
-			<result property="nickname" 	column="NICKNAME" />
-			<result property="profileImg" 	column="PROFILE_IMG" />
+			<result property="userCode" 	column="to_code" />
+			<result property="nickname" 	column="to_nick" />
+			<result property="profileImg" 	column="to_img" />
 		</association>
 	</resultMap>
 	
 	<insert id="addTimeline" parameterType="timeline">
 	INSERT INTO TIMELINE
 	<if test="protocol == 9 or protocol == 8">
-	(timeline_code,from_user,to_user,protocol,accept,time_date,comment_code)
+	(timeline_code,from_user,to_user,protocol,invite_code,time_date,comment_code)
 	</if>
 	
 	
@@ -39,16 +39,14 @@
 	</insert>
 	
 	
-<!-- 	<select id="getTimelineList" parameterType="user"  resultMap="timelineMap"> -->
-<!-- 		SELECT * -->
-<!-- 		FROM TIMELINE -->
-<!-- 		WHERE TO_USER = #{userCode} -->
-<!-- 		select t.*,u.user_code from timeline t , users u -->
-<!-- where t.from_user = u.user_code and t.from_user = 2 -->
-<!-- union; -->
-
-<!-- select t.*,u.user_code from timeline t , users u -->
-<!-- where t.to_user = u.user_code and t.to_user = 2; -->
-<!-- 	</select> -->
+	<select id="getTimelineList" parameterType="user"  resultMap="timelineMap">
+		select t1.*,u1.nickname to_nick,u1.user_code to_code, u1.profile_img to_img 
+		from ( select * from (
+						select * from timeline
+						where to_user = #{userCode} or from_user = #{userCode} ) t , users u 
+				where t.from_user = u.user_code) t1,users u1
+		where t1.to_user = u1.user_code
+		order by time_date desc
+	</select>
 	 
 </mapper>

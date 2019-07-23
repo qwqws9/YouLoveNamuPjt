@@ -115,8 +115,9 @@ CREATE TABLE TIMELINE (
    FROM_USER               NUMBER(10)   ,
    TO_USER              NUMBER(10)   ,
    PROTOCOL             CHAR(1),
-   ACCEPT                CHAR(1),
-   TIME_DATE               DATE
+   INVITE_CODE                CHAR(1),
+   TIME_DATE               VARCHAR(100),
+   COMMENT_CODE         NUMBER(10)
 );
 
 
@@ -417,6 +418,7 @@ INSERT INTO city VALUES ( '할슈타트','AT',47.5622342,13.6492617,'오스트�
 INSERT INTO city VALUES ( '잘츠부르크','AT',47.80949,13.05501,'오스트리아','AT.png','EUR');
 INSERT INTO city VALUES ( '부다페스트','HU',47.497912,19.040235,'헝가리','HU.png','HUF');
 INSERT INTO city VALUES ( '브라티슬라바','SK',48.1485965,17.1077478,'슬로바키아','SK.png','EUR');
+INSERT INTO city VALUES ( '서울','KR',37.499427,127.029422,'대한민국','KR.png','KRW');
 
 
 --

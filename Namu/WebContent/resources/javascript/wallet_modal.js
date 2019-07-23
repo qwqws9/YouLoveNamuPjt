@@ -188,7 +188,6 @@ function exchangeRate() {
 	convert($('#moneyUnit').val());
 	
 	$('#moneyUnit').on('change', function(){
-		
 		$('.apply_exchange_rate .second_unit').text($('#moneyUnit').val());
 		
 		convert($(this).val());
@@ -236,7 +235,7 @@ function multiply() {
 
 // 계산기
 function calculation() {
-	$('#expression').keyup(function(event) {
+	$('#expression').keyup(function() {
 		var regexp = /[^0-9]/gi;
         var data = $(this).val();
 

@@ -101,6 +101,7 @@ public class WalletRestController {
 		
 	}
 	
+	// https://ko.exchange-rates.org CRAWLING
 	@RequestMapping(value = "/json/exchangeRates", method=RequestMethod.POST)
 	public List<Exchange> exchangeRates() throws Exception{
 

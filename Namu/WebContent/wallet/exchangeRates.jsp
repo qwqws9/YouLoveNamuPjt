@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
+	.skip {overflow: hidden; position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; clip: rect(0 0 0 0);}
+	
 	.exchange_rate_wrap {width: 100%; height: 225px;}
 	.exchange_rate_wrap h3 {margin: 0; padding: 0; font-size: inherit; font-weight: inherit;}
 	.exchange_rate_wrap h3 .titlee {font-size: 20px; font-weight: 700;}
@@ -15,17 +17,26 @@
 	.exchange_rate_wrap ul, .exchange_rate_wrap li {margin: 0; padding: 0; list-style:none;}
 	.exchange_rate_wrap ul {position: absolute; top: -1; width: 100%; border: 1px solid #cbcbcb; box-sizing: border-box;}
 	.exchange_rate_wrap li {position: relative; height: 45px; line-height: 45px; box-sizing: border-box;}
+	.exchange_rate_wrap li:hover {background-color: #cbcbcb; cursor: default;}
 	.exchange_rate_wrap li:not(:last-child) {border-bottom: 1px solid #cbcbcb;}
-	.exchange_rate_wrap li span {display: inline-block; height: 45px;}
-	.exchange_rate_wrap li .flagg {width: 45px; margin-left: 10px; background-size: 100% 100%; background-repeat: no-repeat; background-position: center center;}
-	.exchange_rate_wrap li .dataa {position: absolute; left: 75px;}
-	.exchange_rate_wrap li .exchange_ratee {position: absolute; right: 25px;}
+	.exchange_rate_wrap li span {display: inline-block; height: 40px;}
+	.exchange_rate_wrap li .flagg {position: absolute; top: 2px; left: 10px; width: 45px; height: 40px; background-size: 100% 100%; background-repeat: no-repeat; background-position: center center;}
+	.exchange_rate_wrap li .dataa {position: absolute; left: 65px;}
+	.exchange_rate_wrap li .unitt {color: #30a9de;}
+	.exchange_rate_wrap li .exchange_ratee {position: absolute; right: 15px;}
+	
 	.exchange_rate_wrap .exchange_convert_wrap form {margin-left: 25px;}
+	.exchange_rate_wrap .exchange_convert_wrap select {font-size: 16px; border: 1px solid #a3daff;}
+	.exchange_rate_wrap .exchange_convert_wrap select:focus {box-shadow: none; border-color: #a3daff; outline: 0;}
+	.exchange_rate_wrap .exchange_convert_wrap input[type=text] {height: 37px; margin-top: 12px; text-align: right; border-radius: 0;}
+	.exchange_rate_wrap .exchange_convert_wrap input[type=text]:focus {box-shadow: none; border-color: #f2c029; outline: 0;}
+	.exchange_rate_wrap .exchange_convert_wrap button[type=button] {width: 100%; margin-top: 10px; margin-bottom: 10px; background-color: #f2c029; border: 1px solid #cbcbcb;}
+	.exchange_rate_wrap .exchange_convert_wrap .nextt {width: 100%; height: 30px; margin: 10px 0; color: #f2c029; font-size: 20px; line-height: 30px; text-align: center;}
 </style>
 
-<div class="exchange_rate_wrap">
+<section class="exchange_rate_wrap">
 	<h3>
-		<span class="titlee">:: 오늘의 환율 ::</span>
+		<span class="titlee">오늘의 환율</span>
 		<span class="datee_wrap"><span class="datee"></span> 기준</span>
 	</h3>
 	<div class="exchange_cont">
@@ -35,7 +46,8 @@
 		</div>
 		<div class="exchange_convert_wrap">
 			<form>
-				<select>
+				<label for="from" class="skip">변환 전 통화</label>
+				<select class="form-control" name="from" id="from">
 					<option value="KRW">대한민국</option>
 					<option value="EUR" selected>유럽연합</option>
 					<option value="CHF">스위스</option>
@@ -57,9 +69,12 @@
 					<option value="HRK">크로아티아</option>
 					<option value="PLN">폴란드</option>
 				</select>
-				<input type="text" />
+				<input type="text" class="form-control amountt" id="amount" name="amount" value="1" />
+				<!-- <button type="button" class="btn btn-warning">변환</button> -->
+				<div class="nextt"><i class="fas fa-angle-double-down"></i></div>
 				
-				<select>
+				<label for="to" class="skip">변환 후 통화</label>
+				<select class="form-control" name="to" id="to">
 					<option value="KRW" selected>대한민국</option>
 					<option value="EUR">유럽연합</option>
 					<option value="CHF">스위스</option>
@@ -81,14 +96,15 @@
 					<option value="HRK">크로아티아</option>
 					<option value="PLN">폴란드</option>
 				</select>
-				<input type="text" />
-				<input type="button" value="변환" />
+				<input type="text" class="form-control" id="exchange_result" readonly />
 			</form>
-		</div>
-	</div>
+		</div><!-- //exchange_convert_wrap -->
+	</div><!-- //exchange_cont -->
 	
 	<script>
 		$(function() {
+			convert();
+			
 			$(document).on('click', '.exchange_rate_wrap .exchange_data_wrap > span > span:first-child', function() {
 				console.log($('.exchange_rate_wrap ul').css('top'));
 				
@@ -102,6 +118,7 @@
 					$(this).addClass('disabled');
 				}
 			});
+			
 			$(document).on('click', '.exchange_rate_wrap .exchange_data_wrap > span > span:last-child', function() {
 				console.log($('.exchange_rate_wrap ul').css('top'));
 				
@@ -115,6 +132,36 @@
 					$(this).addClass('disabled');
 				}
 			});
+			
+			$(document).on('click', '.exchange_rate_wrap ul li', function() {
+				var fromValue = $(this).find('.unitt').text().trim();
+				console.log(fromValue);
+				
+				$('#from').val(fromValue).prop('selected', true);
+				
+		        if($('#amount').val() != null && $('#amount').val() != 0){
+		        	convert();
+		        }
+		    });
+			
+			$(document).on('keyup', '#amount', function() {
+				var regexp = /[^0-9]/gi;
+		        var data = $(this).val();
+
+		        if(regexp.test(data)){
+		        	$(this).val(data.replace(regexp, ''));
+		        }
+		        
+		        if($('#amount').val() != null && $('#amount').val() != 0){
+		        	convert();
+		        }
+		    });
+			
+			$(document).on('change', '#from, #to', function() {
+				if($('#amount').val() != null && $('#amount').val() != 0){
+		        	convert();
+		        }
+		    });
 		});
 		// https://ko.exchange-rates.org 크롤링
 		function exchangeRatesData() {
@@ -181,7 +228,10 @@
 						$('.exchange_rate_wrap ul').append(
 							'<li>' +
 								'<span>' +
-									'<span class="flagg" style="background-image: url(' + flag + ')"></span><span class="dataa"><span class="nationn">' + item.nation + '</span> <span class="unitt">' + item.unit + '</span></span>' +
+									'<span class="flagg" style="background-image: url(' + flag + ')"></span>' +
+									'<span class="dataa">' +
+										'<span class="nationn">' + item.nation + '</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="unitt">' + item.unit + '</span>' +
+									'</span>' +
 								'</span>' +
 								'<span class="exchange_ratee">' + makeComma(item.exchangeRate) + '</span>' +
 							'</li>'
@@ -189,6 +239,29 @@
 					});
 				}
 			})
+		}
+		function convert(){
+			$.ajax({
+				url		: '/wallet/json/convert',
+				method	: 'POST',
+				headers	: {
+					'Accept'		: 'Application/json',
+					'Content-Type'	: 'Application/json'
+				},
+				data	: JSON.stringify({
+					from	: $('#from').val(),
+					to		: $('#to').val(),
+					amount	: $('#amount').val()
+				}),
+				error	: function(request, status, error) {
+					console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			    },
+				success	: function(JSONData, status) {
+					console.log('[SUCCESS]\nRESULT : ' + JSONData);
+					
+					$('#exchange_result').val(makeComma(JSONData.exchangeRate));
+				}
+			});
 		}
 		
 		// 현재 날짜 및 시간
@@ -206,4 +279,4 @@
 			return db.toLocaleString(undefined, {maximumFractionDigits : 2});
 		}
 	</script>
-</div>
+</section><!-- //exchange_rate_wrap -->

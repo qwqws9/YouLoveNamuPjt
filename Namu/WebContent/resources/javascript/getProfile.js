@@ -19,6 +19,16 @@
 			}
 		});
 		
+		// 프로필 정보 닫기
+		$('.profilePop_wrap').on('click', function(e) {
+			var container = $('.profilePop_wrap');
+			console.log(container.has(e.target).length);
+			if(container.has(e.target).length === 0){
+				$(".profilePop_wrap").css('display','none');
+			}
+		});
+		
+		
 		$('.fCity').on('click',function(){
 			var way =$('#way').val();
 			if(way == 'startWay') {
@@ -92,14 +102,14 @@ function selectCity() {
 	
 	
 	
-	
+		
 	
 	
 function getProfile(userCode) {
 			console.log("여기로 들어왔음 닉네임클릭");
 			getUserProfile(userCode);
-			$(".popup_wrap").css('display','block');
-			centerPopUp($(".popup_contain"), $(".popup_contain").width(), $(".popup_contain").height() );
+			$(".profilePop_wrap").css('display','block');
+			centerPopUp($(".profilePop_contain"), $(".profilePop_contain").width(), 400 );
 		}
 	
 	
