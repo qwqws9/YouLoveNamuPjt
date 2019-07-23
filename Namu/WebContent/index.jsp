@@ -38,51 +38,51 @@
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
 
-	<br><br>
-	<!-- <button type="button" id="ooo">로그인</button> -->
-	<br><br>
-	
-	<div style="width: 100%;">
+	<div class="container">
+		<br><br>
+		<!-- <button type="button" id="ooo">로그인</button> -->
+		<br><br>
+		
 		<h4 style="margin: auto;">
-			<a href="/wallet/getWalletList?walletCode=1">규리 가계부 목록</a><br>
+			<a href="/wallet/getWalletListView">규리 가계부</a><br>
+			<a href="/wallet/getWalletList?walletCode=1">/</a><br>
+			
 			<a href="http://192.168.0.13:8005/">상욱 채팅</a><br>
+			
 			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
-			<a href="/planner/addRoute.jsp"> 민희 구글맵 루트</a> <br>
-			 <a href="/planner/getScheduleList.jsp"> /</a> <br>
+			
+			<a href="/planner/addRoute.jsp">민희 구글맵 루트</a><br>
+			<a href="/planner/getScheduleList.jsp">/</a><br>
+			
 			<a href="/community/getCommunityList">중현 커뮤니티 등록</a>
-			<a href="/party/getPartyList">중현 동행 리스트</a>
+			<a href="/party/getPartyList">중현 동행 리스트</a><br><br>
 		</h4>
+		
+		<!-- 날씨 -->
+		<div class="row">
+		 <div class="col-sm-4">
+		   <div class="card">
+		     <div class="card-body">
+		       <h5 class="weatherCity card-title">날씨</h5>
+		       <img class="weatherImg" src="http://openweathermap.org/img/wn/10d@2x.png">
+		       <h3 class="mainTemp">27도</h3>
+		       <p class="mainMinMaxTemp card-text"><span style="color:blue">27도</span>/<span style="color:red">32도</span></p>
+		        <p class="humidity card-text">80%</p>
+		        <button class="btn btn-outline-primary" id="callCountry">도시 선택</button>
+		      </div>
+		    </div>
+		  </div>
+			<div class="col-sm-8">
+				<div class="card">
+					<div class="card-body" id="exchange_container"></div>
+				</div>
+			</div>
+		</div>
+			<br><br>
+			<!-- <button id="callCountry">국가 정보 호출</button> -->
+		<input type="hidden" id="weatherCountry" value="프랑스">
+		<input type="hidden" id="weatherCity" value="파리">
 	</div>
-	
-	<!-- 날씨 -->
-	<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="weatherCity card-title">날씨</h5>
-        <img class="weatherImg" src="http://openweathermap.org/img/wn/10d@2x.png">
-        <h3 class="mainTemp">27도</h3>
-        <p class="mainMinMaxTemp card-text"><span style="color:blue">27도</span>/<span style="color:red">32도</span></p>
-        <p class="humidity card-text">80%</p>
-        <button  class="btn btn-outline-primary" id="callCountry">도시 선택</button>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-  </div>
-</div>
-	<br><br>
-<!-- 	<button id="callCountry">국가 정보 호출</button> -->
-	<input type="hidden" id="weatherCountry" value="프랑스">
-	<input type="hidden" id="weatherCity" value="파리">
-	
 	
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
 </body>

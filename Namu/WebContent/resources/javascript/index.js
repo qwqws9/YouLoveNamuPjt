@@ -141,9 +141,6 @@ $(function(){
 	})
 	
 	
-	
-	
-	
 }).ajaxStart(function(){
 	$('body').oLoader({
 		  wholeWindow: true, //makes the loader fit the window size
@@ -163,3 +160,12 @@ $(window).load(function(){
 	$('body').oLoader('hide');
 });;
 
+// 환율 정보 .jsp 온로드
+$(function() {
+	// innerHTML
+	$($('#exchange_container')).load('/wallet/exchangeRates.jsp', function(data) {
+		//console.log(data);
+		
+		exchangeRatesData();
+	});
+});
