@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.common.FileNameUUId;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Timeline;
 import com.youlove.service.domain.User;
 import com.youlove.service.timeline.TimelineService;
 import com.youlove.service.user.UserService;
@@ -43,12 +44,16 @@ public class TimelineController {
 	
 	
 	@RequestMapping(value="/getTimelineList",method=RequestMethod.GET)
-	public String getTimelineList(HttpSession session) throws Exception{
+	public String getTimelineList(HttpSession session,Model model) throws Exception{
 		
 		User user = (User)session.getAttribute("user");
 		
+		List<Timeline> list = timelineService.getTimelineList(user);
 		
-		return "forward:/user/payList.jsp";
+		model.addAttribute("list",list);
+		//System.out.println(list.toString());
+		
+		return "forward:/timeline/getTimelineList.jsp";
 	}
 	
 	

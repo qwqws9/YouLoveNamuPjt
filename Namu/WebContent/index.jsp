@@ -81,8 +81,8 @@
 		</div>
 			<br><br>
 			<!-- <button id="callCountry">국가 정보 호출</button> -->
-		<input type="hidden" id="weatherCountry" value="프랑스">
-		<input type="hidden" id="weatherCity" value="파리">
+		<input type="hidden" id="weatherCountry" value="대한민국">
+		<input type="hidden" id="weatherCity" value="서울">
 	</div>
 	
 	<script type="text/javascript">

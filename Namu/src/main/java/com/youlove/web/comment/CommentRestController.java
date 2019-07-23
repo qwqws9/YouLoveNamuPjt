@@ -122,5 +122,22 @@ public class CommentRestController {
 		
 	}
 	
+	@RequestMapping(value ="/json/getCommentOne", method=RequestMethod.POST)
+	public String getCommentOne(@RequestBody Comment comment ) throws Exception {
+		
+		comment = commentService.getCommentOne(comment);
+		String path = "";
+		
+		int boardCode = comment.getBoardCode();
+		
+		if(boardCode == 5) {
+			path = "/guide/selectTourDetail/"+comment.getDetailCode();
+		}
+		
+		
+		return path;
+		
+	}
+	
 
 }

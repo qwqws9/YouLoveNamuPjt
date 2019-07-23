@@ -58,6 +58,11 @@ public class CommentServiceImpl implements CommentService{
 		return commentDao.countComment(comment);
 	}
 
+	@Override
+	public Comment getCommentOne(Comment comment) throws Exception {
+		return commentDao.getCommentOne(comment);
+	}
+
 	
 
 
