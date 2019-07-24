@@ -183,7 +183,7 @@ CREATE TABLE PAYLIST (
 CREATE TABLE planner ( 
    planner_code          NUMBER(10)            NOT NULL,
    planner_ver     NUMBER(2)    NOT NULL,
-   user_code    NUMBER(10)    NOT NULL  REFERENCES users(user_code),
+   planner_writer    NUMBER(10)    NOT NULL  REFERENCES users(user_code),
    planner_name       VARCHAR2(2000)   NOT NULL,
    planner_image       VARCHAR2(100),
    member              CHAR(1),
@@ -447,7 +447,7 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 INSERT 
 
 
-INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , privacy, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
    
@@ -458,7 +458,7 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희의유럽배낭여행 ', NULL, '1
 
 INSERT 
 
-INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , privacy, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
 
@@ -467,14 +467,14 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희의신혼여행 ', NULL, '2', 'S'
 
 INSERT 
 
-INTO planner ( planner_code , planner_ver,user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver,planner_writer, planner_name , planner_image , member , privacy, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
 VALUES ( seq_planner_code.nextval,1, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
 
-INTO planner ( planner_code ,planner_ver, user_code, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , privacy, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
 
