@@ -75,7 +75,7 @@
 				   
 			  	</div>
 			</div>
-			 </form>
+		</form>
 			<c:if test ="${empty user }">
 			<div class="col-lg-6" id="beforeLogin"><!-- 로그인 전 -->
 				<div class="row text-right">
@@ -90,7 +90,7 @@
 			<c:if test ="${!empty user }">
 			<div class="col-lg-6" id="afterLogin"><!-- 로그인 후 -->
 				<div class="row">
-					<div class="col-lg-4 offset-4">
+					<!-- <div class="col-lg-4 offset-4">
 						<div class="row">
 							<div class="col-lg-3" style="padding-top: 7px;">
 								<button type="button" style="background: none; border: none;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-address-book fa-lg"></i></button>
@@ -105,7 +105,7 @@
 								<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-lg-4">
 						<div class="row">
 							<div class="col-lg-9">
