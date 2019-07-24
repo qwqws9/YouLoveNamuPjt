@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -129,7 +127,11 @@ public class CommunityController {
 		//cityName.setCityName(city);
 		//community.setCity(cityName);
 		//해쉬태그
-		map = hashtagService.getHashtag(community.getCommunityCode());
+		Hashtag hashVO = new Hashtag();
+		hashVO.setCommunityCode(communityCode);
+		hashVO.setPartyCode(0);
+		hashVO.setRole(true);
+		map = hashtagService.getHashtag(hashVO);
 		modelAndView.addObject("hashtag", map.get("hashtag"));
 		//댓글
 		modelAndView.addObject("boardCode",communityCode);
@@ -183,7 +185,11 @@ public class CommunityController {
 		//게시물 정보
 		Community community = communityService.getCommunity(communityCode);
 		//해시태그
-		map = hashtagService.getHashtag(community.getCommunityCode());
+		Hashtag hashVO = new Hashtag();
+		hashVO.setCommunityCode(communityCode);
+		hashVO.setPartyCode(0);
+		hashVO.setRole(true);
+		map = hashtagService.getHashtag(hashVO);
 		modelAndView.addObject("hashtag", map.get("hashtag"));
 		modelAndView.addObject("community", community);
 		System.out.println("\nCommunityController:::updateCommunityView() 끝:::");

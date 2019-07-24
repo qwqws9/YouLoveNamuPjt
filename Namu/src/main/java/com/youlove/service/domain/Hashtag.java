@@ -9,6 +9,7 @@ public class Hashtag {
 	private int communityCode;
 	private int partyCode;
 	private User writer;
+	private boolean role;
 
 	///Constructor
 	public Hashtag(){
@@ -53,6 +54,14 @@ public class Hashtag {
 
 	public void setWriter(User user) {
 		this.writer = user;
+	}
+
+	public boolean getRole() {
+		return role;
+	}
+
+	public void setRole(boolean role) {
+		this.role = role;
 	}
 
 	@Override
