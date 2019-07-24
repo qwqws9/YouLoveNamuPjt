@@ -26,6 +26,7 @@
 <header><jsp:include page="/layout/header.jsp" /></header>
 <br><br>
 <div class="container-fluid">
+
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
 				<div class="row"></div>
@@ -63,51 +64,63 @@
 				<br>
 				<p class="totalSearchClick">YouTube<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029;" ></i></p>
 				<hr>
-				<div class="row">
+				<div class="row mb-2">
 				
-					<div class= "col-3 col-md-3 col-lg-3">
-						 <iframe id="player0" type="text/html" width="400" height="300"
+					<div class= "col-md-6">
+						 <iframe id="player0" type="text/html" width="750" height="400"
 							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 					  </div>
-					  <div class= "col-1 col-md-1 col-lg-1">
+<!-- 					  <div class= "col-1 col-md-1 col-lg-1"> -->
+<!-- 					  </div> -->
+					 <div class= "col-md-6">
+						<iframe id="player1" type="text/html" width="750" height="400"
+							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
+							  <br><br>
+					   </div>
+				
+							
+				<div class= "col-md-6">
+						 <iframe id="player2" type="text/html" width="750" height="400"
+							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 					  </div>
-					  <div class= "col-3 col-md-3 col-lg-3">
-						<iframe id="player1" type="text/html" width="400" height="300"
+<!-- 					  <div class= "col-1 col-md-1 col-lg-1"> -->
+<!-- 					  </div> -->
+				<div class= "col-md-6">
+						<iframe id="player3" type="text/html" width="750" height="400"
 							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 					   </div>
-					   <div class= "col-1 col-md-1 col-lg-1">
-					  </div>
-					  <div class= "col-3 col-md-3 col-lg-3">
-						<iframe id="player2" type="text/html" width="400" height="300"
-							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
-						</div>			
 				</div>
 				
-				<hr>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				<hr>
+				<br>
+				<br>
 				
+				
+				<c:if test="${!empty communityList  }">
+				<p class="totalSearchClick">커뮤니티<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029;" ></i></p>
+				<hr>
+				</c:if>
+					<c:forEach varStatus="status" var="community" items="${communityList }" end="3">
+				<div class="preview-${status.index +1} row mb-1">
+					<input type="hidden" name="communityCode" value="${community.communityCode }">
+					<div class="col-md-12">
+						<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+							<div class="col p-4 d-flex flex-column position-static">
+								<strong class="d-inline-block mb-2 text-primary">@ ${community.writer.nickname }</strong>
+								<h3 class="mb-0">${community.communityTitle }</h3>
+								<div class="mb-1 text-muted">${community.communityDate } &nbsp;&nbsp;&nbsp;&nbsp; 조회수&nbsp;${community.views }</div>
+								<p class="communityContent card-text mb-auto">${community.communityContent }</p>
+								<a href="/community/getCommunity?communityCode=${community.communityCode }" class="stretched-link">Continue reading</a>
+							</div>
+							<div class="col-auto d-none d-lg-block">
+								<img src="/resources/images/ThumbNail/${community.communityThumbnail}"  width="250" height="250">
+							</div>
+						</div>
+					</div>
+				</div>
+				</c:forEach>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br>
 				
 				</div>
 				<div class="col-1 col-md-1">
@@ -129,8 +142,11 @@
 	
 	<script type="text/javascript">
 	
+	//게시글 조회시 태그로 검색되어서 텍스트만 남기는 처리
 	$(window).load(function(){
-		
+		$.each($('div[class^=preview-]'),function(){
+			$(this).find($('.communityContent')).next().text($(this).find($('.communityContent')).next().text());
+		})
 	});
 		 
 		function search(keyword) {
@@ -150,7 +166,7 @@
 		    //$("#response").text(res[0].id.videoId);
 		    var idx = 0;
 		    $.each(response.items, function(){
-		    	if(idx == 3) {
+		    	if(idx == 4) {
 		    		return;
 		    	}
 		    	//$("#response").append('<iframe id="player"'+idx+' type="text/html" width="350" height="300" frameborder="0" src="http://www.youtube.com/embed/"'+response.items[idx].id.videoId+ '></iframe>');
@@ -165,11 +181,13 @@
 			$('.totalSearchClick').on('click',function(){
 				var where = $(this).text().trim();
 				if(where == '관광지') {
-					self.location = '';
+					self.location = '/guide/initTour';
+				}else if(where == '커뮤니티') {
+					self.location = '/community/getCommunityList';
 				}
+			})
 				
 			})
-		})
 	
 	</script>
 </body>
