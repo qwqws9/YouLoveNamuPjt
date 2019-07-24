@@ -25,6 +25,8 @@
 	<!-- MapBoxGeocoder -->	
 	<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 	<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' type='text/css' />
+	
+	
 	<!-- Full Calendar -->
 	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
 	<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
@@ -256,7 +258,9 @@
 			</div><!-- end of main -->
 			
 			
-			<div class="col-lg-1"></div><!-- 사이드바 -->
+			<div class="col-lg-1">
+				<button type="button" id="ddd">fff</button>
+			</div><!-- 사이드바 -->
 			
 			
 		</div><!-- end row of container -->
@@ -323,56 +327,71 @@
 					}
 				]
 		};
-		/* $.ajax({
+		
+		
+		var geojson;
+		var geo;
+		
+		$.ajax({
 			url : "/party/json/getPartyList",
 		    method : "POST",
+		    data : JSON.stringify({
+		    	'pageSize' : '3'
+		    }),
 		    dataType : "json",
 		    headers : {
      			 "Accept" : "application/json",
                  "Content-Type" : "application/json"
      		},
      		success : function(JSONData, status){
-     			$.each(JSONData,function(index,item){
-     				$("#city").append('<option value="'+item.cityName+'">'+item.cityName+'</option>');
+     			$.each(JSONData.list,function(index,item){
+					party = JSON.parse(JSON.stringify(item));
+     				
+     				//debugger;
+     				geo = {type: 'Feature',
+				    		geometry: {type: 'Point', coordinates: [party.latitude, party.longitude]},
+				    		properties: { title: party.partyTitle, description: party.partyContent }}
+     				
+     				
+					//console.log(party.age);
      			});
+     			//date of markers
+				geojson = {
+						  type: 'FeatureCollection',
+						  features: [
+								{	type: 'Feature',
+							    	geometry: {type: 'Point', coordinates: [-77.032, 38.913] },
+							    	properties: { title: 'Mapbox', description: 'Washington, D.C.' }},
+							    	geo
+							  ]
+							};
+				console.log(geojson);
+				//add markers on map
+				geojson.features.forEach(function(marker) {
+			  	  	// create a HTML element for each feature
+			  		var el = document.createElement('div');
+			  	 	el.className = 'marker';
+
+			  	  	// make a marker for each feature and add to the map
+			  	  	new mapboxgl.Marker(el)
+			  	    	.setLngLat(marker.geometry.coordinates)
+			  	    	.addTo(map);
+			 		// make a popup
+			  	  	new mapboxgl.Marker(el)
+						.setLngLat(marker.geometry.coordinates)
+						.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+						.setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+						.addTo(map);
+			 	})
      		},
      		error:function(jqXHR, textStatus, errorThrown){
     			alert(textStatus );
     			alert( errorThrown );
     		}
-		}); */
-		var geojson = {
-				  type: 'FeatureCollection',
-				  features: [{
-				    type: 'Feature',
-				    geometry: {
-				      type: 'Point',
-				      coordinates: [-77.032, 38.913]
-				    },
-				    properties: {
-				      title: 'Mapbox',
-				      description: 'Washington, D.C.'
-				    }
-				  },
-				  {
-				    type: 'Feature',
-				    geometry: {
-				      type: 'Point',
-				      coordinates: [-122.414, 37.776]
-				    },
-				    properties: {
-				      title: 'Mapbox',
-				      description: 'San Francisco, California'
-				    }
-				  }]
-				};
-
-				var map = new mapboxgl.Map({
-					  container: 'map',
-					  style: 'mapbox://styles/mapbox/light-v10',
-					  center: [-96, 37.8],
-					  zoom: 3
-					});
+		});
+		
+		
+		
 		var map = new mapboxgl.Map({
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v10',
@@ -404,37 +423,18 @@
 		var lng;
 		var lat;
 	  	var marker = new mapboxgl.Marker()
-		/* map.on('click', function(e) {
-	  	lng = e.lngLat.lng;
-	  	lat = e.lngLat.lat;
-	  	console.log(lng + ', ' + lat);
-		  
-	  	marker.setLngLat([lng, lat])
-	  	//marker.addTo(map);
-		$("#latitude").val(lat);
-		$("#longitude").val(lat);
-	  	
-			}); */
+		map.on('click', function(e) {
+		  	lng = e.lngLat.lng;
+		  	lat = e.lngLat.lat;
+		  	console.log(lng + ', ' + lat);
+			  
+		  	marker.setLngLat([lng, lat])
+		  	//marker.addTo(map);
+			$("#latitude").val(lat);
+			$("#longitude").val(lat);
+		});
 	  	
 
-	 	// add markers to map
-	 	geojson.features.forEach(function(marker) {
-	  	  	// create a HTML element for each feature
-	  		var el = document.createElement('div');
-	  	 	el.className = 'marker';
-
-	  	  	// make a marker for each feature and add to the map
-	  	  	new mapboxgl.Marker(el)
-	  	    	.setLngLat(marker.geometry.coordinates)
-	  	    	.addTo(map);
-	 		// make a popup
-	  	  	new mapboxgl.Marker(el)
-				.setLngLat(marker.geometry.coordinates)
-				.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-				.setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
-				.addTo(map);
-	  	  	
-	 	})
 	 	
 	</script>
 </body>

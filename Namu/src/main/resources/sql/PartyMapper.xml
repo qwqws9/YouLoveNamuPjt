@@ -17,7 +17,7 @@
 		<result property="longitude" 		column="longitude" 			jdbcType="NUMERIC" />
 		<result property="partyPeople" 		column="party_people" 			jdbcType="VARCHAR"  />
 		<result property="partyRecruitment"	column="party_recruitment" 		jdbcType="CHAR" />
-		<result property="gender"			column="gerder" 		jdbcType="CHAR" />
+		<result property="gender"			column="gender" 		jdbcType="CHAR" />
 		<result property="age"				column="age" 		jdbcType="NUMERIC" />
 		<result property="partyHashtagCode.hashtagCode"	column="hashtag_code" 		jdbcType="INTEGER" />
 		<result property="regDate"			column="reg_date" 		jdbcType="DATE" />
@@ -98,7 +98,7 @@
 		                                    p.longitude,
 		                                    p.party_people,
 		                                    p.party_recruitment,
-		                                    p.gerder,
+		                                    p.gender,
 		                                    p.age,
 		                                    p.hashtag_code,
 		                                    p.reg_date,

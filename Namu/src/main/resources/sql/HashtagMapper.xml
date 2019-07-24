@@ -23,11 +23,20 @@
 		VALUES (seq_hashtag_code.nextval,#{hashtag:VARCHAR},#{communityCode:INTEGER},#{partyCode:INTEGER},#{writer.userCode})
 	</insert>
 	 
-	<select 	id="getHashtag"		parameterType="int"		resultMap="hashtagMap">
+	<select 	id="getHashtag"		parameterType="hashtag"		resultMap="hashtagMap">
 		SELECT
 		hashtag_code, hashtag, community_code, party_code, user_code
 		FROM hashtag
-		WHERE community_code = #{communityCode}
+		<if test="communityCode != 0">
+			<where>
+				community_code = #{communityCode}
+			</where>
+		</if>
+		<if test="partyCode != 0">
+			<where>
+				party_code = #{partyCode}
+			</where>
+		</if>
 	
 	</select>
 	 
