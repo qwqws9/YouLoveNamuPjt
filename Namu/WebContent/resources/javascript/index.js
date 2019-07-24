@@ -82,14 +82,14 @@ $(function(){
 		
 		if($(this).hasClass('active') === true) {
 			//alert("액티브있음")
-			$.each($('button[class*=weatherCountry'),function(){
+			$.each($('button[class*=weatherCountry]'),function(){
 				$(this).removeClass('active');
 				$(this).css('display','block');
 			});
 			return;
 		}else {
 			//alert("액티브없음")
-			$.each($('button[class*=weatherCountry'),function(){
+			$.each($('button[class*=weatherCountry]'),function(){
 				$(this).removeClass('active');
 				$(this).css('display','none');
 				
@@ -140,19 +140,6 @@ $(function(){
 	})
 	
 	
-}).ajaxStart(function(){
-	$('body').oLoader({
-		  wholeWindow: true, //makes the loader fit the window size
-		  lockOverflow: true, //disable scrollbar on body
-		   
-		  backgroundColor: '#282c37',
-		  fadeInTime: 1000,
-		  fadeLevel: 0.7,
-		  image: '../resources/images/ownageLoader/430377_e43058e053634b499f67c63cd1e3ba02_mv2.gif',  
-		 
-		});
-}).ajaxStop(function(){
-	$('body').oLoader('hide');
 });
 
 $(window).load(function(){
@@ -162,7 +149,7 @@ $(window).load(function(){
 // 환율 정보 .jsp 온로드
 $(function() {
 	// innerHTML
-	$($('#exchange_container')).load('/wallet/exchangeRates.jsp', function(data) {
+	$($('#exchange_container')).load('/wallet/mainExchangeRates.jsp', function(data) {
 		//console.log(data);
 		
 		exchangeRatesData();

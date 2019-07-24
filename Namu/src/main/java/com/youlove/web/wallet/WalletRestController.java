@@ -119,9 +119,9 @@ public class WalletRestController {
 		System.out.println("/wallet/json/convert :: POST");
 		System.out.println(exchange);
 
-		exchange = exchangeRatesService.convertExchangeRate(exchange);
+		//exchange = exchangeRatesService.convertExchangeRate(exchange);
 		
-		return exchange;
+		return exchangeRatesService.convertExchangeRate(exchange);
 		
 	}
 	

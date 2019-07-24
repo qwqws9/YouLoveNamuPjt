@@ -93,6 +93,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 		//System.out.println(doc);
 		
 		Elements element = doc.select("span#ctl00_M_lblConversion");
+		System.out.println(element);
 		
 		String[] strArr = (element.text()).split(" = ");
 		//System.out.println(strArr[0] + strArr[1]);
