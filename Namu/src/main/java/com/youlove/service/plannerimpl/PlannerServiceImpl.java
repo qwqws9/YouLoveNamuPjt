@@ -57,7 +57,7 @@ import com.youlove.service.user.UserDao;
 			plannerDao.updatePlanner(planner);
 		}
 		
-
+		@Override
 		public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception{
 			List<Planner> list = plannerDao.getPlannerList(map);
 			int totalCount = plannerDao.getTotalCount(map);
@@ -66,6 +66,17 @@ import com.youlove.service.user.UserDao;
 			map.put("totalCount", new Integer(totalCount));
 			return map;
 		}
+		
+		@Override
+		public Map<String, Object> getAllPlannerList(Map<String, Object> map) throws Exception{
+			List<Planner> list = plannerDao.getAllPlannerList(map);
+			int totalCount = plannerDao.getAllTotalCount(map);
+			map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("totalCount", new Integer(totalCount));
+			return map;
+		}
+		
 		//2. route 
 		@Override
 		public void addRoute(Route route) throws Exception {
@@ -80,21 +91,6 @@ import com.youlove.service.user.UserDao;
 		@Override
 		public List<Route> getRouteList(int plannerCode) throws Exception {
 			return plannerDao.getRouteList(plannerCode);
-		}
-	
-		//3.schedule
-		@Override
-		public void addSchedule(Schedule schedule) throws Exception {
-			plannerDao.addSchedule(schedule);
-		}
-		
-		@Override
-		public List<Schedule> getScheduleList(int plannerCode) throws Exception{
-			return plannerDao.getScheduleList(plannerCode);
-		}
-		
-		public Schedule getSchedule(int scheCode) throws Exception{
-			return plannerDao.getSchedule(scheCode);
 		}
 		
 		@Override
@@ -143,5 +139,21 @@ import com.youlove.service.user.UserDao;
 			return lats;
 		}
 
+		//3.schedule
+		@Override
+		public void addSchedule(Schedule schedule) throws Exception {
+			plannerDao.addSchedule(schedule);
+		}
+		
+		@Override
+		public List<Schedule> getScheduleList(int plannerCode) throws Exception{
+			return plannerDao.getScheduleList(plannerCode);
+		}
+		
+		public Schedule getSchedule(int scheCode) throws Exception{
+			return plannerDao.getSchedule(scheCode);
+		}
+		
+		
 	
 }

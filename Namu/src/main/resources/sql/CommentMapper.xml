@@ -69,6 +69,11 @@
 	    WHERE BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode}
 	 </select>
 	 
+	 <select id="getCommentOne" parameterType="comment" resultMap="commentMap">
+	 	SELECT *
+	    FROM comments 
+	    WHERE COMMENT_CODE = #{commentCode}
+	 </select>
 	
 	
 	 

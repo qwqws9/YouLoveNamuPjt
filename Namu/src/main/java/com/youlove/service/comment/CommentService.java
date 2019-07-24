@@ -17,6 +17,7 @@ public interface CommentService {
 	
 	public int countComment(Comment comment) throws Exception;
 	
+	public Comment getCommentOne(Comment comment ) throws Exception;
 	
 }
 

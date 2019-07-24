@@ -12,8 +12,8 @@ $(function(){
 		});
 	
 	// 날씨 init
-	getWeather("48.856614","2.3522219");
-	
+	getWeather("37.499427","127.029422");
+	// 37.499427, 127.029422
 	$('#callCountry').on('click',function(){
 				selectCity();
 	});
@@ -62,7 +62,7 @@ $(function(){
 				$('.mainMinMaxTemp span:last-child').text(data.tempMax);
 				
 				$('.humidity').text(data.humidity);
-				$('.weatherCity').text($('#weatherCountry').val() +'-' + $('#weatherCity').val() );
+				$('.weatherCity').text($('#weatherCountry').val() +' - ' + $('#weatherCity').val() );
 				$(".popup_wrap").css('display','none');
 				
 			}

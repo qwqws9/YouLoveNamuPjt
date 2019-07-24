@@ -20,8 +20,13 @@ public interface PlannerDao {
 
 	public List<Planner> getPlannerList(Map<String, Object> map)  throws Exception;
 	
+	public int getAllTotalCount(Map<String, Object> map) throws Exception;
+	
 	public int getTotalCount(Map<String, Object> map) throws Exception;
 
+	
+	public List<Planner> getAllPlannerList(Map<String, Object> map) throws Exception;
+	
 	//2. route
 	public void addRoute(Route route) throws Exception ;
 	

@@ -45,15 +45,23 @@ public class PlannerDaoImpl implements PlannerDao{
 		sqlSession.update("PlannerMapper.updatePlanner", planner);
 	}
 	
+	@Override
 	public List<Planner> getPlannerList(Map<String, Object> map) throws Exception{
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("search", search );
-//		map.put("userCode", userCode);
 		return sqlSession.selectList("PlannerMapper.getPlannerList", map);
 	}
 	
+	@Override
+	public List<Planner> getAllPlannerList(Map<String, Object> map) throws Exception{
+		return sqlSession.selectList("PlannerMapper.getAllPlannerList", map);
+	}
+	@Override
 	public int getTotalCount(Map<String, Object> map) throws Exception{
 		return sqlSession.selectOne("PlannerMapper.getTotalCount", map);
+	}
+	
+	@Override
+	public int getAllTotalCount(Map<String, Object> map) throws Exception{
+		return sqlSession.selectOne("PlannerMapper.getAllTotalCount", map);
 	}
 	
 	//2. route 
@@ -98,6 +106,7 @@ public class PlannerDaoImpl implements PlannerDao{
 		return sqlSession.selectList("PlannerMapper.getScheduleList",plannerCode);
 	}
 	
+	@Override
 	public Schedule getSchedule(int scheCode)  throws Exception{
 		return sqlSession.selectOne("PlannerMapper.getSchedule",scheCode);
 	}

@@ -10,7 +10,7 @@ public class Planner {
 	private String plannerName;
 	private String departDate;
 	private String plannerImage;
-	private User user;
+	private User plannerWriter;
 	private String member;
 	private String privacy;
 	private String status;
@@ -63,12 +63,14 @@ public class Planner {
 		this.plannerImage = plannerImage;
 	}
 
-	public User getUser() {
-		return user;
+
+
+	public User getPlannerWriter() {
+		return plannerWriter;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setPlannerWriter(User plannerWriter) {
+		this.plannerWriter = plannerWriter;
 	}
 
 	public String getMember() {
@@ -122,7 +124,7 @@ public class Planner {
 	@Override
 	public String toString() {
 		return "Planner [plannerCode=" + plannerCode + ", plannerVer=" + plannerVer +", plannerName=" + plannerName + ", departDate=" + departDate
-				+ ", plannerImage=" + plannerImage + ", user=" + user + ", member=" + member + ", privacy=" + privacy
+				+ ", plannerImage=" + plannerImage + ",  plannerWriter=" +  plannerWriter + ", member=" + member + ", privacy=" + privacy
 				+ ", status=" + status + ", isGroup=" + isGroup + ", boardCode=" + boardCode + ", regDate=" + regDate
 				+ "]";
 	}

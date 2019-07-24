@@ -7,20 +7,13 @@ public class Timeline {
 	private User toUser;
 	private String timeDate;
 	
-	private String accept;
+	private String inviteCode;
 	
 	private String protocol;
 	private int commentCode;
 	
 	//private String accept;
 	
-	public String getAccept() {
-		return accept;
-	}
-
-	public void setAccept(String accept) {
-		this.accept = accept;
-	}
 
 	
 	
@@ -28,6 +21,14 @@ public class Timeline {
 
 	public int getCommentCode() {
 		return commentCode;
+	}
+
+	public String getInviteCode() {
+		return inviteCode;
+	}
+
+	public void setInviteCode(String inviteCode) {
+		this.inviteCode = inviteCode;
 	}
 
 	public void setCommentCode(int commentCode) {
@@ -77,10 +78,10 @@ public class Timeline {
 	@Override
 	public String toString() {
 		return "Timeline [timelineCode=" + timelineCode + ", fromUser=" + fromUser + ", toUser=" + toUser
-				+ ", timeDate=" + timeDate + ", protocol=" + protocol + "]";
+				+ ", timeDate=" + timeDate + ", inviteCode=" + inviteCode + ", protocol=" + protocol + ", commentCode="
+				+ commentCode + "]";
 	}
-	
-	
+
 	
 	
 

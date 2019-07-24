@@ -19,6 +19,8 @@ public interface PlannerService {
 	
 	public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception;
 	
+	public Map<String, Object> getAllPlannerList(Map<String, Object> map) throws Exception;
+	
 	//2. route 
 	public void addRoute(Route route) throws Exception;	//ok
 	
