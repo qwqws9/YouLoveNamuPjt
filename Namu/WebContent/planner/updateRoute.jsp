@@ -191,10 +191,10 @@ $('#list_table').on("click", ".deletebtn", function () {
         		   
             	displayValue += ('<tr>');                
             	displayValue += ('<td>'+''+'</td>');
-            	displayValue += ('<td>'+value.city+'</td>');
-            	displayValue += ('<td>'+value.lat+'</td>');
-            	displayValue += ('<td>'+value.lng+'</td>');    
-            	displayValue += ('<td>'+"<select><option value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
+            	displayValue += ('<td>'+"<input name='cityName' type='text' id='cityName' value=' "+ value.city+ "'>"+'</td>');
+            	displayValue += ('<td>'+"<input name='cityName' type='text' id='lat' value=' "+value.lat+"'>"+'</td>');
+            	displayValue += ('<td>'+"<input name='cityName' type='text' id='lng' value=' "+value.lng+"'>"+'</td>');    
+            	displayValue += ('<td>'+"<select><option name='stayDay' value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
             	displayValue += ('<td>'+"<input class='deletebtn' type='button' value = 'delete' id='delete' />"+'</td>');  
             	//displayValue += ('</tr>');                                    
             /* //}); */});
@@ -242,31 +242,22 @@ $('#list_table').on("click", ".deletebtn", function () {
    	
    	//////////////////marker/////////////////////
    	$(function(){
-   		for (var i = 0; i < route.length; i++) {
-		      var myMarker = new google.maps.Marker({
-		        position: new google.maps.LatLng(routeLat[i], routeLng[i]),
-		        map: map,
-		        id:route[i],
-		     
-		      });     
-		      myMarkers.push(myMarker);
-		      array.push(myMarker.id);
-		      firstMarkers=myMarkers.length; 
-	      
-		      var path=poly.getPath();
-	      path.push(new google.maps.LatLng(routeLat[i], routeLng[i]));
-	    
-		}
-       
+   		
    		for (var i = 0; i < locations.length; i++) {
    		      var marker = new google.maps.Marker({
    		        position: new google.maps.LatLng(locationLat[i], locationLng[i]),
    		        map: map,
    		        id:locations[i],
-   		    	icon: icons[iconCounter]
+   		    	icon: icons[iconCounter],
+   		    	zIndex: 100
    		      });
-   		   markers.push(marker);
-
+   		   //marker.setMap(map) ;  
+   		
+   		
+   		   //markers.push(marker);
+   		   
+			/* marker.setMap(map) ;  
+			myMarker.setMap(map) ;   */
    		   google.maps.event.addListener(marker, 'mouseover', function(){
 
 				   var marker= this;
@@ -286,9 +277,33 @@ $('#list_table').on("click", ".deletebtn", function () {
 	   		      }
 	   		        
 	   		    }
- 	   
+   	
+   		redMarker();
+		
   	});
-
+   function redMarker() {
+	   for (var i = 0; i < route.length; i++) {
+		      var myMarker = new google.maps.Marker({
+		        position: new google.maps.LatLng(routeLat[i], routeLng[i]),
+		        map: map,
+		        id:route[i],
+		        zIndex: 101
+		      
+		      });     
+		
+		      myMarkers.push(myMarker);
+		    
+		      /* marker.setMap(null); */
+		      //myMarker.setMap(map)
+			   
+		      array.push(myMarker.id);
+		      firstMarkers=myMarkers.length; 
+	      
+		      var path=poly.getPath();
+	      path.push(new google.maps.LatLng(routeLat[i], routeLng[i]));
+	    
+		}
+   }
 
 	
 	 function addLatLng(event) {
@@ -325,7 +340,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 	    	   rowcount=rowcount+1;
 		   $('#list_table').append(
 					$('<tr>').append(
-						$('<td>').append("<input type=hidden value="+myMarker.id+">"),
+						$('<td>').append(""+myMarker.id),
 						//$('<td>').append(""+index),
 						$('<td>').append("<input name='cityName' type='text' id='cityName' value="+array[path.getLength()-1]+" readonly>"),    
 						$('<td>').append( "<input name='lat' type='text' id='lat' value="+myMarker.position.lat()+" readonly>"),

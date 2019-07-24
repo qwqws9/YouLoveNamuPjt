@@ -300,6 +300,7 @@ public class PlannerController {
 		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
+		
 		}
 
 		return "forward:/planner/getScheduleList.jsp";
@@ -322,13 +323,13 @@ public class PlannerController {
 	@RequestMapping( value="updateRoute", method=RequestMethod.GET )
 	public String updateRoute(@RequestParam("plannerCode") int plannerCode, HttpSession session) throws Exception {
 
-		System.out.println("PlannerController -------------------addRoute:GET ");
+		System.out.println("PlannerController -------------------updateRoute:GET ");
 		
 		return "forward:/planner/updateRoute.jsp";  
 	}
 	
 	@RequestMapping(value = "updateRoute", method=RequestMethod.POST)
-	public String updateRoute( HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route) throws Exception {
+	public String updateRoute( HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route,@ModelAttribute("schedule") Schedule schedule) throws Exception {
 		
 		System.out.println("PlannerController ----------------------- updateRoute start");
 		
@@ -340,6 +341,9 @@ public class PlannerController {
 		
 		//planner 버전 업그레이드 
 		route.setPlannerVer(planner.getPlannerVer());  
+		schedule.setPlannerVer(planner.getPlannerVer());  
+		System.out.println("planner 버전???"+planner.getPlannerVer()
+		+"route 버전 ??? "+route.getPlannerVer()+"schedule 버전 ??"+schedule.getPlannerVer());
 		
 		//departDate 받아와서 set 
 		String departDate=planner.getDepartDate();

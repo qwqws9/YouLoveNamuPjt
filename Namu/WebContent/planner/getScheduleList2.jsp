@@ -1,10 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"    %>
-
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+ <script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
+<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
+<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
+
+<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
+<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
+
 <style type="text/css">
 input{
 background: none; border: 0 none;
@@ -126,19 +140,6 @@ a.btn-layerClose:hover {
 }
 
 </style>
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<!-- jQuery UI toolTip 사용 JS-->
-
- <script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
-<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
-<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
-
-<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
-<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
-
 <script>
 function onchangeDay(yy,mm,dd,ss){ 
 	 $("#nows").html(yy+"."+mm+"."+dd+".("+ss+")"); 
@@ -180,9 +181,10 @@ function layer_open(el){
 
 $(function () {
 //initialize  calendar
- /*  var plannerCode=${planner.plannerCode}; */
+  var plannerCode=${planner.plannerCode};
 	   $('#calendar').fullCalendar({
-		 
+		   ,minTime: "07:00:00"
+		       ,maxTime: "23:00:00"
 		    events: function(start, end, timezone, callback) {  
 	         /* $.ajax({
 	                url: '/planner/getRouteList',
@@ -235,15 +237,15 @@ $(function () {
         
 		   /////////////////////////////////////////////////////////////////
 	       $.ajax({
-	   	                url: "/planner/getScheduleList",
-	   	                type : 'post',
+	   	                url: "/planner/json/getScheduleList/"+plannerCode,
+	   	                type : 'GET',
 	   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'),endDate :  end.format('YYYY-MM-DD HH:MM') },
 	   	                dataType: 'json',
 	   	               	
 	   	                success: function(data) {
-	   	                   var events2 = [];
+	   	                   var events = [];
 	   	                   $(data).each(function() {
-	   	                        events2.push({
+	   	                        events.push({
 	   	                           title: $(this).attr('title'),
 	   	                            start:moment( $(this).attr('start')),
 	   	                         color: $(this).attr('color'),
@@ -252,7 +254,7 @@ $(function () {
 	   	                        });
 	   	                     
 	   	                    });
-	                    callback(events2);
+	                    callback(events);
 	                }
 	                   }); 
 	       
@@ -370,7 +372,7 @@ $(function () {
         <input type ="reset" value="취소" id="reset">	
        	<input type='button' id="close"  value='닫기'/>
 		</form>
-		</div></div> </div></div></div>
+		</div></div> </div></div>
 <br/><br/>
 
 
