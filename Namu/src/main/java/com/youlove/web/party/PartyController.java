@@ -2,6 +2,7 @@ package com.youlove.web.party;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -72,7 +73,8 @@ public class PartyController {
 		Hashtag hashVo = new Hashtag();
 		hashVo.setHashtag(hashtag);
 		hashVo.setWriter(user);
-		hashVo.setCommunityCode(party.getPartyCode());
+		hashVo.setPartyCode(party.getPartyCode());
+		hashVo.setRole(false);
 		hashtagService.addHashtag(hashVo);
 		
 		modelAndView.setViewName("/party/getParty?partyCode="+party.getPartyCode());
@@ -90,7 +92,11 @@ public class PartyController {
 		//동행
 		Party party = partyService.getParty(partyCode);
 		//해쉬태그
-		map = hashtagService.getHashtag(partyCode);
+		Hashtag hashVO = new Hashtag();
+		hashVO.setCommunityCode(0);
+		hashVO.setPartyCode(partyCode);
+		hashVO.setRole(false);
+		map = hashtagService.getHashtag(hashVO);
 		modelAndView.addObject("hashtag", map.get("hashtag"));
 		//댓글
 		//modelAndView.addObject("boardCode",partyCode);

@@ -265,16 +265,18 @@ public class UserRestController {
 	
 	@RequestMapping(value="/json/updateImg/{userCode}", method=RequestMethod.POST)
 	public User updateImg(MultipartFile file,HttpServletRequest request,@PathVariable String userCode,Map<String,Object> map,HttpSession session) throws Exception{
-		
-		if(!file.isEmpty() && file != null){
-			String fileName = FileNameUUId.convert(file, "profile", request);
+		System.out.println("+++++++++++++++++++++++++++");
+		System.out.println(file);
+		System.out.println("+++++++++++++++++++++++++++");
+		String fileName = "7877e8c81ac0a942265a9b65a049b784.jpg";
+		if(!file.isEmpty()){
+			fileName = FileNameUUId.convert(file, "profile", request);
 			System.out.println(fileName + "         파일이름 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			map.put("userCode", userCode);
-			map.put("target", "img");
-			map.put("value", fileName);
+			
 		}
-//		
-		
+		map.put("value", fileName);
+		map.put("userCode", userCode);
+		map.put("target", "img");
 		boolean result = userService.updateUser(map);
 		User user;
 		

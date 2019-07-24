@@ -24,6 +24,17 @@
 		$("#communityList").on("click",function(){
 			self.location = "/community/getCommunityList?communityBoard=0"
 		})
+		
+		
+		
+		$('#searchbtn').on('click',function(){
+			var keyword = $('input[name=searchKeyword]').val().trim();
+			if(keyword.length > 0) {
+			$($('form')[0]).attr('method','post').attr('action','/totalSearch/getTotalSearch').submit();
+			}else {
+				return;
+			}
+		})
 	});
 	
 	//중현
@@ -51,16 +62,20 @@
 	</div>
 	<div class="col-lg-11">
 		<div class="row main_search"><!-- top -->
+		<form method="post" action="/totalSearch/getTotalSearch">
 			<div class="col-lg-6">
 				<div class="input-group" style="width: 250px;">
-				    <input type="text" class="form-control" placeholder="Search">
+				
+				    <input type="text" name="searchKeyword" class="form-control" placeholder="Search">
 				    <div class="input-group-append-sm" style=" height: 50px;">
-					    <button class="btn btn-secondary" type="button">
+					    <button id="searchbtn" class="btn btn-secondary" type="button">
 					    	<i class="fa fa-search"></i>
 					    </button>
 				    </div>
+				   
 			  	</div>
 			</div>
+			 </form>
 			<c:if test ="${empty user }">
 			<div class="col-lg-6" id="beforeLogin"><!-- 로그인 전 -->
 				<div class="row text-right">

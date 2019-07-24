@@ -40,7 +40,7 @@
 									<strong class="timelineProf text-gray-dark">@ ${item.fromUser.nickname }</strong>
 									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
 								</span>
-								<span class="timelineContent"><button class="timeCommnet" value="${item.commentCode }" style="border:none; background: none">회원님의 댓글을 좋아합니다.</button></span>
+								<span class="timelineContent"><button class="timeComment" value="${item.commentCode }" style="border:none; background: none">회원님의 댓글을 좋아합니다.</button></span>
 <!-- 								<button class="timelineTrue" >수락</button> -->
 <!-- 								<button class="timelineFalse" >거절</button> -->
 								</p>
@@ -58,7 +58,27 @@
 									<strong class="timelineProf text-gray-dark">@ ${item.fromUser.nickname }</strong>
 									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
 								</span>
-								<span class="timelineContent"><button class="timeCommnet"  value="${item.commentCode }" style="border:none; background: none">회원님의 댓글에 답글을 작성하셨습니다.</button></span>
+								<span class="timelineContent"><button class="timeComment"  value="${item.commentCode }" style="border:none; background: none">회원님의 댓글에 답글을 작성하셨습니다.</button></span>
+<!-- 								<button class="timelineTrue" >수락</button> -->
+<!-- 								<button class="timelineFalse" >거절</button> -->
+								</p>
+							</div>
+						</c:if>
+						
+						<!-- 게시물 댓글 -->
+						<c:if test="${item.protocol eq '1' && item.fromUser.userCode ne user.userCode }">
+							<div class="timePreview-${status.index } media text-muted pt-3">
+								<input type="hidden" value="${item.fromUser.userCode }">
+								<img class="timelineProf" alt="" src="/resources/images/profile/${item.fromUser.profileImg }" width="45" height="45">
+								<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+								<span class="timelineTarget d-block" style="position:relative;">
+									<strong class="timelineProf text-gray-dark">@ ${item.fromUser.nickname }</strong>
+									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
+								</span>
+								<span class="timelineContent"><button class="timeCommunity" style="border:none; background: none">회원님의 게시물에 댓글을 남겼습니다.</button></span>
+								<input type="hidden" id="boardCode" value="${item.boardCode }">
+								<input type="hidden" id="detailCode" value="${item.detailCode }">
+								
 <!-- 								<button class="timelineTrue" >수락</button> -->
 <!-- 								<button class="timelineFalse" >거절</button> -->
 								</p>
@@ -85,7 +105,7 @@ $(document).on("click",".timelineProf",function(){
 
 $(function(){
 	// 댓글 or 추천 클릭시 이동할 페이지
-	$('.timeCommnet').on('click',function(){
+	$('.timeComment').on('click',function(){
 		var commentCode = $(this).val().trim();
 		
 		$.ajax({
@@ -102,6 +122,16 @@ $(function(){
 				self.location = data;
 			}
 		})
+	});
+	
+	
+	
+	// 게시물 클릭시 이동할 페이지
+	$('.timeCommunity').on('click',function(){
+		var boardCode = $('#boardCode').val().trim();
+		var detailCode = $('#detailCode').val().trim();
+		
+		self.location = '/community/getCommunity?communityCode='+detailCode;
 	})
 })
 

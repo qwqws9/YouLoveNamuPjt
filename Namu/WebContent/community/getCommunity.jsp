@@ -10,7 +10,7 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-	
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 	
 	<script>
@@ -93,6 +93,8 @@
 			<div class="col-2 order-2" id="profile-nickname" style="position: absolute; top: 12px; left: 88px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
 				<div class="text-muted" style="font-size:medium;">Writer.</div>
 				<div style="font-size:medium; color:#344157;">${community.writer.nickname}</div>
+				<!-- 용 : 유저코드 가져오기위해 추가함 -->
+				<input type="hidden" id="communityUserCode" value="${community.writer.userCode} ">
 			</div>
 		</div>
 	</div>

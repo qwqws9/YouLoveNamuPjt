@@ -40,7 +40,8 @@
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-
+	<!-- 사이드바 추가(채팅, 관리자채팅) -->
+	<jsp:include page="/layout/side.jsp"></jsp:include>
 	<div class="container">
 		<br><br>
 		<!-- <button type="button" id="ooo">로그인</button> -->
@@ -50,7 +51,7 @@
 			<a href="/wallet/getWalletListView">규리 가계부</a> <a href="/wallet/getWalletList?walletCode=1"> @@</a><br>
 			
 			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
-			<i id="getChat">상욱 채팅</i><br>
+			<!-- <i id="getChat">상욱 채팅</i><br> -->
 
 			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
 			
@@ -92,17 +93,17 @@
 		<input type="hidden" id="weatherCity" value="서울">
 	</div>
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	//var url = "http://192.168.0.13:8005?nickname=123&profile=123";
-	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
 	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	//var url = "http://192.168.0.13:8005"
 	
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$("#getChat").on("click", function(){
 			window.open(url, "popup_chat", "width=450, height=800, location=no, resizable=no")
 		});
-	});
+	}); */
 	
 	/* $("#getChat").on("click", function(){
 		$.post("http://192.168.0.13:8005/", {
@@ -113,7 +114,7 @@
 		}
 	}) */
 	
-	</script>
+	</script> -->
 
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
 
