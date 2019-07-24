@@ -94,13 +94,13 @@ ${resultPage.currentPage} 페이지</p>
 src="/resources/images/planner/${planner.plannerImage}"
 alt="Generic placeholder image" width="350" height="350" id="img">
 
-<h5> &nbsp;${planner.plannerName}<div id=plannerCode style="display: none">${planner.plannerWriter.plannerCode}</div>
+<h5> &nbsp;${planner.plannerName}<div id=plannerCode style="display: none">${planner.plannerCode}</div>
 </h5>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/resources/images/profile/${user.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="55px" height="40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="55px" height="40px">
 ${planner.plannerWriter.nickname}</p>
 <p>
 
