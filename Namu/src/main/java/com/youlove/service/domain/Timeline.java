@@ -14,10 +14,29 @@ public class Timeline {
 	
 	//private String accept;
 	
+	private int boardCode;
+	private int detailCode;
+	
 
 	
 	
 	
+
+	public int getBoardCode() {
+		return boardCode;
+	}
+
+	public void setBoardCode(int boardCode) {
+		this.boardCode = boardCode;
+	}
+
+	public int getDetailCode() {
+		return detailCode;
+	}
+
+	public void setDetailCode(int detailCode) {
+		this.detailCode = detailCode;
+	}
 
 	public int getCommentCode() {
 		return commentCode;
@@ -79,7 +98,7 @@ public class Timeline {
 	public String toString() {
 		return "Timeline [timelineCode=" + timelineCode + ", fromUser=" + fromUser + ", toUser=" + toUser
 				+ ", timeDate=" + timeDate + ", inviteCode=" + inviteCode + ", protocol=" + protocol + ", commentCode="
-				+ commentCode + "]";
+				+ commentCode + ", boardCode=" + boardCode + ", detailCode=" + detailCode + "]";
 	}
 
 	

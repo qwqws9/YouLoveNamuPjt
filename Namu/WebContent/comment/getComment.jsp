@@ -146,9 +146,12 @@ function addLike(commentCode,likeName,writerUser) {
 		},
 		success : function(data,status){
 			if(data == true) {
-				addTimelineLike(commentCode,likeName,'9');
 				getComment($('#boardCode').val(),$('#detailCode').val());
+				
+				if(likeName != writerUser) {
+				addTimelineLike(commentCode,likeName,'9');
 				socketcall(writerUser,'9');
+				}
 			}
 		}
 	})
@@ -349,6 +352,7 @@ function deleteLike(commentCode,likeName) {
 		})
 	});
 	
+	//댓글 등록
 	$(document).on("click","button:contains('등록')",function(){ 
 		if($(this).prev().val().length < 1) {
 			alert('내용을 입력하세요');
@@ -365,11 +369,36 @@ function deleteLike(commentCode,likeName) {
 			//alert("있으므로 대댓글");
 			//바꾸기
 			var parentUser = $(this).parents('li').prev('li[class=parentComment]').find('input[class=writerUserCode]').val().trim();
-			socketcall(parentUser,'8');
-			addTimelineLike($(this).parents('li').attr('id'),$('#nodeUserCode').val().trim(),'8');
+			var sessionUser = $('#nodeUserCode').val().trim();
+			
+			if(parentUser != sessionUser) {
+				socketcall(parentUser,'8');
+				addTimelineLike($(this).parents('li').attr('id'),sessionUser,'8');
+			}
 			addComment($(this).parents('li').attr('id'),$(this).prev().val());
 		}else {
 			//alert("없으므로 댓글")
+			var boardCode = $('#boardCode').val().trim();
+			var detailCode = $('#detailCode').val().trim();
+			//댓글 작성하는곳이 게시판인 경우
+			if(boardCode > 0 && boardCode < 5) {
+				//alert(boardCode);
+				//alert(detailCode);
+				//alert($('#communityUserCode').val().trim());
+				//게시물 작성자
+				var writerUser = $('#communityUserCode').val().trim();
+				// 로그인한 유저 
+				var sessionUser = $('#nodeUserCode').val().trim();
+				if(writerUser != sessionUser) {
+					//게시판번호,게시물번호,로그인한 유저,게시물작성자,프로토콜
+					addTimelineCommunity(boardCode,detailCode,sessionUser,writerUser,'1');
+					socketcall(writerUser,'1');
+				}
+				
+				
+				
+				//return;
+			}
 			addComment(0,$(this).prev().val());
 		}
 		$(this).prev().val("");

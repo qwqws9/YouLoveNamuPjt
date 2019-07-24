@@ -12,6 +12,8 @@
 		<result property="protocol" 				column="PROTOCOL" 				jdbcType="CHAR" />
 		<result property="commentCode" 				column="COMMENT_CODE" 			jdbcType="NUMERIC" />
 		<result property="inviteCode" 				column="INVITE_CODE" 				jdbcType="CHAR" />
+		<result property="boardCode" 				column="BOARD_CODE" 				jdbcType="NUMERIC" />
+		<result property="detailCode" 				column="DETAIL_CODE" 				jdbcType="NUMERIC" />
 		<association property="fromUser" 	javaType="user">
 			<result property="userCode" 	column="USER_CODE" />
 			<result property="nickname"		column="NICKNAME" />
@@ -29,13 +31,17 @@
 	<if test="protocol == 9 or protocol == 8">
 	(timeline_code,from_user,to_user,protocol,invite_code,time_date,comment_code)
 	</if>
-	
+	<if test="protocol == 1">
+	(timeline_code,from_user,to_user,protocol,invite_code,time_date,board_code,detail_code)
+	</if>
 	
 	VALUES
 	<if test="protocol == 9 or protocol == 8">
 	(seq_timeline_code.nextval,#{fromUser.userCode},(select writer_comment from comments where comment_code = #{commentCode}),#{protocol},'0',#{timeDate},#{commentCode})
 	</if>
-	
+	<if test="protocol == 1">
+	(seq_timeline_code.nextval,#{fromUser.userCode},#{toUser.userCode},#{protocol},'0',#{timeDate},#{boardCode},#{detailCode})
+	</if>
 	</insert>
 	
 	

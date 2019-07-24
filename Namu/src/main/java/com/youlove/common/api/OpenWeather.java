@@ -31,7 +31,7 @@ public class OpenWeather {
 		httpGet.setHeader("Content-Type","application/json");
 		try {
 		HttpResponse httpResponse = httpClient.execute(httpGet);
-		System.out.println(httpResponse);
+//		System.out.println(httpResponse);
 		
 		HttpEntity httpEntity = httpResponse.getEntity();
 		
@@ -40,15 +40,15 @@ public class OpenWeather {
 		
 		String serverData = br.readLine();
 		
-		System.out.println(serverData);
+//		System.out.println(serverData);
 		
 		JSONObject json = (JSONObject)JSONValue.parse(serverData);
 		
-		System.out.println(json.get("weather"));
-		System.out.println("Main : " + json.get("main"));
+//		System.out.println(json.get("weather"));
+//		System.out.println("Main : " + json.get("main"));
 		JSONArray array = (JSONArray)json.get("weather");
 		
-		System.out.println("아이콘 가져오자"+array.get(0));
+//		System.out.println("아이콘 가져오자"+array.get(0));
 		JSONObject json2 = (JSONObject)array.get(0);
 		
 		System.out.println(json2.get("icon"));
@@ -56,10 +56,10 @@ public class OpenWeather {
 		weather.setIcon((String)json2.get("icon"));
 		
 		json = (JSONObject)json.get("main");
-		System.out.println("온도 "+json.get("temp"));
-		System.out.println("최소온도 "+json.get("temp_min"));
-		System.out.println("최대온도"+json.get("temp_max"));
-		System.out.println("습도 "+json.get("humidity"));
+//		System.out.println("온도 "+json.get("temp"));
+//		System.out.println("최소온도 "+json.get("temp_min"));
+//		System.out.println("최대온도"+json.get("temp_max"));
+//		System.out.println("습도 "+json.get("humidity"));
 		
 		double temp = Math.round(((Double)json.get("temp"))-273.15);
 		double temp1 = Math.round(((Double)json.get("temp_min"))-273.15);

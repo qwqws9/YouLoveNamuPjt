@@ -132,6 +132,8 @@ public class CommentRestController {
 		
 		if(boardCode == 5) {
 			path = "/guide/selectTourDetail/"+comment.getDetailCode();
+		}else if(boardCode > 0 && boardCode < 4) {
+			path = "/community/getCommunity?communityCode="+comment.getDetailCode();
 		}
 		
 		

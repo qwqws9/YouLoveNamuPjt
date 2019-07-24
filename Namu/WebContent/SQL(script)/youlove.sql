@@ -117,7 +117,9 @@ CREATE TABLE TIMELINE (
    PROTOCOL             CHAR(1),
    INVITE_CODE                CHAR(1),
    TIME_DATE               VARCHAR(100),
-   COMMENT_CODE         NUMBER(10)
+   COMMENT_CODE         NUMBER(10),
+   BOARD_CODE           NUMBER(10),
+   DETAIL_CODE          NUMBER(10)
 );
 
 
@@ -259,12 +261,12 @@ CREATE TABLE party (
    party_content   VARCHAR2(1000),   
    party_start      VARCHAR2(20),
    party_end      VARCHAR2(20),
-   latitude         NUMBER(10),
-   longitude       NUMBER(10),
+   latitude         NUMBER(20,16),
+   longitude       NUMBER(20,16),
    party_people   VARCHAR2(100),
    writer           NUMBER(10)      NOT NULL,
    party_recruitment CHAR(1) DEFAULT '1'	NOT NULL,
-   gerder           CHAR(1),
+   gender           CHAR(1),
    age              NUMBER(4),
    city_name      VARCHAR2(50),
    hashtag_code   NUMBER(10),
@@ -349,7 +351,7 @@ CREATE TABLE wallet_detail (
 
 
 
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','qwqws9@naver.com','01090720802','김성용','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','관리자입니다',sysdate,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','admin','01090720802','김성용','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','관리자입니다',sysdate,null,null);
 INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니','user1','01040200643','김민희','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','미니입니다',sysdate,null,null);
 INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현','user2','01065601257','박중현','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','중현입니다',sysdate,null,null);
 INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','귤','user3','01067479984','권규리','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','귤입니다',sysdate,null,null);
@@ -491,3 +493,4 @@ INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
 
 
 commit;
+

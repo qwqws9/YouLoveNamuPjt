@@ -85,8 +85,11 @@
 			$('#userId').attr('class','form-control');
 		})
 		
-		$("#password").on('keyup',function(){
+		$("#password").on('keyup',function(key){
 			$('#password').attr('class','form-control');
+			if(key.keyCode == 13) {
+				loginClick();
+			}
 		})
 		
 		$("#autoLogin").on('click',function(){
@@ -103,64 +106,70 @@
 		
 		$('#login').on('click',function(){
 			//alert('클릭');
-			$('#errorMessage').text();
+			loginClick();
 			
-			var id = $('#userId').val();
-			var pw = $('#password').val();
-			
-			if(id == null || id.length <1) {
-				$('#errorMessage').text('아이디를 입력해주세요');
-				$('#userId').attr('class','form-control is-invalid');
-				$("#userId").focus();
-				return false;
-			}
-			
-			if(pw == null || pw.length <1) {
-				$('#errorMessage').text('비밀번호를 입력해주세요');
-				$('#password').attr('class','form-control is-invalid');
-				$("#password").focus();
-				return false;
-			}
-			
-			$.ajax({
-				url : "/user/json/login",
-				method : "POST" ,
-				//dataType : "json" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				data : JSON.stringify({
-					userId : id,
-					password : pw
-				}),
-				success : function(JSONData , status) {
-					//alert(status);
-					//alert(JSONData);
-					if(JSONData != "") {
-						//alert("정보가있음");
-						//self.location = '/';
-						//alert(JSONData.userCode);
-						login();
-					}else {
-						//alert("정보가없음");
-						$('#errorMessage').text('아이디 또는 비밀번호를 확인해주세요');
-						$('#password').attr('class','form-control is-invalid');
-						$('#userId').attr('class','form-control is-invalid');
-					}
-				}
-				,
-				error:function( jqXHR, textStatus, errorThrown){
-					alert(textStatus);
-					alert(errorThrown);
-				}
-			}) // end ajax 
 		}); // end login event
 		
 	});
 	
 	function login() {
 		$('form').attr('method','post').attr('action','/user/login').submit();
+	}
+	
+	function loginClick() {
+		
+		$('#errorMessage').text();
+		
+		var id = $('#userId').val();
+		var pw = $('#password').val();
+		
+		if(id == null || id.length <1) {
+			$('#errorMessage').text('아이디를 입력해주세요');
+			$('#userId').attr('class','form-control is-invalid');
+			$("#userId").focus();
+			return false;
+		}
+		
+		if(pw == null || pw.length <1) {
+			$('#errorMessage').text('비밀번호를 입력해주세요');
+			$('#password').attr('class','form-control is-invalid');
+			$("#password").focus();
+			return false;
+		}
+		
+		$.ajax({
+			url : "/user/json/login",
+			method : "POST" ,
+			//dataType : "json" ,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			data : JSON.stringify({
+				userId : id,
+				password : pw
+			}),
+			success : function(JSONData , status) {
+				//alert(status);
+				//alert(JSONData);
+				if(JSONData != "") {
+					//alert("정보가있음");
+					//self.location = '/';
+					//alert(JSONData.userCode);
+					login();
+				}else {
+					//alert("정보가없음");
+					$('#errorMessage').text('아이디 또는 비밀번호를 확인해주세요');
+					$('#password').attr('class','form-control is-invalid');
+					$('#userId').attr('class','form-control is-invalid');
+				}
+			}
+			,
+			error:function( jqXHR, textStatus, errorThrown){
+				alert(textStatus);
+				alert(errorThrown);
+			}
+		}) // end ajax 
 	}
 </script>
 
