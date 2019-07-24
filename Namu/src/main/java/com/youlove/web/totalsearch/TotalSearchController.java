@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.common.FileNameUUId;
 import com.youlove.common.Search;
+import com.youlove.service.community.CommunityService;
+import com.youlove.service.domain.Community;
 import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.Timeline;
 import com.youlove.service.domain.Tour;
@@ -40,6 +42,10 @@ public class TotalSearchController {
 	@Qualifier("wishBeenServiceImpl")
 	private WishBeenService wishbeenService;
 	
+	@Autowired
+	@Qualifier("communityServiceImpl")
+	private CommunityService communityService;
+	
 	
 	public TotalSearchController() {
 		System.out.println(this.getClass());
@@ -48,7 +54,7 @@ public class TotalSearchController {
 	
 	
 	@RequestMapping(value="/getTotalSearch",method=RequestMethod.POST)
-	public String getTotalSearch(@ModelAttribute Search search,Model model,Tour tour) throws Exception{
+	public String getTotalSearch(@ModelAttribute Search search,Model model,Tour tour,Map<String,Object> map ) throws Exception{
 		
 		System.out.println("getTotalSearch 들어옴 : " + search.getSearchKeyword());
 		
@@ -65,8 +71,14 @@ public class TotalSearchController {
 				t.setTourShortDesc(cut);
 			}
 		}
+		search.setSearchCondition("2");
+		search.setPageSize(5);
+		search.setCurrentPage(1);
+		map.put("search", search);
+		map = communityService.getCommunityList(map);
 		
 		
+		model.addAttribute("communityList",map.get("list"));
 		model.addAttribute("keyword",search.getSearchKeyword());
 		model.addAttribute("tourList",tourList);
 		
