@@ -8,7 +8,7 @@ public interface HashtagDao {
 
 	public void addHashtag(Hashtag hashtag)throws Exception;
 	
-	public Hashtag getHashtag(int theCode)throws Exception;
+	public Hashtag getHashtag(Hashtag hashVO)throws Exception;
 	
 	public void updateHashtag(Hashtag hashtag)throws Exception;
 	
