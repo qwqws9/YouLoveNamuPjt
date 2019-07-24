@@ -149,7 +149,7 @@ $(window).load(function(){
 // 환율 정보 .jsp 온로드
 $(function() {
 	// innerHTML
-	$($('#exchange_container')).load('/wallet/exchangeRates.jsp', function(data) {
+	$($('#exchange_container')).load('/wallet/mainExchangeRates.jsp', function(data) {
 		//console.log(data);
 		
 		exchangeRatesData();
