@@ -10,28 +10,6 @@
 
 	<title>YouLovePlan</title>
 	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-	
-	<!-- Font Awesome SVG with JavaScript -->
-	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	
-	<!-- Our Own Resources -->
-	<script src="../resources/javascript/jquery.oLoader.min.js"></script>
-	<!-- 날씨, 환율 정보를 위한 국가 도시 리스트 출력 -->
-	<script src="/resources/javascript/getProfile.js"></script>
-	<script src="/resources/javascript/index.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-		
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	
 	<style type="text/css">
 	body {
