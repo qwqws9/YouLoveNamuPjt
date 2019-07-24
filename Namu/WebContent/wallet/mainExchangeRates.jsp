@@ -154,6 +154,8 @@
 		        
 		        if($('#amount').val() != null && $('#amount').val() != 0){
 		        	convert();
+		        }else{
+		        	$('#exchange_result').val('0');
 		        }
 		    });
 			
@@ -259,7 +261,7 @@
 				success	: function(JSONData, status) {
 					console.log('[SUCCESS]\nRESULT : ' + JSONData);
 					
-					$('#exchange_result').val(makeComma(JSONData.exchangeRate));
+					$('#exchange_result').val(makeComma(JSONData.exchangeRate*$('#amount').val()));
 				}
 			});
 		}
