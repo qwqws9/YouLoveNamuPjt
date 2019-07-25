@@ -54,7 +54,7 @@
                   </div>
                   
                    
-               <div class="container"> 
+               <div class="container"  id="tourDetailJsp"> 
                <div class="row">  
 		<input type="hidden" name="tourId" value="">
 		<div class="col-lg-8">
@@ -129,7 +129,6 @@
 		</div>
         </div>           
              </div>      
-      
       <jsp:include page="../comment/getComment.jsp" >
       	<jsp:param value="${boardCode}" name="boardCode"/>
       	<jsp:param value="${detailCode}" name="detailCode"/>

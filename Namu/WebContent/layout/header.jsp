@@ -2,10 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
-
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
+	<!-- 타임라인을 위한 노드 서버 연결 -->
+<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
+<!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
+	<!-- 지우지 말것...... -->
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
 	<script src="/resources/javascript/sidebar.js"></script>
@@ -38,7 +41,9 @@
 	<div id="mySidebar" class="sidebar">
 		<div class="container">
 			<div class="col-lg-3" style="padding-top: 23px;">
-				<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
+				<c:if test ="${!empty user }">
+					<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
+				</c:if>
 			</div>
 			
 		  	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -50,14 +55,14 @@
 				
 					<c:if test ="${empty user }"><!-- 로그인 전 -->
 						<div class="col-12 text-center" id="beforeLogin">
-						
+							<div id="logingogo">
 							<a href="#">
-								<img src="/resources/images/profile/77deb648-41c0-4b4b-aa20-94589acb7f9d.png" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 10px;">
+								<img src="/resources/images/profile/img_login.gif" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">
 							</a>
-							<a href="/user/loginView">
+							<a href="#">
 								<span>로그인</span>
 							</a>
-						
+							</div>
 						</div>
 					</c:if>
 					<c:if test ="${!empty user }"><!-- 로그인 후 -->
@@ -240,7 +245,8 @@
 	  	</div>
 	  	
 	  	<nav class="navbar">
-		    <a href="#" class="navbar"  data-toggle="collapse" data-target="#topbarContent" aria-controls="topbarContent" aria-expanded="false" aria-label="Toggle navigation">
+<!-- 		    <a href="/" class="navbar"  data-toggle="collapse" data-target="#topbarContent" aria-controls="topbarContent" aria-expanded="false" aria-label="Toggle navigation"> -->
+		    <a href="/" class="navbar">
 			    <span class="brand main_logo">
 			    	<img src="/resources/images/youloveplan_logo.png" alt="유럽플랜" class="logo_img" style="height: 100px;">
 			    </span>

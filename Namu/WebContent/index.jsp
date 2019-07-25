@@ -47,7 +47,7 @@
 		<br><br>
 		
 		<h4 style="margin: auto;">
-			<a href="/wallet/getWalletListView">규리 가계부</a> <a href="/wallet/getWalletList?walletCode=1"> @@</a><br>
+			<a href="/wallet/getWalletListView">규리 가계부</a><br>
 			
 			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
 			<!-- <i id="getChat">상욱 채팅</i><br> -->
@@ -116,6 +116,7 @@
 	</script> -->
 
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
+	<jsp:include page="/user/getFriend.jsp"></jsp:include>
 
 </body>
 </html>

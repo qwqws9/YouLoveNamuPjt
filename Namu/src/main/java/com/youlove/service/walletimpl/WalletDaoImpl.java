@@ -29,6 +29,13 @@ public class WalletDaoImpl implements WalletDao {
 
 	///Method
 	// walletListView.jsp
+	public int isWallet(int plannerCode) throws Exception{
+		return sqlSession.selectOne("WalletMapper.isWallet", plannerCode);
+	}
+	
+	public int getWalletCode(int plannerCode) throws Exception{
+		return sqlSession.selectOne("WalletMapper.getWalletCode", plannerCode);
+	}
 	/*
 	public void addWalletView(int plannerCode) throws Exception{
 		sqlSession.insert("WalletMapper.addWalletView", plannerCode);

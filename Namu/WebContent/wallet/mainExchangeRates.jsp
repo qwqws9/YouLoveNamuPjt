@@ -9,23 +9,26 @@
 	.exchange_rate_wrap h3 .datee_wrap {display: block; margin-top: 10px; margin-bottom: 15px;}
 	.exchange_rate_wrap .exchange_cont::after {content: ''; display: block; clear: both;}
 	.exchange_rate_wrap .exchange_data_wrap {position: relative; width: 100%;}
+	.exchange_rate_wrap .exchange_data_wrap .kor {background-color: #a3daff;}
 	.exchange_rate_wrap .exchange_data_wrap, .exchange_rate_wrap .exchange_convert_wrap {float: left; width: 50%;}
 	.exchange_rate_wrap .exchange_data_wrap > span {position: absolute; top: -35px; right: 5px; font-size: 22px;}
 	.exchange_rate_wrap .exchange_data_wrap > span > span {cursor: pointer;}
 	.exchange_rate_wrap .exchange_data_wrap > span > span.disabled {color: #cbcbcb; cursor: default; pointer-events: none;}
-	.exchange_rate_wrap .exchange_data_wrap > div {position: relative; height: 227px; overflow: hidden;}
+	.exchange_rate_wrap .exchange_data_wrap > div {position: relative; height: 226px; overflow: hidden;}
 	.exchange_rate_wrap ul, .exchange_rate_wrap li {margin: 0; padding: 0; list-style:none;}
-	.exchange_rate_wrap ul {position: absolute; top: -1; width: 100%; border: 1px solid #cbcbcb; box-sizing: border-box;}
-	.exchange_rate_wrap li {position: relative; height: 45px; line-height: 45px; box-sizing: border-box;}
+	.exchange_rate_wrap ul {position: absolute; top: -1; width: 100%; box-sizing: border-box;}
+	.exchange_rate_wrap li {position: relative; height: 45px; line-height: 45px; border-top: 1px solid #cbcbcb; border-left: 1px solid #cbcbcb; border-right: 1px solid #cbcbcb;}
 	.exchange_rate_wrap li:hover {background-color: #cbcbcb; cursor: default;}
-	.exchange_rate_wrap li:not(:last-child) {border-bottom: 1px solid #cbcbcb;}
+	.exchange_rate_wrap li:last-child {border-bottom: 1px solid #cbcbcb;}
 	.exchange_rate_wrap li span {display: inline-block; height: 40px;}
 	.exchange_rate_wrap li .flagg {position: absolute; top: 2px; left: 10px; width: 45px; height: 40px; background-size: 100% 100%; background-repeat: no-repeat; background-position: center center;}
 	.exchange_rate_wrap li .dataa {position: absolute; left: 65px;}
+	.exchange_rate_wrap li .korr {font-weight: 700;}
 	.exchange_rate_wrap li .unitt {color: #30a9de;}
 	.exchange_rate_wrap li .exchange_ratee {position: absolute; right: 15px;}
 	
-	.exchange_rate_wrap .exchange_convert_wrap form {margin-left: 25px;}
+	.exchange_rate_wrap .exchange_convert_wrap form {position: relative; margin-left: 25px;}
+	.exchange_rate_wrap .exchange_convert_wrap .changee {position: absolute; top: -35px; right: 5px;}
 	.exchange_rate_wrap .exchange_convert_wrap select {font-size: 16px; border: 1px solid #a3daff;}
 	.exchange_rate_wrap .exchange_convert_wrap select:focus {box-shadow: none; border-color: #a3daff; outline: 0;}
 	.exchange_rate_wrap .exchange_convert_wrap input[type=text] {height: 37px; margin-top: 12px; text-align: right; border-radius: 0;}
@@ -42,10 +45,23 @@
 	<div class="exchange_cont">
 		<div class="exchange_data_wrap">
 			<span><span class="disabled"><i class="fas fa-angle-up"></i></span>&nbsp;&nbsp;<span><i class="fas fa-angle-down"></i></span></span>
-			<div><ul></ul></div>
+			<div>
+				<ul>
+					<li class="kor">
+						<span>
+							<span class="flagg" style="background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNjAwIiB2aWV3Qm94PSItMzYgLTI0IDcyIDQ4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+DQo8cGF0aCBmaWxsPSIjZmZmIiBkPSJtLTM2LTI0aDcydjQ4aC03MnoiLz4NCjxnIHRyYW5zZm9ybT0ibWF0cml4KC41NTQ3IC0uODMyMDUgLjgzMjA1IC41NTQ3IDAgMCkiPg0KPGcgaWQ9ImIyIj4NCjxwYXRoIHN0cm9rZT0iIzAwMCIgaWQ9ImIiIHN0cm9rZS13aWR0aD0iMiIgZD0iTS02LTI1SDZNLTYtMjJINk0tNi0xOUg2Ii8+DQo8dXNlIHk9IjQ0IiB4bGluazpocmVmPSIjYiIvPg0KPC9nPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBkPSJtMCwxN3YxMCIvPg0KPGNpcmNsZSBmaWxsPSIjYzYwYzMwIiByPSIxMiIvPg0KPHBhdGggZmlsbD0iIzAwMzQ3OCIgZD0iTTAtMTJBNiw2IDAgMCAwIDAsMEE2LDYgMCAwIDEgMCwxMkExMiwxMiAwIDAsMSAwLTEyWiIvPg0KPC9nPg0KPGcgdHJhbnNmb3JtPSJtYXRyaXgoLS41NTQ3IC0uODMyMDUgLjgzMjA1IC0uNTU0NyAwIDApIj4NCjx1c2UgeGxpbms6aHJlZj0iI2IyIi8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIGQ9Im0wLTIzLjV2M20wLDM3LjV2My41bTAsM3YzIi8+DQo8L2c+DQo8L3N2Zz4NCg==)"></span>
+								<span class="dataa korr">
+									<span>대한민국 원</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="unitt">KRW</span>
+								</span>
+							</span>
+							<span class="exchange_ratee korr">1</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<div class="exchange_convert_wrap">
 			<form>
+				<a class="changee"><span class="skip">위치 바꾸기</span> <i class="fas fa-arrows-alt-v"></i></a>
 				<label for="from" class="skip">변환 전 통화</label>
 				<select class="form-control" name="from" id="from">
 					<option value="KRW">대한민국</option>
@@ -108,12 +124,12 @@
 			$(document).on('click', '.exchange_rate_wrap .exchange_data_wrap > span > span:first-child', function() {
 				console.log($('.exchange_rate_wrap ul').css('top'));
 				
-				if($('.exchange_rate_wrap ul').css('top') == '-674px'){
+				if($('.exchange_rate_wrap ul').css('top') == '-675px'){
 					$(this).next().removeClass('disabled');
-					$('.exchange_rate_wrap ul').animate({top:'-449px'}, 'slow');
-				}else if($('.exchange_rate_wrap ul').css('top') == '-449px'){
-					$('.exchange_rate_wrap ul').animate({top:'-224px'}, 'slow');
-				}else if($('.exchange_rate_wrap ul').css('top') == '-224px'){
+					$('.exchange_rate_wrap ul').animate({top:'-450px'}, 'slow');
+				}else if($('.exchange_rate_wrap ul').css('top') == '-450px'){
+					$('.exchange_rate_wrap ul').animate({top:'-225px'}, 'slow');
+				}else if($('.exchange_rate_wrap ul').css('top') == '-225px'){
 					$('.exchange_rate_wrap ul').animate({top:'0px'}, 'slow');
 					$(this).addClass('disabled');
 				}
@@ -124,23 +140,25 @@
 				
 				if($('.exchange_rate_wrap ul').css('top') == '0px'){
 					$(this).prev().removeClass('disabled');
-					$('.exchange_rate_wrap ul').animate({top:'-224px'}, 'slow');
-				}else if($('.exchange_rate_wrap ul').css('top') == '-224px'){
-					$('.exchange_rate_wrap ul').animate({top:'-449px'}, 'slow');
-				}else if($('.exchange_rate_wrap ul').css('top') == '-449px'){
-					$('.exchange_rate_wrap ul').animate({top:'-674px'}, 'slow');
+					$('.exchange_rate_wrap ul').animate({top:'-225px'}, 'slow');
+				}else if($('.exchange_rate_wrap ul').css('top') == '-225px'){
+					$('.exchange_rate_wrap ul').animate({top:'-450px'}, 'slow');
+				}else if($('.exchange_rate_wrap ul').css('top') == '-450px'){
+					$('.exchange_rate_wrap ul').animate({top:'-675px'}, 'slow');
 					$(this).addClass('disabled');
 				}
 			});
 			
 			$(document).on('click', '.exchange_rate_wrap ul li', function() {
 				var fromValue = $(this).find('.unitt').text().trim();
-				console.log(fromValue);
+				//console.log(fromValue);
 				
 				$('#from').val(fromValue).prop('selected', true);
 				
 		        if($('#amount').val() != null && $('#amount').val() != 0){
 		        	convert();
+		        }else{
+		        	$('#exchange_result').val('0');
 		        }
 		    });
 			
@@ -162,6 +180,23 @@
 			$(document).on('change', '#from, #to', function() {
 				if($('#amount').val() != null && $('#amount').val() != 0){
 		        	convert();
+		        }else{
+		        	$('#exchange_result').val('0');
+		        }
+		    });
+			
+			$(document).on('click', '.exchange_rate_wrap .exchange_convert_wrap .changee', function() {
+				var up = $('#from').val();
+				var down = $('#to').val();
+				
+				$('#from').val(down).prop('selected', true);
+				$('#to').val(up).prop('selected', true);
+				
+				
+				if($('#amount').val() != null && $('#amount').val() != 0){
+		        	convert();
+		        }else{
+		        	$('#exchange_result').val('0');
 		        }
 		    });
 		});
@@ -232,7 +267,7 @@
 								'<span>' +
 									'<span class="flagg" style="background-image: url(' + flag + ')"></span>' +
 									'<span class="dataa">' +
-										'<span class="nationn">' + item.nation + '</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="unitt">' + item.unit + '</span>' +
+										'<span>' + item.nation + '</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="unitt">' + item.unit + '</span>' +
 									'</span>' +
 								'</span>' +
 								'<span class="exchange_ratee">' + makeComma(item.exchangeRate) + '</span>' +
@@ -256,10 +291,10 @@
 					amount	: $('#amount').val()
 				}),
 				error	: function(request, status, error) {
-					console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+					//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 			    },
 				success	: function(JSONData, status) {
-					console.log('[SUCCESS]\nRESULT : ' + JSONData);
+					//console.log('[SUCCESS]\nRESULT : ' + JSONData);
 					
 					$('#exchange_result').val(makeComma(JSONData.exchangeRate*$('#amount').val()));
 				}
