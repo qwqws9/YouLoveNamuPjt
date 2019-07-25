@@ -16,6 +16,7 @@
 		<typeAlias alias="city" type="com.youlove.service.domain.City" />
 		<typeAlias alias="comment" type="com.youlove.service.domain.Comment" />
 		<typeAlias alias="like" type="com.youlove.service.domain.Like" />
+		<typeAlias alias="friend" type="com.youlove.service.domain.Friend" />
 		<typeAlias alias="pay" type="com.youlove.service.domain.Pay" />
 		<typeAlias alias="hotel" type="com.youlove.service.domain.Hotel" />
 		<typeAlias alias="timeline" type="com.youlove.service.domain.Timeline" />

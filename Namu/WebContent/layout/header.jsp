@@ -6,25 +6,12 @@
 <head>
 	<meta charset="utf-8">
 	<!-- 타임라인을 위한 노드 서버 연결 -->
-<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
-<!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
+	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script>
+	<script src="/resources/javascript/alarmSocket.js"></script>
 	<!-- 지우지 말것...... -->
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
 	<script src="/resources/javascript/sidebar.js"></script>
-	<!-- bootstrap -->
-<!-- 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> -->
-<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script> -->
-<!-- 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> -->
-	<!-- jQuerty -->
-<!-- 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
-	
-<!--   	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet"> -->
-<!--   	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script> -->
-  	<!-- fontAwsome -->
-<!--   	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script> -->
-  	
   	
 	<script>
 	
