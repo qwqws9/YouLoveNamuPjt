@@ -22,7 +22,7 @@
 		// 프로필 정보 닫기
 		$('.profilePop_wrap').on('click', function(e) {
 			var container = $('.profilePop_wrap');
-			console.log(container.has(e.target).length);
+			//console.log(container.has(e.target).length);
 			if(container.has(e.target).length === 0){
 				$(".profilePop_wrap").css('display','none');
 			}

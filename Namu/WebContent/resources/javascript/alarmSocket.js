@@ -1,14 +1,14 @@
-window.onload = function () {
-    if (window.Notification) {
-        Notification.requestPermission();
-    }
-}
+//window.onload = function () {
+//    if (window.Notification) {
+//        Notification.requestPermission();
+//    }
+//}
 
 // socket.io 서버에 접속한다
 var socket;
 
 function socketcall(writerUser,protocol) {
-	//alert("adad");
+	//alert("소켓 호출됨");
 	if(protocol == '9') {
 		socket.emit("timeline", { To: writerUser, msg : '회원님의 댓글을 좋아합니다.' });
 	}else if(protocol == '8') {

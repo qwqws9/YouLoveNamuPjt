@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
 import com.youlove.service.user.UserDao;
@@ -72,6 +73,11 @@ public class UserServiceImpl implements UserService{
 			result = true;
 		}
 		return result;
+	}
+
+	@Override
+	public List<Friend> getFriendList(Friend friend) throws Exception {
+		return userDao.getFriendList(friend);
 	}
 
 	
