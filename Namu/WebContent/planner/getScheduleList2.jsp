@@ -181,6 +181,21 @@ function layer_open(el){
 
 $(function () {
 //initialize  calendar
+var departDate=${planner.departDate};
+	//alert(departDate);
+	var ddd = String(departDate);	
+	var yyyy = ddd.substring(0,4);
+	var mm = ddd.substring(4,6)
+	var dd = ddd.substring(6,8) 
+	var ddate= new Date(); 
+
+	/* var dd = departDate.getDate();
+	var mm = departDate.getMonth()+1; //January is 0! */
+	/* var yyyy = departDate.getFullYear(); */
+	ddate=yyyy+'-'+mm+'-'+dd;
+	/* alert(ddd.substring(0,4)); */
+	
+	
   var plannerCode=${planner.plannerCode};
 	   $('#calendar').fullCalendar({
 		   
@@ -265,8 +280,8 @@ $(function () {
 		        right: 'month,agendaWeek,listDay'
 		      },
 		      allDay: false,
-		   	
-		      editable: true,
+		     defaultDate: ddate,
+		     editable: true,
 		      droppable: true, // this allows things to be dropped onto the calendar
 		     /* dayClick: function(date) { */
 		    /*       var date = (moment(date).format('YYYY-MM-DD'));
@@ -283,7 +298,8 @@ $(function () {
 		        	   layer_open('layer1');
 		        	   onchangeDay(yy,mm,dd,ss);
 		        	     },  
-
+		        	     
+		   		      
 		     eventLimit: true,
 		    
 		     ////////////////////////////////////////////////////////
