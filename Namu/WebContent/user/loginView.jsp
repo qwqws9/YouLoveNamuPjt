@@ -113,7 +113,7 @@
 	});
 	
 	function login() {
-		$('form').attr('method','post').attr('action','/user/login').submit();
+		$($('form')[1]).attr('method','post').attr('action','/user/login').submit();
 	}
 	
 	function loginClick() {

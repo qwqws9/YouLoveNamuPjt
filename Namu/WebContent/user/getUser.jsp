@@ -342,8 +342,8 @@ label {margin:0;padding:0;}
 		var userCode = $('#userCode').val();
 	
 		$('#img1').on('change',function(){
+			updateImg(userCode,$('form')[1]);
 			readURL(this);
-			updateImg(userCode,$('form')[0]);
 		}) 
 		
 		$('.img2').on('click',function(){

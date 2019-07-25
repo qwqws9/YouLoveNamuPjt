@@ -1,5 +1,5 @@
  	//성용
-	/*$(function(){
+	$(function(){
 		$("#ooo").on("click",function(){
 			if($("#beforeLogin").css("display") == "block"){
 				$("#beforeLogin").hide();
@@ -18,10 +18,10 @@
 		
 		
 		
-		//Search Box Event
+		/*//Search Box Event
 		$('#searchbtn').on('click',function(){
-		})
-	});*/
+		})*/
+	});
 	//메인 서치 연결
 	function searchToggle(obj, evt){
 		var container = $(obj).closest('.Search');
