@@ -1,4 +1,4 @@
-package com.model2.mvc.service.wallet.test;
+package com.youlove.service.wallet.test;
 
 import java.util.HashMap;
 import java.util.List;

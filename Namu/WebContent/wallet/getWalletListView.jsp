@@ -48,8 +48,8 @@
 							<input type="hidden" class="walletCode" />
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
-								<c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
-								<c:if test="${empty planner.plannerImage}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
+								<c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
+								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
@@ -83,7 +83,7 @@
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
 								<c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
-								<c:if test="${empty planner.plannerImage}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
+								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
