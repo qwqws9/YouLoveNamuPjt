@@ -38,11 +38,11 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 		for(Element el : element){
 			exchange = new Exchange();
 			
-			System.out.println(index);
+			//System.out.println(index);
 			
 			String str = (el.select("a + a").text()).replaceAll("스위스 크로나", "스웨덴 크로나");
 			exchange.setNation(str);
-			System.out.println(str);
+			//System.out.println(str);
 			
 			/*
 			if((el.select("a + a").text()).indexOf(" ") != -1){
@@ -56,7 +56,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 			*/
 			
 			exchange.setUnit(el.select("a + a").attr("title"));
-			System.out.println(el.select("a + a").attr("title"));
+			//System.out.println(el.select("a + a").attr("title"));
 			
 			str = el.parent().select("td:nth-child(2)").text();
 			
@@ -68,7 +68,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 			
 			double db = Math.round(Double.parseDouble(str)*100) / 100.0;
 			exchange.setExchangeRate(db);
-			System.out.println(db);
+			//System.out.println(db);
 
 			index++;
 			

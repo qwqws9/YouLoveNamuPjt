@@ -1,5 +1,19 @@
-// 네비게이션
 $(function() {
+	// 로드시 가계부 존재 여부 확인
+	isWallet();
+	
+	// 각각의 가계부로 이동
+	$('.wallet_box .square').on('click', function(e) {
+		var walletCode = $(this).children(':eq(0)').val();
+		//console.log(walletCode);
+		
+		if(walletCode != null && walletCode != '' && walletCode != 0){
+			if($(this).find('.isWallet').has(e.target).length === 0){
+				self.location = '/wallet/getWalletList?walletCode=' + walletCode;
+			}
+		}
+	});
+	
 	// 페이지 이동
 	$('.paging_wrap li').on('click', function() {
 		if($(this).text().trim() == 'PREV'){
@@ -28,6 +42,17 @@ $(function() {
 		*/
 	});
 });
+
+function isWallet() {
+	var plannerCodes = document.getElementsByClassName('plannerCode');
+	
+	for(var i=0; i<plannerCodes.length; i++){
+	    var plannerCode = plannerCodes[i].value;
+	    //console.log(i + ', ' + plannerCode);
+	    
+	    isWalletAjax(i, plannerCode);
+	}
+}
 
 // 세자리 콤마
 function makeComma(db) {
@@ -68,6 +93,44 @@ function convert(unit){
 		$('#exchange_result').text('1.0');
 		$('#exchange_rate').val('1.0');
 	}
+}
+
+// getWalletListView Business Logic
+function isWalletAjax(i, plannerCode) {
+	//console.log(i + ', ' + plannerCode);
+	
+	$.ajax({
+		url			: '/wallet/json/isWallet/' + plannerCode,
+		method		: 'GET',
+		headers		: {
+			'Accept'		: 'Application/json',
+			'Content-Type'	: 'Application/json'
+		},
+		error		: function(request, status, error) {
+			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+		},
+		success		: function(JSONData, status) {
+			//console.log(status);
+			//console.log(JSONData);
+			
+			if(JSONData != null && JSONData != '' && JSONData != 0){
+				document.getElementsByClassName('walletCode')[i].setAttribute('value', JSONData);
+				
+				var checked = document.getElementsByClassName('isWallet')[i];
+				//console.log(checked);
+				
+				
+				
+				checked.innerHTML = 
+					'<label class="btn btn-secondary active">' +
+						'<input type="radio" name="options" id="opened" autocomplete="off" checked><span class="txt">사용중</span>' +
+					'</label>' +
+					'<label class="btn btn-secondary">' +
+						'<input type="radio" name="options" id="closed" autocomplete="off"><span class="txt">사용안함</span>' +
+					'</label>';
+			}
+		}
+	});
 }
 
 // addWallet Business Logic
