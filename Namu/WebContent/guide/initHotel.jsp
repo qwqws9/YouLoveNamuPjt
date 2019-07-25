@@ -24,7 +24,7 @@
 </head>
 <body>
 <header><%@ include file="/layout/header.jsp" %></header>
-<div class="container">
+<div class="container" id="initHotelJsp">
 <br>
 <div class="col-md-12">
 <div class="row">
@@ -83,36 +83,6 @@
 		</div>
 	</div>
 	</c:forEach>
-<%-- 	<input type="hidden" id="searchKeyword" value="${tourList[0].keyword }"> --%>
-<%-- 	<input type="hidden" id="firstPageNum" value="${tourList[0].firstPageNum }"> --%>
-<%-- 	<input type="hidden" id="pageCount" value="${tourList[0].pageCount }"> --%>
-	
-	
-	
-<!-- 	<div class="text-xs-center"> -->
-<!-- 			<nav aria-label="..." > -->
-<!-- 		  <ul class="pagination" style="justify-content: center;"> -->
-<!-- 		    <li class="page-item disabled"> -->
-<!-- 		      <a class="preBtn page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a> -->
-<!-- 		    </li> -->
-<%-- 		    <c:forEach varStatus="status" begin="${tourList[0].firstPageNum }" end="${tourList[0].pageCount }"> --%>
-<%-- 		    <li class="pageTour-${status.index} page-item"><a class="viewPage page-link" href="#"> --%>
-<%-- 		    <c:if test="${tourList[0].firstPageNum == 1 }">  --%>
-<%-- 		    ${status.index} --%>
-<%-- 		    </c:if> --%>
-<%-- 		     <c:if test="${tourList[0].firstPageNum != 1 }">  --%>
-<%-- 		    ${status.index + (tourList[0].firstPageNum -1 ) } --%>
-<%-- 		    </c:if> --%>
-<!-- 		    </a></li> -->
-<%-- 		    </c:forEach> --%>
-		    
-		    
-<!-- 		    <li class="page-item"> -->
-<!-- 		      <a class="nextBtn page-link" href="#">Next</a> -->
-<!-- 		    </li> -->
-<!-- 		  </ul> -->
-<!-- 			</nav> -->
-<!-- 	</div> -->
 </div>
 <script type="text/javascript">
 	$(function(){

@@ -116,6 +116,7 @@
 	</script> -->
 
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
+	<jsp:include page="/user/getFriend.jsp"></jsp:include>
 
 </body>
 </html>
