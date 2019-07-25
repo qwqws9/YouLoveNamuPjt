@@ -100,7 +100,7 @@ margin:0 auto
      
       </select>
     </div>
-    
+    </div>
 	<br/>  
 
 		  
@@ -130,6 +130,7 @@ margin:0 auto
 		  </div>
 		  
 		</form>
+		
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>

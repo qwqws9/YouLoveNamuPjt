@@ -180,7 +180,7 @@ function layer_open(el){
 
 $(function () {
 //initialize  calendar
-
+ /*  var plannerCode=${planner.plannerCode}; */
 	   $('#calendar').fullCalendar({
 		 
 		    events: function(start, end, timezone, callback) {  
@@ -235,7 +235,7 @@ $(function () {
         
 		   /////////////////////////////////////////////////////////////////
 	       $.ajax({
-	   	                url: '/planner/getScheduleList',
+	   	                url: "/planner/getScheduleList",
 	   	                type : 'post',
 	   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'),endDate :  end.format('YYYY-MM-DD HH:MM') },
 	   	                dataType: 'json',

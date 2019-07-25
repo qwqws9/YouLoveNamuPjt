@@ -55,8 +55,7 @@ display: block;
 ================================================== -->
 <body>
 <!--  /////////////////////////////////////-->
-
-<!-- ToolBar End /////////////////////////////////////-->
+<header><jsp:include page="/layout/header.jsp" /></header>
 
 <div class="container">
 <div class="page-header text-info">

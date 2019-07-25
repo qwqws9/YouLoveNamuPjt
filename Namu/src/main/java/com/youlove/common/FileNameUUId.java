@@ -43,6 +43,33 @@ public class FileNameUUId {
 		}
 	    return saveName;
 	}
-
+	
+	
+	public static String convertMINI(MultipartFile file,String path,HttpServletRequest request) throws Exception{
+		
+		System.out.println(request.getSession().getServletContext().getRealPath("resources") + "  파일 경로");
+		
+		//업로드된 파일이 없으면 NotImage 리턴
+		String saveName = "NotImage";
+		
+		
+		if(!file.getOriginalFilename().equals("")) {
+		
+		UUID uuid = UUID.randomUUID();
+		
+		//파일 확장자 추출
+		String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+		saveName = uuid+"."+ext;
+		
+		File f = new File(request.getSession().getServletContext().getRealPath("resources")+"//images//"+path+"//"+saveName);
+				
+		
+	    f.createNewFile(); 
+	    FileOutputStream fos = new FileOutputStream(f); 
+	    fos.write(file.getBytes());
+	    fos.close(); 
+		}
+	    return saveName;
+	}
 	
 }

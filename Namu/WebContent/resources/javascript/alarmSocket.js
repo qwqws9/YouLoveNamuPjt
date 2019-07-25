@@ -10,9 +10,11 @@ var socket;
 function socketcall(writerUser,protocol) {
 	//alert("adad");
 	if(protocol == '9') {
-	 socket.emit("timeline", { To: writerUser, msg : '회원님의 댓글을 좋아합니다.' });
+		socket.emit("timeline", { To: writerUser, msg : '회원님의 댓글을 좋아합니다.' });
 	}else if(protocol == '8') {
-	 socket.emit("timeline", { To: writerUser, msg : '회원님의 댓글에 답글을 남겼습니다.' });
+		socket.emit("timeline", { To: writerUser, msg : '회원님의 댓글에 답글을 남겼습니다.' });
+	}else if(protocol == '1') {
+		socket.emit("timeline", { To: writerUser, msg : '회원님의 게시물에 댓글을 남겼습니다.' });
 	}
 }
 
@@ -98,7 +100,7 @@ $(function(){
 });
 
 
-
+//댓글과 추천 DB 추가
 function addTimelineLike(commentCode,likeName,protocol) {
 	console.log("댓글 번호 : " + commentCode);
 	console.log("로그인한 유저  : " + likeName);
@@ -119,11 +121,36 @@ function addTimelineLike(commentCode,likeName,protocol) {
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-				alert(data);
+				//alert(data);
 		}
 	})
 }
 
-function addTimelineReply() {
+
+//게시물에 댓글 DB 추가
+//게시판번호,게시물번호,댓글작성자,게시물작성자,프로토콜
+function addTimelineCommunity(boardCode,detailCode,writerUser,boardWriter,protocol) {
 	
+	$.ajax ({
+		url : '/timeline/json/addTimeline',
+		method : 'post',
+		data : JSON.stringify({
+			boardCode : boardCode,
+			detailCode : detailCode,
+			protocol : protocol,
+			fromUser : {
+				userCode : writerUser
+			},
+			toUser : {
+				userCode : boardWriter
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+				//alert(data);
+		}
+	})
 }
