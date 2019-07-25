@@ -131,7 +131,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
  	dataType : "json",
- 	 async:true,
+ 	 async:false,
  	headers : {
  	"Accept" : "application/json",
  	"Content-Type" : "application/json"
@@ -153,7 +153,7 @@ $('#list_table').on("click", ".deletebtn", function () {
   	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
   	dataType : "json",
-  	 async:true,
+  	 async:false,
   	headers : {
   	"Accept" : "application/json",
   	"Content-Type" : "application/json"
@@ -171,7 +171,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
    	dataType : "json",
-    async:true,
+    async:false,
    	headers : {
    	"Accept" : "application/json",
    	"Content-Type" : "application/json"
@@ -187,7 +187,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	  	url:"/planner/json/getRouteList/"+plannerCode,
    		method : "GET" ,
         dataType : "json",
-        async:true,
+        async:false,
         headers : {
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"
