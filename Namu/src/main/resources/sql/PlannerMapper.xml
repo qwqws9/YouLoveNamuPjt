@@ -73,7 +73,7 @@
 	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
-		planner_code, planner_ver, planner_name, planner_image, DEPART_DATE, member, privacy
+		planner_code, planner_ver, planner_name, planner_image, DEPART_DATE, member, privacy, reg_Date
 		FROM planner
 		WHERE planner_code =#{value}
 	 </select>

@@ -14,11 +14,15 @@
 
 </head> 
 <body>
-<label class="sr-only" for="searchKeyword"> 도시명 </label> 
+	<header><jsp:include page="/layout/header.jsp" /></header>
+<%-- <label class="sr-only" for="searchKeyword"> 도시명 </label> 
 <input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-
+ --%>
 <form name="multiForm" id="multiForm" action="/planner/updateRoute" method="post">
+<div class="container">
+		<div class="row">
+	  	<div class="col-md-12 col-lg-12">
 <table border="1" id="list_table">
 	<colgroup>
 		<col style="width:70px;">
@@ -43,7 +47,9 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
  <input type="submit" id="mul_input_submit" name="mul_input_submit" />
 
 	    	 </table>
-	    	 
+	    	 </div>
+	    	 </div>
+	    	 </div>
 	    	</form>
 		<script type="text/javascript">	
 
