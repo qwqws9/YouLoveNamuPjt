@@ -213,9 +213,15 @@ $('#list_table').on("click", ".deletebtn", function () {
 	            }
 			}) 
 </script>
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12">
+<div id="map" style="width: 1200px; height: 700px;"></div>
 
-  <div id="map" style="width: 1300px; height: 700px;"></div>
-	<div id="floating-panel">
+</div>
+</div>
+</div>
+  	<div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
