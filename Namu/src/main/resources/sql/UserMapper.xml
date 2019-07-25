@@ -50,6 +50,23 @@
 		</association>
 	</resultMap>
 	
+	
+<!-- 	<resultMap id="friendMap" type="friend"> -->
+<!-- 		<result property="friendNo" 			column="FRIEND_NO" 			jdbcType="NUMERIC"/> -->
+<!-- 		<result property="memo"					column="MEMO" 				jdbcType="VARCHAR" /> -->
+<!-- 		<result property="friendRole" 				column="FRIEND_ROLE" 				jdbcType="CHAR" /> -->
+<!-- 		<association property="fromUser" 	javaType="user"> -->
+<!-- 			<result property="userCode" 	column="USER_CODE" /> -->
+<!-- 			<result property="nickname"		column="NICKNAME" /> -->
+<!-- 			<result property="profileImg" 	column="PROFILE_IMG" /> -->
+<!-- 		</association> -->
+<!-- 		<association property="toUser" 		javaType="user"> -->
+<!-- 			<result property="userCode" 	column="to_code" /> -->
+<!-- 			<result property="nickname" 	column="to_nick" /> -->
+<!-- 			<result property="profileImg" 	column="to_img" /> -->
+<!-- 		</association> -->
+<!-- 	</resultMap> -->
+	
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
@@ -168,5 +185,12 @@
 	 </if>
 	 </insert>
 	
+	
+	
+<!-- 	<select id="getFriendList"> -->
+	
+	
+	
+<!-- 	</select> -->
 	 
 </mapper>

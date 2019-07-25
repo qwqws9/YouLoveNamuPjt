@@ -16,33 +16,69 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">회원 검색</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle"><button class="btn btn-secondary" id="userSearchBlock">회원 검색&nbsp;<i class="fas fa-user"></i></button>&nbsp;&nbsp;<button class="btn btn-secondary" id="friendSearchBlock">친구목록&nbsp;<i class="fas fa-users"></i></button></h5>
             
         	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+      
+      <!-- 회원검색 부분 -->
+      <div class="userSearchList" style="display: block; margin-top: 20px">
       <input type="text" class="form-control" id="searchUser" placeholder="닉네임을 입력하세요">
       <br>
       <div class="onCheckUser">
 		    </div>
 		    
        
-      </div>
+      
       <div class="userList col-md-4">
       
       
        </div>
-      <div class="modal-footer">
+       </div>
+       
+       
+       <!-- 친구목록 부분 -->
+       <div class="friendSearchList" style="display: none; margin-top: 20px">
+    		 <div class="list-group text-center">
+			  <button type="button" class="list-group-item list-group-item-action">친구 목록</button>
+			  <button type="button" class="list-group-item list-group-item-action">동행 목록</button>
+			  <button type="button" class="list-group-item list-group-item-action">일행 목록</button>
+			</div>
+       </div>
+       
+       
+      <div class="modal-footer" style="padding-top: 100px">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
+    </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
 $(function(){
+	
+	$('#userSearchBlock').on('click',function(){
+		$('.userSearchList').css('display','block');
+		$('.friendSearchList').css('display','none');
+	});
+	
+	$('#friendSearchBlock').on('click',function(){
+		$('.userSearchList').css('display','none');
+		$('.friendSearchList').css('display','block');
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	$('#searchUser').on('keyup',function(){
 		var nick = $(this).val();
 		if(nick != '') {
