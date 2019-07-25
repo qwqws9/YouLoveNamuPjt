@@ -24,8 +24,21 @@
   	
   	
 	<script>
+	//채팅 팝업
+	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	
-	 
+	function onChat(){
+		$(document).ready(function(){
+			$("#getChat").on("click", function(){
+				popup = window.open(url, "popup_chat", "width=450, height=700, location=no, resizable=no, left=1000, top=70")
+				/* popup = window.open(url, "popup_chat", "resizable")
+				popup.resizeTo(450,700);
+				popup.resizeBy(-100,-100); */
+			});
+		});
+	};
+	
 	</script>
 </head>
 <body>
@@ -178,7 +191,15 @@
 							<div class="col-lg-12 text-left">
 								<a href="#">
 									<span class="talk">
-										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;">
+										<c:if test="${! empty user.nickname}">
+										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;" onClick=onChat() id='getChat'>
+										</c:if>
+										<c:if test="${empty user.nickname}">
+											채팅은 로그인시 이용가능합니다.
+										</c:if>
+										
+										
+										
 									</span>
 								</a>
 							</div>
