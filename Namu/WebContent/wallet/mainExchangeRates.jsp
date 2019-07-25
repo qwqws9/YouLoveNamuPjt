@@ -16,8 +16,8 @@
 	.exchange_rate_wrap .exchange_data_wrap > span > span.disabled {color: #cbcbcb; cursor: default; pointer-events: none;}
 	.exchange_rate_wrap .exchange_data_wrap > div {position: relative; height: 226px; overflow: hidden;}
 	.exchange_rate_wrap ul, .exchange_rate_wrap li {margin: 0; padding: 0; list-style:none;}
-	.exchange_rate_wrap ul {position: absolute; top: -1; width: 100%; border-left: 1px solid #cbcbcb; border-right: 1px solid #cbcbcb; box-sizing: border-box;}
-	.exchange_rate_wrap li {position: relative; height: 45px; line-height: 45px; border-top: 1px solid #cbcbcb;}
+	.exchange_rate_wrap ul {position: absolute; top: -1; width: 100%; box-sizing: border-box;}
+	.exchange_rate_wrap li {position: relative; height: 45px; line-height: 45px; border-top: 1px solid #cbcbcb; border-left: 1px solid #cbcbcb; border-right: 1px solid #cbcbcb;}
 	.exchange_rate_wrap li:hover {background-color: #cbcbcb; cursor: default;}
 	.exchange_rate_wrap li:last-child {border-bottom: 1px solid #cbcbcb;}
 	.exchange_rate_wrap li span {display: inline-block; height: 40px;}
@@ -51,7 +51,7 @@
 						<span>
 							<span class="flagg" style="background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNjAwIiB2aWV3Qm94PSItMzYgLTI0IDcyIDQ4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+DQo8cGF0aCBmaWxsPSIjZmZmIiBkPSJtLTM2LTI0aDcydjQ4aC03MnoiLz4NCjxnIHRyYW5zZm9ybT0ibWF0cml4KC41NTQ3IC0uODMyMDUgLjgzMjA1IC41NTQ3IDAgMCkiPg0KPGcgaWQ9ImIyIj4NCjxwYXRoIHN0cm9rZT0iIzAwMCIgaWQ9ImIiIHN0cm9rZS13aWR0aD0iMiIgZD0iTS02LTI1SDZNLTYtMjJINk0tNi0xOUg2Ii8+DQo8dXNlIHk9IjQ0IiB4bGluazpocmVmPSIjYiIvPg0KPC9nPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBkPSJtMCwxN3YxMCIvPg0KPGNpcmNsZSBmaWxsPSIjYzYwYzMwIiByPSIxMiIvPg0KPHBhdGggZmlsbD0iIzAwMzQ3OCIgZD0iTTAtMTJBNiw2IDAgMCAwIDAsMEE2LDYgMCAwIDEgMCwxMkExMiwxMiAwIDAsMSAwLTEyWiIvPg0KPC9nPg0KPGcgdHJhbnNmb3JtPSJtYXRyaXgoLS41NTQ3IC0uODMyMDUgLjgzMjA1IC0uNTU0NyAwIDApIj4NCjx1c2UgeGxpbms6aHJlZj0iI2IyIi8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIGQ9Im0wLTIzLjV2M20wLDM3LjV2My41bTAsM3YzIi8+DQo8L2c+DQo8L3N2Zz4NCg==)"></span>
 								<span class="dataa korr">
-									<span>대한민국</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="unitt">KRW</span>
+									<span>대한민국 원</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span class="unitt">KRW</span>
 								</span>
 							</span>
 							<span class="exchange_ratee korr">1</span>
