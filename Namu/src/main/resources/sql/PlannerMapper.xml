@@ -163,7 +163,8 @@ SELECT *
 		city_name ,city_order, stay_day, start_Date,end_Date, lat, lng
 	  	FROM route 
 	  	<where>
-	  	planner_code = #{plannerCode}
+	  	planner_code = #{plannerCode} and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)
 		</where>
 	  </select>			
 	  				
@@ -171,7 +172,9 @@ SELECT *
 		SELECT city_name
 		FROM  route 
 		<where>
-	  	planner_code = #{plannerCode}
+	  	planner_code = #{plannerCode} and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)
+
 		</where>
 	 </select>
 	 
@@ -179,7 +182,8 @@ SELECT *
 		SELECT lat
 		FROM  route 
 		<where>
-	  	planner_code = #{plannerCode}
+	  	planner_code = #{plannerCode} and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)
 		</where>
 	 </select>
 	 
@@ -187,7 +191,8 @@ SELECT *
 		SELECT lng
 		FROM  route 
 		<where>
-	  	planner_code = #{plannerCode}
+	  	planner_code = #{plannerCode} and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)
 		</where>
 	 </select>			
 	
@@ -230,7 +235,8 @@ SELECT *
 		sche_code, sche_day, sche_name, color
 	  	FROM schedule
 	  	<where>
-	  	planner_code = #{plannerCode}
+	  	planner_code = #{plannerCode} and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM schedule)
 		</where>
 			</select>
 			

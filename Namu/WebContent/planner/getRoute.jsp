@@ -4,7 +4,6 @@
 <html> 
 <head> 
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <title>Google Maps Multiple Markers</title> 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
@@ -14,6 +13,7 @@
 
 </head> 
 <body>
+
 <label class="sr-only" for="searchKeyword"> 도시명 </label> 
 <input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
@@ -40,7 +40,6 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 	<tbody>
 
 	</tbody>
- <input type="submit" id="mul_input_submit" name="mul_input_submit" />
 
 	    	 </table>
 	    	 
@@ -191,7 +190,7 @@ $('#list_table').on("click", ".deletebtn", function () {
             	displayValue += ('<td>'+value.lat+'</td>');
             	displayValue += ('<td>'+value.lng+'</td>');    
             	displayValue += ('<td>'+"<select><option value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
-            	displayValue += ('<td>'+"<input class='deletebtn' type='button' value = 'delete' id='delete' />"+'</td>');  
+            	  
             	//displayValue += ('</tr>');                                    
             /* //}); */});
             //displayValue += ('</tbody>');
@@ -245,10 +244,10 @@ $('#list_table').on("click", ".deletebtn", function () {
 	      markers.push(myMarker);
 	      var path=poly.getPath();
 	      path.push(new google.maps.LatLng(routeLat[i], routeLng[i]));
-	     // flightPath.setMap(map);
+	   
    	   }
  
-       flightPath.setMap(map);
+       path.setMap(map);
      
    	
    		for (var i = 0; i < locations.length; i++) {

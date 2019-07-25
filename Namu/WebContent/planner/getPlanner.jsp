@@ -5,14 +5,23 @@
 <html>
 <head> 
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <title>Google Maps Multiple Markers</title> 
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+<!-- map -->
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<!-- Our Own Resources -->
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 <script type="text/javascript">
 
 		 $(function() {
@@ -38,20 +47,21 @@
 
 	});
 </script>
+
 </head> 
 <body>
+<header><jsp:include page="/layout/header.jsp" /></header>
+ 
 <div class="container" >
 
- 
 		<div class="page-header text-info">
 		<br>
 		<br>
 	       <h3 class=" text-info"> 내플래너  </h3>
 					
   </div>
+</div>
 
-<div class="row">
-  
   <div class="col-md-5">
       <img class="img-thumbnail" src="/resources/images/planner/${planner.plannerImage}" alt="..." height="300" width="900">    
   </div>
@@ -107,12 +117,13 @@
  </form>
  
  <br><br><br><br>
+ 
  <nav class="map">
 			<jsp:include page="/planner/getRoute.jsp" />
 		</nav>
 		
  <nav class="map">
-			<jsp:include page="/planner/getScheduleList.jsp" />
+			<jsp:include page="/planner/getScheduleList2.jsp" />
 		</nav>
 		
 		
