@@ -33,7 +33,7 @@ margin:0 auto
 
 	function fncUpdatePlanner(){
 	
-		$("form").attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();
+		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();
 	}		
 
 	$(function(){
@@ -61,7 +61,6 @@ margin:0 auto
 
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-
 	<div class="container">
 
 		<h4 class="text-center"> 플래너 만들기 </h4>

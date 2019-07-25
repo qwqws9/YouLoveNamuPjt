@@ -43,9 +43,9 @@
        <!-- 친구목록 부분 -->
        <div class="friendSearchList" style="display: none; margin-top: 20px">
     		 <div class="list-group text-center">
-			  <button type="button" class="list-group-item list-group-item-action">친구 목록</button>
-			  <button type="button" class="list-group-item list-group-item-action">동행 목록</button>
-			  <button type="button" class="list-group-item list-group-item-action">일행 목록</button>
+			  <button type="button" class="friendRole list-group-item list-group-item-action">친구 목록</button>
+			  <button type="button" class="friendRole list-group-item list-group-item-action">동행 목록</button>
+			  <button type="button" class="friendRole list-group-item list-group-item-action">일행 목록</button>
 			</div>
        </div>
        
@@ -72,6 +72,38 @@ $(function(){
 	});
 	
 	
+	$('.friendRole').on('click',function(){
+		var roleText = $(this).text().trim();
+		var userCode = $('#nodeUserCode').val().trim();
+		
+		var role;
+		if(roleText == '친구 목록') {
+			role = '1';
+		}else if(roleText == '일행 목록') {
+			role = '3';
+		}else if(roleText == '동행 목록') {
+			role = '2';
+		}
+		
+		
+		$.ajax({
+			url : '/user/json/getFriend',
+			method : 'post',
+			data : JSON.stringify({
+				userCode : userCode,
+				friendRole : role
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status) {
+				alert(data);
+			}
+			
+		});// end ajax
+		
+	});
 	
 	
 	

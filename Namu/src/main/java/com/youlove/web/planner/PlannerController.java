@@ -127,18 +127,23 @@ public class PlannerController {
 	
 	
 	@RequestMapping( value="updatePlanner", method=RequestMethod.POST )
-	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
+	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  
+			MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
 
 		System.out.println("plannerController ----------------updatePlanner:POST ");
 		
 		
+	System.out.println(file);
 		String fileName = FileNameUUId.convert(file, "planner", request);
+		System.out.println("1");
 		planner.setPlannerImage(fileName);
+		System.out.println("2");
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
-		
+		System.out.println("3");
 		System.out.println(planner);
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
+		System.out.println("4");
 		System.out.println(planner.getPlannerCode());
 
 		plannerService.updatePlanner(planner);
@@ -194,7 +199,7 @@ public class PlannerController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 		model.addAttribute("resultPage", resultPage);
-		
+		model.addAttribute("today", com.youlove.common.DateFormat.today());
 		System.out.println(search);
 		System.out.println(map.get("list"));
 	

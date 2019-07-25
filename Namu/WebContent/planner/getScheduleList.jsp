@@ -177,63 +177,76 @@ function layer_open(el){
     });
 
 }
-
 $(function () {
-//initialize  calendar
- /*  var plannerCode=${planner.plannerCode}; */
-	   $('#calendar').fullCalendar({
-		 
-		    events: function(start, end, timezone, callback) {  
-	         /* $.ajax({
-	                url: '/planner/getRouteList',
-	                type : 'post',
-	                data : { startDate :  start.format('YYYY-MM-DD'), endDate : end.format('YYYY-MM-DD') },
-	                dataType: 'json',
-	               	
-	                success: function(data) {
-	                   var events = [];
-	                   $(data).each(function() {
-	                	    alert(data);
-	                        events.push({
-	                           title: $(this).attr('title'),
-	                            start:moment( $(this).attr('start')),
-	                            end: $(this).attr('end'),
-	                            color: $(this).attr('color'),
-	                            id: $(this).attr('id'),
-	                        
-	                        });
-	                    });
-	                   
-	                   
-	                   
-	                   callback(events);
+	//initialize  calendar
+	var departDate=${planner.departDate};
+		//alert(departDate);
+		var ddd = String(departDate);	
+		var yyyy = ddd.substring(0,4);
+		var mm = ddd.substring(4,6)
+		var dd = ddd.substring(6,8) 
+		var ddate= new Date(); 
+
+		/* var dd = departDate.getDate();
+		var mm = departDate.getMonth()+1; //January is 0! */
+		/* var yyyy = departDate.getFullYear(); */
+		ddate=yyyy+'-'+mm+'-'+dd;
+		/* alert(ddd.substring(0,4)); */
+		
+		
+	  var plannerCode=${planner.plannerCode};
+		   $('#calendar').fullCalendar({
+			   
+			    events: function(start, end, timezone, callback) {  
+		         /* $.ajax({
+		                url: '/planner/getRouteList',
+		                type : 'post',
+		                data : { startDate :  start.format('YYYY-MM-DD'), endDate : end.format('YYYY-MM-DD') },
+		                dataType: 'json',
+		               	
+		                success: function(data) {
+		                   var events = [];
+		                   $(data).each(function() {
+		                	    alert(data);
+		                        events.push({
+		                           title: $(this).attr('title'),
+		                            start:moment( $(this).attr('start')),
+		                            end: $(this).attr('end'),
+		                            color: $(this).attr('color'),
+		                            id: $(this).attr('id'),
+		                        
+		                        });
+		                    });
+		                   
+		                   
+		                   
+		                   callback(events);
+		                }
+		            });
+			    },  */
+			        /* $.ajax({
+	   	                url: '/planner/getRouteList',
+	   	                type : 'post',
+	   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'), endDate :  end.format('YYYY-MM-DD HH:MM') },
+	   	                dataType: 'json',
+	   	               	
+	   	                success: function(data) {
+	   	                   var events2 = [];
+	   	                   $(data).each(function() {
+	   	                        events2.push({
+	   	                           title: $(this).attr('title'),
+	   	                            start:moment( $(this).attr('start')),
+	   	                         color: $(this).attr('color'),
+	   	                            id: $(this).attr('id') ,
+	   	                         end:  moment($(this).attr('end')) 
+	   	                  
+	   	                    });
+	                    callback(events2);
 	                }
-	            });
-		    },  */
-		        /* $.ajax({
-   	                url: '/planner/getRouteList',
-   	                type : 'post',
-   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'), endDate :  end.format('YYYY-MM-DD HH:MM') },
-   	                dataType: 'json',
-   	               	
-   	                success: function(data) {
-   	                   var events2 = [];
-   	                   $(data).each(function() {
-   	                        events2.push({
-   	                           title: $(this).attr('title'),
-   	                            start:moment( $(this).attr('start')),
-   	                         color: $(this).attr('color'),
-   	                            id: $(this).attr('id') ,
-   	                         end:  moment($(this).attr('end')) 
-   	                  
-   	                    });
-                    callback(events2);
-                }
-                   }); 
-       
-     }, 	 */
-        
-		   /////////////////////////////////////////////////////////////////
+	                   }); 
+	       
+	     }, 	 */
+	        /////////////////////////////////////////////////////////////////
 	       $.ajax({
 	   	                url: "/planner/getScheduleList",
 	   	                type : 'post',
@@ -264,7 +277,7 @@ $(function () {
 		        right: 'month,agendaWeek,listDay'
 		      },
 		      allDay: false,
-		   	
+		      defaultDate: ddate,
 		      editable: true,
 		      droppable: true, // this allows things to be dropped onto the calendar
 		     /* dayClick: function(date) { */

@@ -12,23 +12,23 @@
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
 	<script src="/resources/javascript/sidebar.js"></script>
-	<!-- bootstrap -->
-<!-- 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> -->
-<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script> -->
-<!-- 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> -->
-	<!-- jQuerty -->
-<!-- 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
-	
-<!--   	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet"> -->
-<!--   	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script> -->
-  	<!-- fontAwsome -->
-<!--   	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script> -->
-  	
   	
 	<script>
+	//채팅 팝업
+	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	
-	 
+	function onChat(){
+		$(document).ready(function(){
+			$("#getChat").on("click", function(){
+				popup = window.open(url, "popup_chat", "width=450, height=700, location=no, resizable=no, left=1000, top=70")
+				/* popup = window.open(url, "popup_chat", "resizable")
+				popup.resizeTo(450,700);
+				popup.resizeBy(-100,-100); */
+			});
+		});
+	};
+	
 	</script>
 </head>
 <body>
@@ -183,7 +183,15 @@
 							<div class="col-lg-12 text-left">
 								<a href="#">
 									<span class="talk">
-										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;">
+										<c:if test="${! empty user.nickname}">
+										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;" onClick=onChat() id='getChat'>
+										</c:if>
+										<c:if test="${empty user.nickname}">
+											채팅은 로그인시 이용가능합니다.
+										</c:if>
+										
+										
+										
 									</span>
 								</a>
 							</div>

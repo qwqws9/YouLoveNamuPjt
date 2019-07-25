@@ -48,18 +48,6 @@
 		<!-- <button type="button" id="ooo">로그인</button> -->
 		<br><br>
 		
-		<h4 style="margin: auto;">
-			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
-			<!-- <i id="getChat">상욱 채팅</i><br> -->
-
-			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
-			
-			<a href="/planner/addRoute.jsp">민희 구글맵</a><br>
-			<a href="/planner/getScheduleList.jsp"> /</a><br>
-			
-			<a href="/community/getCommunityList">중현 커뮤니티 등록</a>
-			<a href="/party/getPartyList">중현 동행 리스트</a><br><br>
-		</h4>
 		
 		<div class="row">
 			<!-- 날씨 -->

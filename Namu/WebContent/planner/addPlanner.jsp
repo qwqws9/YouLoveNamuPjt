@@ -25,6 +25,9 @@ margin:0 auto
 </head>
      <!--   JavaScript  -->
 	<script type="text/javascript">	
+	
+	
+
 
 	function fncAddPlanner(){
 		// 유효성 검사 
@@ -43,11 +46,14 @@ margin:0 auto
 			return;
 		}
 		
-		$("form").attr("method" , "POST").attr("action" , "/planner/addPlanner").attr("enctype" , "multipart/form-data").submit();
+		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/addPlanner").attr("enctype" , "multipart/form-data").submit();
 	}		
 	
 	$(function(){
-		
+		$('#file').on('change',function(){
+	        var fileName = $(this).val();
+	        $(this).next('.custom-file-label').html(fileName);
+	    });
 	    $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
@@ -71,7 +77,7 @@ margin:0 auto
 
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-
+<form>
 	<div class="container">
 
 		<h4 class="text-center"> 플래너 만들기 </h4>
@@ -148,9 +154,15 @@ margin:0 auto
 		  </div>
 		    <div class="col-sm-4">
 		  <div class="custom-file">
+		  
+		  
+			<input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;">
+			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
+	<!-- 		
+			
  		<input type="file" class="custom-file-input" id="file" name="file" value="">
-  		<label class="custom-file-label" for="customFile">Choose file</label>
-		</div>
+  		<label class="custom-file-label" for="customFile">Choose file</label>-->
+		</div> 
 		  	  </div>
 		  	  </div>
 		<br/>  
