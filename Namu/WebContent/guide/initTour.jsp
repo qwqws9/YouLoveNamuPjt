@@ -17,7 +17,8 @@
 </head>
 <body>
 <header><%@ include file="/layout/header.jsp" %></header>
-<div class="container">
+<div class="container" id="initTour">
+
 <br>
 <div class="col-md-12">
 <div class="row">
@@ -79,7 +80,7 @@
 		  </ul>
 			</nav>
 	</div>
-</div>
+</div><!-- 컨 -->
 <form></form>
 <script type="text/javascript">
 	$(function(){

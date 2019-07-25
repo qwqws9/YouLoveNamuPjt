@@ -6,6 +6,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -76,17 +77,25 @@ margin:0 auto
 		<h4 class="text-center"> 플래너 만들기 </h4>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-		<br/>
-		  <div class="form-group">
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		    <label for="plannerName" class="control-label col-sm-2"> 플래너 Title  </label>
+		    </div>
+		      </div>
+		    
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="plannerName" name="plannerName" >
 		    </div>
 		  </div>
-		<br/>  
-		  <div class="form-group">
-		        <label for="member" class="control-label col-sm-2"> 멤버 </label>
+		    
+		  
+		<br/> 
+		 	  
+		 	 <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
+		        <label for="member" class="control-label col-sm-2"> 멤버 </label> </div> </div>
 		            <div class="col-sm-4">
 		    <select class="custom-select mr-sm-2" id="member" name="member" >
 		  	<option value="1" selected="selected"> 혼자 </option>
@@ -99,8 +108,12 @@ margin:0 auto
     </div>
 	<br/>  
 	
-			  <div class="form-group">
+ <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		        <label for="member" class="control-label col-sm-2"> 공개여부 </label>
+		        	    </div>
+		    </div>
 		            <div class="col-sm-4">
 		    <select class="custom-select mr-sm-2" id="privacy" name="privacy" >
 		  	<option value="1" selected="selected"> 비공개  </option>
@@ -109,20 +122,30 @@ margin:0 auto
      
       </select>
     </div>
-    
+    </div>
+    </div>
+    </div>
 	<br/>  
 
 		  
-		  <div class="form-group">
+	 <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		    <label for="departDate" class="control-label col-sm-2">여행 시작일 </label>
+		    </div>
+		    </div>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="departDate" name="departDate" >
 		    </div>
 		  </div>
 		<br/> 
 		 	  
-		  <div class="form-group">
+		 	 <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		    <label for="file" class="control-label col-sm-2">플래너 이미지</label>
+		     </div>
+		  </div>
 		    <div class="col-sm-4">
 		  <div class="custom-file">
  		<input type="file" class="custom-file-input" id="file" name="file" value="">

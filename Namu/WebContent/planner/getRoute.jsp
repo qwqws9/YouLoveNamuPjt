@@ -70,13 +70,19 @@ $('#list_table').on("click", ".deletebtn", function () {
 	            }
 			}) 
 </script>
-
-  <div id="map" style="width: 1300px; height: 700px;"></div>
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12">
+  <div id="map" style="width: 1000px; height: 700px;"></div>
+  </div>
+  </div>
+  </div>
+<!-- 
 	<div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
-    </div>
+    </div>  -->
   <script>
   var locations = ['런던','파리','니스','프랑크푸르트','베를린','로마','베니스','바르셀로나','마드리드','부다페스트'];
   var locationLat = ['51.5073509','48.856614','43.7101728','50.1109221','52.52000659999999','41.9027835','45.4408474','41.3850639','40.4167754','47.497912'];
@@ -120,13 +126,14 @@ $('#list_table').on("click", ".deletebtn", function () {
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
  	dataType : "json",
+ 	 async:true,
  	headers : {
  	"Accept" : "application/json",
  	"Content-Type" : "application/json"
  	},
 
  	success : function(JSONData) {
-
+ 		console.log(JSONData);   
  	route = JSONData;
  	
 
@@ -141,13 +148,14 @@ $('#list_table').on("click", ".deletebtn", function () {
   	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
   	dataType : "json",
+  	 async:true,
   	headers : {
   	"Accept" : "application/json",
   	"Content-Type" : "application/json"
   	},
 
   	success : function(JSONData2) {
-
+  		console.log(JSONData2);   
   	routeLat = JSONData2;
 
   	}
@@ -158,13 +166,14 @@ $('#list_table').on("click", ".deletebtn", function () {
    	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
    	dataType : "json",
+    async:true,
    	headers : {
    	"Accept" : "application/json",
    	"Content-Type" : "application/json"
    	},
 
    	success : function(JSONData3) {
-
+   		console.log(JSONData3);   
    	routeLng = JSONData3;
 
    	}
@@ -173,6 +182,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	  	url:"/planner/json/getRouteList/"+plannerCode,
    		method : "GET" ,
         dataType : "json",
+        async:true,
         headers : {
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"
@@ -247,7 +257,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 	   
    	   }
  
-       path.setMap(map);
+      
      
    	
    		for (var i = 0; i < locations.length; i++) {
@@ -257,9 +267,10 @@ $('#list_table').on("click", ".deletebtn", function () {
    		        id:locations[i],
    		    	 icon: icons[iconCounter]
    		      });
+   		   marker.setMap(null);
    		   markers.push(marker);
    		   
-   		
+   			
    	   
    		   google.maps.event.addListener(marker, 'mouseover', function(){
    			
