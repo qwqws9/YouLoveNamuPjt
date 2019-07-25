@@ -254,7 +254,7 @@
 	  	
 	  	<nav class="navbar">
 <!-- 		    <a href="/" class="navbar"  data-toggle="collapse" data-target="#topbarContent" aria-controls="topbarContent" aria-expanded="false" aria-label="Toggle navigation"> -->
-		    <a href="/" class="navbar">
+		    <a href="/" class="navbar" style="width: 100%; padding-top: 20px; padding-bottom: 35px; border-bottom: 1px solid #cbcbcb;">
 			    <span class="brand main_logo">
 			    	<img src="/resources/images/youloveplan_logo.png" alt="유럽플랜" class="logo_img" style="height: 100px;">
 			    </span>

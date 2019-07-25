@@ -3,7 +3,7 @@
 html, body{font-family: 'Noto Sans KR', sans-serif; font-color: #282c37; font-weight: 400;}
 
 .header_wrap {padding-bottom: 20px; border-bottom: 1px solid #cbcbcb;}
-.logo_img {width: 280px; height: auto;}
+.logo_img {width: 300px; height: auto;}
 .main_search {margin-left: 500px;}
 .gnb_wrap {padding-top: 100px;}
 
@@ -19,4 +19,4 @@ html, body{font-family: 'Noto Sans KR', sans-serif; font-color: #282c37; font-we
 
 
 .profilePop_wrap {display: none; overflow: auto; position: fixed; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 100;}
-.profilePop_contain {position:fixed ; width: 600px; height: 0px;  background-color: #fff;  }
+.profilePop_contain {position:fixed ; width: 600px; height: 0px;  background-color: #fff;}
