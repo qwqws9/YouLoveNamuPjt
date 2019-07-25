@@ -9,7 +9,7 @@
 				$("#beforeLogin").show();
 			}
 		});
-		$('button:contains("로그인")').on('click',function(){
+		$('#logingogo').on('click',function(){
 			self.location = '/user/loginView';
 		})
 		$("#communityList").on("click",function(){
