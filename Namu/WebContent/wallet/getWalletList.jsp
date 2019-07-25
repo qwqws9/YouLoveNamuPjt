@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- favicon.ico -->
+	<link rel="shortcut icon" href="/resources/images/favicon.ico" />
+	
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,6 +46,7 @@
 	
 	<div class="wrap">
 		<h2 class="skip">내 가계부</h2>
+		<input type="hidden" id="walletCode" value="${param.walletCode}" />
 		
 		<div class="btnns">
 			<a href="javascript:void(0);" class="pre_btn">

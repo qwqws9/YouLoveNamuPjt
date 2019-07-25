@@ -390,6 +390,7 @@ function deleteLike(commentCode,likeName) {
 				// 로그인한 유저 
 				var sessionUser = $('#nodeUserCode').val().trim();
 				if(writerUser != sessionUser) {
+					//alert("같지않아서 들어옴");
 					//게시판번호,게시물번호,로그인한 유저,게시물작성자,프로토콜
 					addTimelineCommunity(boardCode,detailCode,sessionUser,writerUser,'1');
 					socketcall(writerUser,'1');

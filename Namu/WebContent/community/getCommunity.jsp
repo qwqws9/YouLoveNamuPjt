@@ -42,7 +42,7 @@
 			  var widthSize = window.outerWidth;
 			  
 			  // 800 이하인지 if문으로 확인
-			  if (width_size <= 800) {
+			  if (widthSize <= 800) {
 			    alert('현재 브라우저 크기가 <= 800px');
 			  }
 		});

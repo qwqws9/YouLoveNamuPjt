@@ -8,7 +8,7 @@ $(function() {
 		$('.pop_wrap_add').html('');
 		
 		// innerHTML
-		$($('#save_income_form')).load('/wallet/addWalletIncome.jsp', function(data) {
+		$($('#save_income_form')).load('/wallet/addWalletIncome.jsp', {walletCode:$('#walletCode').val()}, function(data) {
 			//console.log(data);
 			
 			$('.pop_wrap_add').show();
@@ -24,7 +24,7 @@ $(function() {
 		$('.pop_wrap_add').html('');
 		
 		// innerHTML
-		$($('#save_expenditure_form')).load('/wallet/addWalletExpenditure.jsp', function(data) {
+		$($('#save_expenditure_form')).load('/wallet/addWalletExpenditure.jsp', {walletCode:$('#walletCode').val()}, function(data) {
 			//console.log(data);
 			
 			$('.pop_wrap_add').show();
