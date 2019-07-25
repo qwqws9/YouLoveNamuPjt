@@ -2,7 +2,7 @@ $(function() {
 	// 로드시 가계부 존재 여부 확인
 	isWallet();
 	
-	// 각각의 가계부로 이동
+	// 가계부 상세내역 조회 페이지로 이동
 	$('.wallet_box .square').on('click', function(e) {
 		var walletCode = $(this).children(':eq(0)').val();
 		//console.log(walletCode);
@@ -12,6 +12,11 @@ $(function() {
 				self.location = '/wallet/getWalletList?walletCode=' + walletCode;
 			}
 		}
+	});
+	
+	// 가계부 사용여부 체크
+	$('.square .isWallet label').on('click', function(e) {
+		console.log('에이이잉' + $(this).parent().parent().parent().parent().prev().prev().val());
 	});
 	
 	// 페이지 이동
@@ -48,7 +53,7 @@ function isWallet() {
 	
 	for(var i=0; i<plannerCodes.length; i++){
 	    var plannerCode = plannerCodes[i].value;
-	    //console.log(i + ', ' + plannerCode);
+	    console.log(i + ', ' + plannerCode);
 	    
 	    isWalletAjax(i, plannerCode);
 	}
@@ -97,7 +102,7 @@ function convert(unit){
 
 // getWalletListView Business Logic
 function isWalletAjax(i, plannerCode) {
-	//console.log(i + ', ' + plannerCode);
+	console.log(i + ', ' + plannerCode);
 	
 	$.ajax({
 		url			: '/wallet/json/isWallet/' + plannerCode,
@@ -111,15 +116,13 @@ function isWalletAjax(i, plannerCode) {
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);
-			//console.log(JSONData);
+			console.log(i + ' 번째 ' + plannerCode + ' 번 플래너의 가계부 : ' + JSONData);
 			
 			if(JSONData != null && JSONData != '' && JSONData != 0){
 				document.getElementsByClassName('walletCode')[i].setAttribute('value', JSONData);
 				
 				var checked = document.getElementsByClassName('isWallet')[i];
-				//console.log(checked);
-				
-				
+				checked.parentNode.parentNode.parentNode.parentNode.style = 'cursor:pointer';
 				
 				checked.innerHTML = 
 					'<label class="btn btn-secondary active">' +
@@ -128,6 +131,7 @@ function isWalletAjax(i, plannerCode) {
 					'<label class="btn btn-secondary">' +
 						'<input type="radio" name="options" id="closed" autocomplete="off"><span class="txt">사용안함</span>' +
 					'</label>';
+				
 			}
 		}
 	});

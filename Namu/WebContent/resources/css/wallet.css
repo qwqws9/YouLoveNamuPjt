@@ -45,6 +45,7 @@ a:link, a:active, a:hover {text-decoration: none;}
 .plan_period {margin-top: 15px; font-size: 14px;}
 .wallet_is {margin-top: 30px;}
 .wallet_is .btn-secondary {color: #cbcbcb; background-color: #fff; border-color: #282c37;}
+.wallet_is .btn-secondary:last-child {}
 .wallet_is .btn-secondary:not(:disabled):not(.disabled).active, .wallet_is .btn-secondary:not(:disabled):not(.disabled):active
 	{color: #282c37; background-color: #f2c029; border-color: #282c37;}
 .wallet_is .btn-group-toggle .txt {font-size: 13px; font-weight: 700;}

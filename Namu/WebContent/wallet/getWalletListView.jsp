@@ -54,14 +54,14 @@
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
 									<div class="plan_flag">국기 제기랄</div>
-									<div class="plan_period text_shadow">${planner.departDate}</div>
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 									<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">
 											<label class="btn btn-secondary">
 												<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
 											</label>
-											<label class="btn btn-secondary">
-												<input type="radio" name="options" id="closed" autocomplete="off"><span class="txt">사용안함</span>
+											<label class="btn btn-secondary active">
+												<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
 											</label>
 										</div>
 									</div><!-- //wallet_is -->
@@ -88,7 +88,7 @@
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
 									<div class="plan_flag">국기 제기랄</div>
-									<div class="plan_period text_shadow">${planner.departDate}</div>
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 									<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">
 											<label class="btn btn-secondary">
