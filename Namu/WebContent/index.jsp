@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- favicon.ico -->
+	<link rel="shortcut icon" href="/resources/images/favicon.ico" />
+	
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,7 +29,6 @@
 	<!-- 날씨, 환율 정보를 위한 국가 도시 리스트 출력 -->
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
-	
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 		
 	<!-- Bootstrap CSS -->
@@ -47,8 +49,6 @@
 		<br><br>
 		
 		<h4 style="margin: auto;">
-			<a href="/wallet/getWalletListView">규리 가계부</a> <a href="/wallet/getWalletList?walletCode=1"> @@</a><br>
-			
 			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
 			<!-- <i id="getChat">상욱 채팅</i><br> -->
 

@@ -183,8 +183,7 @@ $(function () {
 //initialize  calendar
   var plannerCode=${planner.plannerCode};
 	   $('#calendar').fullCalendar({
-		   ,minTime: "07:00:00"
-		       ,maxTime: "23:00:00"
+		   
 		    events: function(start, end, timezone, callback) {  
 	         /* $.ajax({
 	                url: '/planner/getRouteList',

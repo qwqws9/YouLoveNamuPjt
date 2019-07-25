@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- favicon.ico -->
+	<link rel="shortcut icon" href="/resources/images/favicon.ico" />
+	
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,11 +30,6 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
-	
-	<script type="text/javascript">
-		// Toggle
-		
-	</script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -48,20 +46,20 @@
 							<input type="hidden" class="walletCode" />
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
-								<c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
-								<c:if test="${empty planner.plannerImage}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
+								<c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
+								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
-									<div class="plan_flag">국기 제기랄</div>
-									<div class="plan_period text_shadow">${planner.departDate}</div>
+									<div class="plan_flag">국기</div>
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 									<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">
 											<label class="btn btn-secondary">
 												<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
 											</label>
-											<label class="btn btn-secondary">
-												<input type="radio" name="options" id="closed" autocomplete="off"><span class="txt">사용안함</span>
+											<label class="btn btn-secondary active">
+												<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
 											</label>
 										</div>
 									</div><!-- //wallet_is -->
@@ -83,12 +81,12 @@
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
 								<c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
-								<c:if test="${empty planner.plannerImage}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
+								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
 									<div class="plan_flag">국기 제기랄</div>
-									<div class="plan_period text_shadow">${planner.departDate}</div>
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 									<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">
 											<label class="btn btn-secondary">

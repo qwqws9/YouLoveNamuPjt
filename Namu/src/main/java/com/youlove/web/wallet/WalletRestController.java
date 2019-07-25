@@ -60,7 +60,7 @@ public class WalletRestController {
 	
 	// walletList.jsp
 	@RequestMapping(value="json/addWallet", method=RequestMethod.POST)
-	public Wallet addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
+	public boolean addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/wallet/json/addWallet :: POST");
 		
@@ -74,7 +74,7 @@ public class WalletRestController {
 		
 		walletService.addWallet(wallet);
 		
-		return wallet;
+		return true;
 		
 	}
 	

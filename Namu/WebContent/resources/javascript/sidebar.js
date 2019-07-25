@@ -103,3 +103,10 @@
 	   
 	   $('#main').css('display','block');
 	 }
+
+	// 가계부
+	$(function(){
+		$('#wallet-btn').on('click', function(){
+			self.location = '/wallet/getWalletListView';
+		})
+	});

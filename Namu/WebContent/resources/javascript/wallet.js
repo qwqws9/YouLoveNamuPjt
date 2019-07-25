@@ -2,7 +2,7 @@ $(function() {
 	// 로드시 가계부 존재 여부 확인
 	isWallet();
 	
-	// 각각의 가계부로 이동
+	// 가계부 상세내역 조회 페이지로 이동
 	$('.wallet_box .square').on('click', function(e) {
 		var walletCode = $(this).children(':eq(0)').val();
 		//console.log(walletCode);
@@ -12,6 +12,16 @@ $(function() {
 				self.location = '/wallet/getWalletList?walletCode=' + walletCode;
 			}
 		}
+	});
+	
+	// 가계부 사용여부 체크
+	/*$('.square .isWallet label').on('click', function(e) {
+		console.log('에이이잉' + $(this).parent().parent().parent().parent().prev().prev().val());
+	});*/
+	
+	// 단순 페이지 이동
+	$('.btnns .pre_btn').on('click', function() {
+		self.location = '/wallet/getWalletListView';
 	});
 	
 	// 페이지 이동
@@ -111,15 +121,13 @@ function isWalletAjax(i, plannerCode) {
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);
-			//console.log(JSONData);
+			//console.log(i + ' 번째 ' + plannerCode + ' 번 플래너의 가계부 : ' + JSONData);
 			
 			if(JSONData != null && JSONData != '' && JSONData != 0){
 				document.getElementsByClassName('walletCode')[i].setAttribute('value', JSONData);
 				
 				var checked = document.getElementsByClassName('isWallet')[i];
-				//console.log(checked);
-				
-				
+				checked.parentNode.parentNode.parentNode.parentNode.style = 'cursor:pointer';
 				
 				checked.innerHTML = 
 					'<label class="btn btn-secondary active">' +
@@ -156,15 +164,18 @@ function addAjax(form) {
 		cache		: false,
 		timeout		: 600000,
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 	    },
 		success		: function(JSONData, status) {
 			//console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
+			console.log(JSONData);
 			
-			form.reset();
-			$('.pop_wrap_add').html('');
+			if(JSONData == true){
+				form.reset();
+				$('.pop_wrap_add').html('');
 			
-			getListAjax(1);
+				getListAjax(1);
+			}
 		}
 	});
 	
@@ -211,11 +222,11 @@ function getAjax(walletDetailCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log(JSONData);
+			console.log(status);
+			console.log(JSONData);
 			
 			var list = $('.pop_wrap_get .padding_boxing');
 			
@@ -337,7 +348,7 @@ function deleteAjax(walletDetailCode) {
 
 // getWalletList Business Logic
 function getListAjax(currentPage) {
-	//console.log(currentPage);
+	console.log(currentPage);
 	
 	$.ajax({
 		url			: '/wallet/json/getWalletList/' + $('.walletCode').text().trim(),
@@ -349,18 +360,18 @@ function getListAjax(currentPage) {
 		dataType	: 'json',
 		contentType	: 'application/json',
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log(JSONData);
-			//console.log(JSONData.list.length);
+			console.log(status);
+			console.log(JSONData);
+			console.log(JSONData.list.length);
 			
 			$('.totalCount').html(JSONData.totalCount);
 			$('.currentPage').html(currentPage);
 			
 			$.each(JSONData.list, function(index, item) {
-				//console.log(item.walletDetailCode);
+				console.log(item.walletDetailCode);
 				
 				// 기존 데이터 삭제
 				$('li[class^=ajax-]').each(function(idx) {

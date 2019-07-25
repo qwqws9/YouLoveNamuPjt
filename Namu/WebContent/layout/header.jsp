@@ -89,7 +89,7 @@
 									<button type="button" style="background: none; border: none; cursor: pointer;" onclick="location.href='/planner/getPlannerList'"><i class="far fa-calendar fa-lg" ></i></button>
 								</div>
 								<div class="col-lg-3" style="padding-top: 7px;">
-									<button type="button" style="background: none; border: none; cursor: pointer;"><i class="fas fa-money-check-alt fa-lg"></i></button>
+									<button type="button" id="wallet-btn" style="background: none; border: none; cursor: pointer;"><i class="fas fa-money-check-alt fa-lg"></i></button>
 								</div>
 							</div>
 						</div><!-- end of profile -->
