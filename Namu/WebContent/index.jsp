@@ -41,7 +41,6 @@
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<jsp:include page="/layout/side.jsp"></jsp:include>
 	<div class="container">
 		<br><br>
 		<!-- <button type="button" id="ooo">로그인</button> -->
