@@ -236,7 +236,7 @@ public class PlannerController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 		model.addAttribute("resultPage", resultPage);
-		
+		model.addAttribute("today", com.youlove.common.DateFormat.today());
 		System.out.println(search);
 		System.out.println(map.get("list"));
 		return "forward:/planner/getAllPlannerList.jsp";
