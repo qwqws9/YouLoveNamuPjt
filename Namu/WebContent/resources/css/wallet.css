@@ -36,7 +36,8 @@ a:link, a:active, a:hover {text-decoration: none;}
 	background-repeat: no-repeat; border-radius: 2.2em; box-sizing: border-box;}
 .square > div:hover {background-size: 200% 200%;}
 .square > div > div
-	{width: 100%; height: 100%; padding: 50px 18px; background-color: rgba(255, 255, 255, 0.2); border: 1px solid #cbcbcb; border-radius: 2.2em; box-sizing: border-box;}
+	{width: 100%; height: 100%; padding: 50px 18px; background-color: rgba(255, 255, 255, 0.2);
+	border: 1px solid #cbcbcb; border-radius: 2.2em; box-sizing: border-box;}
 .square > div > div:hover {background-color: rgba(255, 255, 255, 0.7);}
 .square > div > div:hover .text_shadow {text-shadow: none;}
 .square .text_shadow {text-shadow: 5px 5px 4px #fff, -5px -5px 4px #fff, -5px -5px 4px #fff;}
@@ -95,7 +96,8 @@ a.day_btn span {color: #fff;}
 
 /* 검색 */
 .search_form {position: absolute; top: 50px; right: 10px; height: 40px; margin-right: 1.5%;}
-.search_txt, .search_btn {height: inherit; padding: 7px 12px; border-top-right-radius: .25em; border-bottom-right-radius: .25em; box-sizing: border-box;}
+.search_txt, .search_btn
+	{height: inherit; padding: 7px 12px; border-top-right-radius: .25em; border-bottom-right-radius: .25em; box-sizing: border-box;}
 .search_txt {width: 250px; border: 1px solid #ccc; border-radius: .25em;}
 .search_btn {margin-left: -7px; color: #fff; background-color: #30a9de;}
 
@@ -129,7 +131,8 @@ a.day_btn span {color: #fff;}
 /* 입력 결과 */
 .result_top {position: relative; width: inherit; height: 110px; margin-bottom: 10px; border-bottom: 1px solid #cbcbcb;}
 .date_time
-	{width: 100%; height: 28px; line-height: 26px; font-size: 13px; text-align: center; border: 1px solid #f2c029; border-radius: .25em; box-sizing: border-box; cursor: pointer;}
+	{width: 100%; height: 28px; line-height: 26px; font-size: 13px; text-align: center; border: 1px solid #f2c029; border-radius: .25em;
+	box-sizing: border-box; cursor: pointer;}
 .date_time:hover {background-color: #f2c029;}
 .unit_selec {position: absolute; top: 40px; left: 0; width: 85px; padding: 7px 12px;
 	background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
@@ -147,7 +150,8 @@ a.day_btn span {color: #fff;}
 .apply_exchange_rate > div {top: 0; right: 15px; font-size: 12px;}
 .apply_exchange_rate > div > span {line-height: 42px; color: #cbcbcb;}
 .exchange_rate_btn
-	{width: 90px; height: 21px; line-height: 21px; color: #fff; font-size: 11px; text-align: center; background-color: #f2c029 !important; border-radius: .7em;}
+	{width: 90px; height: 21px; line-height: 21px; color: #fff; font-size: 11px; text-align: center;
+	background-color: #f2c029 !important; border-radius: .7em;}
 
 
 /* 카테고리 선택 */
@@ -170,7 +174,8 @@ a.day_btn span {color: #fff;}
 .pay_option_selec {width:50%;}
 .add_option_selec {margin-left: 6%; width:44%;}
 .pay_option_selec > .txt, .add_option_selec > .txt {position: absolute; top: 0; left: 0; font-size: 12px; font-weight: 700; text-align: left;}
-.pay_option_selec .pay_option_wrap, .add_option_selec .add_option_wrap {display: inline-block; font-size: 15px; text-align: center; vertical-align: top;}
+.pay_option_selec .pay_option_wrap, .add_option_selec .add_option_wrap
+	{display: inline-block; font-size: 15px; text-align: center; vertical-align: top;}
 .pay_option_selec .pay_option_wrap {width: 17%; color: #cbcbcb;}
 .add_option_selec .add_option_wrap {width: 24%;}
 .pay_option_selec .pay_option_wrap .txt, .add_option_selec .add_option_wrap .txt {font-size: 10px;}
@@ -179,7 +184,9 @@ a.day_btn span {color: #fff;}
 
 .memo_modal {display: none; position: absolute; top: -215px; left: -142px; width:254px; height: 208px; background-color: #fff; z-index: 10;}
 #save_expenditure_form .memo_modal {top: -225px; height: 217px;}
-.memo_modal textarea {position: absolute; bottom: 0; left: 0; width: inherit; height: 90%; resize: none; padding: 12px 7px; border: 1px solid #a3daff; border-radius: .25em; box-sizing: border-box;}
+.memo_modal textarea
+	{position: absolute; bottom: 0; left: 0; width: inherit; height: 90%; resize: none; padding: 12px 7px;
+	border: 1px solid #a3daff; border-radius: .25em; box-sizing: border-box;}
 .memo_modal .close_btn {position: absolute; top: 0; right: 0; color: #30a9de; line-height: 13px;}
 
 
@@ -220,15 +227,20 @@ a.day_btn span {color: #fff;}
 .table_header .table_col:nth-child(7), .table_row .table_col:nth-child(6) {width: 6%;}
 .table_row .table_col:nth-child(3), .table_row .table_col:nth-child(4) {position: relative; font-weight: 700;}
 .table_row .table_col:nth-child(3) span, .table_row .table_col:nth-child(4) span {position: absolute; right: 20px;}
-.table_row .table_col:nth-child(3) span:first-child, .table_row .table_col:nth-child(4) span:first-child {bottom: -20px; color: #30a9de; font-size: 18px;}
+.table_row .table_col:nth-child(3) span:first-child, .table_row .table_col:nth-child(4) span:first-child
+	{bottom: -20px; color: #30a9de; font-size: 18px;}
 .table_row .table_col:nth-child(3) span:last-child, .table_row .table_col:nth-child(4) span:last-child {bottom: -42px; font-size: 13px;}
-.table_col img {width: 60px; height: 60px; border: 1px solid #6c757d;}
+.table_row .table_col:nth-child(6) img {width: 60px; height: 60px; border: 1px solid #6c757d;}
+.table_row .table_col:nth-child(6) span {font-size: 23px;}
 
 
 /* 수입 및 지출 get 팝업 */
 .pop_wrap_contain
-	{display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 1; transition: all .8s;}
-.pop_wrap_get {position:fixed; width: 600px; height: 600px; padding: 10px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em; transition: all .8s;}
+	{display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1;
+	background-color: rgba(0,0,0,.6); z-index: 1; transition: all .8s;}
+.pop_wrap_get
+	{position:fixed; width: 600px; height: 600px; padding: 10px; background-color: #fff;
+	border: 1px solid #343a40; border-radius: .8em; transition: all .8s;}
 .pop_wrap_get > div {position: relative; width: 100%; height: 100%;}
 .scroller {overflow: auto; width: inherit; height: inherit; margin-bottom: 40px;}
 .padding_boxing {width: 100%; padding: 30px 0;}
@@ -241,7 +253,7 @@ a.day_btn span {color: #fff;}
 .input_money div {position: relative;}
 .input_money div span {position: absolute; right: 0; font-weight: 700;}
 .input_money div:first-child {height: 70%;}
-.input_money div:first-child span {bottom: 10px; font-size: 19px;}
+.input_money div:first-child span {bottom: 10px; color: #30a9de; font-size: 22px;}
 .input_money div:last-child {height: 30%;}
 .input_money div:last-child span {bottom: 0;}
 
@@ -277,8 +289,10 @@ a.day_btn span {color: #fff;}
 
 /* 결산 보고서 */
 .report_wrap
-	{display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1; background-color: rgba(0,0,0,.6); z-index: 1; transition: all .8s;}
+	{display: none; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; line-height: 1;
+	background-color: rgba(0,0,0,.6); z-index: 1; transition: all .8s;}
 .get_report
-	{position:fixed; width: 1090px; height: 600px; margin: auto; padding: 40px; background-color: #fff; border: 1px solid #343a40; border-radius: .8em; transition: all .8s;}
+	{position:fixed; width: 1090px; height: 600px; margin: auto; padding: 40px; background-color: #fff;
+	border: 1px solid #343a40; border-radius: .8em; transition: all .8s;}
 .get_report .charts {display: inline-block; width: 500px;}
 .get_report .close_btnn {right: 0px;}

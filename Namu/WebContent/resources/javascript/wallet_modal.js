@@ -153,7 +153,7 @@ function initPopUp() {
 	currentTime();
 	exchangeRate();
 	memoPopUp();
-	multiply()
+	multiply();
 	calculation();
 }
 

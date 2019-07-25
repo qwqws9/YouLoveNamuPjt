@@ -17,11 +17,15 @@
 	.exchange_rate_wrap .exchange_data_wrap > div {position: relative; height: 226px; overflow: hidden;}
 	.exchange_rate_wrap ul, .exchange_rate_wrap li {margin: 0; padding: 0; list-style:none;}
 	.exchange_rate_wrap ul {position: absolute; top: -1; width: 100%; box-sizing: border-box;}
-	.exchange_rate_wrap li {position: relative; height: 45px; line-height: 45px; border-top: 1px solid #cbcbcb; border-left: 1px solid #cbcbcb; border-right: 1px solid #cbcbcb;}
+	.exchange_rate_wrap li
+		{position: relative; height: 45px; line-height: 45px;
+		border-top: 1px solid #cbcbcb; border-left: 1px solid #cbcbcb; border-right: 1px solid #cbcbcb;}
 	.exchange_rate_wrap li:hover {background-color: #cbcbcb; cursor: default;}
 	.exchange_rate_wrap li:last-child {border-bottom: 1px solid #cbcbcb;}
 	.exchange_rate_wrap li span {display: inline-block; height: 40px;}
-	.exchange_rate_wrap li .flagg {position: absolute; top: 2px; left: 10px; width: 45px; height: 40px; background-size: 100% 100%; background-repeat: no-repeat; background-position: center center;}
+	.exchange_rate_wrap li .flagg
+		{position: absolute; top: 2px; left: 10px; width: 45px; height: 40px;
+		background-size: 100% 100%; background-repeat: no-repeat; background-position: center center;}
 	.exchange_rate_wrap li .dataa {position: absolute; left: 65px;}
 	.exchange_rate_wrap li .korr {font-weight: 700;}
 	.exchange_rate_wrap li .unitt {color: #30a9de;}
@@ -33,8 +37,10 @@
 	.exchange_rate_wrap .exchange_convert_wrap select:focus {box-shadow: none; border-color: #a3daff; outline: 0;}
 	.exchange_rate_wrap .exchange_convert_wrap input[type=text] {height: 37px; margin-top: 12px; text-align: right; border-radius: 0;}
 	.exchange_rate_wrap .exchange_convert_wrap input[type=text]:focus {box-shadow: none; border-color: #f2c029; outline: 0;}
-	.exchange_rate_wrap .exchange_convert_wrap button[type=button] {width: 100%; margin-top: 10px; margin-bottom: 10px; background-color: #f2c029; border: 1px solid #cbcbcb;}
-	.exchange_rate_wrap .exchange_convert_wrap .nextt {width: 100%; height: 30px; margin: 10px 0; color: #f2c029; font-size: 20px; line-height: 30px; text-align: center;}
+	.exchange_rate_wrap .exchange_convert_wrap button[type=button]
+		{width: 100%; margin-top: 10px; margin-bottom: 10px; background-color: #f2c029; border: 1px solid #cbcbcb;}
+	.exchange_rate_wrap .exchange_convert_wrap .nextt
+		{width: 100%; height: 30px; margin: 10px 0; color: #f2c029; font-size: 20px; line-height: 30px; text-align: center;}
 </style>
 
 <section class="exchange_rate_wrap">
