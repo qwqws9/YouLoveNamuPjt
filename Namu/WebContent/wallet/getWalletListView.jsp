@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- favicon.ico -->
+	<link rel="shortcut icon" href="/resources/images/favicon.ico" />
+	
 	<!-- Required meta tags -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,11 +30,6 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
-	
-	<script type="text/javascript">
-		// Toggle
-		
-	</script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
@@ -53,7 +51,7 @@
 							>
 								<div>
 									<div class="plan_name text_shadow">${planner.plannerName}</div>
-									<div class="plan_flag">국기 제기랄</div>
+									<div class="plan_flag">국기</div>
 									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 									<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">

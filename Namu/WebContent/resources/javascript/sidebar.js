@@ -87,3 +87,10 @@
 //	   document.getElementById("tourDetailJsp").style.marginLeft = "0";
 //	   document.getElementById("initHotelJsp").style.marginLeft = "250px";
 	 }
+
+	// 가계부
+	$(function(){
+		$('#wallet-btn').on('click', function(){
+			self.location = '/wallet/getWalletListView';
+		})
+	});
