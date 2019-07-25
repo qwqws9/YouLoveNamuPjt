@@ -91,15 +91,13 @@ public class WalletRestController {
 	}
 	
 	@RequestMapping(value = "/json/deleteWallet/{walletDetailCode}", method=RequestMethod.GET)
-	public Wallet deleteWallet(@PathVariable int walletDetailCode) throws Exception{
+	public boolean deleteWallet(@PathVariable int walletDetailCode) throws Exception{
 		
 		System.out.println("/wallet/json/deleteWallet :: GET");
 		
 		walletService.deleteWallet(walletDetailCode);
 		
-		Wallet wallet = walletService.getWallet(walletDetailCode);
-		
-		return wallet;
+		return true;
 		
 	}
 	

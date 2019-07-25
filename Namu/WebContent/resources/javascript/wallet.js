@@ -222,11 +222,11 @@ function getAjax(walletDetailCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log(JSONData);
+			//console.log(status);
+			//console.log(JSONData);
 			
 			var list = $('.pop_wrap_get .padding_boxing');
 			
@@ -340,15 +340,21 @@ function deleteAjax(walletDetailCode) {
 			
 			alert('삭제되었습니다.');
 			
-			$('.pop_wrap_contain').html('');
-			$('.pop_wrap_contain').hide();
+			console.log(JSONData);
+			
+			if(JSONData == true){
+				$('.pop_wrap_contain').html('');
+				$('.pop_wrap_contain').hide();
+			
+				getListAjax(1);
+			}
 		}
 	});
 }
 
 // getWalletList Business Logic
 function getListAjax(currentPage) {
-	console.log(currentPage);
+	//console.log(currentPage);
 	
 	$.ajax({
 		url			: '/wallet/json/getWalletList/' + $('.walletCode').text().trim(),
@@ -360,12 +366,12 @@ function getListAjax(currentPage) {
 		dataType	: 'json',
 		contentType	: 'application/json',
 		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log(JSONData);
-			console.log(JSONData.list.length);
+			//console.log(status);
+			//console.log(JSONData);
+			//console.log(JSONData.list.length);
 			
 			$('.totalCount').html(JSONData.totalCount);
 			$('.currentPage').html(currentPage);
@@ -462,24 +468,26 @@ function getListAjax(currentPage) {
 				if(item.walletImage != null){
 					list.children().eq(5).html('<img src="/resources/images/wallet/' + item.walletImage + '" alt="' + item.category + '" class="rounded-circle">');
 				}else{
+					list.children().eq(5).html('<span></span>');
+					
 					if(item.category == 0){
-						list.children().eq(5).html('<i class="fas fa-coins"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-coins"></i>');
 					}else if(item.category == 1){
-						list.children().eq(5).html('<i class="fas fa-utensils"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-utensils"></i>');
 					}else if(item.category == 2){
-						list.children().eq(5).html('<i class="fas fa-shopping-cart"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-shopping-cart"></i>');
 					}else if(item.category == 3){
-						list.children().eq(5).html('<i class="fas fa-landmark"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-landmark"></i>');
 					}else if(item.category == 4){
-						list.children().eq(5).html('<i class="fas fa-plane"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-plane"></i>');
 					}else if(item.category == 5){
-						list.children().eq(5).html('<i class="fas fa-subway"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-subway"></i>');
 					}else if(item.category == 6){
-						list.children().eq(5).html('<i class="fas fa-bed"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-bed"></i>');
 					}else if(item.category == 7){
-						list.children().eq(5).html('<i class="fas fa-skating"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-skating"></i>');
 					}else if(item.category == 8){
-						list.children().eq(5).html('<i class="fas fa-ellipsis-h"></i>');
+						list.children().eq(5).find('span').html('<i class="fas fa-ellipsis-h"></i>');
 					}
 				}
 			});
