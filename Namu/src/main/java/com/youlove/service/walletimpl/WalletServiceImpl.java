@@ -27,6 +27,13 @@ public class WalletServiceImpl implements WalletService {
 	
 	///Method
 	// walletListView.jsp
+	public int isWallet(int plannerCode) throws Exception{
+		return walletDao.isWallet(plannerCode);
+	}
+	
+	public int getWalletCode(int plannerCode) throws Exception{
+		return walletDao.getWalletCode(plannerCode);
+	}
 	/*
 	public void addWalletView(Wallet wallet) throws Exception{
 		walletDao.addWalletView(wallet);

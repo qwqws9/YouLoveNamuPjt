@@ -2,30 +2,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
-
 <html lang="ko">
 <head>
 	<meta charset="utf-8">
+	<!-- 타임라인을 위한 노드 서버 연결 -->
+<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
+<!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
+	<!-- 지우지 말것...... -->
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
 	<script src="/resources/javascript/sidebar.js"></script>
-	<!-- bootstrap -->
-<!-- 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> -->
-<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script> -->
-<!-- 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> -->
-	<!-- jQuerty -->
-<!-- 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
-	
-<!--   	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet"> -->
-<!--   	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script> -->
-  	<!-- fontAwsome -->
-<!--   	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script> -->
-  	
   	
 	<script>
+	//채팅 팝업
+	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	
-	 
+	function onChat(){
+		$(document).ready(function(){
+			$("#getChat").on("click", function(){
+				popup = window.open(url, "popup_chat", "width=450, height=700, location=no, resizable=no, left=1000, top=70")
+				/* popup = window.open(url, "popup_chat", "resizable")
+				popup.resizeTo(450,700);
+				popup.resizeBy(-100,-100); */
+			});
+		});
+	};
+	
 	</script>
 </head>
 <body>
@@ -38,7 +41,9 @@
 	<div id="mySidebar" class="sidebar">
 		<div class="container">
 			<div class="col-lg-3" style="padding-top: 23px;">
-				<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
+				<c:if test ="${!empty user }">
+					<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
+				</c:if>
 			</div>
 			
 		  	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -50,14 +55,14 @@
 				
 					<c:if test ="${empty user }"><!-- 로그인 전 -->
 						<div class="col-12 text-center" id="beforeLogin">
-						
+							<div id="logingogo">
 							<a href="#">
-								<img src="/resources/images/profile/77deb648-41c0-4b4b-aa20-94589acb7f9d.png" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 10px;">
+								<img src="/resources/images/profile/img_login.gif" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">
 							</a>
-							<a href="/user/loginView">
+							<a href="#">
 								<span>로그인</span>
 							</a>
-						
+							</div>
 						</div>
 					</c:if>
 					<c:if test ="${!empty user }"><!-- 로그인 후 -->
@@ -97,7 +102,7 @@
 									<button type="button" style="background: none; border: none; cursor: pointer;" onclick="location.href='/planner/getPlannerList'"><i class="far fa-calendar fa-lg" ></i></button>
 								</div>
 								<div class="col-lg-3" style="padding-top: 7px;">
-									<button type="button" style="background: none; border: none; cursor: pointer;"><i class="fas fa-money-check-alt fa-lg"></i></button>
+									<button type="button" id="wallet-btn" style="background: none; border: none; cursor: pointer;"><i class="fas fa-money-check-alt fa-lg"></i></button>
 								</div>
 							</div>
 						</div><!-- end of profile -->
@@ -178,7 +183,15 @@
 							<div class="col-lg-12 text-left">
 								<a href="#">
 									<span class="talk">
-										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;">
+										<c:if test="${! empty user.nickname}">
+										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;" onClick=onChat() id='getChat'>
+										</c:if>
+										<c:if test="${empty user.nickname}">
+											채팅은 로그인시 이용가능합니다.
+										</c:if>
+										
+										
+										
 									</span>
 								</a>
 							</div>
@@ -240,7 +253,8 @@
 	  	</div>
 	  	
 	  	<nav class="navbar">
-		    <a href="#" class="navbar"  data-toggle="collapse" data-target="#topbarContent" aria-controls="topbarContent" aria-expanded="false" aria-label="Toggle navigation">
+<!-- 		    <a href="/" class="navbar"  data-toggle="collapse" data-target="#topbarContent" aria-controls="topbarContent" aria-expanded="false" aria-label="Toggle navigation"> -->
+		    <a href="/" class="navbar">
 			    <span class="brand main_logo">
 			    	<img src="/resources/images/youloveplan_logo.png" alt="유럽플랜" class="logo_img" style="height: 100px;">
 			    </span>

@@ -31,6 +31,7 @@ import com.youlove.common.RandomNumber;
 import com.youlove.common.api.CheckEmailTransfer;
 import com.youlove.common.api.CheckSMSTransfer;
 import com.youlove.common.api.NaverCaptcha;
+import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
@@ -62,6 +63,25 @@ public class UserRestController {
 	
 	@Value("#{commonProperties['captchaPath']}")
 	String captchaPath;
+	
+	
+	
+	// 1 친구 2 동행 3 일행
+	// 조회시 세션 유저코드 + 검색할 Role 번호 넘겨주기
+	@RequestMapping(value="json/getFriend",method=RequestMethod.POST)
+	public List<Friend> getFriend(@RequestBody Friend friend) throws Exception{
+		
+		System.out.println("/user/json/getFriend");
+		
+		System.out.println("+++++++++++++++++++++++++");
+		System.out.println(friend.toString());
+		System.out.println("+++++++++++++++++++++++++");
+		
+		List<Friend> list = userService.getFriendList(friend);
+		
+		return list;
+	}
+	
 	
 	
 	

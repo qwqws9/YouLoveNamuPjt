@@ -1,5 +1,29 @@
-// 네비게이션
 $(function() {
+	// 로드시 가계부 존재 여부 확인
+	isWallet();
+	
+	// 가계부 상세내역 조회 페이지로 이동
+	$('.wallet_box .square').on('click', function(e) {
+		var walletCode = $(this).children(':eq(0)').val();
+		//console.log(walletCode);
+		
+		if(walletCode != null && walletCode != '' && walletCode != 0){
+			if($(this).find('.isWallet').has(e.target).length === 0){
+				self.location = '/wallet/getWalletList?walletCode=' + walletCode;
+			}
+		}
+	});
+	
+	// 가계부 사용여부 체크
+	/*$('.square .isWallet label').on('click', function(e) {
+		console.log('에이이잉' + $(this).parent().parent().parent().parent().prev().prev().val());
+	});*/
+	
+	// 단순 페이지 이동
+	$('.btnns .pre_btn').on('click', function() {
+		self.location = '/wallet/getWalletListView';
+	});
+	
 	// 페이지 이동
 	$('.paging_wrap li').on('click', function() {
 		if($(this).text().trim() == 'PREV'){
@@ -28,6 +52,17 @@ $(function() {
 		*/
 	});
 });
+
+function isWallet() {
+	var plannerCodes = document.getElementsByClassName('plannerCode');
+	
+	for(var i=0; i<plannerCodes.length; i++){
+	    var plannerCode = plannerCodes[i].value;
+	    //console.log(i + ', ' + plannerCode);
+	    
+	    isWalletAjax(i, plannerCode);
+	}
+}
 
 // 세자리 콤마
 function makeComma(db) {
@@ -70,6 +105,42 @@ function convert(unit){
 	}
 }
 
+// getWalletListView Business Logic
+function isWalletAjax(i, plannerCode) {
+	//console.log(i + ', ' + plannerCode);
+	
+	$.ajax({
+		url			: '/wallet/json/isWallet/' + plannerCode,
+		method		: 'GET',
+		headers		: {
+			'Accept'		: 'Application/json',
+			'Content-Type'	: 'Application/json'
+		},
+		error		: function(request, status, error) {
+			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+		},
+		success		: function(JSONData, status) {
+			//console.log(status);
+			//console.log(i + ' 번째 ' + plannerCode + ' 번 플래너의 가계부 : ' + JSONData);
+			
+			if(JSONData != null && JSONData != '' && JSONData != 0){
+				document.getElementsByClassName('walletCode')[i].setAttribute('value', JSONData);
+				
+				var checked = document.getElementsByClassName('isWallet')[i];
+				checked.parentNode.parentNode.parentNode.parentNode.style = 'cursor:pointer';
+				
+				checked.innerHTML = 
+					'<label class="btn btn-secondary active">' +
+						'<input type="radio" name="options" id="opened" autocomplete="off" checked><span class="txt">사용중</span>' +
+					'</label>' +
+					'<label class="btn btn-secondary">' +
+						'<input type="radio" name="options" id="closed" autocomplete="off"><span class="txt">사용안함</span>' +
+					'</label>';
+			}
+		}
+	});
+}
+
 // addWallet Business Logic
 function addAjax(form) {
 	// file이 담긴 FORM 태그를 @ModelAttribute, MultipartFile 로 전달
@@ -93,15 +164,18 @@ function addAjax(form) {
 		cache		: false,
 		timeout		: 600000,
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 	    },
 		success		: function(JSONData, status) {
 			//console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
+			console.log(JSONData);
 			
-			form.reset();
-			$('.pop_wrap_add').html('');
+			if(JSONData == true){
+				form.reset();
+				$('.pop_wrap_add').html('');
 			
-			getListAjax(1);
+				getListAjax(1);
+			}
 		}
 	});
 	
@@ -148,11 +222,11 @@ function getAjax(walletDetailCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log(JSONData);
+			console.log(status);
+			console.log(JSONData);
 			
 			var list = $('.pop_wrap_get .padding_boxing');
 			
@@ -274,7 +348,7 @@ function deleteAjax(walletDetailCode) {
 
 // getWalletList Business Logic
 function getListAjax(currentPage) {
-	//console.log(currentPage);
+	console.log(currentPage);
 	
 	$.ajax({
 		url			: '/wallet/json/getWalletList/' + $('.walletCode').text().trim(),
@@ -286,18 +360,18 @@ function getListAjax(currentPage) {
 		dataType	: 'json',
 		contentType	: 'application/json',
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log(JSONData);
-			//console.log(JSONData.list.length);
+			console.log(status);
+			console.log(JSONData);
+			console.log(JSONData.list.length);
 			
 			$('.totalCount').html(JSONData.totalCount);
 			$('.currentPage').html(currentPage);
 			
 			$.each(JSONData.list, function(index, item) {
-				//console.log(item.walletDetailCode);
+				console.log(item.walletDetailCode);
 				
 				// 기존 데이터 삭제
 				$('li[class^=ajax-]').each(function(idx) {

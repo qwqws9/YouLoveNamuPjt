@@ -3,6 +3,7 @@ package com.youlove.service.user;
 import java.util.List;
 import java.util.Map;
 
+import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
 
@@ -23,4 +24,5 @@ public interface UserService {
 	
 	public boolean addPay(Pay pay) throws Exception;
 	
+	public List<Friend> getFriendList(Friend friend) throws Exception;
 }

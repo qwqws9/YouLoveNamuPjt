@@ -9,12 +9,23 @@
 				$("#beforeLogin").show();
 			}
 		});
-		$('button:contains("로그인")').on('click',function(){
+		$('#logingogo').on('click',function(){
 			self.location = '/user/loginView';
 		})
 		$("#communityList").on("click",function(){
 			self.location = "/community/getCommunityList?communityBoard=0"
 		})
+		
+		$('body').on('click', function(e) {
+			var width = $('#mySidebar').css('width');
+			if(width == '300px') {
+				var container = $('#mySidebar');
+				console.log(container.has(e.target).length);
+				if(container.has(e.target).length === 0){
+					closeNav();
+				}
+			}
+		});
 		
 		
 		
@@ -73,6 +84,11 @@
 	   document.getElementById("mySidebar").style.width = "300px";
 	   document.getElementById("main").style.marginLeft = "300px";
 	   document.getElementById("topbar").style.marginLeft = "300px";
+//	   document.getElementById("initTour").style.marginLeft = "300px";
+//	   document.getElementById("tourDetailJsp").style.marginLeft = "300px";
+//	   document.getElementById("initHotelJsp").style.marginLeft = "0px";
+	   
+	   $('#main').css('display','none');
 	 }
 
 	 /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
@@ -80,4 +96,17 @@
 	   document.getElementById("mySidebar").style.width = "0";
 	   document.getElementById("main").style.marginLeft = "0";
 	   document.getElementById("topbar").style.marginLeft = "0";
+//	   document.getElementById("initTour").style.marginLeft = "230px";
+//	   document.getElementById("tourDetailJsp").style.marginLeft = "0";
+//	   document.getElementById("initHotelJsp").style.marginLeft = "250px";
+	   
+	   
+	   $('#main').css('display','block');
 	 }
+
+	// 가계부
+	$(function(){
+		$('#wallet-btn').on('click', function(){
+			self.location = '/wallet/getWalletListView';
+		})
+	});

@@ -134,8 +134,8 @@ public class CommunityController {
 		map = hashtagService.getHashtag(hashVO);
 		modelAndView.addObject("hashtag", map.get("hashtag"));
 		//댓글
-		modelAndView.addObject("boardCode",communityCode);
-		modelAndView.addObject("detailCode", community.getCommunityBoard());
+		modelAndView.addObject("boardCode",community.getCommunityBoard());
+		modelAndView.addObject("detailCode",communityCode);
 		//관련글
 		map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity());
 		modelAndView.addObject("related", map.get("related"));//관련글
