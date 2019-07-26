@@ -14,12 +14,7 @@ $(function() {
 		}
 	});
 	
-	// 가계부 사용여부 체크
-	/*$('.square .isWallet label').on('click', function(e) {
-		console.log('에이이잉' + $(this).parent().parent().parent().parent().prev().prev().val());
-	});*/
-	
-	// 단순 페이지 이동
+	// 이전 페이지로 이동
 	$('.btnns .pre_btn').on('click', function() {
 		self.location = '/wallet/getWalletListView';
 	});
@@ -53,6 +48,7 @@ $(function() {
 	});
 });
 
+//가계부 사용 여부
 function isWallet() {
 	var plannerCodes = document.getElementsByClassName('plannerCode');
 	
@@ -64,7 +60,192 @@ function isWallet() {
 	}
 }
 
-// 세자리 콤마
+// 모달창 오픈 및 클로즈
+$(function() {
+	// 수입 추가 모달창 버튼
+	$('#income_modal').on('click', function() {
+		$('.modal_btn').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+		$(this).children().addClass('fas').css({'color':'#f2c029'});
+		
+		$('.pop_wrap_add').html('');
+		
+		// innerHTML
+		$($('#save_income_form')).load('/wallet/addWalletIncome.jsp', {walletCode:$('#walletCode').val()}, function(data) {
+			//console.log(data);
+			
+			$('.pop_wrap_add').show();
+			initPopUp();
+		});
+	});
+	
+	// 지출 추가 모달창 버튼
+	$('#expenditure_modal').on('click', function() {
+		$('.modal_btn').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+		$(this).children().addClass('fas').css({'color':'#f2c029'});
+		
+		$('.pop_wrap_add').html('');
+		
+		// innerHTML
+		$($('#save_expenditure_form')).load('/wallet/addWalletExpenditure.jsp', {walletCode:$('#walletCode').val()}, function(data) {
+			//console.log(data);
+			
+			$('.pop_wrap_add').show();
+			initPopUp();
+		});
+	});
+	
+	// 수입/지출 추가 폼 제출 버튼
+	$('.pop_wrap_add').on('submit', function(event) {
+		$('.modal_btn').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+		
+		event.preventDefault();
+		
+		addAjax($(this)[0]);
+	});
+	
+	// 수입/지출 추가 모달창 닫기 버튼 (동적)
+	$(document).on('click', '.pop_wrap_add .act_btns .close_btn', function() {
+		$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+		
+		$('.pop_wrap_add').html('');
+		$('.pop_wrap_add').hide();
+	});
+	
+	// 수입/지출 상세내역 모달창 버튼
+	$('.detail_line').on('click', function() {
+		$(this).next('.pop_wrap_contain').show();
+		
+		// innerHTML
+		$($(this).next('.pop_wrap_contain')).load('/wallet/getWallet.jsp', function(data) {
+			//console.log(data);
+			//console.log('모달창 넓이 : ' + $(this).children().width() + 'px, 길이 : ' + $(this).children().height() + 'px');
+			
+			var walletDetailCode = $(this).prev().prev().text();
+			//console.log(walletDetailCode);
+			
+			centerPopUp($(this).children());
+			getAjax(walletDetailCode);
+		});
+	});
+	
+	// 수입/지출 상세내역 삭제 버튼 (동적)
+	$(document).on('click', '.pop_wrap_get .act_btns .delete_btn', function() {
+		var result = confirm('삭제 후 복구가 불가능 합니다. 정말 삭제하시겠습니까?');
+		
+		if(result){
+			//console.log($(this).parent().prev().text().trim());
+			
+			deleteAjax($(this).parent().prev().text().trim());
+			getListAjax($('#currentPage').text().trim());
+		}
+	});
+	
+	// 수입/지출 상세내역 모달창 닫기 버튼 (동적)
+	$(document).on('click', '.pop_wrap_contain .pop_wrap_get .close_btnn', function() {
+		$('.pop_wrap_contain').html('');
+		$('.pop_wrap_contain').hide();
+	});
+	
+	// 결산 보고서 모달창 버튼
+	$('.report_btn').on('click', function() {
+		$('.report_wrap').show();
+		
+		// innerHTML
+		$($('.report_wrap')).load('/wallet/getWalletReport.jsp', function(data) {
+			//console.log(data);
+			//console.log('모달창 넓이 : ' + $(this).children().width() + 'px, 길이 : ' + $(this).children().height() + 'px');
+			
+			centerPopUp($(this).children());
+		});
+	});
+	
+	// 결산 보고서 모달창 닫기 버튼 (동적)
+	$(document).on('click', '.report_wrap .get_report .close_btnn', function() {
+		$('.report_wrap').html('');
+		$('.report_wrap').hide();
+	});
+	
+	// 모달창 외부 클릭시 닫기 이벤트
+	$('body').on('click', function(e) {
+		//console.log(':: BODY ONCLICK EVENT ::');
+		
+		if($('#save_income_form').css('display') == 'block' || $('#save_expenditure_form').css('display') == 'block'){
+			if($('.pop_wrap_add').has(e.target).length === 0){
+				$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css({'color':'#282c37'});
+				
+				$('.pop_wrap_add').html('');
+				$('.pop_wrap_add').hide();
+			}
+		}else if(e.target.className == 'pop_wrap_contain'){
+			if($('.pop_wrap_get').has(e.target).length === 0){
+				$('.pop_wrap_contain').html('');
+				$('.pop_wrap_contain').hide();
+			}
+		}else if(e.target.className == 'report_wrap'){
+			if($('.get_report').has(e.target).length === 0){
+				$('.report_wrap').html('');
+				$('.report_wrap').hide();
+			}
+		}
+	});
+});
+
+// 팝업 중앙에 띄우기
+function centerPopUp(modal) {
+	realCenterPopUp(modal);
+	
+	// 윈도우창 크기 변화 감지
+	$(window).resize(function() {
+		realCenterPopUp(modal);
+	});
+}
+function realCenterPopUp(modal) {
+	// var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) + $(window).scrollTop()) + 'px';
+	var top = Math.max(0, (($(window).height() - modal.outerHeight()) / 2) - 15) + 'px';
+	var left = Math.max(0, (($(window).width() - modal.outerWidth()) / 2) + $(window).scrollLeft()) + 'px';
+	//console.log('모달창 위치 : 위쪽 ' + top + ', 왼쪽 ' + left);
+
+	modal.css({'top':top, 'left':left});
+}
+
+// 팝업 초기 작업
+function initPopUp() {
+	$('#expression').focus();
+	
+	currentTime();
+	exchangeRate();
+	memoPopUp();
+	multiply();
+	calculation();
+}
+
+// 현재 날짜 및 시간 입력
+function currentTime() {
+	var day = new Date();
+	
+	var month = slice(day.getMonth()+1);
+	var date = slice(day.getDate());
+	var hours = slice(day.getHours());
+	var minutes = slice(day.getMinutes());
+	
+	var nowDay = day.getFullYear() + '-' + month + '-' + date;
+	var nowTime = hours + ':' + minutes;
+	//console.log('현재 시각 : ' + nowDay + ' ' + nowTime);
+	
+	$('input.date_time').val(nowDay + ' ' + nowTime);
+}
+function slice(day) {
+	var str = String(day);
+	//console.log(str.length);
+	
+	if(str.length == 1){
+		return '0' + str;
+	}else{
+		return str;
+	}
+}
+
+//세자리 콤마
 function makeComma(db) {
 	//console.log(db);
 	//console.log(db.toLocaleString(undefined, {maximumFractionDigits : 2}));
@@ -72,431 +253,194 @@ function makeComma(db) {
 	return db.toLocaleString(undefined, {maximumFractionDigits : 2});
 }
 
-// https://ko.exchange-rates.org 크롤링
-function convert(unit){
-	//console.log(unit);
+// 환율 적용
+function exchangeRate() {
+	convert($('#moneyUnit').val());
 	
-	if(unit != 'KRW'){
-		$.ajax({
-			url		: '/wallet/json/convert',
-			method	: 'POST',
-			headers	: {
-				'Accept'		: 'Application/json',
-				'Content-Type'	: 'Application/json'
-			},
-			data	: JSON.stringify({
-				from	: unit,
-				to		: 'KRW',
-				amount	: 1
-			}),
-			error	: function(request, status, error) {
-				//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		    },
-			success	: function(JSONData, status) {
-				//console.log('[SUCCESS]\nRESULT : ' + JSONData);
-				
-				$('#exchange_result').text(makeComma(JSONData.exchangeRate));
-				$('#exchange_rate').val(JSONData.exchangeRate);
-			}
-		})
-	}else{
-		$('#exchange_result').text('1.0');
-		$('#exchange_rate').val('1.0');
-	}
-}
-
-// getWalletListView Business Logic
-function isWalletAjax(i, plannerCode) {
-	//console.log(i + ', ' + plannerCode);
-	
-	$.ajax({
-		url			: '/wallet/json/isWallet/' + plannerCode,
-		method		: 'GET',
-		headers		: {
-			'Accept'		: 'Application/json',
-			'Content-Type'	: 'Application/json'
-		},
-		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
-		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log(i + ' 번째 ' + plannerCode + ' 번 플래너의 가계부 : ' + JSONData);
-			
-			if(JSONData != null && JSONData != '' && JSONData != 0){
-				document.getElementsByClassName('walletCode')[i].setAttribute('value', JSONData);
-				
-				var checked = document.getElementsByClassName('isWallet')[i];
-				checked.parentNode.parentNode.parentNode.parentNode.style = 'cursor:pointer';
-				
-				checked.innerHTML = 
-					'<label class="btn btn-secondary active">' +
-						'<input type="radio" name="options" id="opened" autocomplete="off" checked><span class="txt">사용중</span>' +
-					'</label>' +
-					'<label class="btn btn-secondary">' +
-						'<input type="radio" name="options" id="closed" autocomplete="off"><span class="txt">사용안함</span>' +
-					'</label>';
-			}
-		}
+	$('#moneyUnit').on('change', function(){
+		$('.apply_exchange_rate .second_unit').text($('#moneyUnit').val());
+		
+		convert($(this).val());
+		multiply();
 	});
 }
 
-// addWallet Business Logic
-function addAjax(form) {
-	// file이 담긴 FORM 태그를 @ModelAttribute, MultipartFile 로 전달
-	var formData = new FormData(form);
-	
-	/*
-	for(var pair of formData.entries()) {
-		console.log(pair[0] + ' = '+ pair[1]); 
-	}
-	console.log(formData.get('file'));
-	*/
-	
-	$.ajax({
-		url			: '/wallet/json/addWallet',
-		type		: 'POST',
-		enctype		: 'multipart/form-data',
-		data		: formData,
-		dataType	: 'json',
-		contentType	: false,
-		processData	: false,
-		cache		: false,
-		timeout		: 600000,
-		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-	    },
-		success		: function(JSONData, status) {
-			//console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
-			console.log(JSONData);
-			
-			if(JSONData == true){
-				form.reset();
-				$('.pop_wrap_add').html('');
-			
-				getListAjax(1);
-			}
-		}
+// 메모장
+function memoPopUp() {
+	$('.add_option_selec #memo_btn').on('click', function() {
+		//console.log($('#memo_btn').html());
+		
+		$('#memo_btn').next().show();
+		$('.memo_modal > textarea').focus();
 	});
 	
-	// FORM 태그를 @RequestBody 로 전달
-	/*
-	console.log(form.serialize());
-	console.log(form.serializeArray());
-	console.log(JSON.stringify(form.serializeArray()));
+	$('.add_option_selec .close_btn').on('click', function() {
+		$('#memo_btn').next().hide();
+	});
 	
-	var data = {};
+	
+	
+	$('.memo_cont').on('keyup', function(){
+		console.log($(this).val());
+		
+		$('.memo_cont').val(removeTag($(this).val()));
+	});
+}
 
-	$.each(form.serializeArray(), function(index, object) {
-		data[object.name] = object.value;
+// html 태그 제거
+function removeTag(html) {
+	return html.replace(/(<([^>]+)>)/gi, '');
+}
+
+// 금액 X 환율
+function multiply() {
+	//console.log('금액 : ' + $('#price').val() + ', 환율 : ' + $('#exchange_rate').val());
+	
+	var exchangePrice = $('#price').val() * $('#exchange_rate').val();
+	//console.log(exchangePrice);
+	
+	$('.exchange_plus_result').text(makeComma(exchangePrice));
+	$('#exchange_price').val(Math.round(exchangePrice * 100) / 100);
+}
+
+// 계산기
+function calculation() {
+	$('#expression').keyup(function() {
+		var regexp = /[^0-9]/gi;
+        var data = $(this).val();
+
+        if(regexp.test(data)){
+        	$(this).val(data.replace(regexp, ''));
+        }
+        
+        $('#price').val($(this).val());
+        multiply();
     });
-    
-    console.log(data);
-    console.log(JSON.stringify(data));
 	
-	$.ajax({
-		url			: '/wallet/json/addWallet',
-		type		: 'POST',
-		data		: JSON.stringify(data),
-		dataType	: 'json',
-		contentType	: 'application/json',
-		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
-		success		: function(JSONData, status) {
-			console.log('[SUCCESS]\nRESULT : ' + JSONData.expression + '=' + JSONData.price);
+	var test; // true 또는 false 판단
+	
+	$('.cal_btn:not(.operator, .real, .back, .ac)').on('click', function() {
+		pressNumber($(this).val());
+	});
+	
+	$('.operator').on('click', function() {
+		test = true;
+		
+		if($('#expression').val() == '' || $('#expression').val().length == 1){
+			test = false;
+			
+			// 첫글자에 +, -를 입력하면
+			if($(this).val() == '+' || $(this).val() == '-'){
+				test = true;
+			// 첫글자가 연산자면
+			}else if($('#expression').val().length == 1 && operStr.indexOf($('#expression').val()) == -1){
+				test = true;
+			}
+		}
+		
+		if(test){
+			pressNumber($(this).val());
 		}
 	});
-	*/
-}
-
-// getWallet Business Logic
-function getAjax(walletDetailCode) {
-	//console.log(walletDetailCode);
 	
-	$.ajax({
-		url			: '/wallet/json/getWallet/' + walletDetailCode,
-		method		: 'GET',
-		headers		: {
-			'Accept'		: 'Application/json',
-			'Content-Type'	: 'Application/json'
-		},
-		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
-		success		: function(JSONData, status) {
-			console.log(status);
-			console.log(JSONData);
+	$('.real').on('click', function() {
+		test = true;
+		
+		// . 중복 입력 방지
+		if($(this).val() == '.' && $('#expression').val().indexOf('.') != -1){
+			test = false;
 			
-			var list = $('.pop_wrap_get .padding_boxing');
+			var tempStr = $('#expression').val().substring($('#expression').val().lastIndexOf('.')+1, $('#expression').val().length);
 			
-			list.find('.input_date').html(JSONData.regDate);
-			
-			if(JSONData.category == 0){
-				list.find('.input_category').html('<i class="fas fa-coins"></i>');
-			}else if(JSONData.category == 1){
-				list.find('.input_category').html('<i class="fas fa-utensils"></i>');
-			}else if(JSONData.category == 2){
-				list.find('.input_category').html('<i class="fas fa-shopping-cart"></i>');
-			}else if(JSONData.category == 3){
-				list.find('.input_category').html('<i class="fas fa-landmark"></i>');
-			}else if(JSONData.category == 4){
-				list.find('.input_category').html('<i class="fas fa-plane"></i>');
-			}else if(JSONData.category == 5){
-				list.find('.input_category').html('<i class="fas fa-subway"></i>');
-			}else if(JSONData.category == 6){
-				list.find('.input_category').html('<i class="fas fa-bed"></i>');
-			}else if(JSONData.category == 7){
-				list.find('.input_category').html('<i class="fas fa-skating"></i>');
-			}else if(JSONData.category == 8){
-				list.find('.input_category').html('<i class="fas fa-ellipsis-h"></i>');
-			}
-			
-			if(JSONData.moneyUnit == 'KRW'){
-				list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-won-sign"></i>');
-			}else if(JSONData.moneyUnit == 'EUR'){
-				list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-euro-sign"></i>');
-			}else if(JSONData.moneyUnit == 'CHF'){
-				list.find('.input_money > div:eq(0) > span').html('CHF');
-			}else if(JSONData.moneyUnit == 'GBP'){
-				list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-pound-sign"></i>');
-			}else if(JSONData.moneyUnit == 'CZK'){
-				list.find('.input_money > div:eq(0) > span').html('CZK');
-			}else if(JSONData.moneyUnit == 'HUF'){
-				list.find('.input_money > div:eq(0) > span').html('HUF');
-			}
-			list.find('.input_money > div:eq(0) > span').append('&nbsp;' + makeComma(JSONData.price));
-			
-			if(JSONData.moneyUnit != 'KRW' && (JSONData.krwPrice != null && JSONData.krwPrice != 0)){
-				list.find('.input_money > div:eq(1) > span').html('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(JSONData.krwPrice));
-			}
-			
-			if(JSONData.payer != null && JSONData.payer != 0){
-				list.find('.top_input').append(
-					'<div class="input_payer">' +
-						'<span>결제자</span><span>' + JSONData.payer.nickname + '</span>' +
-					'</div>'
-				);
-			}
-			
-			if(JSONData.part == 0){
-				list.find('.top_input').after(
-					'<div class="what_unit">' +
-						'<div class="clear">' +
-							'<span>화폐 단위</span><span>' + JSONData.moneyUnit + '</span>' +
-						'</div>' +
-					'</div>'
-				);
-				
-				if(JSONData.moneyUnit != 'KRW'){
-					list.find('.what_unit').append(
-						'<div class="clear">' +
-							'<span>적용 환율</span><span>' + JSONData.moneyUnit + ' 1 = KRW ' + makeComma(JSONData.exchangeRate) + '</span>' +
-						'</div>'
-					);
+			for(i=0; i<tempStr.length; i++){
+				// .과 . 사이에 연산자가 있으면
+				if(operStr.indexOf(tempStr.charAt(i)) != -1){
+					test = true;
 				}
 			}
-			
-			if(JSONData.item != null && JSONData.item != ''){
-				list.find('.input_item').html(JSONData.item);
-			}else{
-				if(JSONData.part == 0){
-					list.find('.input_item').append('예산 추가');
-				}else if(JSONData.part == 1){
-					list.find('.input_item').append('지출 추가');
-				}
-			}
-			
-			if(JSONData.content != null && JSONData.content != ''){
-				list.find('.text_width').append('<div class="input_content">' + JSONData.content + '</div>');
-			}
-			
-			if(JSONData.walletImage != null){
-				list.append('<img src="/resources/images/wallet/' + JSONData.walletImage + '" alt="' + JSONData.item + ' 이미지" class="big_image">');
-			}
-			
-			$('.pop_wrap_get .walletDetailCode').text(JSONData.walletDetailCode);
 		}
+		
+		if(test){
+			// . 입력시 앞에 숫자가 없으면 0 추가
+			if($('#expression').val() == '' || operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1){
+				// . 연속 입력 방지
+				if($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length) != '.'){
+					pressNumber('0' + $(this).val());
+				}
+			}else{
+				pressNumber($(this).val());
+			}
+		}
+	});
+	
+	$('.back').on('click', function() {
+		backspace();
+	});
+	
+	$('.ac').on('click', function() {
+		allClear();
 	});
 }
 
-// deleteWallet Business Logic
-function deleteAjax(walletDetailCode) {
-	//console.log(walletDetailCode);
-	
-	$.ajax({
-		url			: '/wallet/json/deleteWallet/' + walletDetailCode,
-		method		: 'GET',
-		headers		: {
-			'Accept'		: 'Application/json',
-			'Content-Type'	: 'Application/json'
-		},
-		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
-		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log(JSONData);
-			
-			alert('삭제되었습니다.');
-			
-			$('.pop_wrap_contain').html('');
-			$('.pop_wrap_contain').hide();
-		}
-	});
-}
+var operStr = '+-*/.';
 
-// getWalletList Business Logic
-function getListAjax(currentPage) {
-	console.log(currentPage);
+function pressNumber(num) {
+	// 15자까지 입력 제한
+	if($('#expression').val().length < 15){
+		// 연산자 중복 클릭시 기존 연산자 삭제
+		if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1 && operStr.indexOf(num) != -1){
+			backspace();
+		}
+		
+		$('#expression').val($('#expression').val() + num);
+		
+		// 연산자 중복 입력 방지
+		if(operStr.indexOf(num) == -1 && $('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length) != '.'){
+			answer($('#expression').val());
+		}
+	}else{
+		backspace();
+	}
+}
+function answer(num) {
+	var zeroStr = '/0';
+	var numStr = '123456789'
+	operStr = '+-*/';
 	
-	$.ajax({
-		url			: '/wallet/json/getWalletList/' + $('.walletCode').text().trim(),
-		type		: 'POST',
-		data		: JSON.stringify({
-			currentPage	: currentPage,
-			pageSize	: 5
-		}),
-		dataType	: 'json',
-		contentType	: 'application/json',
-		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
-		success		: function(JSONData, status) {
-			console.log(status);
-			console.log(JSONData);
-			console.log(JSONData.list.length);
-			
-			$('.totalCount').html(JSONData.totalCount);
-			$('.currentPage').html(currentPage);
-			
-			$.each(JSONData.list, function(index, item) {
-				console.log(item.walletDetailCode);
-				
-				// 기존 데이터 삭제
-				$('li[class^=ajax-]').each(function(idx) {
-					$('.ajax-' + (index+1) + ' .detail_line .table_col').empty();
-					
-					if(JSONData.list.length <= idx){
-						$('.ajax-' + (idx+1)).hide();
-					}else{
-						$('.ajax-' + (idx+1)).show();
-					}
-				});
-				
-				// 새 데이터 삽입
-				$('.ajax-' + (index+1) + ' > .walletDetailCode').text(item.walletDetailCode);
-				
-				var list = $('.ajax-' + (index+1) + ' .detail_line');
-				
-				list.find('.table_col').empty();
-				
-				list.children().eq(0).html(index+1);
-				
-				list.children().eq(1).html(item.regDate);
-				
-				if(item.part == 0){
-					list.children().eq(2).html('<span></span><span></span>');
-					
-					if(item.moneyUnit == 'KRW'){
-						list.children().eq(2).find('span:eq(0)').append('<i class="fas fa-won-sign"></i>');
-					}else if(item.moneyUnit == 'EUR'){
-						list.children().eq(2).find('span:eq(0)').append('<i class="fas fa-euro-sign"></i>');
-					}else if(item.moneyUnit == 'CHF'){
-						list.children().eq(2).find('span:eq(0)').append('CHF');
-					}else if(item.moneyUnit == 'GBP'){
-						list.children().eq(2).find('span:eq(0)').append('<i class="fas fa-pound-sign"></i>');
-					}else if(item.moneyUnit == 'CZK'){
-						list.children().eq(2).find('span:eq(0)').append('CZK');
-					}else if(item.moneyUnit == 'HUF'){
-						list.children().eq(2).find('span:eq(0)').append('HUF');
-					}
-					list.children().eq(2).find('span:eq(0)').append('&nbsp;' + makeComma(item.price));
-					
-					if(item.payOption == 2){
-						list.children().eq(2).find('span:eq(0)').append('&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>');
-					}
-					
-					if(item.moneyUnit != 'KRW' && (item.krwPrice != null && item.krwPrice != 0)){
-						list.children().eq(2).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.krwPrice));
-					}
-				}
-				
-				if(item.part == 1){
-					list.children().eq(3).html('<span></span><span></span>');
-					
-					if(item.moneyUnit == 'KRW'){
-						list.children().eq(3).find('span:eq(0)').append('<i class="fas fa-won-sign"></i>');
-					}else if(item.moneyUnit == 'EUR'){
-						list.children().eq(3).find('span:eq(0)').append('<i class="fas fa-euro-sign"></i>');
-					}else if(item.moneyUnit == 'CHF'){
-						list.children().eq(3).find('span:eq(0)').append('CHF');
-					}else if(item.moneyUnit == 'GBP'){
-						list.children().eq(3).find('span:eq(0)').append('<i class="fas fa-pound-sign"></i>');
-					}else if(item.moneyUnit == 'CZK'){
-						list.children().eq(3).find('span:eq(0)').append('CZK');
-					}else if(item.moneyUnit == 'HUF'){
-						list.children().eq(3).find('span:eq(0)').append('HUF');
-					}
-					list.children().eq(3).find('span:eq(0)').append('&nbsp;' + makeComma(item.price));
-					
-					if(item.payOption == 2){
-						list.children().eq(3).find('span:eq(0)').append('&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>');
-					}
-					
-					if(item.moneyUnit != 'KRW' && (item.krwPrice != null && item.krwPrice != 0)){
-						list.children().eq(3).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.krwPrice));
-					}
-				}
-				
-				if(item.item != null && item.item != ''){
-					list.children().eq(4).html(item.item);
-				}else{
-					if(item.part == 0){
-						list.children().eq(4).html('예산 추가');
-					}else if(item.part == 1){
-						list.children().eq(4).html('지출 추가');
-					}
-				}
-				
-				if(item.walletImage != null){
-					list.children().eq(5).html('<img src="/resources/images/wallet/' + item.walletImage + '" alt="' + item.category + '" class="rounded-circle">');
-				}else{
-					if(item.category == 0){
-						list.children().eq(5).html('<i class="fas fa-coins"></i>');
-					}else if(item.category == 1){
-						list.children().eq(5).html('<i class="fas fa-utensils"></i>');
-					}else if(item.category == 2){
-						list.children().eq(5).html('<i class="fas fa-shopping-cart"></i>');
-					}else if(item.category == 3){
-						list.children().eq(5).html('<i class="fas fa-landmark"></i>');
-					}else if(item.category == 4){
-						list.children().eq(5).html('<i class="fas fa-plane"></i>');
-					}else if(item.category == 5){
-						list.children().eq(5).html('<i class="fas fa-subway"></i>');
-					}else if(item.category == 6){
-						list.children().eq(5).html('<i class="fas fa-bed"></i>');
-					}else if(item.category == 7){
-						list.children().eq(5).html('<i class="fas fa-skating"></i>');
-					}else if(item.category == 8){
-						list.children().eq(5).html('<i class="fas fa-ellipsis-h"></i>');
-					}
-				}
-			});
-			
-			// 페이징 처리
-			// PREV
-			if(currentPage == 1){
-				$('.paging_wrap ul .left').addClass('disabled');
-			}else{
-				$('.paging_wrap ul .left').removeClass('disabled');
+	// 0으로 나눌 때 생기는 오류 방지
+	if(num.indexOf(zeroStr) != -1){
+		var test = true; // true 또는 false 판단
+		var tempStr = $('#expression').val().substring(num.indexOf(zeroStr) + 2);
+		
+		for(i=0; i<tempStr.length; i++){
+			if(numStr.indexOf(tempStr.charAt(i)) != -1){
+				$('#price').val(eval(num));
+				test = false;
 			}
-			// NEXT
-			if(JSONData.list.length < JSONData.search.pageSize || JSONData.list.length * currentPage == JSONData.totalCount){
-				$('.paging_wrap ul .right').addClass('disabled');
-			}else{
-				$('.paging_wrap ul .right').removeClass('disabled');
+			if(operStr.indexOf(tempStr.charAt(i)) != -1){
+				break;
 			}
 		}
-	});
+		
+		if(test){
+			$('#price').val(0);
+			multiply();
+		}
+	}else{
+		$('#price').val(eval(num));
+		multiply();
+	}
+}
+function backspace() {
+	$('#expression').val($('#expression').val().substring(0, $('#expression').val().length-1));
+	
+	// 다시 계산
+	if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) == -1 || $('#expression').val() == ''){
+		answer($('#expression').val());
+		multiply();
+	}
+}
+function allClear() {
+	$('#expression, #price').val('');
+	multiply();
 }

@@ -68,7 +68,7 @@
 					<c:if test ="${!empty user }"><!-- 로그인 후 -->
 						<div class="col-12 text-center" id="afterLogin">
 							<a href="#">
-								<img src="/resources/images/profile/${user.profileImg }" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 10px;">
+								<img src="/resources/images/profile/${user.profileImg }" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">
 							</a>
 						
 							<div class="row">
@@ -254,7 +254,7 @@
 	  	
 	  	<nav class="navbar">
 <!-- 		    <a href="/" class="navbar"  data-toggle="collapse" data-target="#topbarContent" aria-controls="topbarContent" aria-expanded="false" aria-label="Toggle navigation"> -->
-		    <a href="/" class="navbar">
+		    <a href="/" class="navbar" style="width: 100%; padding-top: 20px; padding-bottom: 35px; border-bottom: 1px solid #cbcbcb;">
 			    <span class="brand main_logo">
 			    	<img src="/resources/images/youloveplan_logo.png" alt="유럽플랜" class="logo_img" style="height: 100px;">
 			    </span>
@@ -263,8 +263,8 @@
 	</div>
 	
 	<!-- 메인 -->
-	<div id="main">
-	  <button class="openbtn" onclick="openNav()">&#9776;</button> 
+	<div id="main" class="gnb_btn">
+	  <button class="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button> 
 	</div>
 	
 	

@@ -7,6 +7,13 @@
 <meta charset="UTF-8">
 <title>회원검색/친구목록</title>
 
+<style>
+/* .friend_click {height: 35px; background-size: cover;background-repeat:no-repeat;background-position: center; margin: 0; padding:0; border: 0;} */
+/* .friend_click span {line-height:35px ;display:inline-block; width: 100%; height:100%; background-color: rgba(255, 255, 255, 0.3)} */
+/* .friend_click span small {font-size: 16px; font-weight: 700; } */
+.friend_click > div::after {content:''; display: block; clear:both;}
+</style>
+
 </head>
 <body>
 <!-- Button trigger modal -->
@@ -42,10 +49,10 @@
        
        <!-- 친구목록 부분 -->
        <div class="friendSearchList" style="display: none; margin-top: 20px">
-    		 <div class="list-group text-center">
-			  <button type="button" class="friendRole list-group-item list-group-item-action">친구 목록</button>
-			  <button type="button" class="friendRole list-group-item list-group-item-action">동행 목록</button>
-			  <button type="button" class="friendRole list-group-item list-group-item-action">일행 목록</button>
+    		 <div class="list-group">
+			  <button type="button" class="friendRole1 list-group-item list-group-item-action text-center">친구 목록</button>
+			  <button type="button" class="friendRole2 list-group-item list-group-item-action text-center">동행 목록</button>
+			  <button type="button" class="friendRole3 list-group-item list-group-item-action text-center">일행 목록</button>
 			</div>
        </div>
        
@@ -72,7 +79,7 @@ $(function(){
 	});
 	
 	
-	$('.friendRole').on('click',function(){
+	$('.friendRole1').on('click',function(){
 		var roleText = $(this).text().trim();
 		var userCode = $('#nodeUserCode').val().trim();
 		
@@ -98,16 +105,48 @@ $(function(){
 				"Content-Type" : "application/json"
 			},
 			success : function(data,status) {
-				alert(data);
+				$.each(data,function(index,item){
+					//alert(item.friendCode.profileImg);
+					
+					$('button[class^=friendRole'+item.friendRole).after(
+					'<div class="friend_click" style="padding-top:10px;">'
+					+'<div><img class="rounded-circle" height="50" width="50" style="float:left; margin-left: 5px;" src="/resources/images/profile/'+item.friendCode.profileImg+'"></img>'
+					+'<div style="float:left; margin-left: 15px;"><strong>'+item.friendCode.nickname+'</strong>'
+					+'<div style="font-size: 13px;">'+item.friendCode.nickname+'&nbsp;&nbsp;<i class="friendMemoEdit far fa-edit" style="color:black;"></i>&nbsp;&nbsp;&nbsp;<i class="far fa-trash-alt"></i></div></div>'
+					+'<div style="float:right;" class="custom-control custom-checkbox">'
+					 +' <input type="checkbox" class="custom-control-input" id="customCheck1">'
+					 +' <label class="custom-control-label" for="customCheck1">선택</label>'
+					+'</div></div>'
+					+'<div class="friendMemoEditForm" style="width:100%; margin-top:5px; display:none;"><input type="text" class="form-control" style="display:inline-block; margin-left: 70px;width:60%;"><span style="width:30%">'
+					+'<button type="button" class="btn btn-outline-warning" style="margin-left:5px; margin-top:-5px;">수정</button></span></div></div>'
+					);
+				})
 			}
 			
 		});// end ajax
 		
 	});
 	
+// 	$('.friendMemoEdit').on('click',function(){
+// 		var color = $(this).css('color');
+// 		alert(color);
+// 		alert("1");
+// 		//$('.friendMemoEditForm').css('display','block');
+// 	})
+	$(document).on("click",".friendMemoEdit",function(){  
 	
-	
-	
+		var color = $(this).css('color');
+		
+		if(color == 'rgb(0, 0, 0)'){
+			//$('.friendMemoEditForm').css('display','none');
+			$(this).parents('div[class^=friend_click]').children().next().css('display','block');
+			$(this).css('color','red');
+		}else {
+			//$('.friendMemoEditForm').css('display','none');
+			$(this).parents('div[class^=friend_click]').children().next().css('display','none');
+			$(this).css('color','black');
+		}
+	});
 	
 	
 	

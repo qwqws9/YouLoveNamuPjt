@@ -37,7 +37,10 @@ margin:0 auto
 	}		
 
 	$(function(){
-		
+		$('#file').on('change',function(){
+	        var fileName = $(this).val();
+	        $(this).next('.custom-file-label').html(fileName);
+	    });
 	    $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
@@ -115,8 +118,10 @@ margin:0 auto
 		    <label for="file" class="control-label col-sm-2">플래너 이미지</label>
 		    <div class="col-sm-4">
 		  <div class="custom-file">
- 		<input type="file" class="custom-file-input" id="file" name="file" value="">
-  		<label class="custom-file-label" for="customFile">Choose file</label>
+ 		 
+			<input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;">
+			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
+	
 		</div>
 		  	  </div>
 		  	  </div>

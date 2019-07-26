@@ -29,7 +29,7 @@
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
 	
 	<script type="text/javascript">
-	$(function() {
+/* 	$(function() {
 
 		$("#plannerName").on("click",function(){
 
@@ -37,8 +37,19 @@
 
 
 	});
+	}); */
+	$(function() {
+		
+		$('.wallet_box .square').on('click', function(e) {
+			var plannerCode = $(this).children(':eq(0)').val();
+			
+			if(plannerCode != null && plannerCode != '' && plannerCode != 0){
+				
+					self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
+				
+			}
+		});
 	});
-		// Toggle
 		
 	</script>
 </head>
@@ -54,14 +65,14 @@
 				<c:forEach var="planner" items="${list}">
 					<c:if test="${planner.departDate >= today}">
 						<div class="square" >
-							<input type="hidden" class="walletCode" />
+							<!-- <input type="hidden" class="walletCode" /> -->
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
 								<c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
 								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
-									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<div id=plannerCode style="display: none">${planner.plannerCode}</div></div>
+									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<%-- <div id=plannerCode style="display: none">${planner.plannerCode}</div> --%></div>
 									<div class="plan_flag">국기</div>
 									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 								<div class="wallet_is">
@@ -88,7 +99,7 @@
 				<c:forEach var="planner" items="${list}">
 					<c:if test="${planner.departDate < today}">
 						<div class="square">
-							<input type="hidden" class="walletCode" />
+							<!-- <input type="hidden" class="walletCode" /> -->
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
 								<c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
@@ -99,7 +110,7 @@
 									<div class="plan_flag">국기  </div> 
 									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 									 <div class="wallet_is">
-										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">
+										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
 											<label class="btn btn-secondary" >
 												<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
 											</label>
