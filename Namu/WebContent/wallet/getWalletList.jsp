@@ -5,14 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- favicon.ico -->
-	<link rel="shortcut icon" href="/resources/images/favicon.ico" />
-	
-	<!-- Required meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>YouLovePlan</title>
+	<jsp:include page="/layout/head.jsp" />
 	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -38,7 +31,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
-	<script type="text/javascript" src="/resources/javascript/wallet_modal.js"></script>
+	<script type="text/javascript" src="/resources/javascript/wallet_ajax.js"></script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>

@@ -263,8 +263,8 @@
 	</div>
 	
 	<!-- 메인 -->
-	<div id="main">
-	  <button class="openbtn" onclick="openNav()">&#9776;</button> 
+	<div id="main" class="gnb_btn">
+	  <button class="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button> 
 	</div>
 	
 	
