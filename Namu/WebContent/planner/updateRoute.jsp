@@ -65,8 +65,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 			var no = td.eq(0).html();
 			var cn = td.eq(1).text(); 
 		/* 	var cn =$("#list_table td input").eq(0).val(); */
-			alert(no);
-			alert(cn);
+			/* alert(no);
+			alert(cn); */
 			  $(this).parent().parent().remove();
 			for (var i = 0; i < myMarkers.length; i++) {
 	            if (myMarkers[i].id == no || myMarkers[i].id == cn) {                
@@ -347,8 +347,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 	 	   }); */
 	 	   
 	        myMarkers.push(myMarker);
-	 	  	alert(path.getLength());
-		    alert(firstMarkers);
+	 	  	/* alert(path.getLength());
+		    alert(firstMarkers); */
 	        
 	       /* $.each(myMarkers,function(index){
 	    	   alert(index+" 번째 "+myMarkers[index].position);

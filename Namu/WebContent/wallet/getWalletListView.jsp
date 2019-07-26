@@ -85,7 +85,7 @@
                      >
                         <div>
                            <div class="plan_name text_shadow">${planner.plannerName}</div>
-                           <div class="plan_flag">국기 제기랄</div>
+                           <div class="plan_flag">국기 들어갈곳</div>
                            <div class="plan_period text_shadow">${planner.departDate} ~</div>
                            <div class="wallet_is">
                               <div class="btn-group btn-group-toggle isWallet" data-toggle="buttons">

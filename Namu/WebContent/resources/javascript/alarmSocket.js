@@ -76,7 +76,7 @@ $(function(){
 	
 	
 	$(document).on('click','.timelinePop_wrap',function(){
-		self.location = '/user/loginView';
+		self.location = '/timeline/getTimelineList';
 	})
 	
 	function notify(data) {
