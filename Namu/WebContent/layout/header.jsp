@@ -68,7 +68,7 @@
 					<c:if test ="${!empty user }"><!-- 로그인 후 -->
 						<div class="col-12 text-center" id="afterLogin">
 							<a href="#">
-								<img src="/resources/images/profile/${user.profileImg }" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 10px;">
+								<img src="/resources/images/profile/${user.profileImg }" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">
 							</a>
 						
 							<div class="row">

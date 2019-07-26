@@ -173,8 +173,8 @@ public class PlannerController {
 	public String getPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
-	int pageUnit = 10;
-	int pageSize = 10;
+	int pageUnit = 30;
+	int pageSize = 30;
 	
 	if(search.getCurrentPage() ==0 ){
 		search.setCurrentPage(1);
