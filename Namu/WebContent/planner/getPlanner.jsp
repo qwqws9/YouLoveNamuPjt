@@ -63,44 +63,19 @@
 		<div class="page-header text-info">
 		<br>
 		<br>
-	       <h3 class=" text-info"> 내플래너  </h3>
+	       <h5 > 내플래너  </h5>
 					
   </div>
 </div>
 
-<div class="container">
+ <div class="container">
 <div class="row">
-<div class="col-md-12 col-lg-12" width="100%">
-      <img class="img-thumbnail" width="60%" style="float:left" src="/resources/images/planner/${planner.plannerImage}" alt="..." height="400" width="700">    
-  		<div width="40%" style="float:left">
-  			<strong>플래너 번호</strong></div>
-			${planner.plannerCode}</div>
-			<div class="row">
-	  	<strong>플래너 이름 </strong></div>
-		${planner.plannerName}</div>
-			<div class="row">
-<!-- <div class="col-md-12 col-lg-12"> -->
-		<strong> 여행멤버 </strong></div>
-		<c:if test="${! empty planner.member && (planner.member eq '1')}">
-		혼자 </c:if>
-		<c:if test="${! empty planner.member && (planner.member eq '2')}">
-		연인과 </c:if>
-		<c:if test="${! empty planner.member && (planner.member eq '3')}">
-		친구들과 </c:if>
-		<c:if test="${! empty planner.member && (planner.member eq '4')}">
-		가족들과 </c:if>
-		
-		<div class="row">
-
-	  <strong> 여행출발일 </strong></div>
-	${planner.departDate}</div>
-			
-			<div class="row">
-	  		<strong>등록일자</strong></div>
-		${planner.regDate}</div>
-	
-  <%-- 
-  <div class="container">
+<div class="col-md-12 col-lg-12" >
+      <img class="img-thumbnail"src="/resources/images/planner/${planner.plannerImage}" alt="..." height="400" width="700">    
+  		
+</div></div>
+</div>
+  <%-- <div class="container">
 <div class="row">
 <div class="col-md-12 col-lg-12">
 <strong>플래너 번호</strong></div>
@@ -108,7 +83,7 @@
 		</div>
 		</div>
 		
-		<hr/>
+		<hr/> --%>
 		<div class="container">
 		<div class="row">
 	  	<div class="col-md-12 col-lg-12"><strong>플래너 이름 </strong></div>
@@ -120,6 +95,7 @@
 <div class="row">
 <div class="col-md-12 col-lg-12">
 		<strong> 여행멤버 </strong></div>
+			<div class="col-md-4" >
 		<c:if test="${! empty planner.member && (planner.member eq '1')}">
 		혼자 </c:if>
 		<c:if test="${! empty planner.member && (planner.member eq '2')}">
@@ -129,26 +105,28 @@
 		<c:if test="${! empty planner.member && (planner.member eq '4')}">
 		가족들과 </c:if>
 		</div>
+		</div></div>
+		<hr/>
+
+	  <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12">
+<strong> 여행출발일 </strong></div>
+			<div class="col-md-4">${planner.departDate}</div>
+		</div>
 		</div>
 		<hr/>
 
 	  <div class="container">
 <div class="row">
 <div class="col-md-12 col-lg-12">
-	  		<div class="col-md-8 "><strong> 여행출발일 </strong></div>
-			<div class="col-md-4">${planner.departDate}</div>
-		</div>
-		</div>
-		<hr/>
-
-		<div class="row">
-	  		<div class="col-md-8 "><strong>등록일자</strong></div>
+	  	<strong>등록일자</strong></div>
 			<div class="col-md-4">${planner.regDate}</div>
 		</div>
   </div>  
   
 		<hr/>
-			 --%>
+		
 <form role="form" method="post">
  <input type="hidden" name="plannerCode" value="${planner.plannerCode}" />
  </form>

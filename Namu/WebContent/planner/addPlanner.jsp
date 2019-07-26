@@ -35,11 +35,11 @@ margin:0 auto
 	 	var plannerName = $("input[name='plannerName']").val();
 		var departDate =$("input[name='departDate']").val();
 		
-		
+		/* 
 		if(plannerName == null || plannerName.length<1){
 			alert("플래너 제목을 입력해주세요.");
 			return;
-		}
+		} */
 	
 		if(departDate == null || departDate.length<1){
 			alert( "여행시작일을 입력해주세요.");
