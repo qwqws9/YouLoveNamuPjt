@@ -207,7 +207,7 @@ public class PlannerController {
 	}
 	
 	@RequestMapping( value="getAllPlannerList")
-	public String getAllPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
+	public String getAllPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
 	 
@@ -230,13 +230,14 @@ public class PlannerController {
 		//map.put("userCode", user);
 		map = plannerService.getAllPlannerList(map);
 		
+		//String cityName= route.getCityName();
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 //		System.out.println(resultPage);
 		
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("today", com.youlove.common.DateFormat.today());
+//		model.addAttribute("today", com.youlove.common.DateFormat.today());
 		System.out.println(search);
 		System.out.println(map.get("list"));
 		return "forward:/planner/getAllPlannerList.jsp";

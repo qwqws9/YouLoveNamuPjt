@@ -29,7 +29,7 @@
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
 	
 	<script type="text/javascript">
-	$(function() {
+/* 	$(function() {
 
 		$("#plannerName").on("click",function(){
 
@@ -37,33 +37,79 @@
 
 
 	});
+	}); */
+	$(function() {
+		
+		$('.wallet_box .square').on('click', function(e) {
+			var plannerCode = $(this).children(':eq(0)').val();
+			
+			if(plannerCode != null && plannerCode != '' && plannerCode != 0){
+				
+					self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
+				
+			}
+		});
 	});
-		// Toggle
 		
 	</script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
+	<!--  Search  -->
+	
+<form class="form-inline" name="detailForm">
+<div class="row">
+<div class="col-md-6 text-left">
+<p class="text-primary">전체  ${resultPage.totalCount } 건, 현재
+${resultPage.currentPage} 페이지</p>
+</div>
+
+<div class="col-md-6 text-right">
+
+
+<div class="form-group">
+<label class="sr-only" for="searchKeyword">검색</label> <input
+type="text" class="form-control" id="searchKeyword"
+name="searchKeyword" placeholder="검색어"
+value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+</div>
+
+<button type="button" class="btn btn-default">Search</button>
+<br><br>
+
+</div>
+
+
+<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+<input type="hidden" id="currentPage" name="currentPage" value="" />
+
+</form>
+
+<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+<br>
+<br>
+	
+	
 	<div class="wrap">
-		<h2 class="wallet_title"><span> 플래너 목록</span></h2>
+		<h2 class="wallet_title"><span>내 플래너 목록</span></h2>
 		
 		<section class="wallet_box">
 			<h3>다가오는 여행</h3>
 			<div class="square_wrap clear">
 				<c:forEach var="planner" items="${list}">
-					<c:if test="${planner.departDate >= today}">
+					<%-- <c:if test="${planner.departDate >= today}"> --%>
 						<div class="square" >
-							<input type="hidden" class="walletCode" />
+							<!-- <input type="hidden" class="walletCode" /> -->
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
 							<div
 								<c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
 								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
-									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<div id=plannerCode style="display: none">${planner.plannerCode}</div></div>
+									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<%-- <div id=plannerCode style="display: none">${planner.plannerCode}</div> --%></div>
 									<div class="plan_flag">국기</div>
-									<div class="plan_period text_shadow">${planner.departDate} ~</div>
+									<div class="plan_period text_shadow">${planner.departDate} ~ </div>
 								<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
 											<label class="btn btn-secondary">
@@ -77,44 +123,15 @@
 								</div>
 							</div>
 						</div><!-- //square -->
-					</c:if>
+					<%-- </c:if> --%>
 				</c:forEach>
 			</div><!-- //square_wrap -->
 		</section><!-- //wallet_box -->
 		
-		<section class="wallet_box">
-			<h3>지난 여행</h3>
-			<div class="square_wrap clear">
-				<c:forEach var="planner" items="${list}">
-					<c:if test="${planner.departDate < today}">
-						<div class="square">
-							<input type="hidden" class="walletCode" />
-							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
-							<div
-								<c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
-								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
-							>
-								<div>
-									<div class="plan_name text_shadow">${planner.plannerName}</div>
-									<div class="plan_flag">  </div> 
-									<div class="plan_period text_shadow">${planner.departDate} ~</div>
-									 <div class="wallet_is">
-										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
-											<label class="btn btn-secondary" >
-												<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
-											</label>
-											<label class="btn btn-secondary active">
-												<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
-											</label>
-										</div>
-									</div> --><!-- //wallet_is -->
-								</div>
-							</div>
-						</div><!-- //square -->
-					</c:if>
-				</c:forEach>
-			</div><!-- //square_wrap -->
-		</section><!-- //wallet_box -->
-	</div><!-- //wrap -->
+		
+		
+		
+		
+		</div>
 </body>
 </html>
