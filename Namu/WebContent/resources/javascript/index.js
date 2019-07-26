@@ -55,7 +55,8 @@ $(function(){
 			success : function(data,status){
 				//alert(data);
 				
-				$('.weatherImg').attr('src','http://openweathermap.org/img/wn/'+data.icon+'@2x.png');
+//				$('.weatherImg').attr('src','http://openweathermap.org/img/wn/'+data.icon+'@2x.png');
+				$('.weatherImg').attr('src','/resources/images/weather/'+data.icon+'.png').attr('alt','/resources/images/weather/04d.png');
 				$('.mainTemp').text(data.temp);
 				//$('.mainMinMaxTemp').text(data.tempMin+'/'+data.tempMax);
 				$('.mainMinMaxTemp span:first-child').text(data.tempMin);
