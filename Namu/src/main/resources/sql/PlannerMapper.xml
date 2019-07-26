@@ -73,7 +73,7 @@
 	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
-		planner_code, planner_ver, planner_name, planner_image, DEPART_DATE, member, privacy
+		planner_code, planner_ver, planner_name, planner_image, DEPART_DATE, member, privacy, reg_Date
 		FROM planner
 		WHERE planner_code =#{value}
 	 </select>
@@ -112,9 +112,71 @@ SELECT *
 SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(
-	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname 
-	  					FROM planner p, users u 
-	  					where p.planner_writer =u.user_code
+	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
+	  					FROM planner p, users u
+	  					<if test="searchKeyword != null ">		
+	 						, route r 
+	  					</if>
+	  					<!-- <if test="searchMember=='1'">
+	  					p.planner_writer =u.user_code and p.member='1'
+	  					</if>
+	  					<if test="searchMember=='2'">
+	  					p.planner_writer =u.user_code and p.member='2'
+	  					</if>
+	  					<if test="searchMember=='3'">
+	  					p.planner_writer =u.user_code and p.member='3'
+	  					</if>
+	  					<if test="searchMember=='4'">
+	  					p.planner_writer =u.user_code and p.member='4'
+	  					</if>
+	  					<if test="searchDate=='1'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='01'
+	  					 </if>
+	  					 <if test="searchDate=='2'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='02'
+	  					 </if>
+	  					 <if test="searchDate=='3'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='03'
+	  					 </if>
+	  					 <if test="searchDate=='4'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='04'
+	  					 </if>
+	  					 <if test="searchDate=='5'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='05'
+	  					 </if>
+	  					 <if test="searchDate=='6'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='06'
+	  					 </if>
+	  					 <if test="searchDate=='7'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='07'
+	  					 </if>
+	  					 <if test="searchDate=='8'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='08'
+	  					 </if>
+	  					 <if test="searchDate=='9'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='09'
+	  					 </if>
+	  					 <if test="searchDate=='10'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='10'
+	  					 </if>
+	  					 <if test="searchDate=='11'">
+	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='11'
+	  					 </if>
+	  					 <if test="searchDate=='12'">
+	  					 p.planner_writer =u.user_code 
+	  					and SUBSTR(p.depart_date ,5,2) ='12'
+	  					 </if> -->
+					
+					<where>
+						
+	  					p.planner_writer =u.user_code 
+	  			
+	  				
+	  					<if test="searchKeyword != null ">		
+	  						AND p.planner_code= r.planner_code
+	  						and r.city_name = #{search.searchKeyword}
+	  					 </if> 
+	  					 </where>
 	  					 ORDER BY p.planner_code DESC 
 	  						) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
@@ -132,14 +194,27 @@ SELECT *
 	 </select>
 	 
 	<select  id="getAllTotalCount" parameterType="map" resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname 
-	  					FROM planner p, users u 
-	  					where p.planner_writer =u.user_code
-	  					 ORDER BY p.planner_code DESC 
-	  						) inner_table				
-	 </select>
-	 
+	  SELECT COUNT(*)
+	  	FROM (	
+	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
+	  					FROM planner p, users u
+	  						<where>
+						
+	  					p.planner_writer =u.user_code 
+	  					
+	  				
+	  					<if test="searchKeyword != null ">		
+	  					AND p.planner_code= r.planner_code	
+	  					and r.city_name =#{search.searchKeyword}
+	  			 
+	  					 </if> 
+	  					 </where>
+	  					 ORDER BY planner_code DESC 
+	  						) countTable	 
+			  <!-- 	 SELECT COUNT(*)
+		FROM planner -->
+	</select>
+	 		
 		
 		<!-- 2. route -->
 	 	
@@ -163,8 +238,8 @@ SELECT *
 		city_name ,city_order, stay_day, start_Date,end_Date, lat, lng
 	  	FROM route 
 	  	<where>
-	  	planner_code = #{plannerCode}  <!-- and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route)   -->
+	  	planner_code = #{plannerCode}  and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  
 		</where>
 	  </select>			
 	  				
@@ -172,9 +247,9 @@ SELECT *
 		SELECT city_name
 		FROM  route 
 		<where>
-	  	planner_code = #{plannerCode}   <!-- and
+	  	planner_code = #{plannerCode}  and
 	  	planner_ver=(SELECT MAX(planner_ver) FROM route) 
- -->
+
 		</where>
 	 </select>
 	 
@@ -182,8 +257,8 @@ SELECT *
 		SELECT lat
 		FROM  route 
 		<where>
-	  	planner_code = #{plannerCode}  <!--  and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  -->
+	  	planner_code = #{plannerCode}   and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  
 		</where>
 	 </select>
 	 
@@ -191,8 +266,8 @@ SELECT *
 		SELECT lng
 		FROM  route 
 		<where>
-	  	planner_code = #{plannerCode}  <!-- and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route) -->  
+	  	planner_code = #{plannerCode}   and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  
 		</where>
 	 </select>			
 	
@@ -235,8 +310,8 @@ SELECT *
 		sche_code, sche_day, sche_name, color
 	  	FROM schedule
 	  	<where>
-	  	planner_code = #{plannerCode}  <!-- and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM schedule)  -->
+	  	planner_code = #{plannerCode}  and
+	  	planner_ver=(SELECT MAX(planner_ver) FROM schedule)  
 		</where>
 			</select>
 			

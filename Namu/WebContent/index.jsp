@@ -3,14 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- favicon.ico -->
-	<link rel="shortcut icon" href="/resources/images/favicon.ico" />
-	
-	<!-- Required meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<title>YouLovePlan</title>
+	<jsp:include page="/layout/head.jsp" />
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	
@@ -54,16 +47,16 @@
 			<div class="col-sm-4">
 				<div class="card" style="height: 335px;">
 					<div class="card-body">
-						<h5 class="weatherCity card-title" style="margin-bottom: 0; font-weight: 700; line-height: 30px;">날씨</h5>
+						<h5 class="weatherCity card-title" style="margin-bottom: 15px; font-weight: 700; line-height: 30px;">날씨</h5>
 						<div style="text-align: center;">
-							<img class="weatherImg" src="http://openweathermap.org/img/wn/10d@2x.png">
-							<h3 class="mainTemp" style="margin-top: 5px;">27도</h3>
-							<p class="mainMinMaxTemp card-text" style="margin-top: 10px; font-size: 18px;">
+							<img class="weatherImg" src="/resources/images/weather/01d.png" height="70px">
+							<h3 class="mainTemp" style="margin-top: 15px;">27도</h3>
+							<p class="mainMinMaxTemp card-text" style="margin-top: 12px; font-size: 18px;">
 								<span style="color: #30a9de;">27도</span> / <span style="color: #f2c029;">32도</span>
 							</p>
-							<p class="humidity card-text">80%</p>
+							<p style="margin-top: -5px;"><span style="color: #30a9de;"><i class="fas fa-tint"></i></span>&nbsp;&nbsp;<span class="humidity card-text">80%</span></p>
 						</div>
-						<button class="btn btn-outline-primary" id="callCountry">도시 선택</button>
+						<button class="btn btn-outline-primary" id="callCountry" style="margin-top: 0;">도시 선택</button>
 					</div>
 				</div>
 			</div>
@@ -104,7 +97,6 @@
 	</script> -->
 
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
-	<jsp:include page="/user/getFriend.jsp"></jsp:include>
 
 </body>
 </html>

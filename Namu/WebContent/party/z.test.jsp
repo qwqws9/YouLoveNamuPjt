@@ -459,11 +459,11 @@
 		
 		
 		map.on('load', function(e) {
-			  // Add the data to your map as a layer
+			  // map에 데이터 추가
 			  map.addLayer({
 			    id: 'locations',
 			    type: 'symbol',
-			    // Add a GeoJSON source containing place coordinates and information.
+			    // 장소좌표와 정보가 포함된 GeoJSON 소스추가
 			    source: {
 			      type: 'geojson',
 			      data: stores
@@ -473,14 +473,14 @@
 			      'icon-allow-overlap': true,
 			    }
 			  });
-			  //Initialize the list
+			  //목록 초기화
 			  buildLocationList(stores);
 			  
-			});
+		});
 		
-		// Add an event listener for when a user clicks on the map
+		//지도 클릭시 인베트 리스너 추가
 		map.on('click', function(e) {
-		  // Query all the rendered points in the view
+		  // 뷰에서 렌더링된 모든 점을 쿼리
 		  var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
 		  if (features.length) {
 		    var clickedPoint = features[0];
@@ -527,11 +527,11 @@
 		}
 		
 		function buildLocationList(data) {
-			  // Iterate through the list of stores
+			  // 데이터 뽑기
 			  for (i = 0; i < data.features.length; i++) {
 			    var currentFeature = data.features[i];
-			    // Shorten data.feature.properties to `prop` so we're not
-			    // writing this long form over and over again.
+			    
+			    
 			    var prop = currentFeature.properties;
 			    // Select the listing container in the HTML and append a div
 			    // with the class 'item' for each store
@@ -555,26 +555,30 @@
 			    if (prop.phone) {
 			      details.innerHTML += ' · ' + prop.phoneFormatted;
 			    }
+			    
+				// Add an event listener for the links in the sidebar listing
+				link.addEventListener('click', function(e) {
+				  // Update the currentFeature to the store associated with the clicked link
+				  var clickedListing = data.features[this.dataPosition];
+				  // 1. Fly to the point associated with the clicked link
+				  flyToStore(clickedListing);
+				  // 2. Close all other popups and display popup for clicked store
+				  createPopUp(clickedListing);
+				  // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+				  var activeItem = document.getElementsByClassName('active');
+				  if (activeItem[0]) {
+				    activeItem[0].classList.remove('active');
+				  }
+				  this.parentNode.classList.add('active');
+				});
+				
+			    
+			    
+			    
 			  }
 			}
 		
 			
-			
-			// Add an event listener for the links in the sidebar listing
-			link.addEventListener('click', function(e) {
-			  // Update the currentFeature to the store associated with the clicked link
-			  var clickedListing = data.features[this.dataPosition];
-			  // 1. Fly to the point associated with the clicked link
-			  flyToStore(clickedListing);
-			  // 2. Close all other popups and display popup for clicked store
-			  createPopUp(clickedListing);
-			  // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-			  var activeItem = document.getElementsByClassName('active');
-			  if (activeItem[0]) {
-			    activeItem[0].classList.remove('active');
-			  }
-			  this.parentNode.classList.add('active');
-			});
 			
 			
 	</script>

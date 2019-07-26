@@ -14,11 +14,14 @@
 </head> 
 <body>
 
-<label class="sr-only" for="searchKeyword"> 도시명 </label> 
+<%-- <label class="sr-only" for="searchKeyword"> 도시명 </label> 
 <input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-
+ --%>
 <form name="multiForm" id="multiForm" action="/planner/addRoute" method="post">
+	<div class="container">
+		<div class="row">
+	  	<div class="col-md-12 col-lg-12">
 <table border="1" id="list_table">
 	<colgroup>
 		<col style="width:70px;">
@@ -42,7 +45,9 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 	</tbody>
 
 	    	 </table>
-	    	 
+	    	 </div>
+	    	 </div>
+	    	 </div>
 	    	</form>
 		<script type="text/javascript">	
 
@@ -126,7 +131,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
  	dataType : "json",
- 	 async:true,
+ 	 async:false,
  	headers : {
  	"Accept" : "application/json",
  	"Content-Type" : "application/json"
@@ -148,7 +153,7 @@ $('#list_table').on("click", ".deletebtn", function () {
   	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
   	dataType : "json",
-  	 async:true,
+  	 async:false,
   	headers : {
   	"Accept" : "application/json",
   	"Content-Type" : "application/json"
@@ -166,7 +171,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
    	dataType : "json",
-    async:true,
+    async:false,
    	headers : {
    	"Accept" : "application/json",
    	"Content-Type" : "application/json"
@@ -182,7 +187,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	  	url:"/planner/json/getRouteList/"+plannerCode,
    		method : "GET" ,
         dataType : "json",
-        async:true,
+        async:false,
         headers : {
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"

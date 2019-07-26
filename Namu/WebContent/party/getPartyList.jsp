@@ -312,26 +312,29 @@
 		})
 		
 		
-		
+		if (!('remove' in Element.prototype)) {
+		  Element.prototype.remove = function() {
+		    if (this.parentNode) {
+		      this.parentNode.removeChild(this);
+		    }
+		  };
+		}
 		
 		
 		mapboxgl.accessToken = 'pk.eyJ1Ijoia29zNTY2NyIsImEiOiJjanlmeDF5dHMwZXFrM25waDY0Nm9kY2o3In0.bXrnQ0ZqZ2ul0OdF-SzW0w';
 		
-		var party = {
-				type: 'FeatureCollection',
-				features: [
-					{
-					type: 'Feature',
-					geometry: {type: 'Point', coordinates: [11,11]},
-					properties:{ title: 'Mapbox', description: 'Washington, D.C.' }
-					}
-				]
-		};
+		
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/mapbox/streets-v10',
+			center: [4.17 , 48.13],
+			zoom: 4,
+		});
 		
 		
-		var geojson;
 		var geo;
-		
+		var geojson;
+		var json = new Array();
 		$.ajax({
 			url : "/party/json/getPartyList",
 		    method : "POST",
@@ -345,30 +348,43 @@
      		},
      		success : function(JSONData, status){
      			$.each(JSONData.list,function(index,item){
-					party = JSON.parse(JSON.stringify(item));
+					//party = JSON.parse(JSON.stringify(item));
+     				//console.log(party);
      				
-     				//debugger;
+     				//$.each(party,function(index,party){
      				geo = {type: 'Feature',
-				    		geometry: {type: 'Point', coordinates: [party.latitude, party.longitude]},
-				    		properties: { title: party.partyTitle, description: party.partyContent }}
+				    		geometry: {type: 'Point', coordinates: [item.latitude, item.longitude]},
+				    		properties: { 
+				    			writer: item.partyWriter.nickname,
+				    			writerProfileImg: item.partyWriter.profileImg,
+				    			partyCode: item.partyCode,
+						    	partyTitle: item.partyTitle,
+						    	partyContent: item.partyContent,
+						    	regDate: item.regDate,
+						    	partyStart: item.partyStart,
+						    	partyEnd: item.partyEnd,
+						    	partyRecruitment: item.partyRecruitment,
+						    	gender: item.gender,
+						    	country: item.city.countryName,
+						    	city: item.city.cityName,
+						    	flag: item.city.flagImage
+				    		}};
+     				json.push(geo);
+     				//});
      				
-     				
-					//console.log(party.age);
      			});
+				//console.log(geo);
      			//date of markers
 				geojson = {
 						  type: 'FeatureCollection',
-						  features: [
-								{	type: 'Feature',
-							    	geometry: {type: 'Point', coordinates: [-77.032, 38.913] },
-							    	properties: { title: 'Mapbox', description: 'Washington, D.C.' }},
-							    	geo
-							  ]
-							};
-				console.log(geojson);
+						  features: json
+				};
+     			
+     			
+				//console.log(geojson);
 				//add markers on map
 				geojson.features.forEach(function(marker) {
-			  	  	// create a HTML element for each feature
+			  	  	//HTML 만들기
 			  		var el = document.createElement('div');
 			  	 	el.className = 'marker';
 
@@ -379,8 +395,21 @@
 			 		// make a popup
 			  	  	new mapboxgl.Marker(el)
 						.setLngLat(marker.geometry.coordinates)
-						.setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-						.setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+						.setPopup(new mapboxgl.Popup({ offset: 25 })
+						.setHTML('<h3>' + marker.properties.writer + '</h3>'
+								 +'<p>' + marker.properties.writerProfileImg + '</p>'
+								 +'<p>' + marker.properties.partyCode + '</p>'
+								 +'<p>' + marker.properties.partyTitle + '</p>'
+								 +'<p>' + marker.properties.partyContent + '</p>'
+								 +'<p>' + marker.properties.regDate + '</p>'
+								 +'<p>' + marker.properties.partyStart + '</p>'
+								 +'<p>' + marker.properties.partyEnd + '</p>'
+								 +'<p>' + marker.properties.partyRecruitment + '</p>'
+								 +'<p>' + marker.properties.gender + '</p>'
+								 +'<p>' + marker.properties.country + '</p>'
+								 +'<p>' + marker.properties.city + '</p>'
+								 +'<p>' + marker.properties.flag + '</p>'
+								 ))
 						.addTo(map);
 			 	})
      		},
@@ -390,14 +419,6 @@
     		}
 		});
 		
-		
-		
-		var map = new mapboxgl.Map({
-		container: 'map',
-		style: 'mapbox://styles/mapbox/streets-v10',
-		center: [4.17 , 48.13],
-		zoom: 4,
-		});
 		
 		//mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.1.0/mapbox-gl-rtl-text.js');
 		//language
