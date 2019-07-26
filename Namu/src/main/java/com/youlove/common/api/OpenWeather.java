@@ -51,7 +51,7 @@ public class OpenWeather {
 //		System.out.println("아이콘 가져오자"+array.get(0));
 		JSONObject json2 = (JSONObject)array.get(0);
 		
-		System.out.println(json2.get("icon"));
+		System.out.println("_"+json2.get("icon")+"_");
 		
 		weather.setIcon((String)json2.get("icon"));
 		

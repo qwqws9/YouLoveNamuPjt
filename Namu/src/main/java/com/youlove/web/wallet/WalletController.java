@@ -84,7 +84,7 @@ public class WalletController {
 		int pageSize = 5;
 		
 		Search search = new Search();
-		search.setCurrentPage(1);
+		search.setCurrentPage(5);
 		search.setPageSize(pageSize);
 		System.out.println(search);
 		
