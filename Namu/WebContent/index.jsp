@@ -56,7 +56,7 @@
 					<div class="card-body">
 						<h5 class="weatherCity card-title" style="margin-bottom: 0; font-weight: 700; line-height: 30px;">날씨</h5>
 						<div style="text-align: center;">
-							<img class="weatherImg" src="http://openweathermap.org/img/wn/10d@2x.png">
+							<img class="weatherImg" src="/resources/images/weather/01d.png">
 							<h3 class="mainTemp" style="margin-top: 5px;">27도</h3>
 							<p class="mainMinMaxTemp card-text" style="margin-top: 10px; font-size: 18px;">
 								<span style="color: #30a9de;">27도</span> / <span style="color: #f2c029;">32도</span>

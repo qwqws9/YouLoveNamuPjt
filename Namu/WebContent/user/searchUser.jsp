@@ -43,9 +43,9 @@
        <!-- 친구목록 부분 -->
        <div class="friendSearchList" style="display: none; margin-top: 20px">
     		 <div class="list-group text-center">
-			  <button type="button" class="friendRole list-group-item list-group-item-action">친구 목록</button>
-			  <button type="button" class="friendRole list-group-item list-group-item-action">동행 목록</button>
-			  <button type="button" class="friendRole list-group-item list-group-item-action">일행 목록</button>
+			  <button type="button" class="friendRole1 list-group-item list-group-item-action">친구 목록</button>
+			  <button type="button" class="friendRole2 list-group-item list-group-item-action">동행 목록</button>
+			  <button type="button" class="friendRole3 list-group-item list-group-item-action">일행 목록</button>
 			</div>
        </div>
        
@@ -98,7 +98,14 @@ $(function(){
 				"Content-Type" : "application/json"
 			},
 			success : function(data,status) {
-				alert(data);
+				$.each(data.friendCode,function(index,item){
+					
+					$('button[class^=friendRole'+data.friendRole).after(
+					'<button type="button" class="list-group-item list-group-item-action">'
+					+'<small>'+item.nickname+'</small>'
+					+'</button>'
+					);
+				})
 			}
 			
 		});// end ajax
