@@ -14,7 +14,7 @@
 
 </head> 
 <body>
-	<header><jsp:include page="/layout/header.jsp" /></header>
+	<%-- <header><jsp:include page="/layout/header.jsp" /></header> --%>
 <%-- <label class="sr-only" for="searchKeyword"> 도시명 </label> 
 <input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
@@ -42,14 +42,15 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 		</tr>
 	</thead>
 	<tbody>
-
+ 
 	</tbody>
- <input type="submit" id="mul_input_submit" name="mul_input_submit" />
-
+ 
 	    	 </table>
 	    	 </div>
 	    	 </div>
 	    	 </div>
+	    	 <input type="submit" id="mul_input_submit" name="mul_input_submit" />
+	    	 
 	    	</form>
 		<script type="text/javascript">	
 
@@ -62,9 +63,10 @@ $('#list_table').on("click", ".deletebtn", function () {
 		var tr = deletebtn.parent().parent();
 			var td = tr.children();
 			var no = td.eq(0).html();
-			var cn = td.eq(1).text();
-			alert(no);
-			
+			var cn = td.eq(1).text(); 
+		/* 	var cn =$("#list_table td input").eq(0).val(); */
+			/* alert(no);
+			alert(cn); */
 			  $(this).parent().parent().remove();
 			for (var i = 0; i < myMarkers.length; i++) {
 	            if (myMarkers[i].id == no || myMarkers[i].id == cn) {                
@@ -80,11 +82,11 @@ $('#list_table').on("click", ".deletebtn", function () {
 </script>
 
   <div id="map" style="width: 1200px; height: 700px;"></div>
-	<div id="floating-panel">
+	 <div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
-    </div>
+    </div> 
   <script>
   var locations = ['런던','파리','니스','프랑크푸르트','베를린','로마','베니스','바르셀로나','마드리드','부다페스트'];
   var locationLat = ['51.5073509','48.856614','43.7101728','50.1109221','52.52000659999999','41.9027835','45.4408474','41.3850639','40.4167754','47.497912'];
@@ -130,6 +132,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
  	dataType : "json",
+ 	 async:false,
  	headers : {
  	"Accept" : "application/json",
  	"Content-Type" : "application/json"
@@ -151,6 +154,7 @@ $('#list_table').on("click", ".deletebtn", function () {
   	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
   	dataType : "json",
+  	 async:false,
   	headers : {
   	"Accept" : "application/json",
   	"Content-Type" : "application/json"
@@ -168,6 +172,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
    	dataType : "json",
+    async:false,
    	headers : {
    	"Accept" : "application/json",
    	"Content-Type" : "application/json"
@@ -196,11 +201,19 @@ $('#list_table').on("click", ".deletebtn", function () {
         	   $(JSONData).each(function(data,value) {
         		   
             	displayValue += ('<tr>');                
-            	displayValue += ('<td>'+''+'</td>');
-            	displayValue += ('<td>'+"<input name='cityName' type='text' id='cityName' value=' "+ value.city+ "'>"+'</td>');
-            	displayValue += ('<td>'+"<input name='cityName' type='text' id='lat' value=' "+value.lat+"'>"+'</td>');
-            	displayValue += ('<td>'+"<input name='cityName' type='text' id='lng' value=' "+value.lng+"'>"+'</td>');    
-            	displayValue += ('<td>'+"<select><option name='stayDay' value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
+              displayValue += ('<td>'+''+'</td>');  
+   			displayValue += ('<td style="display:none">'+value.city+'</td>'); 
+
+   			/* displayValue += ('<td>'+value.city+'</td>'); 
+ */
+            	 displayValue += ('<td>'+"<input name='cityName'  type='text' value='"+ value.city+ "'>"+'</td>'); 
+            	/* displayValue += ('<td>'+$("#tbl tr td input").eq(1).val() */
+            /* 	displayValue += ('<td style="display:none">'+value.city+'</td>');  */
+				/* displayValue += ('<td>'+value.lat+'</td>');
+            	displayValue += ('<td>'+value.lng+'</td>');    */ 
+            	 displayValue += ('<td>'+"<input name='lat' type='text' value=' "+value.lat+"'>"+'</td>');
+            	displayValue += ('<td>'+"<input name='lng' type='text' value=' "+value.lng+"'>"+'</td>');     
+            	displayValue += ('<td>'+"<select name='stayDay' ><option value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
             	displayValue += ('<td>'+"<input class='deletebtn' type='button' value = 'delete' id='delete' />"+'</td>');  
             	//displayValue += ('</tr>');                                    
             /* //}); */});
@@ -293,7 +306,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 		        position: new google.maps.LatLng(routeLat[i], routeLng[i]),
 		        map: map,
 		        id:route[i],
-		        zIndex: 101
+		        zIndex: 201
 		      
 		      });     
 		
@@ -322,7 +335,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 	          position: event.latLng,
 	         // title: '#' + path.getLength(),
 	         // id:path.getLength(),
-	          map: map 
+	          map: map,
+	          zIndex: 205
 	        });
 	        
 	 	 	myMarker.id=uniqueId;
@@ -333,8 +347,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 	 	   }); */
 	 	   
 	        myMarkers.push(myMarker);
-	 	  	alert(path.getLength());
-		    alert(firstMarkers);
+	 	  	/* alert(path.getLength());
+		    alert(firstMarkers); */
 	        
 	       /* $.each(myMarkers,function(index){
 	    	   alert(index+" 번째 "+myMarkers[index].position);
@@ -347,11 +361,11 @@ $('#list_table').on("click", ".deletebtn", function () {
 		   $('#list_table').append(
 					$('<tr>').append(
 						$('<td>').append(""+myMarker.id),
-						//$('<td>').append(""+index),
-						$('<td>').append("<input name='cityName' type='text' id='cityName' value="+array[path.getLength()-1]+" readonly>"),    
-						$('<td>').append( "<input name='lat' type='text' id='lat' value="+myMarker.position.lat()+" readonly>"),
-						$('<td>').append( "<input name='lng' type='text' id='lng' value="+(myMarker.position.lng()).toFixed(6)+" readonly>"),
-						$('<td>').append( "<select name='stayDay' id='stayDay'><option value='1' selected='selected'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"),
+						/* $('<td style="display:none">').append(""), */
+						$('<td>').append("<input name='cityName'  type='text' value="+array[path.getLength()-1]+" readonly>"),    
+						$('<td>').append( "<input name='lat' type='text' value="+myMarker.position.lat()+" readonly>"),
+						$('<td>').append( "<input name='lng' type='text' value="+(myMarker.position.lng()).toFixed(6)+" readonly>"),
+						$('<td>').append( "<select name='stayDay' ><option value='1' selected='selected'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"),
 						$('<td>').append(
 								 "<input class='deletebtn' type='button' value = 'delete' id='delete' />")
 					)

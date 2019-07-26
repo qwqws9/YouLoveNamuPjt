@@ -6,8 +6,8 @@
 <head>
 	<meta charset="utf-8">
 	<!-- 타임라인을 위한 노드 서버 연결 -->
-<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
-<!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
+	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script>
+	<script src="/resources/javascript/alarmSocket.js"></script>
 	<!-- 지우지 말것...... -->
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
@@ -68,7 +68,7 @@
 					<c:if test ="${!empty user }"><!-- 로그인 후 -->
 						<div class="col-12 text-center" id="afterLogin">
 							<a href="#">
-								<img src="/resources/images/profile/${user.profileImg }" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 10px;">
+								<img src="/resources/images/profile/${user.profileImg }" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">
 							</a>
 						
 							<div class="row">

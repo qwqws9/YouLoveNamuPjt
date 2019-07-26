@@ -45,8 +45,8 @@ public class WalletController {
 
 		System.out.println("/wallet/getWalletListView :: GET");
 		
-		int pageUnit = 10;
-		int pageSize = 10;
+		int pageUnit = 30;
+		int pageSize = 30;
 		
 		Search search = new Search();
 		search.setCurrentPage(1);

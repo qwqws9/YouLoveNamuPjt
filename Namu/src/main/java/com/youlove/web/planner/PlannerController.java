@@ -173,8 +173,8 @@ public class PlannerController {
 	public String getPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
-	int pageUnit = 10;
-	int pageSize = 10;
+	int pageUnit = 30;
+	int pageSize = 30;
 	
 	if(search.getCurrentPage() ==0 ){
 		search.setCurrentPage(1);
@@ -378,13 +378,18 @@ public class PlannerController {
 		System.out.println(cityNames.length+"번 addRoute !!!!!!");
 		
 		route.setCityName(cityNames[i]);
+		System.out.println(cityNames[i]);
 		route.setLat(lats[i]);
+		System.out.println(lats[i]);
 		route.setLng(lngs[i]);
 		route.setCityOrder(i+1);
+		
 		route.setStayDay(Integer.parseInt(stayDays[i]));
+		System.out.println(Integer.parseInt(stayDays[i]));
 		//String startDate = dateFormat.format(cal.getTime());
 		//cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
 		//String endDate = dateFormat.format(cal.getTime());
+		
 		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
 		route.setEndDate(cal.getTime());
