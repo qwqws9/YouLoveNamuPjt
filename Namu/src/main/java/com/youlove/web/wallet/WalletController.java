@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,7 +83,7 @@ public class WalletController {
 		int pageSize = 5;
 		
 		Search search = new Search();
-		search.setCurrentPage(5);
+		search.setCurrentPage(1);
 		search.setPageSize(pageSize);
 		System.out.println(search);
 		

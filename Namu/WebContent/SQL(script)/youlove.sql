@@ -323,30 +323,31 @@ ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES u
 
 
 CREATE TABLE wallet ( 
-   w_code			NUMBER(10)		NOT NULL,
-   planner_code		NUMBER(10)		NOT NULL		REFERENCES planner(planner_code),
-   PRIMARY KEY(w_code)
+	w_code						NUMBER(10)			NOT NULL,
+	planner_code				NUMBER(10)			NOT NULL		REFERENCES planner(planner_code),
+	is_wallet					CHAR(1)				DEFAULT 0,
+	PRIMARY KEY(w_code)
 );
 
 
 
 CREATE TABLE wallet_detail ( 
-   w_detail_code		NUMBER(10)		NOT NULL,
-   w_main_code		NUMBER(10)		NOT NULL		REFERENCES wallet(w_code),
-   part			CHAR(1)			NOT NULL,
-   money_unit		VARCHAR2(30)		NOT NULL,
-   expression		VARCHAR2(30)		NOT NULL,
-   price			NUMBER(15, 2)		NOT NULL,
-   krw_price		NUMBER(15, 2)		NOT NULL,
-   reg_date		VARCHAR2(20)		NOT NULL,
-   item			VARCHAR2(100),
-   content			VARCHAR2(2000),
-   pay_option		CHAR(1)			DEFAULT 0,
-   exchange_rate		NUMBER(10, 2),
-   category		CHAR(1)			DEFAULT 0,
-   w_image		VARCHAR2(1000),
-   payer			NUMBER(10),
-   PRIMARY KEY(w_detail_code)
+	w_detail_code				NUMBER(10)			NOT NULL,
+	w_code						NUMBER(10)			NOT NULL		REFERENCES wallet(w_code),
+	part						CHAR(1)				NOT NULL,
+	money_unit					VARCHAR2(30)		NOT NULL,
+	expression					VARCHAR2(30)		NOT NULL,
+	price						NUMBER(15, 2)		NOT NULL,
+	krw_price					NUMBER(15, 2)		NOT NULL,
+	reg_date					VARCHAR2(20)		NOT NULL,
+	item						VARCHAR2(50),
+	content						VARCHAR2(150),
+	pay_option					CHAR(1)				DEFAULT 0,
+	exchange_rate				NUMBER(10, 2),
+	category					CHAR(1)				DEFAULT 0,
+	w_image						VARCHAR2(1000),
+	payer						NUMBER(10),
+	PRIMARY KEY(w_detail_code)
 );
 
 
@@ -486,10 +487,10 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S
 
 
 
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1, 0);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2, 0);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3, 0);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4, 0);
 
 
 commit;

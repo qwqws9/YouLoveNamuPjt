@@ -55,7 +55,7 @@
 		</div>
 		
 		<div class="item">
-			<input type="text" name="item" placeholder="항목명을 기입해주세요." />
+			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20" />
 		</div>
 		
 		<div class="option_wrap clear">

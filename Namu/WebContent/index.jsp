@@ -47,11 +47,11 @@
 			<div class="col-sm-4">
 				<div class="card" style="height: 335px;">
 					<div class="card-body">
-						<h5 class="weatherCity card-title" style="margin-bottom: 15px; font-weight: 700; line-height: 30px;">날씨</h5>
+						<h5 class="weatherCity card-title" style="margin-bottom: 25px; font-weight: 700; line-height: 30px;">날씨</h5>
 						<div style="text-align: center;">
-							<img class="weatherImg" src="/resources/images/weather/01d.png" height="70px">
+							<img class="weatherImg" src="/resources/images/weather/01d.png" height="60px">
 							<h3 class="mainTemp" style="margin-top: 15px;">27도</h3>
-							<p class="mainMinMaxTemp card-text" style="margin-top: 12px; font-size: 18px;">
+							<p class="mainMinMaxTemp card-text" style="margin-top: 15px; font-size: 18px;">
 								<span style="color: #30a9de;">27도</span> / <span style="color: #f2c029;">32도</span>
 							</p>
 							<p style="margin-top: -5px;"><span style="color: #30a9de;"><i class="fas fa-tint"></i></span>&nbsp;&nbsp;<span class="humidity card-text">80%</span></p>

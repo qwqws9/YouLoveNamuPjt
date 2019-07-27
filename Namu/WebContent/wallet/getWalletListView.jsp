@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:if test="${empty user}">
+	<jsp:forward page="/user/loginView" />
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,9 +40,7 @@
          <div class="square_wrap clear">
             <c:forEach var="planner" items="${list}">
                <c:if test="${planner.departDate >= today}">
-                  <div class="square">
-                     <input type="hidden" class="walletCode" />
-                     <input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
+                  <div class="square" data-planner-code="${planner.plannerCode}">
                      <div
                         <c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
                         <c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
@@ -69,9 +72,7 @@
          <div class="square_wrap clear">
             <c:forEach var="planner" items="${list}">
                <c:if test="${planner.departDate < today}">
-                  <div class="square">
-                     <input type="hidden" class="walletCode" />
-                     <input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
+                   <div class="square" data-planner-code="${planner.plannerCode}">
                      <div
                         <c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
                         <c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>

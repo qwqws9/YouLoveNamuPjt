@@ -34,24 +34,14 @@ public class WalletServiceImpl implements WalletService {
 	public int getWalletCode(int plannerCode) throws Exception{
 		return walletDao.getWalletCode(plannerCode);
 	}
-	/*
-	public void addWalletView(Wallet wallet) throws Exception{
-		walletDao.addWalletView(wallet);
-	}
 	
+	public void addWalletView(int plannerCode) throws Exception{
+		walletDao.addWalletView(plannerCode);
+	}
+
 	public void deleteWalletView(int walletCode) throws Exception{
 		walletDao.deleteWalletView(walletCode);
 	}
-	
-	public Map<String, Object> getWalletListView(int plannerCode) throws Exception {
-		List<Wallet> list = walletDao.getWalletListView(plannerCode);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		
-		return map;
-	}
-	*/
 
 	// walletList.jsp
 	public void addWallet(Wallet wallet) throws Exception{
