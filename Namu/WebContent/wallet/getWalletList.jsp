@@ -5,11 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>YouLovePlan</title>
+	<jsp:include page="/layout/head.jsp" />
 	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -27,7 +23,6 @@
 	
 	<!-- Chart.js built files -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"> -->
 	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -36,13 +31,14 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
-	<script type="text/javascript" src="/resources/javascript/wallet_modal.js"></script>
+	<script type="text/javascript" src="/resources/javascript/wallet_ajax.js"></script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
 	<div class="wrap">
 		<h2 class="skip">내 가계부</h2>
+		<input type="hidden" id="walletCode" value="${param.walletCode}" />
 		
 		<div class="btnns">
 			<a href="javascript:void(0);" class="pre_btn">
@@ -54,9 +50,8 @@
 		
 		<section class="sec_wrap clear">
 			<h3 class="skip"><span class="walletCode">${param.walletCode}</span>가계부 내역</h3>
-			
 			<!--
-			<form class="search_form" name="search_form">
+			<form class="search_form" id="search_form" name="search_form">
 				<input type="hidden" id="pageSize" name="pageSize" value="" />
 				
 				<label for="searchKeyword" class="skip">검색어</label>
@@ -64,7 +59,6 @@
 				<button type="submit" class="search_btn">검색</button>
 			</form>
 			-->
-			
 			<nav class="left_nav">
 				<a class="day_btn rounded-circle"><span>All</span></a>
 				<a class="day_btn rounded-circle"><span>준비</span></a>
@@ -113,7 +107,7 @@
 						<span class="skip">순으로 출력</span>
 					</div>
 					
-					<ul class="ajax-base">
+					<ul class="ajax-base" id="ajax-base">
 						<c:forEach varStatus="status" var="wallet" items="${list}">
 							<li class="ajax-${status.index+1} table_row">
 								<span class="walletDetailCode" style="display: none;">${wallet.walletDetailCode}</span>
@@ -182,15 +176,17 @@
 											<img src="/resources/images/wallet/${wallet.walletImage}" alt="${wallet.category}" class="rounded-circle">
 										</c:if>
 										<c:if test="${empty wallet.walletImage}">
-											<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
-											<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
-											<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
-											<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
-											<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
-											<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
-											<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
-											<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
-											<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+											<span>
+												<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
+												<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
+												<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
+												<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
+												<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
+												<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
+												<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
+												<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
+												<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+											</span>
 										</c:if>
 									</span>
 								</a><!-- //detail_line -->

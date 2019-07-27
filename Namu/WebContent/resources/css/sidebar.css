@@ -1,0 +1,226 @@
+		  /* The sidebar menu */
+		.sidebar {
+		  height: 100%;
+		  width: 0px;
+		  position: fixed;
+		  z-index: 1; /* Stay on top */
+		  top: 0;
+		  left: 0;
+		  background-color: rgba(163, 218, 255, 0.5); /* Black*/
+		  overflow-x: hidden;
+		  transition: 0.5s;
+		}
+		
+		/* The sidebar links */
+		.sidebar a {
+		  padding: 8px 8px 8px 32px;
+		  text-decoration: none;
+		  font-size: 14px;
+		  color: black;
+		  display: block;
+		  transition: 0.3s;
+		}
+		
+		/* 반짝이 */
+		.sidebar a:hover {
+		  color: #F2C029;
+		}
+		
+		/* 닫기 버튼 */
+		.sidebar .closebtn {
+		  position: absolute;
+		  top: 0;
+		  right: 25px;
+		  font-size: 36px;
+		  margin-left: 50px;
+		}
+		
+		/* 메인화면 버튼 */
+		.openbtn {
+		  font-size: 15px;
+		  cursor: pointer;
+		  background-color: white;
+		  border-radius: 3px;
+		  color: #F2C029;
+		  padding: 10px 10px;
+		  border: none;
+		}
+		
+		.openbtn:hover {
+		  background-color: rgba(163, 218, 255, 0.5);
+		}
+		
+		/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+		#main {
+		   transition: margin-left .5s; /* If you want a transition effect */ 
+		/*   padding: 0px; */
+		}
+		#topbar {
+		  transition: margin-left .5s; /* If you want a transition effect */
+		}
+		#initTour {
+		transition: margin-left .5s; /* If you want a transition effect */
+		}
+		#tourDetailJsp {
+		transition: margin-left .5s; /* If you want a transition effect */
+		}
+		#initHotelJsp {
+		transition: margin-left .5s; /* If you want a transition effect */
+		}
+		/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+		@media screen and (max-height: 450px) {
+		  .sidebar {padding-top: 15px;}
+		  .sidebar a {font-size: 18px;}
+		}
+		
+		
+		
+/* 		Swarch BOX!!!!	 */
+		.Search {
+		    position: absolute;
+		    /* transform: translate(-50%, -50%); */
+		    top:70px;
+		    left:20px;
+		}
+		/* /////////////// */
+		.Search.active {}
+		
+		.Search .input-holder {    
+		    height: 40px;
+		    width:40px;
+		    overflow: hidden;
+		    background: rgba(242, 192, 41, 0.2);
+		    border-radius:6px;
+		    position: relative;
+		    transition: all 0.3s ease-in-out;
+		}
+		.Search.active .input-holder {
+		    width:200px;
+		    border-radius: 50px;
+		    background: white;
+		    transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+		}
+		.Search .input-holder .search-input {
+		    width:100%;
+		    height: 40px;
+		    padding:0px 70px 0 20px;
+		    opacity: 0;
+		    position: absolute;
+		    top:0px;
+		    left:0px;
+		    background: transparent;
+		    box-sizing: border-box;
+		    border:none;
+		    outline:none;
+		    font-family:"Open Sans", Arial, Verdana;
+		    font-size: 15px;
+		    font-weight: 400;
+		    line-height: 20px;
+		    color:#F2C029;
+		    transform: translate(0, 60px);
+		    transition: all .3s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+		    transition-delay: 0.3s;
+		}
+		.Search.active .input-holder .search-input {
+		    opacity: 1;
+		    transform: translate(0, 0px);
+		}
+		.Search .input-holder .search-icon {
+		    width:40px;
+		    height:40px;
+		    border: 1px solid #F2C029;
+		    border-radius:6px;
+		    background: #FFF;
+		    padding:0px;
+		    outline:none;
+		    position: relative;
+		    z-index: 2;
+		    float:right;
+		    cursor: pointer;
+		    transition: all 0.3s ease-in-out;
+		}
+		.Search.active .input-holder .search-icon {
+		    width: 40px;
+		    height:40px;
+		    margin: 0px;
+		    border-radius: 30px;
+		}
+		.Search .input-holder .search-icon span {
+		    width:22px;
+		    height:22px;
+		    display: inline-block;
+		    vertical-align: middle;
+		    position:relative;
+		    transform: rotate(45deg);
+		    transition: all .4s cubic-bezier(0.650, -0.600, 0.240, 1.650);
+		}
+		.Search.active .input-holder .search-icon span {
+		    transform: rotate(-45deg);
+		}
+		.Search .input-holder .search-icon span::before, .Search .input-holder .search-icon span::after {
+		    position: absolute; 
+		    content:'';
+		}
+		.Search .input-holder .search-icon span::before {
+		    width: 4px;
+		    height: 11px;
+		    left: 9px;
+		    top: 14px;
+		    border-radius: 2px;
+		    background: #F2C029;
+		}
+		.Search .input-holder .search-icon span::after {
+		    width: 19px;
+		    height: 19px;
+		    left: 0px;
+		    top: -3px;
+		    border-radius: 16px;
+		    border: 4px solid #F2C029;
+		}
+		.Search .close {
+		    position: absolute;
+		    z-index: 1;
+		    top:7px;
+		    right:10px;
+		    width:25px;
+		    height:25px;
+		    cursor: pointer;
+		    transform: rotate(-180deg);
+		    transition: all .3s cubic-bezier(0.285, -0.450, 0.935, 0.110);
+		    transition-delay: 0.2s;
+		}
+		.Search.active .close {
+		    right:-50px;
+		    transform: rotate(45deg);
+		    transition: all .6s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+		    transition-delay: 0.5s;
+		}
+		.Search .close::before, .Search .close::after {
+		    position:absolute;
+		    content:'';
+		    background: #F2C029;
+		    border-radius: 2px;
+		}
+		.Search .close::before {
+		    width: 5px;
+		    height: 25px;
+		    left: 10px;
+		    top: 0px;
+		}
+		.Search .close::after {
+		    width: 25px;
+		    height: 5px;
+		    left: 0px;
+		    top: 10px;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
