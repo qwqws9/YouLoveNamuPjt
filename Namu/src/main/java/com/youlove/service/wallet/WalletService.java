@@ -7,6 +7,9 @@ import com.youlove.service.domain.Wallet;
 public interface WalletService {
 
 	// walletListView.jsp
+	public int isWallet(int plannerCode) throws Exception;
+	
+	public int getWalletCode(int plannerCode) throws Exception;
 	/*
 	public void addWalletView(Wallet wallet) throws Exception;
 	

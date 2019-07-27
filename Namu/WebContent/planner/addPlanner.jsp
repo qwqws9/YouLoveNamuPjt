@@ -3,24 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
-	<!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- jQuerty -->
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <style>
 form{
@@ -30,6 +25,9 @@ margin:0 auto
 </head>
      <!--   JavaScript  -->
 	<script type="text/javascript">	
+	
+	
+
 
 	function fncAddPlanner(){
 		// 유효성 검사 
@@ -37,22 +35,25 @@ margin:0 auto
 	 	var plannerName = $("input[name='plannerName']").val();
 		var departDate =$("input[name='departDate']").val();
 		
-		
+		/* 
 		if(plannerName == null || plannerName.length<1){
 			alert("플래너 제목을 입력해주세요.");
 			return;
-		}
+		} */
 	
 		if(departDate == null || departDate.length<1){
 			alert( "여행시작일을 입력해주세요.");
 			return;
 		}
 		
-		$("form").attr("method" , "POST").attr("action" , "/planner/addPlanner").attr("enctype" , "multipart/form-data").submit();
+		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/addPlanner").attr("enctype" , "multipart/form-data").submit();
 	}		
 	
 	$(function(){
-		
+		$('#file').on('change',function(){
+	        var fileName = $(this).val();
+	        $(this).next('.custom-file-label').html(fileName);
+	    });
 	    $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
@@ -76,23 +77,31 @@ margin:0 auto
 
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-
+<form>
 	<div class="container">
 
 		<h4 class="text-center"> 플래너 만들기 </h4>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-		<br/>
-		  <div class="form-group">
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		    <label for="plannerName" class="control-label col-sm-2"> 플래너 Title  </label>
+		    </div>
+		      </div>
+		    
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="plannerName" name="plannerName" >
 		    </div>
 		  </div>
-		<br/>  
-		  <div class="form-group">
-		        <label for="member" class="control-label col-sm-2"> 멤버 </label>
+		    
+		  
+		<br/> 
+		 	  
+		 	 <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
+		        <label for="member" class="control-label col-sm-2"> 멤버 </label> </div> </div>
 		            <div class="col-sm-4">
 		    <select class="custom-select mr-sm-2" id="member" name="member" >
 		  	<option value="1" selected="selected"> 혼자 </option>
@@ -105,8 +114,12 @@ margin:0 auto
     </div>
 	<br/>  
 	
-			  <div class="form-group">
+ <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		        <label for="member" class="control-label col-sm-2"> 공개여부 </label>
+		        	    </div>
+		    </div>
 		            <div class="col-sm-4">
 		    <select class="custom-select mr-sm-2" id="privacy" name="privacy" >
 		  	<option value="1" selected="selected"> 비공개  </option>
@@ -115,30 +128,46 @@ margin:0 auto
      
       </select>
     </div>
-    
+    </div>
+    </div>
+    </div>
 	<br/>  
 
 		  
-		  <div class="form-group">
+	 <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		    <label for="departDate" class="control-label col-sm-2">여행 시작일 </label>
+		    </div>
+		    </div>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="departDate" name="departDate" >
 		    </div>
 		  </div>
 		<br/> 
 		 	  
-		  <div class="form-group">
+		 	 <div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12" >
 		    <label for="file" class="control-label col-sm-2">플래너 이미지</label>
+		     </div>
+		  </div>
 		    <div class="col-sm-4">
 		  <div class="custom-file">
+		  
+		  
+			<input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;">
+			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
+	<!-- 		
+			
  		<input type="file" class="custom-file-input" id="file" name="file" value="">
-  		<label class="custom-file-label" for="customFile">Choose file</label>
-		</div>
+  		<label class="custom-file-label" for="customFile">Choose file</label>-->
+		</div> 
 		  	  </div>
 		  	  </div>
 		<br/>  
 		  <div class="form-group">
-		    <div class=""col-sm-offset-1 col-sm-3 control-label">
+		    <div class="col-sm-offset-1 col-sm-3 control-label">
 		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
 		      <button type="button" class="btn btn-default"  > 다음 단계  </button>
 			 </div>

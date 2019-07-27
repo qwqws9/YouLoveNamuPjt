@@ -3,11 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<title>YouLovePlan</title>
+	<jsp:include page="/layout/head.jsp" />
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	
@@ -26,7 +22,6 @@
 	<!-- 날씨, 환율 정보를 위한 국가 도시 리스트 출력 -->
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
-	
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 		
 	<!-- Bootstrap CSS -->
@@ -41,42 +36,27 @@
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<jsp:include page="/layout/side.jsp"></jsp:include>
 	<div class="container">
 		<br><br>
 		<!-- <button type="button" id="ooo">로그인</button> -->
 		<br><br>
 		
-		<h4 style="margin: auto;">
-			<a href="/wallet/getWalletListView">규리 가계부</a> <a href="/wallet/getWalletList?walletCode=1"> @@</a><br>
-			
-			<!-- <a href="http://192.168.0.13:8005/">상욱 채팅</a><br> -->
-			<!-- <i id="getChat">상욱 채팅</i><br> -->
-
-			<a href="/user/loginView.jsp/">성용 회원가입</a><br>
-			
-			<a href="/planner/addRoute.jsp">민희 구글맵</a><br>
-			<a href="/planner/getScheduleList.jsp"> /</a><br>
-			
-			<a href="/community/getCommunityList">중현 커뮤니티 등록</a>
-			<a href="/party/getPartyList">중현 동행 리스트</a><br><br>
-		</h4>
 		
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">
 				<div class="card" style="height: 335px;">
 					<div class="card-body">
-						<h5 class="weatherCity card-title" style="margin-bottom: 0; font-weight: 700; line-height: 30px;">날씨</h5>
+						<h5 class="weatherCity card-title" style="margin-bottom: 15px; font-weight: 700; line-height: 30px;">날씨</h5>
 						<div style="text-align: center;">
-							<img class="weatherImg" src="http://openweathermap.org/img/wn/10d@2x.png">
-							<h3 class="mainTemp" style="margin-top: 5px;">27도</h3>
-							<p class="mainMinMaxTemp card-text" style="margin-top: 10px; font-size: 18px;">
+							<img class="weatherImg" src="/resources/images/weather/01d.png" height="70px">
+							<h3 class="mainTemp" style="margin-top: 15px;">27도</h3>
+							<p class="mainMinMaxTemp card-text" style="margin-top: 12px; font-size: 18px;">
 								<span style="color: #30a9de;">27도</span> / <span style="color: #f2c029;">32도</span>
 							</p>
-							<p class="humidity card-text">80%</p>
+							<p style="margin-top: -5px;"><span style="color: #30a9de;"><i class="fas fa-tint"></i></span>&nbsp;&nbsp;<span class="humidity card-text">80%</span></p>
 						</div>
-						<button class="btn btn-outline-primary" id="callCountry">도시 선택</button>
+						<button class="btn btn-outline-primary" id="callCountry" style="margin-top: 0;">도시 선택</button>
 					</div>
 				</div>
 			</div>

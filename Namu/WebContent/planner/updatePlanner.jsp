@@ -33,11 +33,14 @@ margin:0 auto
 
 	function fncUpdatePlanner(){
 	
-		$("form").attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();
+		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();
 	}		
 
 	$(function(){
-		
+		$('#file').on('change',function(){
+	        var fileName = $(this).val();
+	        $(this).next('.custom-file-label').html(fileName);
+	    });
 	    $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
@@ -61,7 +64,6 @@ margin:0 auto
 
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-
 	<div class="container">
 
 		<h4 class="text-center"> 플래너 만들기 </h4>
@@ -100,7 +102,7 @@ margin:0 auto
      
       </select>
     </div>
-    
+    </div>
 	<br/>  
 
 		  
@@ -116,8 +118,10 @@ margin:0 auto
 		    <label for="file" class="control-label col-sm-2">플래너 이미지</label>
 		    <div class="col-sm-4">
 		  <div class="custom-file">
- 		<input type="file" class="custom-file-input" id="file" name="file" value="">
-  		<label class="custom-file-label" for="customFile">Choose file</label>
+ 		 
+			<input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;">
+			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
+	
 		</div>
 		  	  </div>
 		  	  </div>
@@ -130,6 +134,7 @@ margin:0 auto
 		  </div>
 		  
 		</form>
+		
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>

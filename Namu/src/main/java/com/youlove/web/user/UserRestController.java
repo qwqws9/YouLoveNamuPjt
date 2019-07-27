@@ -31,6 +31,7 @@ import com.youlove.common.RandomNumber;
 import com.youlove.common.api.CheckEmailTransfer;
 import com.youlove.common.api.CheckSMSTransfer;
 import com.youlove.common.api.NaverCaptcha;
+import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Pay;
 import com.youlove.service.domain.User;
@@ -62,6 +63,25 @@ public class UserRestController {
 	
 	@Value("#{commonProperties['captchaPath']}")
 	String captchaPath;
+	
+	
+	
+	// 1 친구 2 동행 3 일행
+	// 조회시 세션 유저코드 + 검색할 Role 번호 넘겨주기
+	@RequestMapping(value="json/getFriend",method=RequestMethod.POST)
+	public List<Friend> getFriend(@RequestBody Friend friend) throws Exception{
+		
+		System.out.println("/user/json/getFriend");
+		
+		System.out.println("+++++++++++++++++++++++++");
+		System.out.println(friend.toString());
+		System.out.println("+++++++++++++++++++++++++");
+		
+		List<Friend> list = userService.getFriendList(friend);
+		
+		return list;
+	}
+	
 	
 	
 	
@@ -263,37 +283,35 @@ public class UserRestController {
 		
 	}
 	
-	@RequestMapping(value="/json/updateImg/{userCode}", method=RequestMethod.POST)
-	public User updateImg(MultipartFile file,HttpServletRequest request,@PathVariable String userCode,Map<String,Object> map,HttpSession session) throws Exception{
-		System.out.println("+++++++++++++++++++++++++++");
-		System.out.println(file);
-		System.out.println("+++++++++++++++++++++++++++");
-		String fileName = "7877e8c81ac0a942265a9b65a049b784.jpg";
-		if(!file.isEmpty()){
-			fileName = FileNameUUId.convert(file, "profile", request);
-			System.out.println(fileName + "         파일이름 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			
-		}
-		map.put("value", fileName);
-		map.put("userCode", userCode);
-		map.put("target", "img");
-		boolean result = userService.updateUser(map);
-		User user;
-		
-		if(result == true) {
-			session.removeAttribute("user");
-			map.clear();
-			map.put("userCode", Integer.parseInt(userCode));
-			user = userService.getUser(map);
-			session.setAttribute("user", user);
-			
-		}else {
-			user = null;
-		}
-		
-		return user;
-		
-	}
+	 @RequestMapping(value="/json/updateImg/{userCode}", method=RequestMethod.POST)
+	   public User updateImg(MultipartFile file,HttpServletRequest request,@PathVariable String userCode,Map<String,Object> map,HttpSession session) throws Exception{
+	      
+	      if(!file.isEmpty() && file != null){
+	         String fileName = FileNameUUId.convert(file, "profile", request);
+	         System.out.println(fileName + "         파일이름 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	         map.put("userCode", userCode);
+	         map.put("target", "img");
+	         map.put("value", fileName);
+	      }
+//	      
+	      
+	      boolean result = userService.updateUser(map);
+	      User user;
+	      
+	      if(result == true) {
+	         session.removeAttribute("user");
+	         map.clear();
+	         map.put("userCode", Integer.parseInt(userCode));
+	         user = userService.getUser(map);
+	         session.setAttribute("user", user);
+	         
+	      }else {
+	         user = null;
+	      }
+	      
+	      return user;
+	      
+	   }
 	
 	
 	

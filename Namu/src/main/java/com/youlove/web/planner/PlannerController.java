@@ -127,18 +127,23 @@ public class PlannerController {
 	
 	
 	@RequestMapping( value="updatePlanner", method=RequestMethod.POST )
-	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
+	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  
+			MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
 
 		System.out.println("plannerController ----------------updatePlanner:POST ");
 		
 		
+	System.out.println(file);
 		String fileName = FileNameUUId.convert(file, "planner", request);
+		System.out.println("1");
 		planner.setPlannerImage(fileName);
+		System.out.println("2");
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
-		
+		System.out.println("3");
 		System.out.println(planner);
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
+		System.out.println("4");
 		System.out.println(planner.getPlannerCode());
 
 		plannerService.updatePlanner(planner);
@@ -168,8 +173,8 @@ public class PlannerController {
 	public String getPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
-	int pageUnit = 10;
-	int pageSize = 10;
+	int pageUnit = 30;
+	int pageSize = 30;
 	
 	if(search.getCurrentPage() ==0 ){
 		search.setCurrentPage(1);
@@ -194,7 +199,7 @@ public class PlannerController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 		model.addAttribute("resultPage", resultPage);
-		
+		model.addAttribute("today", com.youlove.common.DateFormat.today());
 		System.out.println(search);
 		System.out.println(map.get("list"));
 	
@@ -202,7 +207,7 @@ public class PlannerController {
 	}
 	
 	@RequestMapping( value="getAllPlannerList")
-	public String getAllPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
+	public String getAllPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
 	 
@@ -225,13 +230,14 @@ public class PlannerController {
 		//map.put("userCode", user);
 		map = plannerService.getAllPlannerList(map);
 		
+		//String cityName= route.getCityName();
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 //		System.out.println(resultPage);
 		
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 		model.addAttribute("resultPage", resultPage);
-		
+//		model.addAttribute("today", com.youlove.common.DateFormat.today());
 		System.out.println(search);
 		System.out.println(map.get("list"));
 		return "forward:/planner/getAllPlannerList.jsp";
@@ -300,6 +306,7 @@ public class PlannerController {
 		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
+		
 		}
 
 		return "forward:/planner/getScheduleList.jsp";
@@ -322,13 +329,13 @@ public class PlannerController {
 	@RequestMapping( value="updateRoute", method=RequestMethod.GET )
 	public String updateRoute(@RequestParam("plannerCode") int plannerCode, HttpSession session) throws Exception {
 
-		System.out.println("PlannerController -------------------addRoute:GET ");
+		System.out.println("PlannerController -------------------updateRoute:GET ");
 		
 		return "forward:/planner/updateRoute.jsp";  
 	}
 	
 	@RequestMapping(value = "updateRoute", method=RequestMethod.POST)
-	public String updateRoute( HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route) throws Exception {
+	public String updateRoute( HttpServletRequest request, HttpSession session,@ModelAttribute("route") Route route,@ModelAttribute("schedule") Schedule schedule) throws Exception {
 		
 		System.out.println("PlannerController ----------------------- updateRoute start");
 		
@@ -340,6 +347,9 @@ public class PlannerController {
 		
 		//planner 버전 업그레이드 
 		route.setPlannerVer(planner.getPlannerVer());  
+		schedule.setPlannerVer(planner.getPlannerVer());  
+		System.out.println("planner 버전???"+planner.getPlannerVer()
+		+"route 버전 ??? "+route.getPlannerVer()+"schedule 버전 ??"+schedule.getPlannerVer());
 		
 		//departDate 받아와서 set 
 		String departDate=planner.getDepartDate();
@@ -369,13 +379,18 @@ public class PlannerController {
 		System.out.println(cityNames.length+"번 addRoute !!!!!!");
 		
 		route.setCityName(cityNames[i]);
+		System.out.println(cityNames[i]);
 		route.setLat(lats[i]);
+		System.out.println(lats[i]);
 		route.setLng(lngs[i]);
 		route.setCityOrder(i+1);
+		
 		route.setStayDay(Integer.parseInt(stayDays[i]));
+		System.out.println(Integer.parseInt(stayDays[i]));
 		//String startDate = dateFormat.format(cal.getTime());
 		//cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
 		//String endDate = dateFormat.format(cal.getTime());
+		
 		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
 		route.setEndDate(cal.getTime());

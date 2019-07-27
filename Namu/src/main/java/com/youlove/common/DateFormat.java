@@ -20,6 +20,17 @@ public class DateFormat {
 		return time;
 	}
 	
+	public static String today() throws Exception {
+		
+		//날짜 형식 19920802
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		
+		String time = format.format(System.currentTimeMillis());
+		//System.out.println(time);
+		
+		return time;
+	}
+	
 	public static User block(User user) throws Exception {
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

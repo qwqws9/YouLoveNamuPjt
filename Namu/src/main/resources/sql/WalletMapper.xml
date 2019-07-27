@@ -22,6 +22,23 @@
 		<result property="payer.userCode"	column="PAYER"			jdbcType="NUMERIC" />
 	</resultMap>
 	
+	<!-- walletListView.jsp -->
+	<select id="isWallet" parameterType="int" resultType="int">
+		SELECT NVL(COUNT(*), 0)
+		FROM wallet
+		<where>
+			planner_code = #{value}
+		</where>
+	</select>
+	
+	<select id="getWalletCode" parameterType="int" resultType="int">
+		SELECT w_code
+		FROM wallet
+		<where>
+			planner_code = #{value}
+		</where>
+	</select>
+	
 	<!-- walletList.jsp -->
 	<insert id="addWallet" parameterType="wallet">
 		INSERT
@@ -102,8 +119,5 @@
 			   AND category <![CDATA[ < ]]> '9'
 			   ORDER BY reg_date DESC, w_detail_code DESC ) countTable
 	</select>
-	
-	<!-- getWalletReport.jsp -->
-	
 	
 </mapper>

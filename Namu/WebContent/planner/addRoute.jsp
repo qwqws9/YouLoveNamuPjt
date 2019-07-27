@@ -3,15 +3,26 @@
 <!DOCTYPE html>
 <html> 
 <head> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <title>Google Maps Multiple Markers</title> 
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<!-- jQuery -->
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		 
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	
+
 <!-- 	<style>
 	.table-title h3 {
 		   color: #f2c029;
@@ -141,12 +152,14 @@ td {
 </script>
 </head> 
 <body>
+	<header><jsp:include page="/layout/header.jsp" /></header>
+	
 <label class="sr-only" for="searchKeyword"> 도시명 </label> 
 <input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 
 <form name="multiForm" id="multiForm" action="/planner/addRoute" method="post">
-<div class="table-title"> 
+<div class="table-title"> </div>
 <table  class="table-fill" id="list_table">
 <!-- 	<colgroup>
 		<col style="width:70px;">
@@ -165,12 +178,13 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 			<th>Action</th>
 		</tr>
 	</thead>
+	
 	<tbody class="table-hover">
 
 	</tbody>
- <input type="submit" id="mul_input_submit" name="mul_input_submit" />
-
+ 
 	    	 </table>
+	    	 <input type="submit" id="mul_input_submit" name="mul_input_submit" />
 	    	 
 	    	</form>
 		<script type="text/javascript">	
@@ -199,9 +213,15 @@ $('#list_table').on("click", ".deletebtn", function () {
 	            }
 			}) 
 </script>
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12">
+<div id="map" style="width: 1200px; height: 700px;"></div>
 
-  <div id="map" style="width: 1300px; height: 700px;"></div>
-	<div id="floating-panel">
+</div>
+</div>
+</div>
+  	<div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">

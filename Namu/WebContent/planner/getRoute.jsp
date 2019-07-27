@@ -4,7 +4,6 @@
 <html> 
 <head> 
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <title>Google Maps Multiple Markers</title> 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
@@ -14,11 +13,15 @@
 
 </head> 
 <body>
-<label class="sr-only" for="searchKeyword"> 도시명 </label> 
+
+<%-- <label class="sr-only" for="searchKeyword"> 도시명 </label> 
 <input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-
+ --%>
 <form name="multiForm" id="multiForm" action="/planner/addRoute" method="post">
+	<div class="container">
+		<div class="row">
+	  	<div class="col-md-12 col-lg-12">
 <table border="1" id="list_table">
 	<colgroup>
 		<col style="width:70px;">
@@ -40,10 +43,11 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 	<tbody>
 
 	</tbody>
- <input type="submit" id="mul_input_submit" name="mul_input_submit" />
 
 	    	 </table>
-	    	 
+	    	 </div>
+	    	 </div>
+	    	 </div>
 	    	</form>
 		<script type="text/javascript">	
 
@@ -71,13 +75,19 @@ $('#list_table').on("click", ".deletebtn", function () {
 	            }
 			}) 
 </script>
-
-  <div id="map" style="width: 1300px; height: 700px;"></div>
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-12">
+  <div id="map" style="width: 1000px; height: 700px;"></div>
+  </div>
+  </div>
+  </div>
+<!-- 
 	<div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
-    </div>
+    </div>  -->
   <script>
   var locations = ['런던','파리','니스','프랑크푸르트','베를린','로마','베니스','바르셀로나','마드리드','부다페스트'];
   var locationLat = ['51.5073509','48.856614','43.7101728','50.1109221','52.52000659999999','41.9027835','45.4408474','41.3850639','40.4167754','47.497912'];
@@ -121,13 +131,14 @@ $('#list_table').on("click", ".deletebtn", function () {
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
  	dataType : "json",
+ 	 async:false,
  	headers : {
  	"Accept" : "application/json",
  	"Content-Type" : "application/json"
  	},
 
  	success : function(JSONData) {
-
+ 		console.log(JSONData);   
  	route = JSONData;
  	
 
@@ -142,13 +153,14 @@ $('#list_table').on("click", ".deletebtn", function () {
   	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
   	dataType : "json",
+  	 async:false,
   	headers : {
   	"Accept" : "application/json",
   	"Content-Type" : "application/json"
   	},
 
   	success : function(JSONData2) {
-
+  		console.log(JSONData2);   
   	routeLat = JSONData2;
 
   	}
@@ -159,13 +171,14 @@ $('#list_table').on("click", ".deletebtn", function () {
    	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
    	dataType : "json",
+    async:false,
    	headers : {
    	"Accept" : "application/json",
    	"Content-Type" : "application/json"
    	},
 
    	success : function(JSONData3) {
-
+   		console.log(JSONData3);   
    	routeLng = JSONData3;
 
    	}
@@ -174,6 +187,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	  	url:"/planner/json/getRouteList/"+plannerCode,
    		method : "GET" ,
         dataType : "json",
+        async:false,
         headers : {
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"
@@ -191,7 +205,7 @@ $('#list_table').on("click", ".deletebtn", function () {
             	displayValue += ('<td>'+value.lat+'</td>');
             	displayValue += ('<td>'+value.lng+'</td>');    
             	displayValue += ('<td>'+"<select><option value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
-            	displayValue += ('<td>'+"<input class='deletebtn' type='button' value = 'delete' id='delete' />"+'</td>');  
+            	  
             	//displayValue += ('</tr>');                                    
             /* //}); */});
             //displayValue += ('</tbody>');
@@ -245,10 +259,10 @@ $('#list_table').on("click", ".deletebtn", function () {
 	      markers.push(myMarker);
 	      var path=poly.getPath();
 	      path.push(new google.maps.LatLng(routeLat[i], routeLng[i]));
-	     // flightPath.setMap(map);
+	   
    	   }
  
-       flightPath.setMap(map);
+      
      
    	
    		for (var i = 0; i < locations.length; i++) {
@@ -258,9 +272,10 @@ $('#list_table').on("click", ".deletebtn", function () {
    		        id:locations[i],
    		    	 icon: icons[iconCounter]
    		      });
+   		   marker.setMap(null);
    		   markers.push(marker);
    		   
-   		
+   			
    	   
    		   google.maps.event.addListener(marker, 'mouseover', function(){
    			

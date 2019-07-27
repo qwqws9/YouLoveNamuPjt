@@ -39,8 +39,28 @@ public class WalletRestController {
 		System.out.println(this.getClass());
 	}
 	
+	// walletListView.jsp
+	@RequestMapping(value = "/json/isWallet/{plannerCode}", method=RequestMethod.GET)
+	public int isWallet(@PathVariable int plannerCode) throws Exception{
+		
+		System.out.println("/wallet/json/isWallet :: GET");
+		
+		int is = walletService.isWallet(plannerCode);
+		System.out.println(is);
+		
+		int walletCode = 0;
+		
+		if(is != 0) {
+			walletCode = walletService.getWalletCode(plannerCode);
+		}
+		
+		return walletCode;
+		
+	}
+	
+	// walletList.jsp
 	@RequestMapping(value="json/addWallet", method=RequestMethod.POST)
-	public Wallet addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
+	public boolean addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/wallet/json/addWallet :: POST");
 		
@@ -54,7 +74,7 @@ public class WalletRestController {
 		
 		walletService.addWallet(wallet);
 		
-		return wallet;
+		return true;
 		
 	}
 	
@@ -71,15 +91,13 @@ public class WalletRestController {
 	}
 	
 	@RequestMapping(value = "/json/deleteWallet/{walletDetailCode}", method=RequestMethod.GET)
-	public Wallet deleteWallet(@PathVariable int walletDetailCode) throws Exception{
+	public boolean deleteWallet(@PathVariable int walletDetailCode) throws Exception{
 		
 		System.out.println("/wallet/json/deleteWallet :: GET");
 		
 		walletService.deleteWallet(walletDetailCode);
 		
-		Wallet wallet = walletService.getWallet(walletDetailCode);
-		
-		return wallet;
+		return true;
 		
 	}
 	

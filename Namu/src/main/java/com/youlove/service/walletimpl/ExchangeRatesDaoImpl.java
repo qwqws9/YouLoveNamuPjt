@@ -21,11 +21,15 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 		String url = "https://ko.exchange-rates.org/MajorRates/ByRegion/E";
 		
 		/*
-		Document doc = Jsoup.connect(url).header("Content-Type", "application/json;charset=UTF-8")
-				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36").get();
+		Document doc = Jsoup.connect(url)
+					  .header("Content-Type", "application/json;charset=UTF-8")
+					  .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36")
+					  .get();
 		*/
 		
-		Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36").get();
+		Document doc = Jsoup.connect(url)
+					  .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36")
+					  .get();
 		//System.out.println(doc);
 		
 		Elements element = doc.select("td.text-nowrapX");
@@ -38,11 +42,11 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 		for(Element el : element){
 			exchange = new Exchange();
 			
-			System.out.println(index);
+			//System.out.println(index);
 			
-			String str = (el.select("a + a").text()).replaceAll("스위스 크로나", "스웨덴 크로나");
+			String str = (el.select("a + a").text()).replaceAll("스위스 크로나", "스웨덴 크로나").replaceAll("유로", "유럽연합 유로");
 			exchange.setNation(str);
-			System.out.println(str);
+			//System.out.println(str);
 			
 			/*
 			if((el.select("a + a").text()).indexOf(" ") != -1){
@@ -56,7 +60,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 			*/
 			
 			exchange.setUnit(el.select("a + a").attr("title"));
-			System.out.println(el.select("a + a").attr("title"));
+			//System.out.println(el.select("a + a").attr("title"));
 			
 			str = el.parent().select("td:nth-child(2)").text();
 			
@@ -68,7 +72,7 @@ public class ExchangeRatesDaoImpl implements ExchangeRatesDao {
 			
 			double db = Math.round(Double.parseDouble(str)*100) / 100.0;
 			exchange.setExchangeRate(db);
-			System.out.println(db);
+			//System.out.println(db);
 
 			index++;
 			

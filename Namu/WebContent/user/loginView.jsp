@@ -16,12 +16,12 @@
  
 </head>
 
-<body class="text-center">
 <header><%@ include file="/layout/header.jsp" %></header>
+<body>
 <br><br><br>
 	<div class="container">
-		<div class="col-lg-12">
-			<div class="row  justify-content-center">
+		<div class="col-md-6 col-lg-12">
+			<div class="row  justify-content-center text-center">
 				<form >
 					<div class="col">
 		  				<h1 class="h3 mb-3 font-weight-normal">You Love</h1>
@@ -113,7 +113,7 @@
 	});
 	
 	function login() {
-		$('form').attr('method','post').attr('action','/user/login').submit();
+		$($('form')[1]).attr('method','post').attr('action','/user/login').submit();
 	}
 	
 	function loginClick() {
