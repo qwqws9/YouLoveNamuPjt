@@ -25,4 +25,10 @@ public interface UserService {
 	public boolean addPay(Pay pay) throws Exception;
 	
 	public List<Friend> getFriendList(Friend friend) throws Exception;
+	
+	public boolean addFriendMemo(Friend friend) throws Exception;
+	
+	public boolean inviteUser(Friend friend) throws Exception;
+	
 }
+

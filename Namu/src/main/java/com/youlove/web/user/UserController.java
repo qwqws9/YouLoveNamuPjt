@@ -21,8 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.common.FileNameUUId;
+import com.youlove.common.GetAge;
+import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Timeline;
 import com.youlove.service.domain.User;
+import com.youlove.service.timeline.TimelineService;
 import com.youlove.service.user.UserService;
 
 @Controller
@@ -32,6 +36,10 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("timelineServiceImpl")
+	private TimelineService timelineService;
 	
 	public UserController() {
 		System.out.println(this.getClass());
@@ -229,7 +237,7 @@ public class UserController {
 	
 	
 	@RequestMapping("/searchUserClick/{userCode}")
-	public String searchUserClick(@PathVariable int userCode,Map<String,Object> map,Model model) throws Exception {
+	public String searchUserClick(@PathVariable int userCode,Map<String,Object> map,Model model,HttpSession session,Friend friend) throws Exception {
 		
 		System.out.println("/user/searchUserClick");
 		
@@ -237,7 +245,57 @@ public class UserController {
 		
 		User user = userService.getUser(map);
 		
+		//나이
+		String birth = user.getBirth();
+		int age = GetAge.getAge(Integer.parseInt(birth.substring(0, 2))+1900, Integer.parseInt(birth.substring(2, 4)), Integer.parseInt(birth.substring(4, 6)));
+		user.setBirth(age+"세");
+		
+		//성별
+		String gender = user.getGender();
+		if(gender.equals("M")) {
+			user.setGender("남자");
+		}else {
+			user.setGender("여자");
+		}
+		
+		
 		model.addAttribute("userForm",user);
+		
+		int sessionCode = ((User)session.getAttribute("user")).getUserCode();
+		// 자기자신을 조회시 모든 버튼 비활성화
+		if(sessionCode == userCode) {
+			model.addAttribute("thisUser","true");
+		}else {
+
+			//이미 등록된 친구인지 판별
+			friend.setUserCode(sessionCode);
+			friend.setFriendRole("1");
+			List<Friend> list = userService.getFriendList(friend);
+			
+			for(Friend f : list) {
+				
+				if(userCode == f.getFriendCode().getUserCode() ) {
+					System.out.println("내가 클릭한 유저 코드"+userCode);
+					System.out.println("여기는 위랑 같아야함"+f.getFriendCode().getUserCode());
+					model.addAttribute("friendAl","true");
+				}
+			}
+			
+			
+			//타임라인에 신청중인지 판별
+			List<Timeline> timeline = timelineService.getTimelineList(new User(sessionCode));
+			
+			for(Timeline t : timeline) {
+				//프로토콜이 2(친구) 이면서     초대 수락여부를 선택하지 않은 타임라인 중
+				if(t.getProtocol().equals("2") && t.getInviteCode().equals("0")) {
+					// 초대 메시지를 보낸 유저가 타임라인 보낸유저 이거나 타임라인 받은 유저 이면 ( 수락 대기중이므로 버튼 비활성화 )
+					if(t.getFromUser().getUserCode() == userCode || t.getToUser().getUserCode() == userCode  ) {
+						model.addAttribute("timelineFriend","true");
+					}
+				}
+			}
+		}
+		
 		
 		
 		return "forward:/user/searchUserClick.jsp";

@@ -23,6 +23,13 @@ public class User {
 	//로그인시 판별위한 필드
 	private String userId;
 	
+	public User(int userCode) {
+		this.userCode = userCode;
+	}
+	public User() {
+	}
+	
+	
 	
 	public int getUserCode() {
 		return userCode;

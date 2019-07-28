@@ -80,6 +80,26 @@ public class UserServiceImpl implements UserService{
 		return userDao.getFriendList(friend);
 	}
 
+	@Override
+	public boolean addFriendMemo(Friend friend) throws Exception {
+		int res = userDao.addFriendMemo(friend);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
+	}
+
+	@Override
+	public boolean inviteUser(Friend friend) throws Exception {
+		int res = userDao.inviteUser(friend);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
+	}
+
 	
 //	public boolean checkDuplication(String userId) throws Exception {
 //		boolean result=true;

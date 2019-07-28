@@ -31,4 +31,16 @@ public class TimelineRestController {
 		
 		return true;
 	}
+	
+	@RequestMapping("/json/updateTimeline")
+	public boolean updateTimeline(@RequestBody Timeline timeline) throws Exception {
+		
+		System.out.println("/json/updateTimeline");
+		//현재시간 넣어줌
+		//timeline.setTimeDate(DateFormat.minute());
+		
+		boolean result = timelineService.updateTimeline(timeline);
+		
+		return result;
+	}
 }

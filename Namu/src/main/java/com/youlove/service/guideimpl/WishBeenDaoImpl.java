@@ -271,8 +271,13 @@ public class WishBeenDaoImpl implements WishBeenDao {
 				
 				//true면 10페이지 이후도 존재하는것. 아래 searchKeyword , viewPageNum=11 , url 파라미터로 보낼것
 				//System.out.println(doc.select(".paging .btn-next").text().equals("다음"));
-				
+				//System.out.println(doc.select(".no-result"));
+				Elements result = doc.select(".no-result");
+				System.out.println(result.isEmpty());
 				//System.out.println(doc.select(".paging li"));
+				if(result.isEmpty()) {
+					
+				
 				Elements el = doc.select(".paging li");
 				
 				int pageCount = 0;
@@ -347,7 +352,7 @@ public class WishBeenDaoImpl implements WishBeenDao {
 					tour.setPageNum(pageNum);
 					list.add(tour);
 				}
-		
+				}
 		
 		return list;
 	}
