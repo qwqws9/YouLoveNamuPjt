@@ -115,7 +115,7 @@ a.day_btn span { color: #fff; }
 .page_info { position: absolute; top: 0; left: 0; }
 
 
-/* 예산 및 지출 add 팝업 */
+/* 예산 및 지출 add/update 팝업 */
 .plus_btns { position: relative; margin: 25px 2.5%; font-size: 16px; text-align: right; }
 .pop_wrap_add { position: absolute; top: 25px; right: 0; width: auto; height: auto; z-index: 100; }
 .pop_wrap { padding: 30px 30px; background-color: #fff; border: 2px solid #343a40; border-radius: .25em; }

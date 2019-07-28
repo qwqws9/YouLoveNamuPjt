@@ -95,7 +95,7 @@ function deleteWalletAjax(walletCode) {
 
 // https://ko.exchange-rates.org 크롤링
 function convert(unit) {
-	console.log('화폐단위 :: ' + unit);
+	//console.log('화폐단위 :: ' + unit);
 	
 	if(unit != 'KRW'){
 		$.ajax({
@@ -111,11 +111,11 @@ function convert(unit) {
 				amount	: 1
 			}),
 			error	: function(request, status, error) {
-				console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+				//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		    },
 			success	: function(JSONData, status) {
-				console.log(status);
-				console.log('JSONData :: ' + JSONData.exchangeRate);
+				//console.log(status);
+				//console.log('JSONData :: ' + JSONData.exchangeRate);
 				
 				$('#exchange_result').text(makeComma(JSONData.exchangeRate));
 				$('#exchange_rate').val(JSONData.exchangeRate);
@@ -151,11 +151,11 @@ function addAjax(form) {
 		cache		: false,
 		timeout		: 600000,
 		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 	    },
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log('JSONData :: ' + JSONData);
+			//console.log(status);
+			//console.log('JSONData :: ' + JSONData);
 			
 			if(JSONData == true){
 				form.reset();
@@ -237,15 +237,12 @@ function getListAjax(currentPage) {
 				$('.ajax-' + (idx + 1) + ' .detail_line .table_col').empty();
 			});
 			
-			
-			 if(JSONData.list.length <= idx){
-						$('.ajax-' + (idx + 1)).hide();
-					}else{
-						$('.ajax-' + (idx + 1)).show();
-					}
-			 */
-			
-			
+			if(JSONData.list.length <= idx){
+				$('.ajax-' + (idx + 1)).hide();
+			}else{
+				$('.ajax-' + (idx + 1)).show();
+			}
+			*/
 			
 			$.each(JSONData.list, function(index, item) {
 				console.log((index + 1) + '번째 :: ' + item.walletDetailCode);
@@ -370,118 +367,137 @@ function getListAjax(currentPage) {
 }
 
 // getWallet Business Logic
-function getAjax(walletDetailCode) {
-	console.log('walletDetailCode :: ' + walletDetailCode);
+function getAjax(walletDetailCode, way) {
+	//console.log('walletDetailCode :: ' + walletDetailCode);
+	
+	var result;
 	
 	$.ajax({
 		url			: '/wallet/json/getWallet/' + walletDetailCode,
 		method		: 'GET',
+		async		: false,
 		headers		: {
 			'Accept'		: 'Application/json',
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log('JSONData :: ' + JSONData.walletDetailCode);
+			//console.log(status);
+			//console.log('JSONData :: ' + JSONData.walletDetailCode);
 			
-			var list = $('.pop_wrap_get .padding_boxing');
-			
-			list.find('.input_date').html(JSONData.regDate);
-			
-			if(JSONData.category == 0){
-				list.find('.input_category').html('<i class="fas fa-coins"></i>');
-			}else if(JSONData.category == 1){
-				list.find('.input_category').html('<i class="fas fa-utensils"></i>');
-			}else if(JSONData.category == 2){
-				list.find('.input_category').html('<i class="fas fa-shopping-cart"></i>');
-			}else if(JSONData.category == 3){
-				list.find('.input_category').html('<i class="fas fa-landmark"></i>');
-			}else if(JSONData.category == 4){
-				list.find('.input_category').html('<i class="fas fa-plane"></i>');
-			}else if(JSONData.category == 5){
-				list.find('.input_category').html('<i class="fas fa-subway"></i>');
-			}else if(JSONData.category == 6){
-				list.find('.input_category').html('<i class="fas fa-bed"></i>');
-			}else if(JSONData.category == 7){
-				list.find('.input_category').html('<i class="fas fa-skating"></i>');
-			}else if(JSONData.category == 8){
-				list.find('.input_category').html('<i class="fas fa-ellipsis-h"></i>');
-			}
-			
-			list.find('.input_money .input_expresion').html(JSONData.expression);
-			
-			if(JSONData.moneyUnit == 'KRW'){
-				list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-won-sign"></i>');
-			}else if(JSONData.moneyUnit == 'EUR'){
-				list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-euro-sign"></i>');
-			}else if(JSONData.moneyUnit == 'CHF'){
-				list.find('.input_money > div:eq(0) > span').html('CHF');
-			}else if(JSONData.moneyUnit == 'GBP'){
-				list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-pound-sign"></i>');
-			}else if(JSONData.moneyUnit == 'CZK'){
-				list.find('.input_money > div:eq(0) > span').html('CZK');
-			}else if(JSONData.moneyUnit == 'HUF'){
-				list.find('.input_money > div:eq(0) > span').html('HUF');
-			}
-			list.find('.input_money > div:eq(0) > span').append('&nbsp;' + makeComma(JSONData.price));
-			
-			if(JSONData.moneyUnit != 'KRW' && (JSONData.krwPrice != null && JSONData.krwPrice != 0)){
-				list.find('.input_money > div:eq(1)').html('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(JSONData.krwPrice));
-			}
-			
-			if(JSONData.payer != null && JSONData.payer != 0){
-				list.find('.top_input').append(
-					'<div class="input_payer">' +
-						'<span>결제자</span><span>' + JSONData.payer.nickname + '</span>' +
-					'</div>'
-				);
-			}
-			
-			if(JSONData.part == 0){
-				list.find('.top_input').after(
-					'<div class="what_unit">' +
-						'<div class="clear">' +
-							'<span>화폐 단위</span><span>' + JSONData.moneyUnit + '</span>' +
-						'</div>' +
-					'</div>'
-				);
+			if(way == 'get'){
+				$('.pop_wrap_get > div').attr('data-part', JSONData.part);
 				
-				if(JSONData.moneyUnit != 'KRW'){
-					list.find('.what_unit').append(
-						'<div class="clear">' +
-							'<span>적용 환율</span><span>' + JSONData.moneyUnit + ' 1 = KRW ' + makeComma(JSONData.exchangeRate) + '</span>' +
+				var list = $('.pop_wrap_get .padding_boxing');
+				
+				list.find('.input_date').html(JSONData.regDate);
+				
+				if(JSONData.category == 0){
+					list.find('.input_category').html('<i class="fas fa-coins"></i>');
+				}else if(JSONData.category == 1){
+					list.find('.input_category').html('<i class="fas fa-utensils"></i>');
+				}else if(JSONData.category == 2){
+					list.find('.input_category').html('<i class="fas fa-shopping-cart"></i>');
+				}else if(JSONData.category == 3){
+					list.find('.input_category').html('<i class="fas fa-landmark"></i>');
+				}else if(JSONData.category == 4){
+					list.find('.input_category').html('<i class="fas fa-plane"></i>');
+				}else if(JSONData.category == 5){
+					list.find('.input_category').html('<i class="fas fa-subway"></i>');
+				}else if(JSONData.category == 6){
+					list.find('.input_category').html('<i class="fas fa-bed"></i>');
+				}else if(JSONData.category == 7){
+					list.find('.input_category').html('<i class="fas fa-skating"></i>');
+				}else if(JSONData.category == 8){
+					list.find('.input_category').html('<i class="fas fa-ellipsis-h"></i>');
+				}
+				
+				list.find('.input_money .input_expresion').html(JSONData.expression);
+				
+				if(JSONData.moneyUnit == 'KRW'){
+					list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-won-sign"></i>');
+				}else if(JSONData.moneyUnit == 'EUR'){
+					list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-euro-sign"></i>');
+				}else if(JSONData.moneyUnit == 'CHF'){
+					list.find('.input_money > div:eq(0) > span').html('CHF');
+				}else if(JSONData.moneyUnit == 'GBP'){
+					list.find('.input_money > div:eq(0) > span').html('<i class="fas fa-pound-sign"></i>');
+				}else if(JSONData.moneyUnit == 'CZK'){
+					list.find('.input_money > div:eq(0) > span').html('CZK');
+				}else if(JSONData.moneyUnit == 'HUF'){
+					list.find('.input_money > div:eq(0) > span').html('HUF');
+				}
+				list.find('.input_money > div:eq(0) > span').append('&nbsp;' + makeComma(JSONData.price));
+				
+				if(JSONData.moneyUnit != 'KRW' && (JSONData.krwPrice != null && JSONData.krwPrice != 0)){
+					list.find('.input_money > div:eq(1)').html('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(JSONData.krwPrice));
+				}
+				
+				if(JSONData.payer != null && JSONData.payer != 0){
+					list.find('.top_input').append(
+						'<div class="input_payer">' +
+							'<span>결제자</span><span>' + JSONData.payer.nickname + '</span>' +
 						'</div>'
 					);
 				}
-			}
-			
-			if(JSONData.item != null && JSONData.item != ''){
-				list.find('.input_item').html(JSONData.item);
-			}else{
+				
 				if(JSONData.part == 0){
-					list.find('.input_item').append('예산 추가');
-				}else if(JSONData.part == 1){
-					list.find('.input_item').append('지출 추가');
+					list.find('.top_input').after(
+						'<div class="what_unit">' +
+							'<div class="clear">' +
+								'<span>화폐 단위</span><span>' + JSONData.moneyUnit + '</span>' +
+							'</div>' +
+						'</div>'
+					);
+					
+					if(JSONData.moneyUnit != 'KRW'){
+						list.find('.what_unit').append(
+							'<div class="clear">' +
+								'<span>적용 환율</span><span>' + JSONData.moneyUnit + ' 1 = KRW ' + makeComma(JSONData.exchangeRate) + '</span>' +
+							'</div>'
+						);
+					}
 				}
-			}
-			
-			if(JSONData.content != null && JSONData.content != ''){
-				list.find('.text_width').append('<div class="input_content">' + JSONData.content + '</div>');
-			}
-			
-			if(JSONData.walletImage != null){
-				list.append('<img src="/resources/images/wallet/' + JSONData.walletImage + '" alt="' + JSONData.item + ' 이미지" class="big_image">');
+				
+				if(JSONData.item != null && JSONData.item != ''){
+					list.find('.input_item').html(JSONData.item);
+				}else{
+					if(JSONData.part == 0){
+						list.find('.input_item').append('예산 추가');
+					}else if(JSONData.part == 1){
+						list.find('.input_item').append('지출 추가');
+					}
+				}
+				
+				if(JSONData.content != null && JSONData.content != ''){
+					list.find('.text_width').append('<div class="input_content">' + JSONData.content + '</div>');
+				}
+				
+				if(JSONData.walletImage != null){
+					list.append('<img src="/resources/images/wallet/' + JSONData.walletImage + '" alt="' + JSONData.item + ' 이미지" class="big_image">');
+				}
+			}else if(way == 'update'){
+				//console.log('JSONData 타입 :: ' + typeof JSONData);
+				
+				result = JSONData;
+				//console.log('JSON.stringify(JSONData) 타입 :: ' + typeof result);
 			}
 		}
 	});
+	
+	// ajax 내부에서 return 사용시 undefined 되므로 동기 방식으로  ajax 사용 후 외부에서 return 사용
+	if(way == 'update'){
+		//console.log('JSON.stringify(JSONData) :: ' + result);
+		
+		return result;
+	}
 }
 
 // deleteWallet Business Logic
 function deleteAjax(walletDetailCode) {
-	console.log('walletDetailCode :: ' + walletDetailCode);
+	//console.log('walletDetailCode :: ' + walletDetailCode);
 	
 	$.ajax({
 		url			: '/wallet/json/deleteWallet/' + walletDetailCode,
@@ -491,11 +507,11 @@ function deleteAjax(walletDetailCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log('JSONData :: ' + JSONData);
+			//console.log(status);
+			//console.log('JSONData :: ' + JSONData);
 			
 			if(JSONData == true){
 				alert('삭제되었습니다.');

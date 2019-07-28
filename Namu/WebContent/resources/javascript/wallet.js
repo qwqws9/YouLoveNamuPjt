@@ -145,10 +145,11 @@ $(function() {
 		$('.pop_wrap_add').html('');
 		
 		// innerHTML
-		$($('#save_income_form')).load('/wallet/addWalletIncome.jsp', {walletCode:$('#wallet_detail_section').data('walletCode')}, function(data) {
+		$('#save_income_form').load('/wallet/addWalletIncome.jsp', {"walletCode":$('#wallet_detail_section').data('walletCode')}, function(data) {
 			//console.log('addWalletIncome.jsp :\n' + data);
 			
 			$(this).show();
+			currentTime();
 			initPopUp();
 		});
 	});
@@ -163,10 +164,11 @@ $(function() {
 		$('.pop_wrap_add').html('');
 		
 		// innerHTML
-		$($('#save_expenditure_form')).load('/wallet/addWalletExpenditure.jsp', {walletCode:$('#wallet_detail_section').data('walletCode')}, function(data) {
+		$('#save_expenditure_form').load('/wallet/addWalletExpenditure.jsp', {"walletCode":$('#wallet_detail_section').data('walletCode')}, function(data) {
 			//console.log('addWalletExpenditure.jsp :\n' + data);
 			
 			$(this).show();
+			currentTime();
 			initPopUp();
 		});
 	});
@@ -180,6 +182,46 @@ $(function() {
 		event.preventDefault();
 		
 		addAjax($(this)[0]);
+	});
+	
+	// 수입/지출 상세내역 수정
+	$(document).on('click', '.pop_wrap_get .act_btns .update_btn', function() {
+		var walletDetailCode = $(this).closest('li').attr('data-wallet-detail-code');
+		//console.log('수정할 walletDetailCode : ' + walletDetailCode);
+		var part = $(this).closest('.pop_wrap_get > div').attr('data-part');
+		//console.log('수정할 part : ' + part);
+		
+		$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
+		
+		$('.pop_wrap_contain').html('');
+		$('.pop_wrap_contain').hide();
+		$('.pop_wrap_add').html('');
+		
+		var list = getAjax(walletDetailCode, 'update');
+		console.log('getAjax(walletDetailCode, "update") :\n' + list);
+		
+		// innerHTML
+		if(part == 0){
+			$('#income_modal').children().addClass('fas').css('color', '#f2c029');
+			
+			$('#save_income_form').load('/wallet/updateWalletIncome.jsp', list, function(data) {
+				console.log('updateWalletIncome.jsp :\n' + data);
+				
+				$(this).show();
+				initPopUp();
+				multiply();
+			});
+		}else if(part == 1){
+			$('#expenditure_modal').children().addClass('fas').css('color', '#f2c029');
+			
+			$('#save_expenditure_form').load('/wallet/updateWalletExpenditure.jsp', list, function(data) {
+				console.log('updateWalletIncome.jsp :\n' + data);
+				
+				$(this).show();
+				initPopUp();
+				multiply();
+			});
+		}
 	});
 	
 	// 수입/지출 추가 모달창 클로즈
@@ -202,7 +244,7 @@ $(function() {
 			
 			$(this).show();
 			centerPopUp($(this).children());
-			getAjax(walletDetailCode);
+			getAjax(walletDetailCode, 'get');
 		});
 	});
 	
@@ -274,7 +316,6 @@ $(function() {
 function initPopUp() {
 	$('#expression').focus();
 	
-	currentTime();
 	exchangeRate();
 	memoPopUp();
 	calculation();

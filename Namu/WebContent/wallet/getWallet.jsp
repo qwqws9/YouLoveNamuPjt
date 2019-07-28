@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="pop_wrap_get">
-	<div>
+	<div data-part="${wallet.part}">
 		<div class="scroller">
 			<div class="padding_boxing">
 				<div class="text_width">
@@ -53,7 +53,7 @@
 							</div>
 							<c:if test="${wallet.moneyUnit ne 'KRW'}">
 								<div class="clear">
-									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.krwRate}" pattern="#,###.00" /></span>
+									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
 								</div>
 							</c:if>
 						</div>
