@@ -1,5 +1,27 @@
 //무한 스크롤로 동적으로 생긴 게시물에 이벤트
 $(document).ready(function(){
+	
+	var owl = $(".owl-carousel");
+	owl.owlCarousel({
+		items:4,
+	    loop:true,
+	    margin:10,
+	    autoplay:true,
+	    autoplayTimeout:3000,
+	    autoplayHoverPause:true
+		
+	});
+	$('.owl-start').on('click',function(){
+	    owl.trigger('play.owl.autoplay',[3000])
+	})
+	$('.owl-stop').on('click',function(){
+	    owl.trigger('stop.owl.autoplay')
+	})
+	
+	
+	
+	
+	
     $(document).on("click",".getCommunity",function(){
 	    self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").val();
     });
@@ -35,8 +57,9 @@ $( function() {
     	self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").val();
     })
     //베스트 게시물 상세조회
-	$(".card.bestCommunity").on("click", function(){
-		self.location="/community/getCommunity?communityCode="+$(this).prev().val();								
+	$(".owl-item").on("click", function(){
+		//alert($(this).children(".bestCommunityCode").val());
+		self.location="/community/getCommunity?communityCode="+$(this).children(".bestCommunityCode").val();								
 	})		    
     
     //$(".content").text("")
@@ -237,8 +260,8 @@ function callCommunityList(page){
 			}
 
 //Search Box Event
-function searchToggle(obj, evt){
-	    var container = $(obj).closest('.Search');
+function searchCommunity(obj, evt){
+	    var container = $(obj).closest('.communitySearch');
 	        if(!container.hasClass('active')){
 	            container.addClass('active');
 	            evt.preventDefault();

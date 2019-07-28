@@ -16,7 +16,7 @@ public interface PartyDao {
 	
 	public void updateParty(Party party) throws Exception;
 	
-	public void deleteParty(int partyCode) throws Exception;		
+	public boolean deleteParty(int partyCode) throws Exception;		
 	
 	public int getTotalCount(Search search) throws Exception ;
 }

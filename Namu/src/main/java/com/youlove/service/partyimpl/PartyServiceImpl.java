@@ -44,7 +44,6 @@ public class PartyServiceImpl implements PartyService{
 		Search search = (Search) map.get("search");
 		List<Party> list = partyDao.getPartyList(map);
 		int totalCount = partyDao.getTotalCount(search);
-		
 		map.put("totalCount", new Integer(totalCount));
 		map.put("list", list);
 		return map;
@@ -52,14 +51,13 @@ public class PartyServiceImpl implements PartyService{
 
 	@Override
 	public void updateParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+		partyDao.updateParty(party);
 	}
 
 	@Override
-	public void deleteParty(int partyCode) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public boolean deleteParty(int partyCode) throws Exception {
+		partyDao.deleteParty(partyCode);
+		return true;
 	}
 	
 	
