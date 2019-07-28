@@ -29,6 +29,18 @@
 		});
 		
 		
+		$(document).on('click','.profilePop_wrap',function(e) {
+			//console.log("바디로 들어옴");
+			
+			var container = $('.profilePop_wrap');
+			//console.log(container.has(e.target).length);
+			if(container.has(e.target).length === 0){
+				$(".profilePop_wrap").css('display','none');
+			}
+			//console.log("종료");
+		})
+		
+		
 		$('.fCity').on('click',function(){
 			var way =$('#way').val();
 			if(way == 'startWay') {
@@ -108,8 +120,8 @@ function selectCity() {
 function getProfile(userCode) {
 			console.log("여기로 들어왔음 닉네임클릭");
 			getUserProfile(userCode);
-			$(".profilePop_wrap").css('display','block');
-			centerPopUp($(".profilePop_contain"), $(".profilePop_contain").width(), 400 );
+			//$(".profilePop_wrap").css('display','block');
+			//centerPopUp($(".profilePop_contain"), $(".profilePop_contain").width(), 400 );
 		}
 	
 	
@@ -124,37 +136,46 @@ function centerPopUp(modal, modalWidth, modalHeight) {
 	modal.css({'top':top, 'left':left});
 }
 	
+function getUserProfile(codeUser) {
+	$('.profilePopup').load('/user/searchUserClick/'+codeUser,function(){
+		//alert("로드완료");
+		$(".profilePopup").css('display','block');
+		$(".profilePop_wrap").css('display','block');
+		centerPopUp($(".profilePop_contain"), 500, 400 );
+	})
 	
-	function getUserProfile(codeUser) {
-		
-		$.ajax({
-			url : '/user/json/getUser',
-			method : 'post',
-			data : JSON.stringify({
-				userCode : codeUser
-			}),
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			success : function(JSONData,status) {
-				//alert(JSONData.nickname);
-				$('.profileInfo').css('display','block');
-				$('.userNick').text('닉네임 : ' + JSONData.nickname);
-				if(JSONData.gender == 'M') {
-					$('.userGend').text('성별 : 남자');
-				}else {
-					$('.userGend').text('성별 : 여자');
-				}
-				$('.userAge').text('나이 : ' + JSONData.birth);
-				$('.userIntro').text(JSONData.introduce);
-				$('.userProfile').attr('src','/resources/images/profile/'+JSONData.profileImg)
-				$('#inviteUserCode').val(codeUser);
-				
-				
-			}
-		})
-	}
+}
+	
+//	function getUserProfile(codeUser) {
+//		
+//		$.ajax({
+//			url : '/user/json/getUser',
+//			method : 'post',
+//			data : JSON.stringify({
+//				userCode : codeUser
+//			}),
+//			headers : {
+//				"Accept" : "application/json",
+//				"Content-Type" : "application/json"
+//			},
+//			success : function(JSONData,status) {
+//				//alert(JSONData.nickname);
+//				$('.profileInfo').css('display','block');
+//				$('.userNick').text('닉네임 : ' + JSONData.nickname);
+//				if(JSONData.gender == 'M') {
+//					$('.userGend').text('성별 : 남자');
+//				}else {
+//					$('.userGend').text('성별 : 여자');
+//				}
+//				$('.userAge').text('나이 : ' + JSONData.birth);
+//				$('.userIntro').text(JSONData.introduce);
+//				$('.userProfile').attr('src','/resources/images/profile/'+JSONData.profileImg)
+//				$('#inviteUserCode').val(codeUser);
+//				
+//				
+//			}
+//		})
+//	}
 		
 		/////
 		

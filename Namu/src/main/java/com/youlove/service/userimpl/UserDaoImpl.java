@@ -64,6 +64,16 @@ public class UserDaoImpl implements UserDao{
 	public List<Friend> getFriendList(Friend friend) throws Exception {
 		return sqlSession.selectList("UserMapper.getFriendList",friend);
 	}
+
+	@Override
+	public int addFriendMemo(Friend friend) throws Exception {
+		return sqlSession.update("UserMapper.addFriendMemo",friend);
+	}
+
+	@Override
+	public int inviteUser(Friend friend) throws Exception {
+		return sqlSession.insert("UserMapper.inviteUser",friend);
+	}
 	
 	
 }

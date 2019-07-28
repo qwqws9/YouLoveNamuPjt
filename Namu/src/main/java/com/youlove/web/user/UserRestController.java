@@ -1,6 +1,7 @@
 package com.youlove.web.user;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,9 @@ import com.youlove.common.api.NaverCaptcha;
 import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Timeline;
 import com.youlove.service.domain.User;
+import com.youlove.service.timeline.TimelineService;
 import com.youlove.service.user.UserService;
 
 @RestController
@@ -44,6 +47,10 @@ public class UserRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("timelineServiceImpl")
+	private TimelineService timelineService;
 	
 	public UserRestController() {
 		System.out.println(this.getClass());
@@ -63,6 +70,92 @@ public class UserRestController {
 	
 	@Value("#{commonProperties['captchaPath']}")
 	String captchaPath;
+	
+	
+	
+	@RequestMapping(value="json/multipleAdd",method=RequestMethod.POST)
+	public List<User> multipleAdd(@RequestBody Map<String,String> map,Timeline timeline,Friend friend) throws Exception{
+		
+		System.out.println("/user/json/multipleAdd");
+		List<User> list = new ArrayList<User>();
+		boolean continueGo = true;
+		
+		String[] mul = map.get("multipleUser").split("#");
+		String sessionUser = map.get("sessionUser");
+		for(int i = 1; i< mul.length; i++) {
+			if(sessionUser.equals(mul[i])) {
+				continue;
+			}else {
+				continueGo = true;
+				//이미 등록된 친구인지 판별
+				friend.setUserCode(Integer.parseInt(sessionUser));
+				friend.setFriendRole("1");
+				List<Friend> friendList = userService.getFriendList(friend);
+				
+				for(Friend f : friendList) {
+					
+					if(Integer.parseInt(mul[i]) == f.getFriendCode().getUserCode() ) {
+						continueGo = false;
+						break;
+					}
+				}
+				
+				if(continueGo) {
+					//타임라인에 신청중인지 판별
+					List<Timeline> timelineList = timelineService.getTimelineList(new User(Integer.parseInt(sessionUser)));
+					
+					for(Timeline t : timelineList) {
+						//프로토콜이 2(친구) 이면서     초대 수락여부를 선택하지 않은 타임라인 중
+						if(t.getProtocol().equals("2") && t.getInviteCode().equals("0")) {
+							// 초대 메시지를 보낸 유저가 타임라인 보낸유저 이거나 타임라인 받은 유저 이면 ( 수락 대기중이므로 버튼 비활성화 )
+							if(t.getFromUser().getUserCode() == Integer.parseInt(mul[i]) || t.getToUser().getUserCode() == Integer.parseInt(mul[i])  ) {
+								continueGo = false;
+								break;
+							}
+						}
+					}
+				}
+				if(continueGo) {
+					timeline.setFromUser(new User(Integer.parseInt(sessionUser)));
+					timeline.setToUser(new User(Integer.parseInt(mul[i])));
+					timeline.setProtocol(map.get("protocol"));
+					timeline.setTimeDate(DateFormat.minute());
+					timelineService.addTimeline(timeline);
+					list.add(new User(Integer.parseInt(mul[i])));
+				}
+			}
+			
+		}
+		return list;
+	}
+	
+	
+	
+	
+	// 초대한유저,받는유저,롤 넣어주기
+	@RequestMapping(value="json/inviteUser",method=RequestMethod.POST)
+	public boolean inviteUser(@RequestBody Friend friend) throws Exception{
+		
+		System.out.println("/user/json/inviteUser");
+		
+		boolean result = userService.inviteUser(friend);
+		
+		return result;
+	}
+	
+	
+	
+	@RequestMapping(value="json/addFriendMemo",method=RequestMethod.POST)
+	public boolean addFriendMemo(@RequestBody Friend friend) throws Exception{
+		
+		System.out.println("/user/json/addFriendMemo");
+		if(friend.getMemo() == null || friend.getMemo().length() == 0) {
+			friend.setMemo(" ");
+		}
+		boolean result = userService.addFriendMemo(friend);
+		
+		return result;
+	}
 	
 	
 	
@@ -250,7 +343,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(value="/json/createCaptcha", method=RequestMethod.POST)
-	public Map<String, Object> createCaptcha() throws Exception{
+	public Map<String, Object> createCaptcha(HttpServletRequest request) throws Exception{
 		
 		StringBuffer str = NaverCaptcha.createKey(captchaId, captchaSecret);
 		JSONObject json = new JSONObject();
@@ -258,7 +351,7 @@ public class UserRestController {
 		json = (JSONObject)parse.parse(str.toString());
 		String key = (String)json.get("key");
 		
-		String image = NaverCaptcha.requestImage(captchaId, captchaSecret,key);
+		String image = NaverCaptcha.requestImage(captchaId, captchaSecret,key,request);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("image", image);
