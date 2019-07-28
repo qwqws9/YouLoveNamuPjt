@@ -84,6 +84,66 @@
 								</p>
 							</div>
 						</c:if>
+						
+						
+						
+						
+						<!-- 친구 초대 -->
+						<c:if test="${item.protocol eq '2' && item.fromUser.userCode ne user.userCode }">
+							<div class="timePreview-${status.index } media text-muted pt-3">
+								<input type="hidden" value="${item.fromUser.userCode }">
+								<img class="timelineProf" alt="" src="/resources/images/profile/${item.fromUser.profileImg }" width="45" height="45">
+								<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+								<span class="timelineTarget d-block" style="position:relative;">
+									<strong class="timelineProf text-gray-dark">@ ${item.fromUser.nickname }</strong>
+									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
+								</span>
+								<span class=""><button class="inviteMessage" style="border:none; background: none" >
+								<c:if test="${item.inviteCode eq '0' }">
+								회원님과 친구맺기를 원합니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '1' }">
+								회원님과 친구가 되었습니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '2' }">
+								회원님과 친구맺기를 거절하셨습니다.
+								</c:if>
+								</button></span>
+								<c:if test="${item.inviteCode eq '0' }">
+								<input type="hidden" value="${item.timelineCode }">
+								<button class="timelineFriendAcceptBtn btn btn-outline-success btn-sm" >수락</button>
+								<button class="timelineFriendRefuseBtn btn btn-outline-danger btn-sm" >거절</button>
+								</c:if>
+								</p>
+							</div>
+						</c:if>
+						
+						
+						<!-- 친구 초대 보낸사람 -->
+						<c:if test="${item.protocol eq '2' && item.fromUser.userCode eq user.userCode }">
+							<div class="timePreview-${status.index } media text-muted pt-3">
+								<input type="hidden" value="${item.toUser.userCode }">
+								<img class="timelineProf" alt="" src="/resources/images/profile/${item.toUser.profileImg }" width="45" height="45">
+								<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+								<span class="timelineTarget d-block" style="position:relative;">
+									<strong class="timelineProf text-gray-dark">@ ${item.toUser.nickname }</strong>
+									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
+								</span>
+								<span class=""><button class="" style="border:none; background: none" >
+								<c:if test="${item.inviteCode eq '0' }">
+								친구 초대 메시지를 전달했습니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '1' }">
+								회원님과 친구가 되었습니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '2' }">
+								회원님과 친구맺기를 거절하셨습니다.
+								</c:if>
+								</button></span>
+								</p>
+							</div>
+						</c:if>
+						
 			 		</c:forEach>
 				</div>
 			</div>
@@ -91,15 +151,35 @@
 	</div>
 </div>
 
-<jsp:include page="../user/getProfile.jsp"></jsp:include>
-
+<%-- <jsp:include page="../user/getProfile.jsp"></jsp:include> --%>
+<div class="profilePopup" style="disaply:none;"></div>
 <script type="text/javascript">
 //닉네임 클릭시 회원코드로 프로필 출력
 $(document).on("click",".timelineProf",function(){ 
 	console.log("유저코드 : " + $(this).parents('div').children().val());
 	getProfile($(this).parents('div').children().val());
-	
-	
+});
+
+
+
+$(document).on("click",".timelineFriendAcceptBtn",function(){ 
+	var timeCode = $(this).prev().val().trim();
+	var sendUser = $(this).parents('div').children().val().trim();
+	var sessionUser = $('#nodeUserCode').val().trim();
+	inviteProfile(sendUser,sessionUser,'1');
+	inviteProfile(sessionUser,sendUser,'1');
+	updateTimelineInvite(timeCode,'1');
+	$(this).next().remove();
+	$(this).parents('div[class^=timePreview]').find('.inviteMessage').text('회원님과 친구가 되었습니다.');
+	$(this).remove();
+});
+
+$(document).on("click",".timelineFriendRefuseBtn",function(){ 
+	var timeCode = $(this).prev().prev().val().trim();
+	updateTimelineInvite(timeCode,'2');
+	$(this).prev().remove();
+	$(this).parents('div[class^=timePreview]').find('.inviteMessage').text('회원님과 친구맺기를 거절하셨습니다.');
+	$(this).remove();
 });
 
 
@@ -135,6 +215,53 @@ $(function(){
 	})
 })
 
+
+	// 수락 , 거절 선택시 호출
+	function inviteProfile(sendUserCode,receiverUserCode,friendRole) {
+	
+	$.ajax ({
+		url : '/user/json/inviteUser',
+		method : 'post',
+		data : JSON.stringify({
+			userCode : sendUserCode,
+			friendCode : {
+				userCode : receiverUserCode
+			},
+			friendRole : friendRole
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+				alert(data);
+		}
+	})
+	
+}
+
+
+
+//수락 , 거절 선택시 호출
+function updateTimelineInvite(timeCode,inviteCode) {
+
+$.ajax ({
+	url : '/timeline/json/updateTimeline',
+	method : 'post',
+	data : JSON.stringify({
+		timelineCode : timeCode,
+		inviteCode : inviteCode
+	}),
+	headers : {
+		"Accept" : "application/json",
+		"Content-Type" : "application/json"
+	},
+	success : function(data,status){
+			alert(data);
+	}
+})
+
+}
 
 </script>
 </body>

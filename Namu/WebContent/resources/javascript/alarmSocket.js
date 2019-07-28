@@ -7,6 +7,7 @@
 // socket.io 서버에 접속한다
 var socket;
 
+//받는사람 , 프로토콜
 function socketcall(writerUser,protocol) {
 	//alert("소켓 호출됨");
 	if(protocol == '9') {
@@ -15,6 +16,8 @@ function socketcall(writerUser,protocol) {
 		socket.emit("timeline", { To: writerUser, msg : '회원님의 댓글에 답글을 남겼습니다.' });
 	}else if(protocol == '1') {
 		socket.emit("timeline", { To: writerUser, msg : '회원님의 게시물에 댓글을 남겼습니다.' });
+	}else if(protocol == '2') {
+		socket.emit("timeline", { To: writerUser, msg : '회원님과 친구맺기를 원합니다.' });
 	}
 }
 
@@ -154,3 +157,35 @@ function addTimelineCommunity(boardCode,detailCode,writerUser,boardWriter,protoc
 		}
 	})
 }
+
+// 프로필정보 친구추가 메시지 전달
+function addTimelineFriend(senduserCode,receiverUserCode,protocol) {
+	
+	$.ajax ({
+		url : '/timeline/json/addTimeline',
+		method : 'post',
+		data : JSON.stringify({
+			protocol : protocol,
+			fromUser : {
+				userCode : senduserCode
+			},
+			toUser : {
+				userCode : receiverUserCode
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+				if(data == true) {
+					socketcall(receiverUserCode,'2');
+				}
+		}
+	})
+}
+
+
+
+
+

@@ -40,7 +40,7 @@
 		    
        
       
-      <div class="userList col-md-4">
+      <div class="userList col-md-4" style="margin-top:8px;">
       
       
        </div>
@@ -57,9 +57,20 @@
        </div>
        
        
-      <div class="modal-footer" style="padding-top: 100px">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer" style="padding-top: 10px">
+      
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <div class="multipleInvite btn-group" role="group">
+		    <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		      선택 초대
+		    </button>
+		    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+		      <a class="searchAddFriend dropdown-item" href="#">친구추가</a>
+		      <a class="searchChatInvite dropdown-item" href="#">채팅초대</a>
+		      <a class="searchMessageSend dropdown-item" href="#">쪽지전송</a>
+		      <a class="searchGroupInvite dropdown-item" href="#">일행초대</a>
+		    </div>
+		  </div>
       </div>
     </div>
     </div>
@@ -67,38 +78,167 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	var sessionUser = $('#nodeUserCode').val().trim();
+	//선택초대에서 친구추가 선택
 	
+	$(document).on('click','.searchAddFriend',function(){
+		var multipleUser;
+		if($('.uploadNick').length === 0) {
+			return;
+		}else {
+			multipleUser = '';
+			$('.uploadNick').each(function(){
+				//alert('회원코드'+$(this).children().next().val().trim());
+				multipleUser += '#'+$(this).children().next().val().trim();
+			});
+			multipleAdd(multipleUser,'2');
+		}
+		//alert(multipleUser);
+			
+		
+	});
+	
+	// 회원검색에서 다중선택 초대메시지 전달
+	function multipleAdd(multipleUser,protocol) {
+		$.ajax({
+			url : '/user/json/multipleAdd',
+			method : 'post',
+			data : JSON.stringify({
+				sessionUser : sessionUser,
+				multipleUser : multipleUser,
+				protocol : protocol
+			}),
+			headers: {
+				"Accpet" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status){
+				$.each(data,function(index,item){
+					//console.log("소켓 받는 유저 코드"+item.userCode);
+					socketcall(item.userCode,'2');
+				})
+			}			
+		});
+	}
+	
+	
+	// 회원검색 메인
 	$('#userSearchBlock').on('click',function(){
 		$('.userSearchList').css('display','block');
 		$('.friendSearchList').css('display','none');
+		$('.multipleInvite').css('display','block');
 	});
 	
+	//친구목록 메인
 	$('#friendSearchBlock').on('click',function(){
 		$('.userSearchList').css('display','none');
 		$('.friendSearchList').css('display','block');
+		$('.multipleInvite').css('display','none');
+	});
+	
+	// 친구목록 활성화
+	$('.friendRole1').on('click',function(){
+		var userCode = $('#nodeUserCode').val().trim();
+		
+		if($(this).hasClass('act') === true) {
+			$(this).removeClass('act');
+			$('.friendRole2').css('display','block');
+			$('.friendRole3').css('display','block');
+			$('div[class^=friend_click').remove();
+		}else {
+			$(this).addClass('act');
+			$('.friendRole2').css('display','none');
+			$('.friendRole3').css('display','none');
+			getFriendList(userCode,'1')
+		}
+	});
+	
+	//동행목록 활성화
+	$('.friendRole2').on('click',function(){
+		var userCode = $('#nodeUserCode').val().trim();
+		
+		if($(this).hasClass('act') === true) {
+			$(this).removeClass('act');
+			$('.friendRole1').css('display','block');
+			$('.friendRole3').css('display','block');
+			$('div[class^=friend_click').remove();
+		}else {
+			$(this).addClass('act');
+			$('.friendRole1').css('display','none');
+			$('.friendRole3').css('display','none');
+			getFriendList(userCode,'2')
+		}
+	});
+	
+	//일행목록 활성화
+	$('.friendRole3').on('click',function(){
+		var userCode = $('#nodeUserCode').val().trim();
+		
+		if($(this).hasClass('act') === true) {
+			$(this).removeClass('act');
+			$('.friendRole1').css('display','block');
+			$('.friendRole2').css('display','block');
+			$('div[class^=friend_click').remove();
+		}else {
+			$(this).addClass('act');
+			$('.friendRole1').css('display','none');
+			$('.friendRole2').css('display','none');
+			getFriendList(userCode,'3')
+		}
+	});
+	
+
+	//친구목록 메모 수정창
+	$(document).on("click",".friendMemoEdit",function(){  
+		var color = $(this).css('color');
+		if(color == 'rgb(0, 0, 0)'){
+			$(this).parents('div[class^=friend_click]').children().next().css('display','block');
+			//alert($(this).parents('div[class^=friend_click]').find($('.friend_memo')).text());
+			$(this).parents('div[class^=friend_click]').find($('input[type=text]')).val($(this).parents('div[class^=friend_click]').find($('.friend_memo')).text().trim());
+			$(this).css('color','red');
+		}else {
+			$(this).parents('div[class^=friend_click]').children().next().css('display','none');
+			$(this).css('color','black');
+		}
+	});
+	
+	// 친구목록 메모 수정버튼 클릭  
+	$(document).on("click",".memoEditBtn",function(){  
+		var memo = $(this).parents('.friendMemoEditForm').children().val().trim();
+		var friendNo = $(this).next().val().trim();
+		var friendRole = $(this).next().next().val().trim();
+		//alert(friendNo);
+		//alert(memo);
+		$.ajax({
+			url : '/user/json/addFriendMemo',
+			method : 'post',
+			data : JSON.stringify({
+				friendNo : friendNo,
+				memo : memo
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status) {
+				if(data == true) {
+					getFriendList(sessionUser,friendRole)
+				}
+			}
+		});
 	});
 	
 	
-	$('.friendRole1').on('click',function(){
-		var roleText = $(this).text().trim();
-		var userCode = $('#nodeUserCode').val().trim();
+	function getFriendList(userCode,friendRole) {
 		
-		var role;
-		if(roleText == '친구 목록') {
-			role = '1';
-		}else if(roleText == '일행 목록') {
-			role = '3';
-		}else if(roleText == '동행 목록') {
-			role = '2';
-		}
-		
+		$('div[class^=friend_click').remove();
 		
 		$.ajax({
 			url : '/user/json/getFriend',
 			method : 'post',
 			data : JSON.stringify({
 				userCode : userCode,
-				friendRole : role
+				friendRole : friendRole
 			}),
 			headers : {
 				"Accept" : "application/json",
@@ -110,51 +250,31 @@ $(function(){
 					
 					$('button[class^=friendRole'+item.friendRole).after(
 					'<div class="friend_click" style="padding-top:10px;">'
-					+'<div><img class="rounded-circle" height="50" width="50" style="float:left; margin-left: 5px;" src="/resources/images/profile/'+item.friendCode.profileImg+'"></img>'
+					+'<div><img class="rounded-circle" height="50" width="55" style="float:left; margin-left: 5px;" src="/resources/images/profile/'+item.friendCode.profileImg+'"></img>'
 					+'<div style="float:left; margin-left: 15px;"><strong>'+item.friendCode.nickname+'</strong>'
-					+'<div style="font-size: 13px;">'+item.friendCode.nickname+'&nbsp;&nbsp;<i class="friendMemoEdit far fa-edit" style="color:black;"></i>&nbsp;&nbsp;&nbsp;<i class="far fa-trash-alt"></i></div></div>'
+					+'<div class="friend_memo" style="font-size: 13px;">'+item.memo+'&nbsp;&nbsp;<i class="friendMemoEdit far fa-edit" style="color:black;"></i>&nbsp;&nbsp;&nbsp;<i class="friendMemoDelete far fa-trash-alt"></i></div></div>'
 					+'<div style="float:right;" class="custom-control custom-checkbox">'
-					 +' <input type="checkbox" class="custom-control-input" id="customCheck1">'
-					 +' <label class="custom-control-label" for="customCheck1">선택</label>'
+					 +' <input type="checkbox" class="custom-control-input">'
 					+'</div></div>'
 					+'<div class="friendMemoEditForm" style="width:100%; margin-top:5px; display:none;"><input type="text" class="form-control" style="display:inline-block; margin-left: 70px;width:60%;"><span style="width:30%">'
-					+'<button type="button" class="btn btn-outline-warning" style="margin-left:5px; margin-top:-5px;">수정</button></span></div></div>'
+					+'<button type="button" class="memoEditBtn btn btn-outline-primary" style="margin-left:5px; margin-top:-5px;">수정</button>'
+					+'<input type="hidden" value="'+item.friendNo+'">'
+					+'<input type="hidden" value="'+item.friendRole+'"></span></div></div>'
 					);
 				})
 			}
 			
 		});// end ajax
 		
-	});
-	
-// 	$('.friendMemoEdit').on('click',function(){
-// 		var color = $(this).css('color');
-// 		alert(color);
-// 		alert("1");
-// 		//$('.friendMemoEditForm').css('display','block');
-// 	})
-	$(document).on("click",".friendMemoEdit",function(){  
-	
-		var color = $(this).css('color');
-		
-		if(color == 'rgb(0, 0, 0)'){
-			//$('.friendMemoEditForm').css('display','none');
-			$(this).parents('div[class^=friend_click]').children().next().css('display','block');
-			$(this).css('color','red');
-		}else {
-			//$('.friendMemoEditForm').css('display','none');
-			$(this).parents('div[class^=friend_click]').children().next().css('display','none');
-			$(this).css('color','black');
-		}
-	});
-	
+	}
 	
 	
 	$('#searchUser').on('keyup',function(){
+		$('.userList').empty();
 		var nick = $(this).val();
 		if(nick != '') {
 			$('.userList').empty();
-		searchUser(nick);
+			setTimeout(searchUser(nick),100);
 		}else {
 			return;
 		}
@@ -163,6 +283,8 @@ $(function(){
 
 $(document).on('click','.userCheck',function(){
 	var nick = $(this).next().text().trim();
+	//console.log('코드코드'+$(this).next().children().next().val().trim());
+	var userCode = $(this).next().children().next().val().trim();
 	var check = true;
 	$.each($('.uploadNick'),function(){
 		console.log('들어옴')
@@ -179,12 +301,18 @@ $(document).on('click','.userCheck',function(){
 	if(check){
 	$('.onCheckUser').append(
 					 '<button type="button" class="uploadNick btn btn-outline-dark" style="height: 25px; border-radius: 10px; padding: 0px; padding-left: 1%; padding-right: 1%;">'
-				    	+'<span style="font-size: 12px;">'+nick+'&nbsp;<i class="far fa-times-circle"></i></span> </button>&nbsp;');
+				    	+'<span style="font-size: 12px;">'+nick+'&nbsp;<i class="far fa-times-circle"></i></span>'
+				    	+'<input type="hidden" value="'+userCode+'"></button>&nbsp;');
 	}
 })
 
 $(document).on('click','.uploadNick',function(){
 	$(this).remove();
+	//$('.onCheckUser').empty();
+	console.log($('.uploadNick').length);
+	if($('.uploadNick').length === 0) {
+		$('.onCheckUser').empty();
+	}
 });
 
 $(document).on('click','.getUserCode',function(){

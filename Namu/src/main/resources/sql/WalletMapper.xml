@@ -6,7 +6,7 @@
 
 	<resultMap id="walletSelectMap" type="wallet">
 		<result property="walletDetailCode"	column="W_DETAIL_CODE"	jdbcType="NUMERIC" />
-		<result property="walletCode"		column="W_MAIN_CODE"	jdbcType="NUMERIC" />
+		<result property="walletCode"		column="W_CODE"			jdbcType="NUMERIC" />
 		<result property="part"				column="PART"			jdbcType="CHAR" />
 		<result property="moneyUnit"		column="MONEY_UNIT"		jdbcType="VARCHAR" />
 		<result property="expression"		column="EXPRESSION"		jdbcType="VARCHAR" />
@@ -26,23 +26,37 @@
 	<select id="isWallet" parameterType="int" resultType="int">
 		SELECT NVL(COUNT(*), 0)
 		FROM wallet
-		<where>
-			planner_code = #{value}
-		</where>
+		WHERE planner_code = #{value}
+			  AND is_wallet = 0
 	</select>
 	
 	<select id="getWalletCode" parameterType="int" resultType="int">
 		SELECT w_code
 		FROM wallet
-		<where>
-			planner_code = #{value}
-		</where>
+		WHERE planner_code = #{value}
+			  AND is_wallet = 0
 	</select>
+	
+	<insert id="addWalletView" parameterType="int">
+		INSERT
+		INTO wallet ( w_code, planner_code, is_wallet )
+		VALUES ( seq_w_code.nextval, #{value}, 0 )
+	</insert>
+	
+	<update	id="deleteWalletView" parameterType="int">
+	  	UPDATE wallet
+		<set>
+			is_wallet = 1
+		</set>
+	  	<where>
+	  		w_code = #{value}
+	  	</where>
+	</update>
 	
 	<!-- walletList.jsp -->
 	<insert id="addWallet" parameterType="wallet">
 		INSERT
-		INTO wallet_detail ( w_detail_code, w_main_code, part, money_unit, expression, price, krw_price,
+		INTO wallet_detail ( w_detail_code, w_code, part, money_unit, expression, price, krw_price,
 							 reg_date, item, content, pay_option, exchange_rate, category, w_image, payer )
 		VALUES ( seq_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
 				 #{price}, #{krwPrice}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
@@ -50,7 +64,7 @@
 	</insert>
 	
 	<select id="getWallet" parameterType="int" resultMap="walletSelectMap">
-		SELECT w_detail_code, w_main_code, part, money_unit, expression, price, krw_price,
+		SELECT w_detail_code, w_code, part, money_unit, expression, price, krw_price,
 			   reg_date, item, content, pay_option, exchange_rate, category, w_image, payer
 		FROM wallet_detail
 		<where>
@@ -79,16 +93,6 @@
 	  	</where>
 	</update>
 	
-	<!--
-	<delete id="deleteWallet" parameterType="int">
-		DELETE
-		FROM wallet_detail
-		<where>
-			w_detail_code = #{value}
-		</where>
-	</delete>
-	-->
-	
 	<update	id="deleteWallet" parameterType="int">
 	  	UPDATE wallet_detail
 		<set>
@@ -104,8 +108,8 @@
 		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
 			   FROM ( SELECT *
 					  FROM wallet_detail
-					  WHERE w_main_code = #{walletCode}
-					  AND category <![CDATA[ < ]]> '9'
+					  WHERE w_code = #{walletCode}
+							AND category <![CDATA[ < ]]> '9'
 					  ORDER BY reg_date DESC, w_detail_code DESC ) inner_table
 			   WHERE ROWNUM <![CDATA[ < ]]>= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
@@ -115,8 +119,8 @@
 		SELECT COUNT(*)
 		FROM ( SELECT *
 			   FROM wallet_detail
-			   WHERE w_main_code = #{walletCode}
-			   AND category <![CDATA[ < ]]> '9'
+			   WHERE w_code = #{walletCode}
+					 AND category <![CDATA[ < ]]> '9'
 			   ORDER BY reg_date DESC, w_detail_code DESC ) countTable
 	</select>
 	

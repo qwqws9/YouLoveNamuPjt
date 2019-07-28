@@ -93,7 +93,6 @@
 		})
 		
 		$("#autoLogin").on('click',function(){
-			socketcall();
 			//alert($('#autoLogin').is(':checked'));
 			if($('#autoLogin').is(':checked')) {
 				$("#saveId").prop('disabled',true).prop('checked',true)
@@ -156,7 +155,12 @@
 					//alert("정보가있음");
 					//self.location = '/';
 					//alert(JSONData.userCode);
-					login();
+					if(JSONData.endBlock != null) {
+						alert(JSONData.startBlock+" ~ " + JSONData.endBlock+ " 까지 제한된 회원입니다.")
+					}else {
+						login();
+					}
+					
 				}else {
 					//alert("정보가없음");
 					$('#errorMessage').text('아이디 또는 비밀번호를 확인해주세요');

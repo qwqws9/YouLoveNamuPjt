@@ -74,7 +74,7 @@
 	</div>
 	<br><br><br><br><br><br>
 	
-	<jsp:include page="../user/getProfile.jsp"></jsp:include>
+<div class="profilePopup" style="disaply:none;"></div>
 
 <script type="text/javascript">
 
@@ -737,4 +737,5 @@ function deleteLike(commentCode,likeName) {
 </script>
 
 </body>
+
 </html>

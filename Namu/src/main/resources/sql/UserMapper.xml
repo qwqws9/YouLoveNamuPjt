@@ -187,5 +187,23 @@
 		select f.*,u.user_code to_code,u.nickname to_nick,u.profile_Img to_img from friend f, users u
 		where f.friend_code = u.user_Code and f.user_code = #{userCode} and FRIEND_ROLE = #{friendRole}
 	</select>
+	
+	<insert id="inviteUser" parameterType="friend">
+		INSERT INTO friend (FRIEND_NO,USER_CODE,FRIEND_CODE,FRIEND_ROLE,MEMO) 
+		VALUES (seq_friend_code.nextval,#{userCode},#{friendCode.userCode},#{friendRole},' ')
+	</insert>
+	
+	
+	<update id="addFriendMemo" parameterType="friend">
+		UPDATE friend 
+		<set>
+			<if test="memo != null">
+				MEMO = #{memo:VARCHAR}
+			</if>
+		</set> 
+		WHERE FRIEND_NO = #{friendNo}
+	
+	
+	</update>
 	 
 </mapper>

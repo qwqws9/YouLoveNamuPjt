@@ -38,7 +38,6 @@
 	
 	<div class="wrap">
 		<h2 class="skip">내 가계부</h2>
-		<input type="hidden" id="walletCode" value="${param.walletCode}" />
 		
 		<div class="btnns">
 			<a href="javascript:void(0);" class="pre_btn">
@@ -48,17 +47,8 @@
 			<div class="report_wrap"></div>
 		</div>
 		
-		<section class="sec_wrap clear">
-			<h3 class="skip"><span class="walletCode">${param.walletCode}</span>가계부 내역</h3>
-			<!--
-			<form class="search_form" id="search_form" name="search_form">
-				<input type="hidden" id="pageSize" name="pageSize" value="" />
-				
-				<label for="searchKeyword" class="skip">검색어</label>
-				<input type="text" class="search_txt" id="searchKeyword" name="searchKeyword" placeholder="내역 항목명을 입력하세요." value="${ ! empty search.searchKeyword ? search.searchKeyword : '' }">
-				<button type="submit" class="search_btn">검색</button>
-			</form>
-			-->
+		<section class="sec_wrap clear" id="wallet_detail_section" data-wallet-code="${param.walletCode}">
+			<h3 class="skip">가계부 내역</h3>
 			<nav class="left_nav">
 				<a class="day_btn rounded-circle"><span>All</span></a>
 				<a class="day_btn rounded-circle"><span>준비</span></a>
@@ -109,8 +99,7 @@
 					
 					<ul class="ajax-base" id="ajax-base">
 						<c:forEach varStatus="status" var="wallet" items="${list}">
-							<li class="ajax-${status.index+1} table_row">
-								<span class="walletDetailCode" style="display: none;">${wallet.walletDetailCode}</span>
+							<li class="ajax-${status.index+1} table_row" data-wallet-detail-code="${wallet.walletDetailCode}">
 								<a class="detail_line">
 									<span class="table_col">${status.index+1}</span>
 									<span class="table_col">
@@ -177,15 +166,15 @@
 										</c:if>
 										<c:if test="${empty wallet.walletImage}">
 											<span>
-												<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>
-												<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils"></i></c:if>
-												<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart"></i></c:if>
-												<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark"></i></c:if>
-												<c:if test="${wallet.category eq 4}"><i class="fas fa-plane"></i></c:if>
-												<c:if test="${wallet.category eq 5}"><i class="fas fa-subway"></i></c:if>
-												<c:if test="${wallet.category eq 6}"><i class="fas fa-bed"></i></c:if>
-												<c:if test="${wallet.category eq 7}"><i class="fas fa-skating"></i></c:if>
-												<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
+												<c:if test="${wallet.category eq 0}"><i class="fas fa-coins fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 1}"><i class="fas fa-utensils fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 2}"><i class="fas fa-shopping-cart fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 3}"><i class="fas fa-landmark fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 4}"><i class="fas fa-plane fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 5}"><i class="fas fa-subway fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 6}"><i class="fas fa-bed fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 7}"><i class="fas fa-skating fa-2x"></i></c:if>
+												<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h fa-2x"></i></c:if>
 											</span>
 										</c:if>
 									</span>
