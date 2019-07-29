@@ -15,6 +15,21 @@
 	
 	<script>
 		$(function(){
+			//신고하기
+			var session =  '${user.nickname}';
+			var check = <%=session.getAttribute("user") != null%>
+			$("#from").val(session);
+			$("#goPolice").on("click",function(){
+				if(check == false){
+					self.location = '/user/loginView';
+				}else{
+					alert($("#policeform").serialize());
+					//$("#policeform").attr("method","POST").attr("action","//").submit();
+				}
+				
+			})
+			
+			
 			var communityCode = $("#communityCode").val();
 			$("#update").on("click",function(){
 				self.location = "/community/updateCommunityView?communityCode="+$("#communityCode").val();
@@ -58,6 +73,53 @@
 <header><jsp:include page="/layout/header.jsp" /></header>
 <br><br><br><br><br>
 
+<!-- 신고하기 -->
+<div class="col-lg-1">
+</div><!-- 사이드바 -->
+
+
+<form id="policeform">
+<div class="modal fade" id="police" tabindex="-1" role="dialog" aria-labelledby="policeLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel">신고</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          		<span aria-hidden="true">&times;</span>
+        		</button>
+      		</div>
+      		<div class="modal-body">
+      			<div>
+      				<input type="hidden" id="from" name="from" value="">
+      				작성자 : <input type="text" name="to" value="${community.writer.nickname}" style="outline: none;background: none;border: none; width: 30%">
+      				<input type="hidden" id="communityBoardPolice" name="communityBoardPolice" value="${community.communityBoard }">
+      				게시물번호 : <input type="text" name="to" value="${community.communityCode}" style="outline: none;background: none;border: none; width: 30%">
+      			</div>
+      			<div>
+      				<div class="form-group">
+					    <label for="exampleFormControlSelect1">신고 조건</label>
+					    <select name="policeOption" class="form-control" id="exampleFormControlSelect1">
+					      <option value="1">욕설</option>
+					      <option value="2">그냥</option>
+					      <option value="3">부적절한 게시물</option>
+					      <option value="4">다음</option>
+					      <option value="5">네이버</option>
+					    </select>
+					  </div>
+      			</div>
+      			<div>
+	      			<textarea name="content" style="width:100%;height: 100px;"></textarea>
+      			</div>
+      			
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        		<button type="button" class="btn btn-primary" id="goPolice">신고</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+</form>
 
 
 <!-- Modal -->
@@ -140,7 +202,7 @@
 						<i class="fas fa-ellipsis-v fa-sm" style="position: absolute; bottom: 1px;"></i>
 					</button>
 					<div class="dropdown-menu">
-						<a>신고하기</a>
+						<button type="button" data-target="#police"  data-toggle="modal" style="border: none;background: none; outline: none;">신고하기</button>
 					</div>
 				</div>
 				
