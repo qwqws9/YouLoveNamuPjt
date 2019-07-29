@@ -490,10 +490,10 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S
 
 
 
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1, 0);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2, 0);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 3, 0);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4, 0);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
 
 
 commit;

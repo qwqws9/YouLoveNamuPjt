@@ -33,7 +33,6 @@
 		SELECT w_code
 		FROM wallet
 		WHERE planner_code = #{value}
-			  AND is_wallet = 0
 	</select>
 	
 	<insert id="addWalletView" parameterType="int">
@@ -45,9 +44,7 @@
 	<update	id="deleteWalletView" parameterType="int">
 	  	DELETE
 		FROM wallet
-	  	<where>
-	  		w_code = #{value}
-	  	</where>
+	  	WHERE w_code = #{value}
 	</update>
 	
 	<!-- walletList.jsp -->
@@ -64,9 +61,7 @@
 		SELECT w_detail_code, w_code, part, money_unit, expression, price, krw_price,
 			   reg_date, item, content, pay_option, exchange_rate, category, w_image, payer
 		FROM wallet_detail
-		<where>
-			w_detail_code = #{value}
-		</where>
+		WHERE w_detail_code = #{value}
 	</select>
 	
 	<update	id="updateWallet" parameterType="wallet">
@@ -85,9 +80,7 @@
 			w_image = #{walletImage:VARCHAR},
 			payer = #{payer.userCode:NUMERIC}
 		</set>
-	  	<where>
-	  		w_detail_code = #{walletDetailCode}
-	  	</where>
+	  	WHERE w_detail_code = #{walletDetailCode}
 	</update>
 	
 	<update	id="deleteWallet" parameterType="int">
@@ -95,9 +88,7 @@
 		<set>
 			category = 9
 		</set>
-	  	<where>
-	  		w_detail_code = #{value}
-	  	</where>
+	  	WHERE w_detail_code = #{value}
 	</update>
 	
 	<select id="getWalletList" parameterType="map" resultMap="walletSelectMap">
