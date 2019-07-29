@@ -368,7 +368,7 @@ var departDate=${planner.departDate};
 
 
 <!--일정 등록 팝업  -->
-<!-- <div style="height: 300px;"></div> -->
+<div style="height: 300px;"></div>
 <a href="#layer1" class="btn-example"></a>
 <div id="layer1" class="pop-layer">
 <div class="pop-container">
@@ -393,7 +393,7 @@ var departDate=${planner.departDate};
 
 
 <!--일정 상세 팝업  -->
-<!-- <div style="height: 300px;"></div> -->
+<div style="height: 300px;"></div>
 <a href="#layer2" class="btn-example"></a>
 <div class="dim-layer">
 <div class="dimBg"></div>
