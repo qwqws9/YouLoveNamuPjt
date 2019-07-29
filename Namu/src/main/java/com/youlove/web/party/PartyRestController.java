@@ -48,6 +48,7 @@ public class PartyRestController {
 		if(search.getCurrentPage() == 0){
 			search.setCurrentPage(1);
 		}
+		System.out.println(search.getSearchKeyword());
 		//게시물 리스트
 		map.put("search", search);
 		map = partyService.getPartyList(map);

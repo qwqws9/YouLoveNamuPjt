@@ -40,6 +40,8 @@ function addHashtag(){
 	}else{
 		alert("값을 입력하세요.");
 	}
+	
+	$("#hashtag").focus();
 	console.log($(".btn.btn-outline-dark").text().trim());
 }
 //addParty
@@ -71,6 +73,14 @@ function addParty(){
 		alert("국가를 선택해 주세요.");
 		return;
 	}
+	var latitude = $("#latitude").val();
+	var longitude = $("#longitude").val();
+	if(latitude == null && longitude == null){
+		alert("위치를 선택해 주세요.")
+		return;
+	}
+	
+	
 	var partyStart = $("#partyStart").val();
 	var partyEnd = $("#partyEnd").val();
 	if(partyStart == null || partyStart.length<1 & partyEnd == null || partyEnd.length<1){
@@ -105,6 +115,11 @@ function addParty(){
 			  event.preventDefault();
 			  alert( $( "form" ).serialize() );
 		});*/
-	$("form").attr("method","POST").attr("action","/party/addParty").submit();
+	var Role = $("#update").val();
+	if(Role == "update"){
+		$("form").attr("method","POST").attr("action","/party/updateParty").submit();
+	}else{
+		$("form").attr("method","POST").attr("action","/party/addParty").submit();
+	}
 	//}
 }	

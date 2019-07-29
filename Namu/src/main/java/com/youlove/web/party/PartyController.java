@@ -2,7 +2,6 @@ package com.youlove.web.party;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -77,7 +76,7 @@ public class PartyController {
 		hashVo.setRole(false);
 		hashtagService.addHashtag(hashVo);
 		
-		modelAndView.setViewName("/party/getParty?partyCode="+party.getPartyCode());
+		modelAndView.setViewName("/party/getPartyList");
 		System.out.println("\nPartyController:::addParty() 끝:::");
 		return modelAndView;
 	}
@@ -132,24 +131,70 @@ public class PartyController {
 		System.out.println("\nPartyController:::getPartyList() 끝:::");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="updateParty",method=RequestMethod.POST)
-	public ModelAndView updateParty(@ModelAttribute("party") Party party)throws Exception{
-		System.out.println("\nPartyController:::addParty() 시작:::");
+	@RequestMapping(value="updatePartyView",method=RequestMethod.GET)
+	public ModelAndView updatePartyView(@RequestParam("partyCode")int partyCode)throws Exception{
+		System.out.println("\nPartyController:::updatePartyView() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/party/updateParty.jsp");
+		Map<String,Object> map = new HashMap<String, Object>();
+		//게시물 정보
+		Party party = partyService.getParty(partyCode);
+		//해시태그
+		Hashtag hashVO = new Hashtag();
+		hashVO.setPartyCode(partyCode);
+		hashVO.setCommunityCode(0);
+		hashVO.setRole(true);
+		map = hashtagService.getHashtag(hashVO);
 		
-		System.out.println("\nPartyController:::addParty() 끝:::");
+		modelAndView.addObject("hashtag", map.get("hashtag"));
+		modelAndView.addObject("party", party);
+		System.out.println("\nPartyController:::updatePartyView() 끝:::");
+		return modelAndView;
+	}
+	@RequestMapping(value="updateParty",method=RequestMethod.POST)
+	public ModelAndView updateParty(@ModelAttribute("party") Party party,
+									@RequestParam(value="cityName")String cityName,
+									@RequestParam(value="hashtag", required=false)String hashtag,
+									HttpSession session)throws Exception{
+		System.out.println("\nPartyController:::updateParty() 시작:::");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/party/updateParty.jsp");
+		//회원정보
+		//User user = (User) session.getAttribute("user");
+		//party.setPartyWriter(user);
+		User user = new User();
+		user.setUserCode(2);
+		party.setPartyWriter(user);
+		//국가, 도시
+		City city = new City();
+		city.setCityName(cityName);
+		party.setCity(city);
+		//동행 등록
+		partyService.updateParty(party);
+		//HashTag
+		Hashtag hashVo = new Hashtag();
+		hashVo.setHashtag(hashtag);
+		hashVo.setPartyCode(party.getPartyCode());
+		hashVo.setRole(false);
+		hashtagService.updateHashtag(hashVo);
+		
+		modelAndView.setViewName("/party/getPartyList");
+		System.out.println("\nPartyController:::updateParty() 끝:::");
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="deleteParty",method=RequestMethod.POST)
-	public ModelAndView deleteParty(@ModelAttribute("party") Party party)throws Exception{
-		System.out.println("\nPartyController:::addParty() 시작:::");
+	@RequestMapping(value="deleteParty",method=RequestMethod.GET)
+	public ModelAndView deleteParty(@RequestParam("partyCode")int partyCode)throws Exception{
+		System.out.println("\nPartyController:::deleteParty() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/party/deleteParty.jsp");
+		modelAndView.setViewName("/party/getPartyList.jsp");
+		Party party = partyService.getParty(partyCode);
+		Hashtag hashtag = party.getPartyHashtagCode();
+		partyService.deleteParty(partyCode);
+		hashtagService.deleteHashtag(hashtag.getHashtagCode());
 		
-		System.out.println("\nPartyController:::addParty() 끝:::");
+		
+		System.out.println("\nPartyController:::deleteParty() 끝:::");
 		return modelAndView;
 	}
 }

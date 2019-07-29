@@ -5,6 +5,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
+	
+	
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<!-- fullcalendar-->
+ 	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
+	<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
+	<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
+
+ 	<!-- Font Awesome  -->
+	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
+	
+	 <!-- bootstrap css-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+	<!-- css-->
+  	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+   <link rel="stylesheet" type="text/css" href="/resources/css/planner.css">
+
+	<!-- spectrum -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
+	<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
+
 <style type="text/css">
 input{
 background: none; border: 0 none;
@@ -126,30 +159,6 @@ a.btn-layerClose:hover {
 }
 
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-	<!-- jQuerty -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<!-- jQuery UI toolTip 사용 JS-->
-
- <script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
-<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
-<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
-
-<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
-<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
 
 <script>
 function onchangeDay(yy,mm,dd,ss){ 
@@ -191,9 +200,9 @@ function layer_open(el){
 }
 $(function () {
 	//initialize  calendar
-	/* var departDate=${planner.departDate}; */
+	
 		//alert(departDate);
-		/* var ddd = String(departDate);	
+/* 		var ddd = String(departDate);	
 		var yyyy = ddd.substring(0,4);
 		var mm = ddd.substring(4,6)
 		var dd = ddd.substring(6,8) 
@@ -202,7 +211,7 @@ $(function () {
 		/* var dd = departDate.getDate();
 		var mm = departDate.getMonth()+1; //January is 0! */
 		/* var yyyy = departDate.getFullYear(); */
-	/* 	ddate=yyyy+'-'+mm+'-'+dd; */
+		/* ddate=yyyy+'-'+mm+'-'+dd; */
 		/* alert(ddd.substring(0,4)); */
 		
 		
@@ -273,14 +282,15 @@ $(function () {
 	   	                            start:moment( $(this).attr('start')),
 	   	                         color: $(this).attr('color'),
 	   	                            id: $(this).attr('id') ,
-	   	                         end: $(this).attr('end') 
+	   	                         end: $(this).attr('end') ,
+	   	                      allDay:$(this).attr('allDay') 
 	   	                        });
 	   	                     
 	   	                    });
+	   	                 console.log(data);
 	                    callback(events2);
 	                }
 	                   }); 
-	       
 	     }, 	 
 	        
 		      header: {
@@ -288,8 +298,8 @@ $(function () {
 		        center: 'title',
 		        right: 'month,agendaWeek,listDay'
 		      },
-		      allDay: false,
-		      /* defaultDate: ddate, */
+		     
+		      /* defaultDate: ddate,  */
 		      editable: true,
 		      droppable: true, // this allows things to be dropped onto the calendar
 		     /* dayClick: function(date) { */
@@ -369,7 +379,18 @@ $(function () {
 </head>
 
 <body>
-	<header><jsp:include page="/layout/header.jsp" /></header>
+	<%-- <header><jsp:include page="/layout/header.jsp" /></header> --%>
+<!-- progress bar  -->
+	<div class="container-fluid " id="progress">
+      <ul class="progressbar">
+          <li > 1 Step</li>
+          <li >2 Step </li>
+          <li class="active">3 Step</li>
+  		</ul>
+		</div>
+	<br><br><br>
+<h4 class="text-center"> 상세 플랜 짜기 </h4>
+		<br><br>
 <!--캘린더  -->
 <div  id="calendar"><p class="date" id="nows"></p>
  </div>

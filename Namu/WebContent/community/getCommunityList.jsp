@@ -22,9 +22,24 @@
 	
 	<!-- jQuerty -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+	<!-- owlCarousel -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	
 	<style>
+	
+		.owl-item{
+ 		position: relative;
+ 		height: 330px; 
+ 		border: 1px solid rgba(0, 0, 0, 0.25);
+	 	} */
+	 	.bestTitle{ 
+	 		word-break:break-all; 
+	 		position: absolute; 
+	 		bottom: 0px; 
+	 		z-index: -1; 
+		} 
 	</style>
 </head>
 
@@ -35,31 +50,64 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
-				<div class="row"></div>
+				<div class="row" style="background-color: rgba(242, 192, 41, 0.1); height: 500px;">
+					<div class="col-md-12 col-lg-12">
+					
+					
+						<div class="col-md-3 offset-1">
+							<h1>Community</h1>
+						</div>
+					
+					
+					</div>
+				</div>
+				
+				<br><br><br>
+			
+				<div class="row justify-content-center">
+					<div class="owl-carousel owl-theme owl-loaded" style="width: 90%;">
+					    <div class="owl-stage-outer">
+					        <div class="owl-stage">
+					        	<c:forEach var="best" items="${bestlist}" begin="0" end="10">
+						            <div class="owl-item" style="">
+										<img src="/resources/images/ThumbNail/${best.communityThumbnail }" class="card-img-top" alt="..." style="height: 250px;">
+						            	<input type="hidden" class="bestCommunityCode" value="${best.communityCode}" />
+										<div class="bestTitle" style="overflow: hidden; text-overflow: ellipsis;font-size: 20px; font-weight: bold;">
+											${best.communityTitle}
+										</div>
+						            </div>
+					        	</c:forEach>
+					        </div>
+					    </div>
+					    <div class="owl-nav">
+					        <div class="owl-stop">stop</div>
+					        <div class="owl-start">start</div>
+					    </div>
+					</div>		
+				</div>
 			</div>
 
 
 			<div class="col-1 col-md-1"></div>
-			<br>
 			<div class="col-10 col-md-10 col-lg-10">
 				<div class="row">
-					<div class="col-2 col-md-2 col-lg-2" style="top: 8px;">
+					<div class="col-2 col-md-2 col-lg-2 offset-1" style="top: 8px;">
 						<h5>
-							<strong style="font-style: inherit;">Community</strong>
+							<strong style="font-style: inherit;"></strong>
 						</h5>
 					</div>
-					<div class="col-md-10 col-lg-9">
+					<div class="col-md-9 col-lg-9">
 						<div class="row justify-content-end" style="padding-top: 13px;">
-							<div class="col-3 col-xs-1" style="font-size: 15px;">
+							<div class="col-md-2 col-lg-2 offset-4" style="font-size: 15px;">
 								<a href="#" class="board" style="color: #282c37;"><strong class="all" >전체</strong></a>
 							</div>
-							<div class="col-3 col-xs-1" style="font-size: 15px;">
+							<div class="col-md-2 col-lg-2" style="font-size: 15px;">
 								<a href="#" class="board" style="color: #282c37;"><strong class="free" >자유</strong></a>
 							</div>
-							<div class="col-3 col-xs-1" style="font-size: 15px;">
+							<div class="col-md-2 col-lg-2" style="font-size: 15px;">
 								<a href="#" class="board" style="color: #282c37;"><strong class="city">도시별</strong></a>
 							</div>
-							<div class="col-3 col-xs-1" style="font-size: 15px;">
+							<div class="col-md-2 col-lg-2" style="font-size: 15px;">
 								<a href="#" class="board" style="color: #282c37;"><strong class="qna">QnA</strong></a>
 							</div>
 						</div>
@@ -70,24 +118,52 @@
 				<br>
 				
 				
-				<div class="row justify-content-center">
-					<div class="col-md-10">
-						<div class="d-flex justify-content-center">
-							<c:forEach var="best" items="${bestlist}" begin="0" end="2">
-								<div class="p-2 border">
-									<input type="hidden" class="bestCommunityCode" value="${best.communityCode}" />
-									<div class="card bestCommunity" style="width: 350px; cursor: pointer;">
-										<img src="/resources/images/ThumbNail/${best.communityThumbnail }" class="card-img-top" alt="..." style="height: 250px;">
-										<div class="card-body" style="overflow: hidden; text-overflow: ellipsis; height: 130px;font-size: 30px; font-weight: bold;">
-											${best.communityTitle}
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</div>
-						<!-- row -->
-					</div>
-				</div>
+<!-- 				<div class="row justify-content-center"> -->
+<!-- 					<div class="col-md-10"> -->
+<!-- 						<div class="owl-carousel owl-theme owl-loaded"> -->
+<!-- 						    <div class="owl-stage-outer"> -->
+<!-- 						        <div class="owl-stage"> -->
+<%-- 						        	<c:forEach var="best" items="${bestlist}" begin="0" end="2"> --%>
+<!-- 							            <div class="owl-item"> -->
+<%-- 							            	<input type="hidden" class="bestCommunityCode" value="${best.communityCode}" /> --%>
+<!-- <!-- 											<div class="card bestCommunity" style="width: 350px; cursor: pointer;"> -->
+<%-- 												<img src="/resources/images/ThumbNail/${best.communityThumbnail }" class="card-img-top" alt="..." style="height: 250px;"> --%>
+<!-- 												<div class="card-body" style="overflow: hidden; text-overflow: ellipsis; height: 130px;font-size: 30px; font-weight: bold;"> -->
+<%-- 													${best.communityTitle} --%>
+<!-- 												</div> -->
+<!-- <!-- 											</div> -->
+<!-- 							            </div> -->
+<%-- 						        	</c:forEach> --%>
+<!-- 						        </div> -->
+<!-- 						    </div> -->
+<!-- 						    <div class="owl-nav"> -->
+<!-- 						        <div class="owl-stop">stop</div> -->
+<!-- 						        <div class="owl-start">start</div> -->
+<!-- 						    </div> -->
+<!-- 						</div>			 -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				
+				
+				
+<!-- 				<div class="row justify-content-center"> -->
+<!-- 					<div class="col-md-10"> -->
+<!-- 						<div class="d-flex justify-content-center"> -->
+<%-- 							<c:forEach var="best" items="${bestlist}" begin="0" end="2"> --%>
+<!-- 								<div class="p-2 border"> -->
+<%-- 									<input type="hidden" class="bestCommunityCode" value="${best.communityCode}" /> --%>
+<!-- 									<div class="card bestCommunity" style="width: 350px; cursor: pointer;"> -->
+<%-- 										<img src="/resources/images/ThumbNail/${best.communityThumbnail }" class="card-img-top" alt="..." style="height: 250px;"> --%>
+<!-- 										<div class="card-body" style="overflow: hidden; text-overflow: ellipsis; height: 130px;font-size: 30px; font-weight: bold;"> -->
+<%-- 											${best.communityTitle} --%>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<%-- 							</c:forEach> --%>
+<!-- 						</div> -->
+<!-- 						row -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				
 				
 				<br>
@@ -98,17 +174,31 @@
 						<form><!-- Search -->
 						<input type="hidden" id="communityBoardURL" name="communityBoard" value="">
 						<div class="row">
-							<div class="col-lg-6">
-								<div class="Search">
-									<div class="input-holder">
+							
+							
+							<div class="col-md-6 col-lg-6">
+								<div class="communitySearch">
+									<div class="community input-holder">
 										<input type="text" class="search-input" name="searchKeyword" placeholder="Search" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/>
-										<button type="button" class="search-icon" onclick="searchToggle(this, event);">
+										<button type="button" class="search-icon" onclick="searchCommunity(this, event);">
 											<span></span>
 										</button>
 									</div>
-									<span class="close" onclick="searchToggle(this, event);"></span>
+									<span class="close" onclick="searchCommunity(this, event);"></span>
 								</div>
 							</div>
+							
+<!-- 							<div class="col-lg-6"> -->
+<!-- 								<div class="Search"> -->
+<!-- 									<div class="input-holder"> -->
+<%-- 										<input type="text" class="search-input" name="searchKeyword" placeholder="Search" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/> --%>
+<!-- 										<button type="button" class="search-icon" onclick="searchToggle(this, event);"> -->
+<!-- 											<span></span> -->
+<!-- 										</button> -->
+<!-- 									</div> -->
+<!-- 									<span class="close" onclick="searchToggle(this, event);"></span> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 
 							<div class="col-lg-6">
 								<div class="row float-right">
@@ -162,7 +252,7 @@
 										<p class="text-center" ><i class="far fa-comments fa-2x"></i></p>
 									</c:if>
 								</div>
-								<div class="col-7 col-md-7">
+								<div class="col-6 col-md-6">
 									<div class="row" id="profile-box" style="position: relative;">
 										<div id="profile-image">
 											<a href="#"><img src="/resources/images/profile/${community.writer.profileImg }" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px"></a>
@@ -188,9 +278,11 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-3 col-md-3">
+								<div class="col-2 col-md-2 col-lg-2">
 									<img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/ThumbNail/${community.communityThumbnail }" width="250px" height="160px" style="border-radius: 6px; cursor: pointer;">
 								</div>
+								
+								<div class="col-1 col-md-1 col-lg-1"></div>
 							</div>
 							<hr>
 						</c:forEach>

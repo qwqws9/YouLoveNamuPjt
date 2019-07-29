@@ -16,7 +16,8 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
-	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
@@ -26,18 +27,39 @@
 	<!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
-	<script type="text/javascript" src="/resources/javascript/wallet.js"></script>
-	
+
 	<script type="text/javascript">
-/* 	$(function() {
+var locations=[];
 
-		$("#plannerName").on("click",function(){
+$(function() {	
+	 $.ajax({
+	url : "/guide/json/getCityList/all",
+	method : "get",
+	dataType : "json",
+	async:"false",
+	headers : {
+	"Accept" : "application/json",
+	"Content-Type" : "application/json"
+	},
 
-	self.location = "/planner/getPlanner?plannerCode="+$(this).children("#plannerCode").text().trim();
+	success : function(JSONData){
+		$.each(JSONData,function(index,item){
+			locations.push(item.cityName);
+	console.log(locations);
+			});
+		$("#searchKeyword").autocomplete({
+		 	source : locations
+		});
+		}
+	 });
+});
+	  
+	function fncGetList(currentPage) {
 
-
-	});
-	}); */
+		$("#currentPage").val(currentPage)
+		$($("form")[1]).attr("method", "POST").attr("action","/planner/getAllPlannerList").submit();
+		}
+	
 	$(function() {
 		
 		$('.wallet_box .square').on('click', function(e) {
@@ -46,56 +68,97 @@
 			if(plannerCode != null && plannerCode != '' && plannerCode != 0){
 				
 					self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
-				
 			}
 		});
-	});
 		
-	</script>
+		$("button.btn.btn-default").on("click", function() {
+			fncGetList(1);
+			});
+		
+ 		$("select[name='searchCondition']").on("change", function(){
+			fncGetList(1);
+		}); 
+	
+ 		$("select[name='searchMonth']").on("change", function(){
+			fncGetList(1);
+		}); 
+	});
+	
+	
+
+</script>
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
 	<!--  Search  -->
-	
-<form class="form-inline" name="detailForm">
-<div class="row">
-<div class="col-md-6 text-left">
-<p class="text-primary">전체  ${resultPage.totalCount } 건, 현재
-${resultPage.currentPage} 페이지</p>
-</div>
 
-<div class="col-md-6 text-right">
-
+<%-- <div class="col-md-6 text-right">
 
 <div class="form-group">
 <label class="sr-only" for="searchKeyword">검색</label> <input
 type="text" class="form-control" id="searchKeyword"
-name="searchKeyword" placeholder="검색어"
+name="searchKeyword" placeholder="도시 검색 "
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 </div>
 
 <button type="button" class="btn btn-default">Search</button>
 <br><br>
-
-</div>
-
+ --%>
 
 <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 <input type="hidden" id="currentPage" name="currentPage" value="" />
 
-</form>
-
-<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-<br>
-<br>
-	
-	
-	<div class="wrap">
+<div class="wrap">
 		<h2 class="wallet_title"><span>내 플래너 목록</span></h2>
 		
 		<section class="wallet_box">
-			<h3>다가오는 여행</h3>
+	
+<form class="form-inline" name="detailForm">
+
+
+<div class="col-md-12" >	
+<div class="row">
+<div class="col-md-4">
+<label class="sr-only" for="searchKeyword">검색</label>
+<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="도시명을 입력하세요 "
+value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+</div>
+
+<div class="col-md-2">
+<button type="button" class="btn btn-default">Search</button>
+</div>
+
+<div class="col-md-1">
+</div>
+
+<div class="col-md-2">
+ <select class="custom-select mr-sm-2" id="searchMonth" name="searchMonth">
+  	 <option value="0" ${! empty planner.searchMonth && planner.searchMonth==0 ? "selected" : ""  }> 전체 </option> 
+ 	<c:forEach begin="1" end="12" varStatus="status">
+ 		 <option value="${status.index }" ${! empty planner.searchMonth && planner.searchMonth== '${status.index }' ? "selected" : "" } >${status.index} 월 </option> 
+ 	</c:forEach>
+      </select>
+      </div>
+      
+<div class="col-md-1">
+</div>
+
+<div class="col-md-2">
+ <select class="custom-select mr-sm-2" id="searchCondition" name="searchCondition">
+<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""  }>전체 </option>
+	<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""  }>혼자 </option>
+		<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""  }>연인과 </option>
+			<option value="3" ${! empty search.searchCondition && search.searchCondition==3 ? "selected" : ""  }>친구들과 </option>
+				<option value="4" ${! empty search.searchCondition && search.searchCondition==4? "selected" : ""  }>가족들과</option>
+ </select>
+
+</div>
+</div>
+</div>
+</form>
+
+
 			<div class="square_wrap clear">
 				<c:forEach var="planner" items="${list}">
 					<%-- <c:if test="${planner.departDate >= today}"> --%>
@@ -109,7 +172,7 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 								<div>
 									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<%-- <div id=plannerCode style="display: none">${planner.plannerCode}</div> --%></div>
 									<div class="plan_flag">국기</div>
-									<div class="plan_period text_shadow">${planner.departDate} ~ </div>
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
 								<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
 											<label class="btn btn-secondary">

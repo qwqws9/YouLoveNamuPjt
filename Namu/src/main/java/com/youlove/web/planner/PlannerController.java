@@ -3,11 +3,9 @@ package com.youlove.web.planner;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -116,7 +112,7 @@ public class PlannerController {
 	@RequestMapping( value="updatePlanner", method=RequestMethod.GET )
 	public String updatePlanner( @RequestParam("plannerCode") int plannerCode , Model model ) throws Exception{
 
-		System.out.println("plannerController ----------------updatePlanner:GET ");
+		System.out.println("plannerController ---------------------updatePlanner:GET ");
 		System.out.println(plannerCode);
 		Planner planner = plannerService.getPlanner(plannerCode);
 		
@@ -130,20 +126,15 @@ public class PlannerController {
 	public String updatePlanner( @ModelAttribute("planner") Planner planner, Model model,HttpSession session,  
 			MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
 
-		System.out.println("plannerController ----------------updatePlanner:POST ");
+		System.out.println("plannerController -----------------------updatePlanner:POST ");
 		
-		
-	System.out.println(file);
 		String fileName = FileNameUUId.convert(file, "planner", request);
-		System.out.println("1");
 		planner.setPlannerImage(fileName);
-		System.out.println("2");
+	
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
-		System.out.println("3");
 		System.out.println(planner);
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
-		System.out.println("4");
 		System.out.println(planner.getPlannerCode());
 
 		plannerService.updatePlanner(planner);
@@ -152,23 +143,48 @@ public class PlannerController {
 	
 	}
 	
+//	@RequestMapping(value="deleteSchedule", method=RequestMethod.GET)
+//	public String deleteSchedule(@RequestParam("plannerCode") int plannerCode )throws Exception{
+//		System.out.println("plannerController -----------------------deletePlanner:GET ");
+//
+//		plannerService.deleteSchedule(plannerCode);
+//	
+//		return "forward:/planner/deleteRoute?plannerCode="+plannerCode;
+//	}
+//	
+
+	@RequestMapping(value="deletePlanner", method=RequestMethod.GET)
+	public String deletePlanner(@RequestParam("plannerCode") int plannerCode,Model model)throws Exception{
+		System.out.println("plannerController -----------------------deletePlanner:GET ");
+		
+		Planner planner = plannerService.getPlanner(plannerCode);
+
+		model.addAttribute("planner", planner);
+		
+		plannerService.deletePlanner(plannerCode);
+	
+		return "forward:/planner/getAllPlannerList.jsp";
+	}
+	
 	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
-	public String getPlanner( @RequestParam("plannerCode") int plannerCode ,Model model) throws Exception {
+	public String getPlanner( @RequestParam("plannerCode") int plannerCode ,Model model, HttpSession session) throws Exception {
 		
 		System.out.println("PlannerRestController--------getPlanner:GET");
-		//Business Logic
+//		User user= (User)session.getAttribute("user");
+		
 		Planner planner = plannerService.getPlanner(plannerCode);
-		//Route route = plannerService.getRoute(plannerCode);
-//		Schedule schedule = plannerService.getScheduleList(plannerCode);
-		
-		String page=null;
-		
 		model.addAttribute("planner", planner);
-		//model.addAttribute("route", route);
-//		model.addAttribute("schedule", schedule);
+//		planner.setPlannerWriter(user);
 		
+		//comment
+		model.addAttribute("boardCode", 4);
+		model.addAttribute("detailCode",plannerCode);
+
+		
+//		System.out.println("작성자는요???????"+planner.getPlannerWriter().getUserCode());
 		return "forward:/planner/getPlanner.jsp";
 		}
+	
 	@RequestMapping( value="getPlannerList")
 	public String getPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search,Model model ,HttpSession session ) throws Exception {
 		
@@ -207,17 +223,12 @@ public class PlannerController {
 	}
 	
 	@RequestMapping( value="getAllPlannerList")
-	public String getAllPlannerList(@ModelAttribute("planner") Planner planner, @ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
+	public String getAllPlannerList(@ModelAttribute("planner") Planner planner,@ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
 	 
-//		User user= (User)session.getAttribute("user");
-//		int userCode=user.getUserCode();
-//		planner.setUser(user);
-//		System.out.println("userCode?:"+userCode);
-		
-		int pageUnit = 10;
-		int pageSize = 10;
+		int pageUnit = 30;
+		int pageSize = 30;
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -227,17 +238,17 @@ public class PlannerController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		//map.put("userCode", user);
+
 		map = plannerService.getAllPlannerList(map);
 		
-		//String cityName= route.getCityName();
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-//		System.out.println(resultPage);
 		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+		System.out.println(map);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("search", search);
 		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("today", com.youlove.common.DateFormat.today());
+
 		System.out.println(search);
 		System.out.println(map.get("list"));
 		return "forward:/planner/getAllPlannerList.jsp";
@@ -401,7 +412,7 @@ public class PlannerController {
 		return "forward:/planner/getScheduleList.jsp";
 			
 		}
-	
+
 
 	//3. schedule 
 

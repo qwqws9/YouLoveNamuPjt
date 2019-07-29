@@ -1,6 +1,5 @@
 package com.youlove.service.plannerimpl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +45,11 @@ public class PlannerDaoImpl implements PlannerDao{
 	}
 	
 	@Override
+	public void deletePlanner(int plannerCode) throws Exception {
+		sqlSession.delete("PlannerMapper.deletePlanner", plannerCode);
+	}
+	
+	@Override
 	public List<Planner> getPlannerList(Map<String, Object> map) throws Exception{
 		return sqlSession.selectList("PlannerMapper.getPlannerList", map);
 	}
@@ -54,6 +58,13 @@ public class PlannerDaoImpl implements PlannerDao{
 	public List<Planner> getAllPlannerList(Map<String, Object> map) throws Exception{
 		return sqlSession.selectList("PlannerMapper.getAllPlannerList", map);
 	}
+	
+	@Override
+	public List<Planner> getAllPlannerList(Search search) throws Exception {
+		return sqlSession.selectList("PlannerMapper.getAllPlannerList", search);
+	}
+	
+	
 	@Override
 	public int getTotalCount(Map<String, Object> map) throws Exception{
 		return sqlSession.selectOne("PlannerMapper.getTotalCount", map);
@@ -62,6 +73,11 @@ public class PlannerDaoImpl implements PlannerDao{
 	@Override
 	public int getAllTotalCount(Map<String, Object> map) throws Exception{
 		return sqlSession.selectOne("PlannerMapper.getAllTotalCount", map);
+	}
+	
+	@Override
+	public int getAllTotalCount(Search search) throws Exception{
+		return sqlSession.selectOne("PlannerMapper.getAllTotalCount", search);
 	}
 	
 	//2. route 
@@ -75,6 +91,11 @@ public class PlannerDaoImpl implements PlannerDao{
 		return sqlSession.selectOne("PlannerMapper.getRoute",routeCode);
 	}
 
+	@Override
+	public void deleteRoute(int plannerCode) throws Exception {
+		sqlSession.delete("PlannerMapper.deleteRoute", plannerCode);
+	}
+	
 	@Override
 	public List<Route> getRouteList(int plannerCode) throws Exception {
 		return sqlSession.selectList("PlannerMapper.getRouteList",plannerCode);
@@ -102,12 +123,19 @@ public class PlannerDaoImpl implements PlannerDao{
 	}
 	
 	@Override
+	public Schedule getSchedule(int scheCode)  throws Exception{
+		return sqlSession.selectOne("PlannerMapper.getSchedule",scheCode);
+	}
+	
+	@Override
+	public void deleteSchedule(int plannerCode) throws Exception {
+		sqlSession.delete("PlannerMapper.deleteSchedule", plannerCode);
+	}
+	
+	@Override
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception {
 		return sqlSession.selectList("PlannerMapper.getScheduleList",plannerCode);
 	}
 	
-	@Override
-	public Schedule getSchedule(int scheCode)  throws Exception{
-		return sqlSession.selectOne("PlannerMapper.getSchedule",scheCode);
-	}
+	
 }
