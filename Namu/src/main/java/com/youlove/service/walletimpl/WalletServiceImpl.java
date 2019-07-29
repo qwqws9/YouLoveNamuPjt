@@ -51,11 +51,11 @@ public class WalletServiceImpl implements WalletService {
 	public Wallet getWallet(int walletDetailCode) throws Exception{
 		return walletDao.getWallet(walletDetailCode);
 	}
-	/*
+	
 	public void updateWallet(Wallet wallet) throws Exception{
 		walletDao.updateWallet(wallet);
 	}
-	*/
+	
 	public void deleteWallet(int walletDetailCode) throws Exception{
 		walletDao.deleteWallet(walletDetailCode);
 	}

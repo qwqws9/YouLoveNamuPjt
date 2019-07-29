@@ -288,7 +288,6 @@ a.day_btn span { color: #fff; }
 .paging_wrap li.disabled { color: #cbcbcb; pointer-events: none; }
 /* .paging_wrap .current_page { color: #fff; background-color: #30a9de; } */
 
-
 /* 결산 보고서 */
 .report_wrap
 	{ display: none; position: fixed; top: 0; right: 0; bottom: 0; left: 0; overflow: auto; line-height: 1;

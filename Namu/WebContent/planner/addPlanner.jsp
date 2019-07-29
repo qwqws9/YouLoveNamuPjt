@@ -12,9 +12,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
-	<!-- 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+ 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
@@ -65,7 +65,7 @@ margin:0 auto
 	    $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
-	        dateFormat: 'yyyy-mm-dd'			        
+	        dateFormat: 'yy-mm-dd'			        
 	    });
 	    
 	    $("button").on("click",function(){    	

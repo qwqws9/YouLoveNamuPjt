@@ -49,14 +49,14 @@
 					<div class="card-body">
 						<h5 class="weatherCity card-title" style="margin-bottom: 25px; font-weight: 700; line-height: 30px;">날씨</h5>
 						<div style="text-align: center;">
-							<img class="weatherImg" src="/resources/images/weather/01d.png" height="60px">
+							<img class="weatherImg" src="/resources/images/weather/01d.png" height="50px">
 							<h3 class="mainTemp" style="margin-top: 15px;">27도</h3>
 							<p class="mainMinMaxTemp card-text" style="margin-top: 15px; font-size: 18px;">
 								<span style="color: #30a9de;">27도</span> / <span style="color: #f2c029;">32도</span>
 							</p>
-							<p style="margin-top: -5px;"><span style="color: #30a9de;"><i class="fas fa-tint"></i></span>&nbsp;&nbsp;<span class="humidity card-text">80%</span></p>
+							<p><span style="color: #30a9de;"><i class="fas fa-tint"></i></span>&nbsp;&nbsp;<span class="humidity card-text">80%</span></p>
 						</div>
-						<button class="btn btn-outline-primary" id="callCountry" style="margin-top: 0;">도시 선택</button>
+						<button class="btn btn-outline-primary" id="callCountry" style="margin-top: 5px;">도시 선택</button>
 					</div>
 				</div>
 			</div>

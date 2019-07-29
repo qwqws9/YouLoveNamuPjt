@@ -161,7 +161,8 @@ function addAjax(form) {
 				form.reset();
 				$('.pop_wrap_add').html('');
 			
-				getListAjax(1);
+				//getListAjax(1);
+				walletDetailList();
 			}
 		}
 	});
@@ -198,169 +199,40 @@ function addAjax(form) {
 	*/
 }
 
-// getWalletList Business Logic
-function getListAjax(currentPage) {
-	console.log('현재 페이지 :: ' + currentPage);
+// updateWallet Business Logic
+function updateAjax(form) {
+	var formData = new FormData(form);
 	
-	var walletCode = $('#wallet_detail_section').data('walletCode')
-	console.log('walletCode :: ' + walletCode);
+	/*
+	console.log('FORM ::');
+	for(var pair of formData.entries()){
+		console.log(pair[0] + ' = ' + pair[1]);
+	}
+	console.log(formData.get('file'));
+	*/
 	
 	$.ajax({
-		url			: '/wallet/json/getWalletList/' + walletCode,
+		url			: '/wallet/json/updateWallet',
 		type		: 'POST',
-		data		: JSON.stringify({
-			currentPage	: currentPage,
-			pageSize	: 5
-		}),
+		enctype		: 'multipart/form-data',
+		data		: formData,
 		dataType	: 'json',
-		contentType	: 'application/json',
+		contentType	: false,
+		processData	: false,
+		cache		: false,
+		timeout		: 600000,
 		error		: function(request, status, error) {
-			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
+			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+	    },
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log('JSONData LIST 길이 :: ' + JSONData.list.length);
-			console.log('페이지의 열 :: ' + document.getElementsByClassName('table_row').length);
+			//console.log(status);
+			//console.log('JSONData :: ' + JSONData);
 			
-			$('.totalCount').html(JSONData.totalCount);
-			$('.currentPage').html(currentPage);
+			if(JSONData == true){
+				form.reset();
+				$('.pop_wrap_add').html('');
 			
-			// 기존 데이터 삭제
-			if(JSONData.list.length > document.getElementsByClassName('table_row').length){
-				for(var i=document.getElementsByClassName('table_row').length; i<=JSONData.list.length; i++){
-					$('ajax-' + (document.getElementsByClassName('table_row').length - 1)).clone().append('#ajax-base');
-				}
-			}
-			
-			/*
-			$('li[class^=ajax-]').each(function(idx) {
-				$('.ajax-' + (idx + 1) + ' .detail_line .table_col').empty();
-			});
-			
-			if(JSONData.list.length <= idx){
-				$('.ajax-' + (idx + 1)).hide();
-			}else{
-				$('.ajax-' + (idx + 1)).show();
-			}
-			*/
-			
-			$.each(JSONData.list, function(index, item) {
-				console.log((index + 1) + '번째 :: ' + item.walletDetailCode);
-				
-				// 새 데이터 삽입
-				$('.ajax-' + (index + 1) + ' > .walletDetailCode').attr('data-wallet-detail-code', item.walletDetailCode);
-				
-				var list = $('.ajax-' + (index + 1) + ' .detail_line');
-				
-				list.find('.table_col').empty();
-				
-				list.children().eq(0).html(index+1);
-				
-				list.children().eq(1).html(item.regDate);
-				
-				if(item.part == 0){
-					list.children().eq(2).html('<span></span><span></span>');
-					
-					if(item.moneyUnit == 'KRW'){
-						list.children().eq(2).find('span:eq(0)').append('<i class="fas fa-won-sign"></i>');
-					}else if(item.moneyUnit == 'EUR'){
-						list.children().eq(2).find('span:eq(0)').append('<i class="fas fa-euro-sign"></i>');
-					}else if(item.moneyUnit == 'CHF'){
-						list.children().eq(2).find('span:eq(0)').append('CHF');
-					}else if(item.moneyUnit == 'GBP'){
-						list.children().eq(2).find('span:eq(0)').append('<i class="fas fa-pound-sign"></i>');
-					}else if(item.moneyUnit == 'CZK'){
-						list.children().eq(2).find('span:eq(0)').append('CZK');
-					}else if(item.moneyUnit == 'HUF'){
-						list.children().eq(2).find('span:eq(0)').append('HUF');
-					}
-					list.children().eq(2).find('span:eq(0)').append('&nbsp;' + makeComma(item.price));
-					
-					if(item.payOption == 2){
-						list.children().eq(2).find('span:eq(0)').append('&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>');
-					}
-					
-					if(item.moneyUnit != 'KRW' && (item.krwPrice != null && item.krwPrice != 0)){
-						list.children().eq(2).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.krwPrice));
-					}
-				}
-				
-				if(item.part == 1){
-					list.children().eq(3).html('<span></span><span></span>');
-					
-					if(item.moneyUnit == 'KRW'){
-						list.children().eq(3).find('span:eq(0)').append('<i class="fas fa-won-sign"></i>');
-					}else if(item.moneyUnit == 'EUR'){
-						list.children().eq(3).find('span:eq(0)').append('<i class="fas fa-euro-sign"></i>');
-					}else if(item.moneyUnit == 'CHF'){
-						list.children().eq(3).find('span:eq(0)').append('CHF');
-					}else if(item.moneyUnit == 'GBP'){
-						list.children().eq(3).find('span:eq(0)').append('<i class="fas fa-pound-sign"></i>');
-					}else if(item.moneyUnit == 'CZK'){
-						list.children().eq(3).find('span:eq(0)').append('CZK');
-					}else if(item.moneyUnit == 'HUF'){
-						list.children().eq(3).find('span:eq(0)').append('HUF');
-					}
-					list.children().eq(3).find('span:eq(0)').append('&nbsp;' + makeComma(item.price));
-					
-					if(item.payOption == 2){
-						list.children().eq(3).find('span:eq(0)').append('&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>');
-					}
-					
-					if(item.moneyUnit != 'KRW' && (item.krwPrice != null && item.krwPrice != 0)){
-						list.children().eq(3).find('span:eq(1)').append('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(item.krwPrice));
-					}
-				}
-				
-				if(item.item != null && item.item != ''){
-					list.children().eq(4).html(item.item);
-				}else{
-					if(item.part == 0){
-						list.children().eq(4).html('예산 추가');
-					}else if(item.part == 1){
-						list.children().eq(4).html('지출 추가');
-					}
-				}
-				
-				if(item.walletImage != null){
-					list.children().eq(5).html('<img src="/resources/images/wallet/' + item.walletImage + '" alt="' + item.category + '" class="rounded-circle">');
-				}else{
-					list.children().eq(5).html('<span></span>');
-					
-					if(item.category == 0){
-						list.children().eq(5).find('span').html('<i class="fas fa-coins fa-2x"></i>');
-					}else if(item.category == 1){
-						list.children().eq(5).find('span').html('<i class="fas fa-utensils fa-2x"></i>');
-					}else if(item.category == 2){
-						list.children().eq(5).find('span').html('<i class="fas fa-shopping-cart fa-2x"></i>');
-					}else if(item.category == 3){
-						list.children().eq(5).find('span').html('<i class="fas fa-landmark fa-2x"></i>');
-					}else if(item.category == 4){
-						list.children().eq(5).find('span').html('<i class="fas fa-plane fa-2x"></i>');
-					}else if(item.category == 5){
-						list.children().eq(5).find('span').html('<i class="fas fa-subway fa-2x"></i>');
-					}else if(item.category == 6){
-						list.children().eq(5).find('span').html('<i class="fas fa-bed fa-2x"></i>');
-					}else if(item.category == 7){
-						list.children().eq(5).find('span').html('<i class="fas fa-skating fa-2x"></i>');
-					}else if(item.category == 8){
-						list.children().eq(5).find('span').html('<i class="fas fa-ellipsis-h fa-2x"></i>');
-					}
-				}
-			});
-			
-			// 페이징 처리
-			// PREV
-			if(currentPage == 1){
-				$('.paging_wrap ul .left').addClass('disabled');
-			}else{
-				$('.paging_wrap ul .left').removeClass('disabled');
-			}
-			// NEXT
-			if(JSONData.list.length < JSONData.search.pageSize || JSONData.list.length * currentPage == JSONData.totalCount){
-				$('.paging_wrap ul .right').addClass('disabled');
-			}else{
-				$('.paging_wrap ul .right').removeClass('disabled');
+				walletDetailList($('#currentPage').text().trim());
 			}
 		}
 	});
@@ -519,7 +391,7 @@ function deleteAjax(walletDetailCode) {
 				$('.pop_wrap_contain').html('');
 				$('.pop_wrap_contain').hide();
 			
-				getListAjax(1);
+				walletDetailList($('#currentPage').text().trim());
 			}
 		}
 	});

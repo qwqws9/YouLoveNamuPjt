@@ -15,8 +15,10 @@
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 	 
 	 <!--  map -->
-	 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
-	 
+	 <script async defer
+    src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
+	  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwQUku8IvfTgFKI9lhoM4tUIHPw8baa-4&libraries=places"></script>
 	 <!-- Font Awesome  -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
