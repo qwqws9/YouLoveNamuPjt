@@ -64,7 +64,19 @@ public class WalletServiceImpl implements WalletService {
 		List<Wallet> list = walletDao.getWalletList(map);
 		int totalCount = walletDao.getTotalCount(map);
 		
+		
 		map = new HashMap<String, Object>();
+		
+		//수입
+		Long income = walletDao.outIncomeSum(new Wallet("0"));
+		
+		//지출
+		Long outcome = walletDao.outIncomeSum(new Wallet("1"));
+		Long total = income- outcome;
+		map.put("income", income);
+		map.put("outcome", outcome);
+		map.put("minus", total);
+		
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		

@@ -101,7 +101,13 @@ public class WalletController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
+		
+		modelAndView.addObject("income", map.get("income"));
+		modelAndView.addObject("outcome", map.get("outcome"));
+		modelAndView.addObject("minus", map.get("minus"));
+		
 		modelAndView.setViewName("/wallet/getWalletList.jsp");
+		
 		
 		return modelAndView;
 		

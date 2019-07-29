@@ -92,6 +92,9 @@
 			<if test="userCode != null" >
 				USER_CODE = #{userCode}
 			</if>
+			<if test="token != null" >
+				TOKEN = #{token}
+			</if>
 			<if test="nick != null">
 				NICKNAME LIKE &apos;%${nick}%&apos; 
 			</if>

@@ -54,7 +54,7 @@ input::placeholder {
 					
 						<div class="row">
 						<div class="col-lg-8">
-			  			<input type="text" id="email" name="email"  class="form-control" placeholder="이메일" autofocus>
+			  			<input type="text" id="email" name="email"  class="form-control" placeholder="이메일" autofocus value="${userSNS.email }">
 			  			</div>
 			  			<div class="col-lg-4">
 			  			<button type="button" class="btn btn-outline-primary" name="emailCheck">인증</button>
@@ -118,7 +118,7 @@ input::placeholder {
 						</small>
 			  			<br>
 			  			
-			  			<input type="text" id="name" name="name" class="form-control" placeholder="이름" >
+			  			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value="${userSNS.name }" >
 			  			<br>
 			  			
 			  			<img src="http://placehold.it/150" id="preImg" />
@@ -149,7 +149,7 @@ input::placeholder {
 						</small>
 			  			<br>
 			  			
-			  			<input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임" >
+			  			<input type="text" id="nickname" name="nickname" class="form-control" placeholder="닉네임" value="${userSNS.nickname }" >
 			  			<small id="nicknameHelp" class="form-text">
  							 
 						</small>
@@ -162,7 +162,7 @@ input::placeholder {
 			  			<br>
 			  			프로필공개&nbsp;&nbsp;&nbsp;
 			  			<div class="custom-control custom-radio custom-control-inline">
-						  <input type="radio" id="customRadioInline1" name="profileAuth" value="T" class="custom-control-input">
+						  <input type="radio" id="customRadioInline1" name="profileAuth" value="T" class="custom-control-input" checked="checked">
 						  <label class="custom-control-label" for="customRadioInline1">공개</label>
 						</div>
 						<div class="custom-control custom-radio custom-control-inline">
@@ -197,11 +197,13 @@ input::placeholder {
 		  				<input type="hidden" id= "saveM">
 		  				<input type="hidden" id= "saveP">
 		  				<input type="hidden" id= "captchaKey">
-		  				
+		  				<input type="hidden" name="token" value="${userSNS.token }">
+		  				<input type="hidden" name="userId" value="${userSNS.userId }">
 				</form>
 			</div>
 		</div>
 	</div>
+
 
 
 

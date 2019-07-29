@@ -63,14 +63,14 @@
 				<div class="right_table">
 					<div class="total_table clear">
 						<div class="total_budget">
-							<span>총 예산</span><span>€ 2500.00</span>
+							<span>총 예산</span><span>${income }</span>
 						</div>
 						<div class="total_price">
 							<div class="total_floating">
-								<span>쓴 돈</span><span>€ 2500.00</span>
+								<span>쓴 돈</span><span>${outcome }</span>
 							</div>
 							<div class="total_floating">
-								<span>남은 돈</span><span>€ 2500.00</span>
+								<span>남은 돈</span><span>${minus }</span>
 							</div>
 						</div>
 					</div><!-- //total_table -->
