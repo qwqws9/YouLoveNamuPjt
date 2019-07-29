@@ -181,8 +181,18 @@ public class UserRestController {
 	@RequestMapping(value="json/addPay",method=RequestMethod.POST)
 	public boolean addPay(@RequestBody Pay pay) throws Exception{
 		
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println(pay.toString());
-		
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
 		boolean result = userService.addPay(pay);
 		
 		return result;

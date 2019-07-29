@@ -20,6 +20,8 @@
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 <link rel="stylesheet" href="/resources/css/common.css" >
 <script src="/resources/javascript/getProfile.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="/resources/javascript/payIamport.js"></script>
 </head>
 <body>
 <header><%@ include file="/layout/header.jsp" %></header>
@@ -244,29 +246,8 @@ $(document).on('click','.flightPrice',function(){
 	var userCode = $('#userCode').val().trim();
 	var cost = $(this).text().trim();
 	
-			$.ajax({
-				url : '/user/json/addPay',
-				method : 'post',
-				data : JSON.stringify({
-					startWay : startWay,
-					endWay : endWay,
-					startDate : checkin,
-					endDate : checkout,
-					flightTime : startTotal,
-					returnFlightTime : endTotal,
-					paymentPrice : cost,
-					paymentUser : {
-						userCode : userCode
-					}
-				}),
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(data, status){
-					alert(status);
-				}
-			})
+	FlightPayIamport(startWay,endWay,checkin,checkout,startTotal,endTotal,cost,userCode);
+			
 			
 		
 	
