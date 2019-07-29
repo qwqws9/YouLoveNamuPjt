@@ -67,7 +67,11 @@ label {margin:0;padding:0;}
 	    <h5 class="card-title">SNS 연동</h5>
 	     </div>
 	        <div class="col-sm-2">
-	    <p class="card-text">카카오</p>
+	    <p class="card-text">
+	    	<c:if test="${user.token.substring(0,1) == 'G' }">구글</c:if>
+	    	<c:if test="${user.token.substring(0,1) == 'K' }">카카오</c:if>
+	    	<c:if test="${empty user.token }">없음</c:if>
+	    </p>
 	     </div>
         </div>
         

@@ -45,7 +45,13 @@ public class UserController {
 		System.out.println(this.getClass());
 	}
 	
-	
+	//토큰남아서 만듬
+	@RequestMapping("/deleteToken")
+	public String deleteToken() throws Exception{
+		
+		
+		return "redirect:/";
+	}
 	
 	
 	
@@ -97,7 +103,7 @@ public class UserController {
 		map.put("userCode", dbUser.getUserCode());
 		map.put("target", "token");
 		map.put("value", sessionId);
-		userService.updateUser(map);
+		//userService.updateUser(map);
 		Cookie c = new Cookie("users",dbUser.getNickname());
 		//c.setDomain("http://192.168.0.13:8005");
 		c.setMaxAge(365 * 24 * 60 * 60);
@@ -124,30 +130,52 @@ public class UserController {
 	public String loginView(HttpServletRequest request,Model model,Map<String,Object> map,HttpSession session) throws Exception{
 		
 		System.out.println("/user/loginView : GET");
+		
+	
+		
 		Cookie[] cookie = request.getCookies();
 		for(Cookie c : cookie) {
 			if(c.getName().equals("autoLogin")) {
 				map.put("login", c.getValue());
 				User user = userService.getUser(map);
 				session.setAttribute("user", user);
-				return "/";
 			}else if(c.getName().equals("saveId")) {
 				model.addAttribute("saveId",c.getValue());
 			}
 		}
 		
       	
-		model.addAttribute("boardCode","5");
-		model.addAttribute("detailCode","12345");
 		
 		
 		return "forward:/user/loginView.jsp";
 	}
 	
-	@RequestMapping(value="/addUser", method= RequestMethod.GET)
+	@RequestMapping("/addSNS")
+	public String addSNS(@ModelAttribute User userSNS,Model model,Map<String,Object> map,HttpSession session) throws Exception {
+		
+		System.out.println("/user/addSNS");
+		if(userSNS != null) {
+			map.put("token", userSNS.getUserId()+userSNS.getToken());
+			User userCheck = userService.getUser(map);
+			if(userCheck != null) {
+				session.setAttribute("user", userCheck);
+				map.clear();
+				return "forward:/user/deleteToken";
+			}else {
+				model.addAttribute("userSNS",userSNS);
+			}
+			
+			
+		}
+		
+		return "forward:/user/addUser.jsp";
+	}
+	
+	
+	@RequestMapping("/addUser")
 	public String addUser() throws Exception {
 		
-		System.out.println("/user/addUser : GET");
+		System.out.println("/user/addUser");
 		
 		return "redirect:/user/addUser.jsp";
 	}
@@ -180,10 +208,14 @@ public class UserController {
 			user.setGender("F");
 		}
 		
+		//SNS로그인 토큰 앞자리 붙이기
+		String token = user.getUserId()+user.getToken();
+		user.setToken(token);
+		
 		userService.addUser(user);
 		
 		//회원가입 성공 후 프로필미리보기 구현하기
-		return "/";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/logout")

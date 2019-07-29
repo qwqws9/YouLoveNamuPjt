@@ -5,6 +5,7 @@ public class Search {
 	///Field
 	private int currentPage;
 	private String searchCondition;
+	private String searchCondition2;
 	private String searchKeyword;
 	private int pageSize;
 	//==> 리스트 화면 currentPage에 해당하는 정보를 ROWNUM을 사용해 SELECT하기 위해 추가
@@ -36,7 +37,12 @@ public class Search {
 	public void setSearchCondition(String searchCondition) {
 		this.searchCondition = searchCondition;
 	}
-	
+	public String getSearchCondition2() {
+		return searchCondition2;
+	}
+	public void setSearchCondition2(String searchCondition2) {
+		this.searchCondition2 = searchCondition2;
+	}
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
@@ -57,7 +63,7 @@ public class Search {
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition="
 				+ searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
+				+ ", searchCondition2="+ searchCondition2 +", pageSize=" + pageSize + ", endRowNum=" + endRowNum
 				+ ", startRowNum=" + startRowNum + "]";
 	}
 	
