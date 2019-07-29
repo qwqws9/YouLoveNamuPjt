@@ -6,7 +6,6 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- jquery bootstrap -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -19,7 +18,6 @@
   	<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"> -->
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
-	
 
   	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
   	<!-- css -->
@@ -60,12 +58,12 @@ margin:0 auto
 	        var fileName = $(this).val();
 	        $(this).next('.custom-file-label').html(fileName);
 	    });
-	   $( "#departDate" ).datepicker({
+	  /*  $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
 	        dateFormat: 'yy-mm-dd'			        
 	    });
-	
+	 */
 	    $("button").on("click",function(){    	
 	    	fncUpdatePlanner();    	
 	    });
@@ -125,11 +123,32 @@ margin:0 auto
 		        </div>
 		    <div class="col-md-4">
 		    <select class="custom-select mr-sm-2" id="member" name="member" >
-		  		<option value="1" <c:if test="${planner.member == '1'}">selected</c:if>> 혼자 </option>
-        		<option value="2" <c:if test="${planner.member == '2'}">selected</c:if>>연인과 </option>
-        		<option value="3" <c:if test="${planner.member == '3'}">selected</c:if>>친구들과 </option>
-       			<option value="4" <c:if test="${planner.member == '4'}">selected</c:if>>가족과 </option>
+		    <c:if test="${planner.member == '1'}">
+		  		<option value="1" selected="selected"> 혼자 </option>
+        		<option value="2" >연인과 </option>
+        		<option value="3" >친구들과 </option>
+       			<option value="4" >가족과 </option>
+       		</c:if>
+       		<c:if test="${planner.member == '2'}">
+		  		<option value="1"> 혼자 </option>
+        		<option value="2" selected="selected">연인과 </option>
+        		<option value="3" >친구들과 </option>
+       			<option value="4" >가족과 </option>
+       		</c:if>
+       		<c:if test="${planner.member == '3'}">
+		  		<option value="1" > 혼자 </option>
+        		<option value="2" >연인과 </option>
+        		<option value="3" selected="selected">친구들과 </option>
+       			<option value="4" >가족과 </option>
+       		</c:if>
+       		<c:if test="${planner.member == '4'}">
+		  		<option value="1" > 혼자 </option>
+        		<option value="2" >연인과 </option>
+        		<option value="3" >친구들과 </option>
+       			<option value="4" selected="selected">가족과 </option>
+       		</c:if>
       </select>
+    
    </div>
 		     <div class="col-md-2"></div>
 		  </div>
@@ -145,9 +164,22 @@ margin:0 auto
 		        	   </div>
 		    <div class="col-md-4">
 		    <select class="custom-select mr-sm-2" id="privacy " name="privacy " >
-		    <option value="p" <c:if test="${planner.privacy == 'p'}">selected</c:if>>공개  </option>
-		  		<option value="s" <c:if test="${planner.privacy  == 's'}">selected</c:if>> 비공개 </option>
-        		<option value="w" <c:if test="${planner.privacy == 'w'}">selected</c:if>>가계부비공개 </option>
+		      <c:if test="${planner.member == 'p'}">
+		  		<option value="p" selected="selected"> 공개  </option>
+        		<option value="s" >비공개 </option>
+        		<option value="w" >가계부비공개 </option>
+       		</c:if>
+		    <c:if test="${planner.member == 's'}">
+		  		<option value="p" > 공개  </option>
+        		<option value="s" selected="selected">비공개 </option>
+        		<option value="w" >가계부비공개 </option>
+       		</c:if>
+       		<c:if test="${planner.member == 'w'}">
+		  		<option value="p"> 공개  </option>
+        		<option value="s" >비공개 </option>
+        		<option value="w"  selected="selected">가계부비공개 </option>
+       		</c:if>
+		  
         </select>
    </div>
 		     <div class="col-md-2"></div>
