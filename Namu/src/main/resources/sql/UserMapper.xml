@@ -63,6 +63,27 @@
 		</association>
 	</resultMap>
 	
+	
+	<resultMap id="policeMap" type="police">
+		<result property="policeCode" 					column="POLICE_CODE" 					jdbcType="NUMERIC"/>
+		<result property="policeBoardCode"				column="POLICE_BOARDCODE" 				jdbcType="NUMERIC" />
+		<result property="policeDetailCode" 			column="POLICE_DETAILCODE" 				jdbcType="NUMERIC" />
+		<result property="policeOption" 				column="POLICE_OPTION" 					jdbcType="VARCHAR" />
+		<result property="policeContent" 				column="POLICE_CONTENT" 				jdbcType="VARCHAR" />
+		<result property="policeDate" 					column="POLICE_DATE" 					jdbcType="VARCHAR" />
+		<result property="processing" 					column="PROCESSING" 					jdbcType="CHAR" />
+		<association property="fromUser" 	javaType="user">
+			<result property="userCode" 	column="USER_CODE" />
+			<result property="nickname"		column="NICKNAME" />
+			<result property="role" 	column="role" />
+		</association>
+		<association property="toUser" 		javaType="user">
+			<result property="userCode" 	column="to_code" />
+			<result property="nickname" 	column="to_nick" />
+			<result property="role" 	column="to_role" />
+		</association>
+	</resultMap>
+	
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
@@ -208,5 +229,21 @@
 	
 	
 	</update>
+	
+	<insert id="addPolice" parameterType="police">
+		INSERT INTO police
+		VALUES (seq_police_code.nextval,#{fromUser.userCode},#{toUser.userCode},#{policeBoardCode},#{policeDetailCode},#{policeOption},#{policeContent},#{policeDate},'X')
+	</insert>
+	
+	<select id="getPoliceList" resultMap="policeMap">
+	select  u1.*,u2.user_code to_code, u2.nickname to_nick,u2.role to_role from (
+	select * from police p , users u
+	where p.from_user = u.user_code) u1, users u2 where u1.to_user=u2.user_code
+	</select>
+	
+	<update id="updatePolice" parameterType="police">
+		UPDATE police set processing=#{processing} where police_code = #{policeCode}
+	</update>
+	
 	 
 </mapper>

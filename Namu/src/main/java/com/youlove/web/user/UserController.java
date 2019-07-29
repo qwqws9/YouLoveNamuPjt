@@ -24,6 +24,7 @@ import com.youlove.common.FileNameUUId;
 import com.youlove.common.GetAge;
 import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Police;
 import com.youlove.service.domain.Timeline;
 import com.youlove.service.domain.User;
 import com.youlove.service.timeline.TimelineService;
@@ -240,6 +241,20 @@ public class UserController {
 		
 		return "/";
 	}
+	
+	@RequestMapping("/getPoliceList")
+	public String getPoliceList(Model model) throws Exception {
+		
+		System.out.println("/user/getPoliceList");
+		
+		List<Police> list = userService.getPoliceList();
+		
+		model.addAttribute("list",list);
+		
+		
+		return "forward:/user/policeList.jsp";
+	}
+	
 	
 	@RequestMapping("/getUser")
 	public String getUser(HttpSession session) throws Exception {

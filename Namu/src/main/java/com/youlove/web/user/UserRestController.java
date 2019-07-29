@@ -35,6 +35,7 @@ import com.youlove.common.api.NaverCaptcha;
 import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Hotel;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Police;
 import com.youlove.service.domain.Timeline;
 import com.youlove.service.domain.User;
 import com.youlove.service.timeline.TimelineService;
@@ -70,6 +71,32 @@ public class UserRestController {
 	
 	@Value("#{commonProperties['captchaPath']}")
 	String captchaPath;
+	
+	
+	
+		@RequestMapping(value="json/addPolice",method=RequestMethod.POST)
+		public boolean addPolice(@RequestBody Police police) throws Exception{
+			
+			System.out.println("/user/json/addPolice");
+			
+			police.setPoliceDate(DateFormat.minute());
+			boolean result = userService.addPolice(police);
+			
+			return result;
+		}
+		
+		@RequestMapping(value="json/updatePolice",method=RequestMethod.POST)
+		public boolean updatePolice(@RequestBody Police police) throws Exception{
+			
+			System.out.println("/user/json/updatePolice");
+			
+			boolean result = userService.updatePolice(police);
+			
+			return result;
+		}
+		
+		
+	
 	
 	
 	

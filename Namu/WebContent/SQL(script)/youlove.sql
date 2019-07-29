@@ -126,12 +126,15 @@ CREATE TABLE TIMELINE (
 
 CREATE TABLE POLICE ( 
    POLICE_CODE          NUMBER(10)   ,
-   POLICE_CONTENT           VARCHAR2(100)   ,
-   POLICE_TIME          DATE   ,
-   FROM_POILCE          VARCHAR2(100)   ,
-   TO_POLICE             VARCHAR2(100)   ,
-   POLICE_DETAIL           NUMBER(10)   ,
-   
+   FROM_USER           NUMBER(10)   ,
+   TO_USER              NUMBER(10)   ,
+   POLICE_BOARDCODE          NUMBER(10)   ,
+   POLICE_DETAILCODE             NUMBER(10)   ,
+   POLICE_OPTION           VARCHAR2(1000)   ,
+   POLICE_CONTENT          VARCHAR2(1000),
+   POLICE_DATE              VARCHAR2(1000),
+   PROCESSING               CHAR(1),
+    
    PRIMARY KEY(POLICE_CODE)
 );
 

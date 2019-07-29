@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Police;
 import com.youlove.service.domain.User;
 import com.youlove.service.user.UserDao;
 import com.youlove.service.user.UserService;;
@@ -93,6 +94,31 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean inviteUser(Friend friend) throws Exception {
 		int res = userDao.inviteUser(friend);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
+	}
+
+	@Override
+	public boolean addPolice(Police police) throws Exception {
+		int res = userDao.addPolice(police);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
+	}
+
+	@Override
+	public List<Police> getPoliceList() throws Exception {
+		return userDao.getPoliceList();
+	}
+
+	@Override
+	public boolean updatePolice(Police police) throws Exception {
+		int res = userDao.updatePolice(police);
 		boolean result = false;
 		if(res != 0) {
 			result = true;

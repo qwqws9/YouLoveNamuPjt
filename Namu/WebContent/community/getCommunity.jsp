@@ -23,8 +23,37 @@
 				if(check == false){
 					self.location = '/user/loginView';
 				}else{
-					alert($("#policeform").serialize());
-					//$("#policeform").attr("method","POST").attr("action","//").submit();
+					var content = $('#policeContent').val().trim();
+					if(content.length <= 0) {
+						alert('내용을 입력하세요.');
+						return;
+					}else {
+						$.ajax({
+							url : '/user/json/addPolice',
+							method  : 'post',
+							data : JSON.stringify ({
+								fromUser : {
+									userCode : $('#fromUser').val().trim()
+								},
+								toUser : {
+									userCode : $('#toUser').val().trim()
+								},
+								policeBoardCode : $('#policeBoardCode').val().trim(),
+								policeDetailCode : $('#policeDetailCode').val().trim(),
+								policeOption : $('#policeOption').val().trim(),
+								policeContent : $('#policeContent').val().trim()
+							}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(data,status) {
+								alert('신고가 완료되었습니다.');
+								$('#policeClose').trigger('click');
+							}
+						});
+					}
+					
 				}
 				
 			})
@@ -90,30 +119,31 @@
       		</div>
       		<div class="modal-body">
       			<div>
-      				<input type="hidden" id="from" name="from" value="">
-      				작성자 : <input type="text" name="to" value="${community.writer.nickname}" style="outline: none;background: none;border: none; width: 30%">
-      				<input type="hidden" id="communityBoardPolice" name="communityBoardPolice" value="${community.communityBoard }">
-      				게시물번호 : <input type="text" name="to" value="${community.communityCode}" style="outline: none;background: none;border: none; width: 30%">
+      				<input type="hidden"  id="fromUser" value="${user.userCode }">
+      				<input type="hidden"  id="toUser" value="${community.writer.userCode}">
+      				작성자 : <input type="text"  value="${community.writer.nickname}" style="outline: none;background: none;border: none; width: 30%">
+      				<input type="hidden" id="policeBoardCode" name="policeBoardCode" value="${community.communityBoard }">
+      				게시물번호 : <input type="text" id="policeDetailCode" value="${community.communityCode}" style="outline: none;background: none;border: none; width: 30%">
       			</div>
       			<div>
       				<div class="form-group">
-					    <label for="exampleFormControlSelect1">신고 조건</label>
-					    <select name="policeOption" class="form-control" id="exampleFormControlSelect1">
-					      <option value="1">욕설</option>
-					      <option value="2">그냥</option>
-					      <option value="3">부적절한 게시물</option>
-					      <option value="4">다음</option>
-					      <option value="5">네이버</option>
+					    <label for="policeOption">신고 조건</label>
+					    <select name="policeOption" class="form-control" id="policeOption">
+					      <option value="욕설">욕설</option>
+					      <option value="그냥">그냥</option>
+					      <option value="부적절한게시물">부적절한 게시물</option>
+					      <option value="다음">다음</option>
+					      <option value="네이버">네이버</option>
 					    </select>
 					  </div>
       			</div>
       			<div>
-	      			<textarea name="content" style="width:100%;height: 100px;"></textarea>
+	      			<textarea name="policeContent" id="policeContent" style="width:100%;height: 100px;"></textarea>
       			</div>
       			
 		    </div>
       		<div class="modal-footer">
-        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        		<button type="button" id="policeClose" class="btn btn-secondary" data-dismiss="modal">취소</button>
         		<button type="button" class="btn btn-primary" id="goPolice">신고</button>
       		</div>
     	</div>
