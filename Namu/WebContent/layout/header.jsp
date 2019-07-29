@@ -15,8 +15,8 @@
   	
 	<script>
 	//채팅 팝업
-	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
-	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	
 	function onChat(){
 		$(document).ready(function(){
