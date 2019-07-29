@@ -27,11 +27,26 @@
 	<!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
-
+	<style type="text/css">
+	#searchKeyword{
+		outline: none;
+		border: none;
+		background: none;
+		border-bottom: 2px solid #F2C029;
+	}
+	#searchKeyword:focus{
+		border-bottom: 2px solid #a3daff;
+		transition: 0.5s;
+	}
+	
+	</style>
 	<script type="text/javascript">
 var locations=[];
 
 $(function() {	
+	
+	
+	
 	 $.ajax({
 	url : "/guide/json/getCityList/all",
 	method : "get",
@@ -55,12 +70,33 @@ $(function() {
 });
 	  
 	function fncGetList(currentPage) {
-
-		$("#currentPage").val(currentPage)
-		$($("form")[1]).attr("method", "POST").attr("action","/planner/getAllPlannerList").submit();
-		}
+		//var ser = $(this).val();
+		//alert(ser);
+		//option.selected;
+		$("#currentPage").val(currentPage);
+		
+		
+		//alert($("form").serialize());
+		 $($("form")[1]).attr("method", "POST").attr("action","/planner/getAllPlannerList").submit();
+	}
+	
+	$(document).ready(function(){
+		$(document).on()
+		
+		
+	})
 	
 	$(function() {
+		
+		//alert(${search.searchCondition2});
+		
+		//$("#searchCondition2 option:eq(3)").attr("selected", "selected");
+		//$("#searchCondition2").option.selectedIndex(${search.searchCondition2});
+		//var ddd = $("#searchCondition2").val();
+		//console.log(ddd);
+		//ddd.prop("selected", true);
+		
+		
 		
 		$('.wallet_box .square').on('click', function(e) {
 			var plannerCode = $(this).children(':eq(0)').val();
@@ -75,13 +111,13 @@ $(function() {
 			fncGetList(1);
 			});
 		
- 		$("select[name='searchCondition']").on("change", function(){
+ 		$("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(){
 			fncGetList(1);
 		}); 
 	
- 		$("select[name='searchMonth']").on("change", function(){
+ 		/* $("select[name='searchCondition2']").on("change", function(){
 			fncGetList(1);
-		}); 
+		});  */
 	});
 	
 	
@@ -120,24 +156,25 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 <div class="col-md-12" >	
 <div class="row">
 <div class="col-md-4">
-<label class="sr-only" for="searchKeyword">검색</label>
-<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="도시명을 입력하세요 "
+<input type="text" class="" id="searchKeyword" name="searchKeyword" placeholder="도시명을 입력하세요 "
 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+<button type="button" class="btn btn-default">Search</button>
 </div>
 
 <div class="col-md-2">
-<button type="button" class="btn btn-default">Search</button>
+
 </div>
 
 <div class="col-md-1">
 </div>
 
 <div class="col-md-2">
- <select class="custom-select mr-sm-2" id="searchMonth" name="searchMonth">
-  	 <option value="0" ${! empty planner.searchMonth && planner.searchMonth==0 ? "selected" : ""  }> 전체 </option> 
+ <select class="custom-select mr-sm-2" id="searchCondition2" name="searchCondition2">
+  	 <option value="0" ${! empty search.searchCondition2 && search.searchCondition2==0 ? "selected" : ""  }> 전체 </option>
  	<c:forEach begin="1" end="12" varStatus="status">
- 		 <option value="${status.index }" ${! empty planner.searchMonth && planner.searchMonth== '${status.index }' ? "selected" : "" } >${status.index} 월 </option> 
+ 		 <option value="${status.index }" ${! empty search.searchCondition2 && search.searchCondition2 == '${status.index }' ? "selected" : "" } >${status.index} 월 </option> 
  	</c:forEach>
+ 	
       </select>
       </div>
       

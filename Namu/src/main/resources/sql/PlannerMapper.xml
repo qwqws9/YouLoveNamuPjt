@@ -139,7 +139,7 @@ SELECT *
 	  					<!-- 검색어가 없는 경우 / 검색조건이 있는 경우  -->
 	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
 	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">
-	  				<!-- 	<when test ="search.searchCondition!= null  and  search.searchCondition != 0 "> -->
+	  			
 	  					AND p.member =#{search.searchCondition} 
 	  					</if>
 	  			       </when>
@@ -209,6 +209,9 @@ SELECT *
 	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">
 	  					AND p.member =#{search.searchCondition} 
 	  					</if>
+	  					<if test= "planner.searchCondition!= null  and  search.searchCondition != 0 ">
+	  					AND p.member =#{search.searchCondition} 
+	  					</if> 
 	  			       </when>
 	  					
 	  					<!-- 검색어가 있는 경우  -->
