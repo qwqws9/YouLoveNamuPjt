@@ -15,5 +15,6 @@ public interface TimelineDao {
 	
 	public List<Timeline> getTimelineList(User user) throws Exception;
 	
+	public int updateTimeline(Timeline timeline) throws Exception;
 	
 }

@@ -62,15 +62,17 @@ public class TotalSearchController {
 		tour.setKeyword(search.getSearchKeyword());
 		tour.setPageNum(1);
 		List<Tour> tourList = wishbeenService.selectPageNum(tour);
-		
-		for(Tour t: tourList) {
-			String cut= t.getTourShortDesc();
-			if(cut.length() > 40) {
-				cut = cut.substring(0, 40);
-				cut += "........";
-				t.setTourShortDesc(cut);
+		if(tourList != null) {
+			for(Tour t: tourList) {
+				String cut= t.getTourShortDesc();
+				if(cut.length() > 40) {
+					cut = cut.substring(0, 40);
+					cut += "........";
+					t.setTourShortDesc(cut);
+				}
 			}
 		}
+		
 		search.setSearchCondition("2");
 		search.setPageSize(5);
 		search.setCurrentPage(1);

@@ -37,10 +37,8 @@
 			</div>
 			<br>
 			<div class="col-10 col-md-10 col-lg-10">
+			<c:if test="${!empty tourList }">
 			<p class="totalSearchClick">관광지<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029; " ></i></p>
-			
-			
-				
 				<hr>
 				<div class="row mb-2">
 				<c:forEach var="tour" items="${tourList }" end="3">
@@ -60,33 +58,34 @@
 				    </div>
 				    </c:forEach>
 				  </div>
+				  <br>
 				<br>
-				<br>
+				  </c:if>
 				<p class="totalSearchClick">YouTube<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029;" ></i></p>
 				<hr>
 				<div class="row mb-2">
 				
 					<div class= "col-md-6">
-						 <iframe id="player0" type="text/html" width="750" height="400"
+						 <iframe id="player0" type="text/html" width="550" height="400"
 							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 					  </div>
 <!-- 					  <div class= "col-1 col-md-1 col-lg-1"> -->
 <!-- 					  </div> -->
 					 <div class= "col-md-6">
-						<iframe id="player1" type="text/html" width="750" height="400"
+						<iframe id="player1" type="text/html" width="550" height="400"
 							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 							  <br><br>
 					   </div>
 				
 							
 				<div class= "col-md-6">
-						 <iframe id="player2" type="text/html" width="750" height="400"
+						 <iframe id="player2" type="text/html" width="550" height="400"
 							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 					  </div>
 <!-- 					  <div class= "col-1 col-md-1 col-lg-1"> -->
 <!-- 					  </div> -->
 				<div class= "col-md-6">
-						<iframe id="player3" type="text/html" width="750" height="400"
+						<iframe id="player3" type="text/html" width="550" height="400"
 							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
 					   </div>
 				</div>

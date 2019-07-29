@@ -36,19 +36,14 @@ public class WalletDaoImpl implements WalletDao {
 	public int getWalletCode(int plannerCode) throws Exception{
 		return sqlSession.selectOne("WalletMapper.getWalletCode", plannerCode);
 	}
-	/*
+	
 	public void addWalletView(int plannerCode) throws Exception{
 		sqlSession.insert("WalletMapper.addWalletView", plannerCode);
 	}
-	
-	public void deleteWalletView(int plannerCode) throws Exception{
-		sqlSession.delete("WalletMapper.deleteWalletView", plannerCode);
+
+	public void deleteWalletView(int walletCode) throws Exception{
+		sqlSession.update("WalletMapper.deleteWalletView", walletCode);
 	}
-	
-	public List<Wallet> getWalletListView(int plannerCode) throws Exception{
-		return sqlSession.selectList("WalletMapper.getWalletListView", plannerCode);
-	}
-	*/
 	
 	// walletList.jsp
 	public void addWallet(Wallet wallet) throws Exception{
@@ -64,7 +59,6 @@ public class WalletDaoImpl implements WalletDao {
 	}
 	*/
 	public void deleteWallet(int walletDetailCode) throws Exception{
-		// sqlSession.delete("WalletMapper.deleteWallet", walletDetailCode);
 		sqlSession.update("WalletMapper.deleteWallet", walletDetailCode);
 	}
 	

@@ -11,13 +11,10 @@ public interface WalletDao {
 	public int isWallet(int plannerCode) throws Exception;
 	
 	public int getWalletCode(int plannerCode) throws Exception;
-	/*
-	public void addWalletView(Wallet wallet) throws Exception;
 	
+	public void addWalletView(int plannerCode) throws Exception;
+
 	public void deleteWalletView(int walletCode) throws Exception;
-	
-	public List<Wallet> getWalletListView(int plannerCode) throws Exception;
-	*/
 	
 	// walletList.jsp
 	public void addWallet(Wallet wallet) throws Exception;

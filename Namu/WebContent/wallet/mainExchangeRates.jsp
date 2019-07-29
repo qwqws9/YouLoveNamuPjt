@@ -49,7 +49,7 @@
 		
 		// 리스트 위아래 버튼
 		$(document).on('click', '.exchange_rate_wrap .exchange_data_wrap > span > span:first-child', function() {
-			console.log($('.exchange_rate_wrap ul').css('top'));
+			//console.log('현재 top : ' + $('.exchange_rate_wrap ul').css('top'));
 			
 			if($('.exchange_rate_wrap ul').css('top') == '-675px'){
 				$(this).next().removeClass('disabled');
@@ -62,7 +62,7 @@
 			}
 		});
 		$(document).on('click', '.exchange_rate_wrap .exchange_data_wrap > span > span:last-child', function() {
-			console.log($('.exchange_rate_wrap ul').css('top'));
+			//console.log('현재 top : ' + $('.exchange_rate_wrap ul').css('top'));
 			
 			if($('.exchange_rate_wrap ul').css('top') == '0px'){
 				$(this).prev().removeClass('disabled');
@@ -78,7 +78,7 @@
 		// 리스트 클릭시 셀렉트로 적용
 		$(document).on('click', '.exchange_rate_wrap ul li', function() {
 			var fromValue = $(this).find('.unitt').text().trim();
-			//console.log(fromValue);
+			//console.log('선택한 화폐단위 : ' + fromValue);
 			
 			$('#from').val(fromValue).prop('selected', true);
 			
@@ -137,12 +137,11 @@
 				'Content-Type'	: 'Application/json'
 			},
 			error	: function(request, status, error) {
-				//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+				//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		    },
 			success	: function(JSONData, status) {
 				//console.log(status);
-				//console.log(JSONData);
-				//console.log(JSONData.length);
+				//console.log('JSONData LIST 길이 :: ' + JSONData.length);
 				
 				$('.exchange_rate_wrap h3 span.datee').text(currentTime());
 				
@@ -164,9 +163,11 @@
 					);
 					
 					if(item.unit == 'EUR'){
-						$('.exchange_rate_wrap .exchange_convert_wrap #to').val(item.unit).prop('selected', true);
+						$('.exchange_rate_wrap .exchange_convert_wrap #from').val(item.unit).prop('selected', true);
 					}
 				});
+				
+				convert();
 			}
 		})
 	}
@@ -184,10 +185,10 @@
 				amount	: $('#amount').val()
 			}),
 			error	: function(request, status, error) {
-				//console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+				//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		    },
 			success	: function(JSONData, status) {
-				//console.log('[SUCCESS]\nRESULT : ' + JSONData);
+				//console.log('JSONData :: ' + JSONData);
 				
 				$('#exchange_result').val(makeComma(JSONData.exchangeRate*$('#amount').val()));
 			}
@@ -203,8 +204,8 @@
 	
 	// 세자리 콤마
 	function makeComma(db) {
-		//console.log(db);
-		//console.log(db.toLocaleString(undefined, {maximumFractionDigits : 2}));
+		//console.log('콤마 적용 전 : ' + db);
+		//console.log('콤마 적용 후 : ' + db.toLocaleString(undefined, {maximumFractionDigits : 2}));
 		
 		return db.toLocaleString(undefined, {maximumFractionDigits : 2});
 	}

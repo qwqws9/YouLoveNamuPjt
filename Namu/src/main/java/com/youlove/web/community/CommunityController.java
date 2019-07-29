@@ -215,6 +215,7 @@ public class CommunityController {
 		Hashtag hashVo = new Hashtag();
 		hashVo.setHashtag(hashtag);
 		hashVo.setCommunityCode(community.getCommunityCode());
+		hashVo.setRole(true);
 		hashtagService.updateHashtag(hashVo);
 		//DomainCity
 		City cityName = new City();

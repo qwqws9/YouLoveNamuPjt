@@ -10,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class NaverCaptcha {
 	
 	
@@ -49,7 +51,7 @@ public class NaverCaptcha {
         return response;
 	}
 	
-	public static String requestImage(String clientId, String clientSecret, String key) {
+	public static String requestImage(String clientId, String clientSecret, String key,HttpServletRequest request) {
 		
 		
 		String tempname = "";
@@ -69,7 +71,7 @@ public class NaverCaptcha {
                byte[] bytes = new byte[1024];
                // 랜덤한 이름으로  파일 생성
                tempname = Long.valueOf(new Date().getTime()).toString();
-               File f = new File("C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\YouLovePlan\\resources\\images\\captcha\\"+tempname + ".jpg");
+               File f = new File(request.getSession().getServletContext().getRealPath("resources")+"\\images\\captcha\\"+tempname + ".jpg");
                f.createNewFile();
                OutputStream outputStream = new FileOutputStream(f);
                while ((read =is.read(bytes)) != -1) {

@@ -27,6 +27,9 @@ public interface UserDao {
 	
 	public List<Friend> getFriendList(Friend friend) throws Exception;
 	
+	public int addFriendMemo(Friend friend) throws Exception;
+	
+	public int inviteUser(Friend friend) throws Exception;
 	
 	
 }

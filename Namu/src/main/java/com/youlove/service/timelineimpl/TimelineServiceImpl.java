@@ -36,5 +36,16 @@ public class TimelineServiceImpl implements TimelineService{
 		return timelineDao.getTimelineList(user);
 	}
 
+
+	@Override
+	public boolean updateTimeline(Timeline timeline) throws Exception {
+		int res = timelineDao.updateTimeline(timeline);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
+	}
+
 }
 

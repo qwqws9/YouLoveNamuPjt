@@ -52,14 +52,13 @@ public class PartyDaoImpl implements PartyDao {
 
 	@Override
 	public void updateParty(Party party) throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.sqlSession.update("PartyMapper.updateParty",party);
 	}
 
 	@Override
-	public void deleteParty(int partyCode) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public boolean deleteParty(int partyCode) throws Exception {
+		this.sqlSession.delete("PartyMapper.deleteParty", partyCode);
+		return true;
 	}
 
 	@Override

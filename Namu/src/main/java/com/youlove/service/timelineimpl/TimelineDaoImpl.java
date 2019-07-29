@@ -36,6 +36,12 @@ public class TimelineDaoImpl implements TimelineDao{
 		return sqlSession.selectList("TimelineMapper.getTimelineList",user);
 	}
 
+
+	@Override
+	public int updateTimeline(Timeline timeline) throws Exception {
+		return sqlSession.update("TimelineMapper.updateTimeline",timeline);
+	}
+
 	
 	
 	

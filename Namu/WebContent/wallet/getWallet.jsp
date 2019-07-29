@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="pop_wrap_get">
-	<div>
+	<div data-part="${wallet.part}">
 		<div class="scroller">
 			<div class="padding_boxing">
 				<div class="text_width">
@@ -20,6 +20,7 @@
 							<c:if test="${wallet.category eq 8}"><i class="fas fa-ellipsis-h"></i></c:if>
 						</div>
 						<div class="input_money">
+							<span class="input_expresion">${wallet.expression}</span>
 							<div>
 								<span>
 									<c:if test="${wallet.moneyUnit eq 'KRW'}"><i class="fas fa-won-sign"></i></c:if>
@@ -32,13 +33,11 @@
 								</span>
 							</div>
 							<div>
-								<span>
-									<c:if test="${wallet.moneyUnit ne 'KRW'}">
-										<c:if test="${! empty wallet.krwPrice}">
-											<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
-										</c:if>
+								<c:if test="${wallet.moneyUnit ne 'KRW'}">
+									<c:if test="${! empty wallet.krwPrice}">
+										<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
 									</c:if>
-								</span>
+								</c:if>
 							</div>
 						</div><!-- //input_money -->
 						<c:if test="${! empty wallet.payer}">
@@ -54,7 +53,7 @@
 							</div>
 							<c:if test="${wallet.moneyUnit ne 'KRW'}">
 								<div class="clear">
-									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.krwRate}" pattern="#,###.00" /></span>
+									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
 								</div>
 							</c:if>
 						</div>
@@ -77,8 +76,6 @@
 				</c:if>
 			</div><!-- //padding_boxing -->
 		</div><!-- //scroller -->
-		
-		<span class="walletDetailCode" style="display: none;">${wallet.walletDetailCode}</span>
 		
 		<div class="act_btns">
 			<a href="javascript:void(0);" class="act_btn update_btn">수정</a><a href="javascript:void(0);" class="act_btn delete_btn">삭제</a>
