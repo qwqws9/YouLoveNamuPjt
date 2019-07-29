@@ -27,7 +27,6 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM wallet
 		WHERE planner_code = #{value}
-			  AND is_wallet = 0
 	</select>
 	
 	<select id="getWalletCode" parameterType="int" resultType="int">
@@ -39,15 +38,13 @@
 	
 	<insert id="addWalletView" parameterType="int">
 		INSERT
-		INTO wallet ( w_code, planner_code, is_wallet )
-		VALUES ( seq_w_code.nextval, #{value}, 0 )
+		INTO wallet ( w_code, planner_code )
+		VALUES ( seq_w_code.nextval, #{value} )
 	</insert>
 	
 	<update	id="deleteWalletView" parameterType="int">
-	  	UPDATE wallet
-		<set>
-			is_wallet = 1
-		</set>
+	  	DELETE
+		FROM wallet
 	  	<where>
 	  		w_code = #{value}
 	  	</where>
