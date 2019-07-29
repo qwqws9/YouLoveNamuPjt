@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<input type="hidden" name="walletDetailCode" value="${param.walletDetailCode}" />
+<input type="hidden" name="walletDetailCode" value="${param.walletDetailCode}" data-wallet-detail-code="${param.walletDetailCode}" />
 <input type="hidden" name="walletCode" value="${param.walletCode}" />
 <input type="hidden" name="part" value="${param.part}" />
 <input type="hidden" name="category" value="${param.category}" />

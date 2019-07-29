@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,16 +75,18 @@ public class WalletController {
 	}
 	
 	// walletList.jsp
-	@RequestMapping(value="getWalletList", method=RequestMethod.GET)
-	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode) throws Exception{
+	@RequestMapping("getWalletList")
+	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode, @ModelAttribute Search search) throws Exception{
 
 		System.out.println("/wallet/getWalletList :: GET");
 		
 		int pageUnit = 5;
 		int pageSize = 5;
 		
-		Search search = new Search();
-		search.setCurrentPage(1);
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
 		search.setPageSize(pageSize);
 		System.out.println(search);
 		

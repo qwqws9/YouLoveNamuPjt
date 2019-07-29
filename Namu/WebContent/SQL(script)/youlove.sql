@@ -323,17 +323,18 @@ ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES u
 
 
 CREATE TABLE wallet ( 
-	w_code						NUMBER(10)			NOT NULL,
-	planner_code				NUMBER(10)			NOT NULL		REFERENCES planner(planner_code),
-	is_wallet					CHAR(1)				DEFAULT 0,
-	PRIMARY KEY(w_code)
+	w_code								NUMBER(10)					NOT NULL,
+	planner_code						NUMBER(10)					NOT NULL,
+	CONSTRAINT wallet_w_code_pk			PRIMARY KEY (w_code),
+    CONSTRAINT wallet_planner_code_fk	FOREIGN KEY (planner_code)	REFERENCES planner (planner_code)
+	ON DELETE CASCADE
 );
 
 
 
 CREATE TABLE wallet_detail ( 
 	w_detail_code				NUMBER(10)			NOT NULL,
-	w_code						NUMBER(10)			NOT NULL		REFERENCES wallet(w_code),
+	w_code						NUMBER(10)			NOT NULL,
 	part						CHAR(1)				NOT NULL,
 	money_unit					VARCHAR2(30)		NOT NULL,
 	expression					VARCHAR2(30)		NOT NULL,
@@ -347,7 +348,9 @@ CREATE TABLE wallet_detail (
 	category					CHAR(1)				DEFAULT 0,
 	w_image						VARCHAR2(1000),
 	payer						NUMBER(10),
-	PRIMARY KEY(w_detail_code)
+	CONSTRAINT wallet_detail_w_detail_code_pk		PRIMARY KEY (w_detail_code),
+    CONSTRAINT wallet_detail_w_code_fk				FOREIGN KEY (w_code)			REFERENCES wallet (w_code)
+    ON DELETE CASCADE
 );
 
 
@@ -487,10 +490,10 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S
 
 
 
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1, 0);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2, 0);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 3, 0);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4, 0);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
 
 
 commit;
