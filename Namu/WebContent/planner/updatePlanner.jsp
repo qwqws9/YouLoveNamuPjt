@@ -3,9 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <jsp:include page="/layout/head.jsp" />
 	<!-- jquery bootstrap -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -63,7 +61,7 @@ margin:0 auto
 	        dateFormat: 'yy-mm-dd'			        
 	    });
 	 
-	    $("button").on("click",function(){    	
+	    $("#save").on("click",function(){    	
 	    	fncUpdatePlanner();    	
 	    });
 		
@@ -163,17 +161,17 @@ margin:0 auto
 		        	   </div>
 		    <div class="col-md-4">
 		    <select class="custom-select mr-sm-2" id="privacy " name="privacy " >
-		      <c:if test="${planner.member == 'p'}">
+		      <c:if test="${planner.privacy == 'p'}">
 		  		<option value="p" selected="selected"> 공개  </option>
         		<option value="s" >비공개 </option>
         		<option value="w" >가계부비공개 </option>
        		</c:if>
-		    <c:if test="${planner.member == 's'}">
+		    <c:if test="${planner.privacy == 's'}">
 		  		<option value="p" > 공개  </option>
         		<option value="s" selected="selected">비공개 </option>
         		<option value="w" >가계부비공개 </option>
        		</c:if>
-       		<c:if test="${planner.member == 'w'}">
+       		<c:if test="${planner.privacy == 'w'}">
 		  		<option value="p"> 공개  </option>
         		<option value="s" >비공개 </option>
         		<option value="w"  selected="selected">가계부비공개 </option>
@@ -222,7 +220,7 @@ margin:0 auto
       <div class="col-md-4">
 		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
 		  
-		      <button type="button" class="btn btn-default"  > 다음 단계  </button>
+		      <button type="button" class="btn btn-default" id="save" > 다음 단계  </button>
 		      
 			 </div>
 		    </div>

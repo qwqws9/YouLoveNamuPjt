@@ -3,12 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>YouLovePlan</title>
-	
+   <jsp:include page="/layout/head.jsp" />
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -41,11 +36,25 @@
 	
 	</style>
 	<script type="text/javascript">
-var locations=[];
-
+ 
+	function fncGetList(currentPage) {
+		$("#currentPage").val(currentPage);
+		
+		 $($("form")[1]).attr("method", "POST").attr("action","/planner/getAllPlannerList").submit();
+	}
+	
+	
 $(function() {	
-	
-	
+	/* $('#searchKeyword').on("keypress", function(event){
+		if(event.keyCode == '13'){
+				fncGetList(1);
+			}
+			
+			fncGetList(1);
+
+	});    //확인해보기   
+	 */
+	var locations=[];
 	
 	 $.ajax({
 	url : "/guide/json/getCityList/all",
@@ -67,37 +76,137 @@ $(function() {
 		});
 		}
 	 });
+
+	 ///////////////////////////////////////////////////////
+	 
+	var plannerCode = "";
+	var event = false;
+	var page = 1;
+	var dispalyValue = "";
+		
+	 $(window).on("scroll" , function(){
+			if($(window).scrollTop() == $(document).height() - $(window).height()){
+				if(event == true){
+					return;
+				}else{
+					event = true;
+					console.log(++page);
+					$.ajax(
+							{
+								url : "/planner/json/getAllPlannerList" ,
+								method : "POST" ,
+								data : JSON.stringify({
+									searchCondition : $("#searchCondition").val(),
+									searchCondition2 : $("#searchCondition2").val(),
+									searchKeyword : $("#searchKeyword").val(),
+									currentPage : page,
+					
+								}) ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData) {
+									
+									if(JSONData.message=="ok"){
+										
+										$.each(JSONData.list, function( index, planner){
+											displayValue = "	<div class='square'>"	
+													+"	<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"'/>"
+															
+															+"<div style='background-image: url(/resources/images/planner/'"+planner.plannerImage+"'>"
+															+"<div><div class='plan_name text_shadow' id='plannerName'>"+planner.plannerName+"</div>"
+															+"<div class='plan_flag'></div>"
+															+"<div class='plan_period text_shadow'>"+planner.departDate +"</div>"
+															+"<div class='wallet_is'>	<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
+															+"<label class='btn btn-secondary'>"
+															+"	<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
+															+"</label><label class='btn btn-secondary active'>"
+															+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
+															+"</label></div></div></div></div></div>"
+											$("#allPlanner").append(displayValue);
+											});
+									event = false;
+									}else{
+												$("div[class='wrap']").append("<div class='text-center'><button type='button' class='btn btn-danger'>맨 위로&uArr;"
+															+"</button></div>");
+												$("button:contains(' a=맨 위로 ')").on("click" , function(){
+													$('html').scrollTop(0);
+												});
+												}
+									} 				
+								});	
+							}
+			}
+	 });
+					
+					
+	$('#searchKeyword').autocomplete({
+					source : function(request, response){
+						$.ajax(
+								{
+									url : "/planner/json/getAllPlannerList" ,
+									method : "POST" ,
+									data : 
+										{searchKeyword: $("#searchKeyword").val(), 
+											searchCondition2 : $("#searchCondition2").val(),
+											searchCondition : $("#searchCondition").val()},
+									
+									success : function(data) {
+										 response($.map(data.list, function(item){
+						                        return{
+						                            plannerImage: planner.plannerImage,                            
+						                            plannerCode: planner.plannerCode,  
+						                            departDate: planner.departDate,  
+						                            plannerName: planner.plannerName,  
+						                        };
+						                    }))    
+						                },
+						                error    : function(request, status, error){
+						                    alert("오류가 발생하였습니다.")
+						                }
+						            });
+						        }
+////////////////////////
+				}); 
+	$("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(request, response){
+		$.ajax(
+				{
+					url : "/planner/json/getAllPlannerList" ,
+					method : "POST" ,
+					data : 
+						{searchKeyword: $("#searchKeyword").val(), 
+						searchCondition : $("#searchCondition").val(), 
+							searchCondition2 : $("#searchCondition2").val()},
+					
+					success : function(data) {
+						 response($.map(data.list, function(item){
+		                        return{
+		                            plannerImage: planner.plannerImage,                            
+		                            plannerCode: planner.plannerCode,  
+		                            departDate: planner.departDate,  
+		                            plannerName: planner.plannerName,  
+		                        };
+		                    }))    
+		                },
+		                error    : function(request, status, error){
+		                    alert("오류가 발생하였습니다.")
+		                }
+		            });
+		   
+////////////////////////
+
+		
 });
-	  
-	function fncGetList(currentPage) {
-		//var ser = $(this).val();
-		//alert(ser);
-		//option.selected;
-		$("#currentPage").val(currentPage);
-		
-		
-		//alert($("form").serialize());
-		 $($("form")[1]).attr("method", "POST").attr("action","/planner/getAllPlannerList").submit();
-	}
 	
-	$(document).ready(function(){
-		$(document).on()
-		
-		
-	})
+});
+		/////////////////////////////////////////////////
+
 	
+	////////////////////////////////////////////////////////////////////////////
 	$(function() {
-		
-		//alert(${search.searchCondition2});
-		
-		//$("#searchCondition2 option:eq(3)").attr("selected", "selected");
-		//$("#searchCondition2").option.selectedIndex(${search.searchCondition2});
-		//var ddd = $("#searchCondition2").val();
-		//console.log(ddd);
-		//ddd.prop("selected", true);
-		
-		
-		
+	
 		$('.wallet_box .square').on('click', function(e) {
 			var plannerCode = $(this).children(':eq(0)').val();
 			
@@ -107,17 +216,15 @@ $(function() {
 			}
 		});
 		
-		$("button.btn.btn-default").on("click", function() {
+	/* 	$("button.btn.btn-default").on("click", function() {
 			fncGetList(1);
 			});
-		
- 		$("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(){
-			fncGetList(1);
-		}); 
-	
- 		/* $("select[name='searchCondition2']").on("change", function(){
+		 */
+/*  		$("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(){
 			fncGetList(1);
 		});  */
+		 
+ 	
 	});
 	
 	
@@ -126,79 +233,64 @@ $(function() {
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-	
-	<!--  Search  -->
 
-<%-- <div class="col-md-6 text-right">
-
-<div class="form-group">
-<label class="sr-only" for="searchKeyword">검색</label> <input
-type="text" class="form-control" id="searchKeyword"
-name="searchKeyword" placeholder="도시 검색 "
-value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-</div>
-
-<button type="button" class="btn btn-default">Search</button>
-<br><br>
- --%>
-
-<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-<input type="hidden" id="currentPage" name="currentPage" value="" />
-
-<div class="wrap">
-		<h2 class="wallet_title"><span>내 플래너 목록</span></h2>
-		
-		<section class="wallet_box">
-	
-<form class="form-inline" name="detailForm">
-
-
+	 <input type="hidden" id="currentPage" name="currentPage" value="" />
+	 	<div class="wrap">
+			<h2 class="wallet_title"><span> 여행 플래너 공유 </span></h2>
+     			<section class="wallet_box">
+      
+ <!--  search area start  -->
+   <form class="form-inline" name="detailForm">
+     
+ <!-- col-md-12 area -->
 <div class="col-md-12" >	
 <div class="row">
+<!-- area 1 : searchKeyword + search button -->
 <div class="col-md-4">
-<input type="text" class="" id="searchKeyword" name="searchKeyword" placeholder="도시명을 입력하세요 "
-value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-<button type="button" class="btn btn-default">Search</button>
-</div>
+	<input type="text" class="" id="searchKeyword" name="searchKeyword" placeholder="도시명을 입력하세요 "
+		value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+		<button type="button" class="btn btn-default">Search</button>
+			</div>
 
+<div class="col-md-1"> </div>
+<!-- area 2 : searchCondition2  -->
 <div class="col-md-2">
+	<p style="line-height: 40px; width:200 ;color:#282c37;"> 언제 떠나시나요?</p>
+		</div>
 
-</div>
-
-<div class="col-md-1">
-</div>
-
-<div class="col-md-2">
- <select class="custom-select mr-sm-2" id="searchCondition2" name="searchCondition2">
+<div class="col-md-1"> 
+	<select class="custom-select mr-sm-2" id="searchCondition2" name="searchCondition2">
   	 <option value="0" ${! empty search.searchCondition2 && search.searchCondition2==0 ? "selected" : ""  }> 전체 </option>
- 	<c:forEach begin="1" end="12" varStatus="status">
- 		 <option value="${status.index }" ${! empty search.searchCondition2 && search.searchCondition2 == '${status.index }' ? "selected" : "" } >${status.index} 월 </option> 
- 	</c:forEach>
- 	
-      </select>
-      </div>
-      
-<div class="col-md-1">
-</div>
-
+ 		<c:forEach begin="1" end="12" varStatus="status">
+ 		 	<option value="${status.index }" ${! empty search.searchCondition2 && search.searchCondition2 == status.index ? "selected" : "" } >${status.index} 월 </option> 
+ 				</c:forEach>
+      				</select>
+      					</div>
+      					
+ <!-- area 3 : searchCondition  -->     
 <div class="col-md-2">
- <select class="custom-select mr-sm-2" id="searchCondition" name="searchCondition">
-<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""  }>전체 </option>
-	<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""  }>혼자 </option>
-		<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""  }>연인과 </option>
-			<option value="3" ${! empty search.searchCondition && search.searchCondition==3 ? "selected" : ""  }>친구들과 </option>
-				<option value="4" ${! empty search.searchCondition && search.searchCondition==4? "selected" : ""  }>가족들과</option>
- </select>
+	<p style="line-height: 40px; width:200 ;color:#282c37;"> 누구와 떠나시나요?</p>
+		</div>
 
-</div>
-</div>
-</div>
+<div class="col-md-2"> 
+  <select class="custom-select mr-sm-2" id="searchCondition" name="searchCondition">
+ 	<option value="0" ${! empty search.searchCondition && search.searchCondition==0 ? "selected" : ""  }>전체 </option>
+		<option value="1" ${! empty search.searchCondition && search.searchCondition==1 ? "selected" : ""  }>혼자 </option>
+			<option value="2" ${! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""  }>연인과 </option>
+				<option value="3" ${! empty search.searchCondition && search.searchCondition==3 ? "selected" : ""  }>친구들과 </option>
+					<option value="4" ${! empty search.searchCondition && search.searchCondition==4? "selected" : ""  }>가족들과</option>
+ 						</select>
+								</div>
+</div>  <!-- <div class="row"> end -->
+</div> 	<!-- <div class="col-md-12 "> end -->
 </form>
+<!--  search area end  -->
 
 
-			<div class="square_wrap clear">
-				<c:forEach var="planner" items="${list}">
-					<%-- <c:if test="${planner.departDate >= today}"> --%>
+<!-- planner area -->
+     <div class="square_wrap clear" id="allPlanner">
+     <c:forEach var="planner" items="${list}">
+     	<%-- <c:if test="${planner.departDate >= today}"> --%>
 						<div class="square" >
 							<!-- <input type="hidden" class="walletCode" /> -->
 							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />

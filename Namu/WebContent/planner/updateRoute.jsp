@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html> 
-<head> 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+   <jsp:include page="/layout/head.jsp" />
 	<!-- bootstrap -->
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -22,8 +21,8 @@
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
    <link rel="stylesheet" type="text/css" href="/resources/css/planner.css">
 
 
@@ -96,7 +95,7 @@ tr:nth-child(odd):hover td {
       <div class="col-md-4">
 		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
 		  
-		      <button type="button" class="btn btn-default"  > 다음 단계  </button>
+		      <button type="button" class="btn btn-default" id="save" > 다음 단계  </button>
 		      </div></div></div>
 	<script type="text/javascript">	
 
@@ -107,7 +106,7 @@ tr:nth-child(odd):hover td {
 			
 		
 		$(function(){
-	    $("button").on("click",function(){    	
+	    $("#save").on("click",function(){    	
 	    	fncUpateRoute();    	
 	    });
 		
