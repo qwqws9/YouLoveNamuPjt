@@ -185,8 +185,9 @@ var departDate=${planner.departDate};
 	//alert(departDate);
 	var ddd = String(departDate);	
 	var yyyy = ddd.substring(0,4);
-	var mm = ddd.substring(4,6)
-	var dd = ddd.substring(6,8) 
+	var mm = ddd.substring(4,6);
+	var dd = ddd.substring(6,8) ;
+	
 	var ddate= new Date(); 
 
 	/* var dd = departDate.getDate();
@@ -253,7 +254,7 @@ var departDate=${planner.departDate};
 	       $.ajax({
 	   	                url: "/planner/json/getScheduleList/"+plannerCode,
 	   	                type : 'GET',
-	   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'),endDate :  end.format('YYYY-MM-DD HH:MM') },
+	   	                data : { startDate :  start.format('YYYY-MM-DD 01:00'),endDate :  end.format('YYYY-MM-DD 11:00') },
 	   	                dataType: 'json',
 	   	               	
 	   	                success: function(data) {

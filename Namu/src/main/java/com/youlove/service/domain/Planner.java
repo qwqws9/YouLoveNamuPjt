@@ -18,6 +18,9 @@ public class Planner {
 	private int boardCode;
 	private Date regDate;
 	
+	private String searchMember;
+	private String searchMonth;
+	
 	public Planner() {
 	}
 
@@ -121,12 +124,31 @@ public class Planner {
 		this.regDate = regDate;
 	}
 
+	
+	
+	public String getSearchMember() {
+		return searchMember;
+	}
+
+	public void setSearchMember(String searchMember) {
+		this.searchMember = searchMember;
+	}
+
+	public String getSearchMonth() {
+		return searchMonth;
+	}
+
+	public void setSearchMonth(String searchMonth) {
+		this.searchMonth = searchMonth;
+	}
+
 	@Override
 	public String toString() {
-		return "Planner [plannerCode=" + plannerCode + ", plannerVer=" + plannerVer +", plannerName=" + plannerName + ", departDate=" + departDate
-				+ ", plannerImage=" + plannerImage + ",  plannerWriter=" +  plannerWriter + ", member=" + member + ", privacy=" + privacy
-				+ ", status=" + status + ", isGroup=" + isGroup + ", boardCode=" + boardCode + ", regDate=" + regDate
-				+ "]";
+		return "Planner [plannerCode=" + plannerCode + ", plannerVer=" + plannerVer + ", plannerName=" + plannerName
+				+ ", departDate=" + departDate + ", plannerImage=" + plannerImage + ", plannerWriter=" + plannerWriter
+				+ ", member=" + member + ", privacy=" + privacy + ", status=" + status + ", isGroup=" + isGroup
+				+ ", boardCode=" + boardCode + ", regDate=" + regDate + ", searchMember=" + searchMember
+				+ ", searchMonth=" + searchMonth + "]";
 	}
 
 }

@@ -19,8 +19,8 @@
 		<result property="isGroup" 			column="ISGROUP" 			jdbcType="CHAR" />
 		<result property="boardCode" 				column="BOARD_CODE" 				jdbcType="CHAR" />
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
-		<association property="plannerWriter"   javaType="user"> 
-		<result property="userCode" column="USER_CODE" />
+		<association property="plannerWriter"  column ="planner_writter" javaType="user"> 
+			<result property="userCode" column="USER_CODE" />
 			<result property="nickname" column="NICKNAME" />
 			<result property="profileImg" column="PROFILE_IMG" />
 			</association>
@@ -73,9 +73,10 @@
 	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
-		planner_code, planner_ver, planner_name, planner_image, DEPART_DATE, member, privacy, reg_Date
-		FROM planner
-		WHERE planner_code =#{value}
+		p.planner_code, p.planner_ver, p.planner_name, p.planner_image, p.DEPART_DATE, p.planner_writer, p.member, p.privacy, p.reg_Date, p.board_code, u.user_code, u.profile_img,u.nickname
+		FROM  planner p, users u
+		WHERE p.planner_code =#{value} 
+		AND p.planner_writer =u.user_code 
 	 </select>
 	 
 	  <update	id="updatePlanner"	parameterType="planner" >
@@ -91,6 +92,11 @@
 	   	WHERE planner_code = #{plannerCode}
 	 </update>
 		 
+		
+		<delete id="deletePlanner" parameterType="int">
+		DELETE planner 
+		WHERE planner_code = #{plannerCode}
+		</delete>
 		
 	 	<select  id="getPlannerList"  parameterType="map"	resultMap="plannerSelectMap">
 SELECT *
@@ -112,70 +118,54 @@ SELECT *
 SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(
-	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
-	  					FROM planner p, users u
-	  					<if test="searchKeyword != null ">		
-	 						, route r 
+	  					<choose>
+	  					<!-- 검색어가 없는 경우 route 테이블 조인 no  -->
+	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
+	  					FROM planner p, users u 
+	  					</when>
+	  					<!-- 검색어가 있는  경우 route 테이블 조인  -->
+	  					<when test="search.searchKeyword != null or search.searchKeyword !=''">
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname, r.city_name
+	  					FROM planner p, users u	, route r 
+	  					</when>
+	  					</choose>
+	  					
+	  					<where>
+	  					<!--  아래는 필수 !! -->
+	  					p.planner_writer =u.user_code
+	  					
+	  					<choose>
+	  					<!-- 검색어가 없는 경우 / 검색조건이 있는 경우  -->
+	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
+	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">
+	  				<!-- 	<when test ="search.searchCondition!= null  and  search.searchCondition != 0 "> -->
+	  					AND p.member =#{search.searchCondition} 
 	  					</if>
-	  					<!-- <if test="searchMember=='1'">
-	  					p.planner_writer =u.user_code and p.member='1'
-	  					</if>
-	  					<if test="searchMember=='2'">
-	  					p.planner_writer =u.user_code and p.member='2'
-	  					</if>
-	  					<if test="searchMember=='3'">
-	  					p.planner_writer =u.user_code and p.member='3'
-	  					</if>
-	  					<if test="searchMember=='4'">
-	  					p.planner_writer =u.user_code and p.member='4'
-	  					</if>
-	  					<if test="searchDate=='1'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='01'
-	  					 </if>
-	  					 <if test="searchDate=='2'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='02'
-	  					 </if>
-	  					 <if test="searchDate=='3'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='03'
-	  					 </if>
-	  					 <if test="searchDate=='4'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='04'
-	  					 </if>
-	  					 <if test="searchDate=='5'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='05'
-	  					 </if>
-	  					 <if test="searchDate=='6'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='06'
-	  					 </if>
-	  					 <if test="searchDate=='7'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='07'
-	  					 </if>
-	  					 <if test="searchDate=='8'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='08'
-	  					 </if>
-	  					 <if test="searchDate=='9'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='09'
-	  					 </if>
-	  					 <if test="searchDate=='10'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='10'
-	  					 </if>
-	  					 <if test="searchDate=='11'">
-	  					p.planner_writer =u.user_code and SUBSTR(p.depart_date ,5,2) ='11'
-	  					 </if>
-	  					 <if test="searchDate=='12'">
-	  					 p.planner_writer =u.user_code 
-	  					and SUBSTR(p.depart_date ,5,2) ='12'
-	  					 </if> -->
-					
-					<where>
-						
-	  					p.planner_writer =u.user_code 
-	  			
+	  			       </when>
+	  					
+	  					<!-- 검색어가 있는 경우  -->
+	  					<when test="search.searchKeyword != null or search.searchKeyword !=''" >
+	  					AND p.planner_code= r.planner_code	
+	  					AND r.city_name =#{search.searchKeyword} 
+	  					<if test ="search.searchCondition!= null  and  search.searchCondition != 0 ">
+	  					AND p.member =#{search.searchCondition}  
 	  				
-	  					<if test="searchKeyword != null ">		
-	  						AND p.planner_code= r.planner_code
-	  						and r.city_name = #{search.searchKeyword}
-	  					 </if> 
+	  					</if>
+	  					</when>
+	  					</choose>
+						
+						
+						<!-- 
+	  				<if test="search.searchKeyword != null  and search.searchCondition == 0">		
+	  					AND r.city_name =#{search.searchKeyword} 
+	  				</if>  
+	  				<if test="search.searchKeyword == null and search.searchCondition!= null  and  search.searchCondition != 0 ">
+	                   AND p.member =#{search.searchCondition} 
+				     </if>  -->
+	                      <!-- 	<if test="planner.searchMonth!= null  and  planner.searchMonth != 0 ">
+	                   	AND SUBSTR(p.depart_date ,5,2) =#{planner.searchMonth} 
+				     	</if>  	 -->
 	  					 </where>
 	  					 ORDER BY p.planner_code DESC 
 	  						) inner_table
@@ -183,6 +173,7 @@ SELECT *
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 			  	 
 	</select>
+	
 	
 	<select  id="getTotalCount" parameterType="map" resultType="int">
 	  	SELECT COUNT(*)
@@ -195,28 +186,52 @@ SELECT *
 	 
 	<select  id="getAllTotalCount" parameterType="map" resultType="int">
 	  SELECT COUNT(*)
-	  	FROM (	
-	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
-	  					FROM planner p, users u
-	  						<where>
-						
-	  					p.planner_writer =u.user_code 
+	  	FROM (	<choose>
+	  					<!-- 검색어가 없는 경우 route 테이블 조인 no  -->
+	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
+	  					FROM planner p, users u 
+	  					</when>
+	  					<!-- 검색어가 있는  경우 route 테이블 조인  -->
+	  					<when test="search.searchKeyword != null or search.searchKeyword !=''">
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname, r.city_name
+	  					FROM planner p, users u	, route r 
+	  					</when>
+	  					</choose>
 	  					
-	  				
-	  					<if test="searchKeyword != null ">		
+	  					<where>
+	  					<!--  아래는 필수 !! -->
+	  					p.planner_writer =u.user_code
+	  					
+	  					<choose>
+	  					<!-- 검색어가 없는 경우 / 검색조건이 있는 경우  -->
+	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
+	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">
+	  					AND p.member =#{search.searchCondition} 
+	  					</if>
+	  			       </when>
+	  					
+	  					<!-- 검색어가 있는 경우  -->
+	  					<when test="search.searchKeyword != null or search.searchKeyword !=''" >
 	  					AND p.planner_code= r.planner_code	
-	  					and r.city_name =#{search.searchKeyword}
-	  			 
-	  					 </if> 
-	  					 </where>
+	  					AND r.city_name =#{search.searchKeyword} 
+	  					<if test ="search.searchCondition!= null  and  search.searchCondition != 0 ">
+	  					AND p.member =#{search.searchCondition}  
+	  				
+	  					</if>
+	  					</when>
+	  					</choose>
+						
+						
+	  					</where>
 	  					 ORDER BY planner_code DESC 
-	  						) countTable	 
-			  <!-- 	 SELECT COUNT(*)
-		FROM planner -->
+	  						) countTable 	 <!-- 
+			  	 SELECT COUNT(*)
+		FROM planner  -->
 	</select>
 	 		
 		
-		<!-- 2. route -->
+		<!-- 2. route /////////////////////////////////////////////////// -->
 	 	
 	<insert 	id="addRoute"		parameterType="route" >
 
@@ -231,6 +246,12 @@ SELECT *
 		FROM route
 		WHERE planner_code = #{plannerCode}
 	 </select>
+	 
+	 		
+		<delete id="deleteRoute" parameterType="int">
+		DELETE Route 
+		WHERE planner_code = #{plannerCode}
+		</delete>
 	 
 	 <select  id="getRouteList"  parameterType="hashmap"	resultMap="routeSelectMap">
 
@@ -271,7 +292,7 @@ SELECT *
 		</where>
 	 </select>			
 	
-	 <!-- 3. schedule -->
+	 <!-- 3. schedule /////////////////////////////////////////////////// -->
 	 
 		<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
@@ -298,12 +319,16 @@ SELECT *
 		WHERE sche_code = #{scheCode}
 	 </update>
 	 
-	 <delete id="deleteSchedule" parameterType="int">
-	  	DELETE 
-	  	FROM schedule 
-	  	WHERE sche_code = #{scheCode}
-  	</delete>
- 
+	 <!-- <delete id="deleteSchedule" parameterType="int">
+	  	DELETE  schedule 
+	  	WHERE sche_code = #{scheCode} 
+  	</delete> -->
+ 		
+		<delete id="deleteSchedule" parameterType="int">
+		DELETE  schedule
+		WHERE planner_code = #{plannerCode}
+		</delete>
+		
   	<select  id="getScheduleList"  parameterType="hashmap"	resultMap="scheduleSelectMap">
 
 	  	SELECT

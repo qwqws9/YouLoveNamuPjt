@@ -28,45 +28,58 @@
   
 <!-- Our Own Resources -->
 <link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+
+<style>
+
+.jumbotron {
+width: 1000px; 
+margin: 0 auto;
+background-image:url("/resources/images/planner/${planner.plannerImage}");
+
+}</style>
 <script type="text/javascript">
 
 		 $(function() {
-			  
-			  $(".previous").on("click", function(){
-				 
-				  history.go(-1);
-  
-			  });
-			  
-			  
-			  $("li:contains('수정')").on("click", function(){
-				  
+
+			  $("#update").on("click",function(){    	
 				  self.location = "/planner/updatePlanner?plannerCode=${planner.plannerCode}";
-				  
-			  });
-	
-		  
+			    });
 
-		 $( "td.ct_btn01:contains('확인')" ).on("click" , function() {
-				self.location = "/planner/getPlannerList";
-		 });
-
+			  /* $("#delete").on("click",function(){    	
+				  self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
+			    }); */
+			  $("a[href='#']").on("click",function(){
+			    	
+				  self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
+			    	
+			    });
+			    
 	});
 </script>
 
 </head> 
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
- 
+ <div class="jumbotron">
+  <h1>${planner.plannerName}</h1>      
+  <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first projects on the web.</p>
+</div>
+
+
 <div class="container" >
 
-		<div class="page-header text-info">
-		<br>
-		<br>
-	       <h5 > 내플래너  </h5>
-					
-  </div>
-</div>
+		<h4 class="text-center">  ${planner.plannerName} </h4>
+		<br><br>
+	  <hr width =100% color="#a3daff" align="center" size=10/>
+	</div>
+  <div class="col-md-12 col-lg-12" >
+<div class="row">
+   <div class="col-md-10"></div>
+      <div class="col-md-2">
+  
+ 	<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="55px" height="40px">
+${planner.plannerWriter.nickname}</div></div></div>
+
 
  <div class="container">
 <div class="row">
@@ -141,20 +154,41 @@
 			<jsp:include page="/planner/getScheduleList2.jsp" />
 		</nav>
 		
-		
-			
-		<nav>
-  <ul class="pager">
-  
+	<%-- <input type="hidden" id="sessionId" value="${user.userCode }"> --%>
+<c:if test="${user.userCode == planner.plannerWriter.userCode}">
+
+ <div class="col-md-10 col-lg-12" >
+<div class="row">
+   <div class="col-md-6"></div>
+      <div class="col-md-4">
+		     <button type="button" class="btn btn-default" id="update"> 수정 </button>
+		  
+		      <a onclick="return confirm('플래너를 삭제하시겠습니까?')" href="#" class="btn btn-default">삭제</a> 
+			 </div>
+		    </div>
+		  </div>
+
+		<!-- <nav> -->
+<!--   <ul class="pager">
     <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span>이전</a></li>
     
     <li><a href="#">수정</a></li>
-    
     <li class="next"><a href="#" class='text-danger'>취소</a></li>
   	
   </ul>
-</nav>
-
-
+</nav> -->
+</c:if>
+<%-- 
+<input type="hidden" class="plannerWriter" name="plannerWriter" value="${planner.plannerWriter}"> --%> 
+<!-- 댓글 -->
+      <jsp:include page="../comment/getComment.jsp" >
+      	<jsp:param value="${boardCode}" name="boardCode"/>
+      	<jsp:param value="${detailCode}" name="detailCode"/>
+      </jsp:include>
+      
+      
+	
+	
+	
 </body>
 </html>

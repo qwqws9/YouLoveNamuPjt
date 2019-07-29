@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youlove.service.domain.Schedule;
+import com.youlove.common.Search;
+import com.youlove.service.domain.Planner;
 import com.youlove.service.domain.Route;
 import com.youlove.service.planner.PlannerService;
 
@@ -35,6 +37,28 @@ public class PlannerRestController {
 	@Qualifier("plannerServiceImpl")
 	private PlannerService plannerService;
 	
+	@RequestMapping(value = "json/getAllPlannerList" ,method = RequestMethod.POST)
+	public Map<String, Object> getAllPlannerList( @RequestBody Search search ) throws Exception {
+		
+		System.out.println("PlannerRestController------------------getPlannerList");
+		
+		search.setPageSize(3);
+		System.out.println(search);
+				
+		Map<String, Object> map = plannerService.getAllPlannerList(search);
+		String message = "ok";
+		List<Planner> list = (List<Planner>) map.get("list");
+		if(list.size()<1) {
+			message = "no";
+		}
+		map.put("message", message);
+		System.out.println(map);		
+		
+		return map;
+	}
+	
+	
+	
 	@RequestMapping( value="json/getRouteList/{plannerCode}", method=RequestMethod.GET)
 	public  List<Map<String, Object>> getRouteList(@PathVariable int plannerCode) throws Exception{
 	
@@ -46,6 +70,7 @@ public class PlannerRestController {
        String lng = "";
        int cityOrder;
        int stayDay;
+
        
        rlist =  plannerService.getRouteList(plannerCode);
           for(int i=0; i<rlist.size(); i++){   
@@ -55,12 +80,14 @@ public class PlannerRestController {
              lng = ((Route) rlist.get(i)).getLng();
              cityOrder=((Route) rlist.get(i)).getCityOrder();
              stayDay=((Route) rlist.get(i)).getStayDay();
+             String allDay = "true";
              
              map.put("city", city);
              map.put("lat", lat);
              map.put("lng", lng);
              map.put("cityOrder",cityOrder);
              map.put("stayDay",stayDay);
+             map.put("allDay",allDay);
              result.add(map);           
            }
   return result;
@@ -119,6 +146,7 @@ public class PlannerRestController {
 	        start = ((Route) rlist.get(i)).getStartDate();
 	        end = ((Route) rlist.get(i)).getEndDate();
 	        int cityOrder=((Route) rlist.get(i)).getCityOrder();
+	        String allDay="true";
 	        
 	        //hard coding...... 방법 알아보기.
 	        if(cityOrder==1){color="#CCCC66";}
@@ -136,6 +164,7 @@ public class PlannerRestController {
 	        map.put("end", end);
 	        map.put("color", color);
 	        map.put("id",cityOrder);
+	        map.put("allDay",allDay);
 	        result.add(map);           
 	     	}
        
@@ -210,7 +239,7 @@ public class PlannerRestController {
          title = ((Schedule) slist.get(j)).getScheName();   
          start = ((Schedule) slist.get(j)).getScheDay();
          int scheCode=((Schedule) slist.get(j)).getScheCode();
-         color= ((Schedule) slist.get(j)).getColor();   
+         color= ((Schedule) slist.get(j)).getColor(); 
 
          map2.put("title", title);
          map2.put("start", start);

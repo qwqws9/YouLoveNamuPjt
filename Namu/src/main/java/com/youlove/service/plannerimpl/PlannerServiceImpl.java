@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
-import com.youlove.service.domain.Wallet;
 import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
@@ -58,6 +57,11 @@ import com.youlove.service.user.UserDao;
 		}
 		
 		@Override
+		public void deletePlanner(int plannerCode) throws Exception {
+			plannerDao.deletePlanner(plannerCode);
+		}
+		
+		@Override
 		public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception{
 			List<Planner> list = plannerDao.getPlannerList(map);
 			int totalCount = plannerDao.getTotalCount(map);
@@ -77,6 +81,19 @@ import com.youlove.service.user.UserDao;
 			return map;
 		}
 		
+		@Override
+		public Map<String, Object> getAllPlannerList(Search search) throws Exception {
+
+			List<Planner> list= plannerDao.getAllPlannerList(search);
+			int totalCount = plannerDao.getAllTotalCount(search);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list );
+			map.put("totalCount", new Integer(totalCount));
+			
+			return map;
+		}
+		
 		//2. route 
 		@Override
 		public void addRoute(Route route) throws Exception {
@@ -87,7 +104,12 @@ import com.youlove.service.user.UserDao;
 		public Route getRoute(int routeCode) throws Exception {
 			return plannerDao.getRoute(routeCode);
 		}
-
+		
+		@Override
+		public void deleteRoute(int plannerCode) throws Exception {
+			plannerDao.deleteRoute(plannerCode);
+		}
+		
 		@Override
 		public List<Route> getRouteList(int plannerCode) throws Exception {
 			return plannerDao.getRouteList(plannerCode);
@@ -144,16 +166,20 @@ import com.youlove.service.user.UserDao;
 		public void addSchedule(Schedule schedule) throws Exception {
 			plannerDao.addSchedule(schedule);
 		}
+
+		public Schedule getSchedule(int scheCode) throws Exception{
+			return plannerDao.getSchedule(scheCode);
+		}
+		
+		@Override
+		public void deleteSchedule(int plannerCode) throws Exception {
+			plannerDao.deleteSchedule(plannerCode);
+		}
 		
 		@Override
 		public List<Schedule> getScheduleList(int plannerCode) throws Exception{
 			return plannerDao.getScheduleList(plannerCode);
 		}
-		
-		public Schedule getSchedule(int scheCode) throws Exception{
-			return plannerDao.getSchedule(scheCode);
-		}
-		
-		
+			
 	
 }
