@@ -19,9 +19,9 @@ public interface WalletService {
 	public void addWallet(Wallet wallet) throws Exception;
 	
 	public Wallet getWallet(int walletDetailCode) throws Exception;
-	/*
-	public void updateUser(Wallet wallet) throws Exception;
-	*/
+	
+	public void updateWallet(Wallet wallet) throws Exception;
+	
 	public void deleteWallet(int walletDetailCode) throws Exception;
 	
 	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception;

@@ -72,9 +72,9 @@
          <div class="square_wrap clear">
             <c:forEach var="planner" items="${list}">
                <c:if test="${planner.departDate < today}">
-                   <div class="square" data-planner-code="${planner.plannerCode}">
+                    <div class="square" data-planner-code="${planner.plannerCode}">
                      <div
-                        <c:if test="${! empty planner.plannerImage}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
+                        <c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
                         <c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
                      >
                         <div>
