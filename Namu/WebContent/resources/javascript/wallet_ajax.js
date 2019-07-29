@@ -198,6 +198,45 @@ function addAjax(form) {
 	*/
 }
 
+// updateWallet Business Logic
+function updateAjax(form) {
+	var formData = new FormData(form);
+	
+	/*
+	console.log('FORM ::');
+	for(var pair of formData.entries()){
+		console.log(pair[0] + ' = ' + pair[1]);
+	}
+	console.log(formData.get('file'));
+	*/
+	
+	$.ajax({
+		url			: '/wallet/json/updateWallet',
+		type		: 'POST',
+		enctype		: 'multipart/form-data',
+		data		: formData,
+		dataType	: 'json',
+		contentType	: false,
+		processData	: false,
+		cache		: false,
+		timeout		: 600000,
+		error		: function(request, status, error) {
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+	    },
+		success		: function(JSONData, status) {
+			console.log(status);
+			console.log('JSONData :: ' + JSONData);
+			
+			if(JSONData == true){
+				form.reset();
+				$('.pop_wrap_add').html('');
+			
+				getListAjax(1);
+			}
+		}
+	});
+}
+
 // getWalletList Business Logic
 function getListAjax(currentPage) {
 	console.log('현재 페이지 :: ' + currentPage);

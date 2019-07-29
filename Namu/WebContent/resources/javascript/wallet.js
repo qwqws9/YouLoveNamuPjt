@@ -173,17 +173,6 @@ $(function() {
 		});
 	});
 	
-	// 수입/지출 추가 폼 제출
-	$('#save_income_form, #save_expenditure_form').on('submit', function(event) {
-		//console.log('제출할 FORM : ' + $(this).html());
-		
-		$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
-		
-		event.preventDefault();
-		
-		addAjax($(this)[0]);
-	});
-	
 	// 수입/지출 상세내역 수정
 	$(document).on('click', '.pop_wrap_get .act_btns .update_btn', function() {
 		var walletDetailCode = $(this).closest('li').attr('data-wallet-detail-code');
@@ -222,6 +211,25 @@ $(function() {
 				multiply();
 			});
 		}
+	});
+	
+	// 수입/지출 추가, 수정 폼 제출
+	$('#save_income_form, #save_expenditure_form').on('submit', function(event) {
+		console.log('제출할 FORM : ' + $(this).html());
+		
+		$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
+		
+		event.preventDefault();
+		
+		var walletDetailCode = $(this).closest('.pop_wrap_add > input').attr('data-wallet-detail-code');
+		console.log('walletDetailCode : ' + walletDetailCode);
+		
+		if(walletDetailCode == null){
+			addAjax($(this)[0]);
+		}else{
+			updateAjax($(this)[0]);
+		}
+		
 	});
 	
 	// 수입/지출 추가 모달창 클로즈

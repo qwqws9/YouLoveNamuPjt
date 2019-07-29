@@ -104,6 +104,27 @@ public class WalletRestController {
 		
 	}
 	
+	@RequestMapping(value="json/updateWallet", method=RequestMethod.POST)
+	public boolean updateWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
+		
+		System.out.println("/wallet/json/updateWallet :: POST");
+		
+		walletService.getWallet(wallet.getWalletDetailCode());
+		
+		if(!file.isEmpty() && file != null){
+			String fileName = FileNameUUId.convert(file, "wallet", request);
+			
+			wallet.setWalletImage(fileName);
+		}
+
+		System.out.println(wallet);
+		
+		//walletService.updateWallet(wallet);
+		
+		return true;
+		
+	}
+	
 	@RequestMapping(value = "/json/getWallet/{walletDetailCode}", method=RequestMethod.GET)
 	public Wallet getWallet(@PathVariable int walletDetailCode) throws Exception{
 		
