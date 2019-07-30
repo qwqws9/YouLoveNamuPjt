@@ -70,9 +70,12 @@ public class WalletDaoImpl implements WalletDao {
 		return sqlSession.selectOne("WalletMapper.getTotalCount", map);
 	}
 
-	@Override
-	public Long outIncomeSum(Wallet wallet) throws Exception {
-		return sqlSession.selectOne("WalletMapper.outIncomeSum",wallet);
+	public double totalComes(Wallet wallet) throws Exception{
+		return sqlSession.selectOne("WalletMapper.totalComes", wallet);
+	}
+	
+	public List<Wallet> getWalletChart(int walletCode) throws Exception{
+		return sqlSession.selectList("WalletMapper.getWalletChart", walletCode);
 	}
 	
 }

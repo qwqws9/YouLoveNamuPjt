@@ -61,26 +61,35 @@ public class WalletServiceImpl implements WalletService {
 	}
 	
 	public Map<String, Object> getWalletList(Map<String, Object> map) throws Exception{
+		int walletCode = Integer.parseInt(map.get("walletCode").toString());
+		System.out.println(walletCode);
+		
 		List<Wallet> list = walletDao.getWalletList(map);
 		int totalCount = walletDao.getTotalCount(map);
 		
+		// 수입
+		double income = walletDao.totalComes(new Wallet(walletCode, "0"));
+		// 지출
+		double expenditure = walletDao.totalComes(new Wallet(walletCode, "1"));
+		
+		double balance = income - expenditure;
 		
 		map = new HashMap<String, Object>();
-		
-		//수입
-		Long income = walletDao.outIncomeSum(new Wallet("0"));
-		
-		//지출
-		Long outcome = walletDao.outIncomeSum(new Wallet("1"));
-		Long total = income- outcome;
-		map.put("income", income);
-		map.put("outcome", outcome);
-		map.put("minus", total);
 		
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
 		
+		map.put("totalIncome", income);
+		map.put("totalExpenditure", expenditure);
+		map.put("balance", balance);
+		
 		return map;
+	}
+	
+	public List<Wallet> getWalletChart(int walletCode) throws Exception{
+		List<Wallet> list = walletDao.getWalletChart(walletCode);
+		
+		return list;
 	}
 	
 }

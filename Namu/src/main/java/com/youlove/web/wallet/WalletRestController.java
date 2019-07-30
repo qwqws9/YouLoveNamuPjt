@@ -1,5 +1,6 @@
 package com.youlove.web.wallet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class WalletRestController {
 	@RequestMapping(value = "/json/isWallet/{plannerCode}", method=RequestMethod.GET)
 	public int isWallet(@PathVariable int plannerCode) throws Exception{
 		
-		System.out.println("/wallet/json/isWallet :: GET");
+		System.out.println("/wallet/json/isWallet ::: GET");
 		
 		int is = walletService.isWallet(plannerCode);
 		System.out.println(is);
@@ -61,7 +62,7 @@ public class WalletRestController {
 	@RequestMapping(value = "/json/addWalletView/{plannerCode}", method=RequestMethod.GET)
 	public int addWalletView(@PathVariable int plannerCode) throws Exception{
 		
-		System.out.println("/wallet/json/addWalletView :: GET");
+		System.out.println("/wallet/json/addWalletView ::: GET");
 		
 		walletService.addWalletView(plannerCode);
 		
@@ -75,8 +76,7 @@ public class WalletRestController {
 	@RequestMapping(value = "/json/deleteWalletView/{walletCode}", method=RequestMethod.GET)
 	public boolean deleteWalletView(@PathVariable int walletCode) throws Exception{
 		
-		System.out.println("/wallet/json/deleteWalletView :: GET");
-		
+		System.out.println("/wallet/json/deleteWalletView ::: GET");
 		
 		walletService.deleteWalletView(walletCode);
 		
@@ -88,7 +88,7 @@ public class WalletRestController {
 	@RequestMapping(value="json/addWallet", method=RequestMethod.POST)
 	public boolean addWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
-		System.out.println("/wallet/json/addWallet :: POST");
+		System.out.println("/wallet/json/addWallet ::: POST");
 		
 		if(!file.isEmpty() && file != null){
 			String fileName = FileNameUUId.convert(file, "wallet", request);
@@ -107,7 +107,7 @@ public class WalletRestController {
 	@RequestMapping(value = "/json/getWallet/{walletDetailCode}", method=RequestMethod.GET)
 	public Wallet getWallet(@PathVariable int walletDetailCode) throws Exception{
 		
-		System.out.println("/wallet/json/getWallet :: GET");
+		System.out.println("/wallet/json/getWallet ::: GET");
 		
 		Wallet wallet = walletService.getWallet(walletDetailCode);
 		System.out.println(wallet);
@@ -119,7 +119,7 @@ public class WalletRestController {
 	@RequestMapping(value="json/updateWallet", method=RequestMethod.POST)
 	public boolean updateWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
-		System.out.println("/wallet/json/updateWallet :: POST");
+		System.out.println("/wallet/json/updateWallet ::: POST");
 		
 		if(!file.isEmpty() && file != null){
 			String fileName = FileNameUUId.convert(file, "wallet", request);
@@ -142,7 +142,7 @@ public class WalletRestController {
 	@RequestMapping(value = "/json/deleteWallet/{walletDetailCode}", method=RequestMethod.GET)
 	public boolean deleteWallet(@PathVariable int walletDetailCode) throws Exception{
 		
-		System.out.println("/wallet/json/deleteWallet :: GET");
+		System.out.println("/wallet/json/deleteWallet ::: GET");
 		
 		walletService.deleteWallet(walletDetailCode);
 		
@@ -153,13 +153,14 @@ public class WalletRestController {
 	@RequestMapping(value="json/getWalletList/{walletCode}")
 	public Map<String, Object> getWalletList (@PathVariable int walletCode, @RequestBody Search search) throws Exception{
 		
-		System.out.println("/wallet/json/getWalletList :: GET / POST");
+		System.out.println("/wallet/json/getWalletList ::: GET / POST");
 		System.out.println(walletCode);
 		System.out.println(search);
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("search", search);
+		
 		map.put("walletCode", walletCode);
+		map.put("search", search);
 		
 		map = walletService.getWalletList(map);
 		map.put("search", search);
@@ -168,11 +169,25 @@ public class WalletRestController {
 		
 	}
 	
+	@RequestMapping(value="json/getWalletChart/{walletCode}", method=RequestMethod.GET)
+	public List<Wallet> getWalletList (@PathVariable int walletCode) throws Exception{
+		
+		System.out.println("/wallet/json/getWalletChart ::: GET");
+		System.out.println(walletCode);
+		
+		List<Wallet> list = new ArrayList<>();
+		
+		list = walletService.getWalletChart(walletCode);
+		
+		return list;
+		
+	}
+	
 	// https://ko.exchange-rates.org CRAWLING
 	@RequestMapping(value = "/json/exchangeRates", method=RequestMethod.POST)
 	public List<Exchange> exchangeRates() throws Exception{
 
-		System.out.println("/wallet/json/exchangeRates :: POST");
+		System.out.println("/wallet/json/exchangeRates ::: POST");
 		
 		List<Exchange> list = exchangeRatesService.exchangeRates();
 		
@@ -183,11 +198,9 @@ public class WalletRestController {
 	@RequestMapping(value = "/json/convert", method=RequestMethod.POST)
 	public Exchange convert(@RequestBody Exchange exchange) throws Exception{
 
-		System.out.println("/wallet/json/convert :: POST");
+		System.out.println("/wallet/json/convert ::: POST");
 		System.out.println(exchange);
 
-		//exchange = exchangeRatesService.convertExchangeRate(exchange);
-		
 		return exchangeRatesService.convertExchangeRate(exchange);
 		
 	}

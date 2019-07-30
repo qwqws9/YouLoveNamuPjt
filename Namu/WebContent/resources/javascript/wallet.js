@@ -207,7 +207,7 @@ $(function() {
 		event.preventDefault();
 		
 		var walletDetailCode = $(this).children('input:first-child').attr('data-wallet-detail-code');
-		console.log('walletDetailCode : ' + walletDetailCode);
+		//.log('walletDetailCode : ' + walletDetailCode);
 		
 		if(walletDetailCode == null){
 			addAjax($(this)[0]);
@@ -264,6 +264,11 @@ $(function() {
 	
 	// 결산 보고서 모달창 오픈
 	$('.report_btn').on('click', function() {
+		var walletCode = $('#wallet_detail_section').data('walletCode');
+		console.log('walletCode : ' + walletCode);
+		
+		
+		
 		// innerHTML
 		$($('.report_wrap')).load('/wallet/getWalletReport.jsp', function(data) {
 			//console.log('getWalletReport.jsp :\n' + data);
@@ -403,6 +408,7 @@ function multiply() {
 	//console.log('결과값 : ' + exchangePrice);
 	
 	$('.exchange_plus_result').text(makeComma(exchangePrice));
+	//$('#exchange_price').val(Math.round(exchangePrice * 100) / 100);
 	$('#exchange_price').val(Math.round(exchangePrice * 100) / 100);
 }
 

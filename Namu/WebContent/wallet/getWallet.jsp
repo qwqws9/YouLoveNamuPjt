@@ -35,16 +35,11 @@
 							<div>
 								<c:if test="${wallet.moneyUnit ne 'KRW'}">
 									<c:if test="${! empty wallet.krwPrice}">
-										<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
+										<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.##" />
 									</c:if>
 								</c:if>
 							</div>
 						</div><!-- //input_money -->
-						<c:if test="${! empty wallet.payer}">
-							<div class="input_payer">
-								<span>결제자</span><span>미니미니</span>
-							</div>
-						</c:if>
 					</div><!-- //top_input -->
 					<c:if test="${wallet.part eq 0}">
 						<div class="what_unit">
@@ -53,7 +48,7 @@
 							</div>
 							<c:if test="${wallet.moneyUnit ne 'KRW'}">
 								<div class="clear">
-									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.00" /></span>
+									<span>적용 환율</span><span>${wallet.moneyUnit} 1 = KRW <fmt:formatNumber value="${wallet.exchangeRate}" pattern="#,###.##" /></span>
 								</div>
 							</c:if>
 						</div>

@@ -8,13 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.youlove.common.Search;
 import com.youlove.service.comment.CommentDao;
-import com.youlove.service.community.CommunityDao;
 import com.youlove.service.domain.Comment;
-import com.youlove.service.domain.Community;
-
-
 
 @Repository("commentDaoImpl")
 public class CommentDaoImpl implements CommentDao {
