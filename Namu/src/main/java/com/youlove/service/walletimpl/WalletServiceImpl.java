@@ -42,6 +42,10 @@ public class WalletServiceImpl implements WalletService {
 	public void deleteWalletView(int walletCode) throws Exception{
 		walletDao.deleteWalletView(walletCode);
 	}
+	
+	public double getTotalExpenditure(int walletCode) throws Exception{
+		return walletDao.totalComes(new Wallet(walletCode, "1"));
+	}
 
 	// walletList.jsp
 	public void addWallet(Wallet wallet) throws Exception{

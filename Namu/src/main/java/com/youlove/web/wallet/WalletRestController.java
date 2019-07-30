@@ -1,9 +1,7 @@
 package com.youlove.web.wallet;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.common.FileNameUUId;
-import com.youlove.common.Search;
 import com.youlove.service.domain.Exchange;
 import com.youlove.service.domain.Wallet;
 import com.youlove.service.wallet.ExchangeRatesService;
@@ -81,6 +78,18 @@ public class WalletRestController {
 		walletService.deleteWalletView(walletCode);
 		
 		return true;
+		
+	}
+	
+	@RequestMapping(value = "/json/getTotalExpenditure/{walletCode}", method=RequestMethod.GET)
+	public double getTotalExpenditure(@PathVariable int walletCode) throws Exception{
+		
+		System.out.println("/wallet/json/getTotalExpenditure ::: GET");
+		
+		double expenditure = walletService.getTotalExpenditure(walletCode);
+		System.out.println(expenditure);
+		
+		return expenditure;
 		
 	}
 	
@@ -150,27 +159,8 @@ public class WalletRestController {
 		
 	}
 	
-	@RequestMapping(value="json/getWalletList/{walletCode}")
-	public Map<String, Object> getWalletList (@PathVariable int walletCode, @RequestBody Search search) throws Exception{
-		
-		System.out.println("/wallet/json/getWalletList ::: GET / POST");
-		System.out.println(walletCode);
-		System.out.println(search);
-		
-		Map<String, Object> map = new HashMap<>();
-		
-		map.put("walletCode", walletCode);
-		map.put("search", search);
-		
-		map = walletService.getWalletList(map);
-		map.put("search", search);
-		
-		return map;
-		
-	}
-	
 	@RequestMapping(value="json/getWalletChart/{walletCode}", method=RequestMethod.GET)
-	public List<Wallet> getWalletList (@PathVariable int walletCode) throws Exception{
+	public List<Wallet> getWalletChart (@PathVariable int walletCode) throws Exception{
 		
 		System.out.println("/wallet/json/getWalletChart ::: GET");
 		System.out.println(walletCode);

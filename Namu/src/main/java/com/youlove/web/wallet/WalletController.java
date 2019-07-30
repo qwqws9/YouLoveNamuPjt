@@ -88,7 +88,7 @@ public class WalletController {
 		int pageUnit = 5;
 		int pageSize = 5;
 		
-		if(search.getCurrentPage() == 0) {
+		if(search.getCurrentPage() == 0){
 			search.setCurrentPage(1);
 		}
 		
