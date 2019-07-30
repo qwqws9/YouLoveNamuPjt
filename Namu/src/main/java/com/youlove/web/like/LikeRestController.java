@@ -57,14 +57,8 @@ public class LikeRestController {
 	public boolean checkLike(@RequestBody Map<String,Object> map)throws Exception{
 		System.out.println("json/checkLike 시작:::");
 		
-		
-		
 		boolean result = likeService.checkLike(map);
-		System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::");
-		System.out.println(map.get("commentCode"));
-		System.out.println(map.get("likeName"));
-		System.out.println(result);
-		System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::");
+		
 		return result;
 	} 
 	

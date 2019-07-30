@@ -11,7 +11,7 @@ import com.youlove.service.domain.User;
 
 public interface TimelineDao {
 	
-	public void addTimeline(Timeline timeline) throws Exception;
+	public int addTimeline(Timeline timeline) throws Exception;
 	
 	public List<Timeline> getTimelineList(User user) throws Exception;
 	

@@ -16,6 +16,7 @@
 <!--  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
  <script src="/resources/javascript/youtube.js"></script>
 <script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 <style type="text/css">
 .totalSearchClick {
 	font-size: 25px;
@@ -37,6 +38,54 @@
 			</div>
 			<br>
 			<div class="col-10 col-md-10 col-lg-10">
+			
+			
+			<c:if test="${!empty plannerList}">
+			<div class="square_wrap clear" id="allPlanner">
+			<p class="totalSearchClick">플래너<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029; " ></i></p>
+			<hr>
+     <c:forEach var="planner" items="${plannerList}" end="3">
+     	<%-- <c:if test="${planner.departDate >= today}"> --%>
+						<div class="plannerSearch square" >
+							<!-- <input type="hidden" class="walletCode" /> -->
+							<input type="hidden" class="plannerCode" value="${planner.plannerCode}" />
+							<div
+								<c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">style="background-image: url(/resources/images/planner/${planner.plannerImage})"</c:if>
+								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
+							>
+								<div>
+									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<%-- <div id=plannerCode style="display: none">${planner.plannerCode}</div> --%></div>
+									<div class="plan_flag">국기</div>
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
+								<div class="wallet_is">
+										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
+											<label class="btn btn-secondary">
+												<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
+											</label>
+											<label class="btn btn-secondary active">
+												<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
+											</label>
+										</div>
+									</div> <!-- //wallet_is -->
+								</div>
+							</div>
+						</div><!-- //square -->
+					<%-- </c:if> --%>
+				</c:forEach>
+			</div><!-- //square_wrap -->
+			</c:if>
+			<br><br><br><br>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			<c:if test="${!empty tourList }">
 			<p class="totalSearchClick">관광지<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029; " ></i></p>
 				<hr>
@@ -67,26 +116,26 @@
 				
 					<div class= "col-md-6">
 						 <iframe id="player0" type="text/html" width="550" height="400"
-							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
+							  src="" frameborder="0"></iframe>
 					  </div>
 <!-- 					  <div class= "col-1 col-md-1 col-lg-1"> -->
 <!-- 					  </div> -->
 					 <div class= "col-md-6">
 						<iframe id="player1" type="text/html" width="550" height="400"
-							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
+							  src="" frameborder="0"></iframe>
 							  <br><br>
 					   </div>
 				
 							
 				<div class= "col-md-6">
 						 <iframe id="player2" type="text/html" width="550" height="400"
-							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
+							  src="" frameborder="0"></iframe>
 					  </div>
 <!-- 					  <div class= "col-1 col-md-1 col-lg-1"> -->
 <!-- 					  </div> -->
 				<div class= "col-md-6">
 						<iframe id="player3" type="text/html" width="550" height="400"
-							  src="https://www.youtube.com/embed/fk9-FfGVt5Q" frameborder="0"></iframe>
+							  src="" frameborder="0"></iframe>
 					   </div>
 				</div>
 				
@@ -183,9 +232,16 @@
 					self.location = '/guide/initTour';
 				}else if(where == '커뮤니티') {
 					self.location = '/community/getCommunityList';
+				}else if(where == '플래너') {
+					self.location = '/planner/getAllPlannerList';
 				}
 			})
+			
+			$('.plannerSearch').on('click',function(){
+				self.location = '/planner/getPlanner?plannerCode='+$(this).children().val().trim();
+			})
 				
+			
 			})
 	
 	</script>

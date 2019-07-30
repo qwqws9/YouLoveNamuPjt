@@ -32,9 +32,11 @@ import com.youlove.service.community.CommunityService;
 import com.youlove.service.domain.City;
 import com.youlove.service.domain.Community;
 import com.youlove.service.domain.Hashtag;
+import com.youlove.service.domain.Like;
 import com.youlove.service.domain.User;
 import com.youlove.service.guide.GuideService;
 import com.youlove.service.hashtag.HashtagService;
+import com.youlove.service.like.LikeService;
 import com.youlove.service.user.UserService;
 
 
@@ -56,6 +58,9 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("guideServiceImpl")
 	private GuideService guideService;
+	@Autowired
+	@Qualifier("likeServiceImpl")
+	private LikeService likeService;
 	
 	
 	public CommunityController(){
@@ -136,6 +141,9 @@ public class CommunityController {
 		//댓글
 		modelAndView.addObject("boardCode",community.getCommunityBoard());
 		modelAndView.addObject("detailCode",communityCode);
+		//게시글 좋아요 개수
+		int likeCount = likeService.countLike(new Like(Integer.parseInt(community.getCommunityBoard()),communityCode));
+		modelAndView.addObject("likeCountBoard",likeCount);
 		//관련글
 		map = communityService.getCommunityRelated(community.getCommunityBoard(), community.getCity());
 		modelAndView.addObject("related", map.get("related"));//관련글
