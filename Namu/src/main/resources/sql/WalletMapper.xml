@@ -112,4 +112,18 @@
 			   ORDER BY reg_date DESC, w_detail_code DESC ) countTable
 	</select>
 	
+	<select id="outIncomeSum" parameterType="wallet" resultType="Long">
+		select sum(krw_price) from wallet_detail where part=#{part}
+		<if test="category != null">
+		 and category = #{category}
+		 </if>
+	</select>
+	
+	<select id="outChartTotal" resultMap="walletSelectMap">
+	 select sum(krw_price) KRW_PRICE ,category
+	 from wallet_detail
+	 where part = 1
+	 group by category
+	</select>
+	
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Police;
 import com.youlove.service.domain.User;
 import com.youlove.service.user.UserDao;
 
@@ -73,6 +74,21 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public int inviteUser(Friend friend) throws Exception {
 		return sqlSession.insert("UserMapper.inviteUser",friend);
+	}
+
+	@Override
+	public int addPolice(Police police) throws Exception {
+		return sqlSession.insert("UserMapper.addPolice",police);
+	}
+
+	@Override
+	public List<Police> getPoliceList() throws Exception {
+		return sqlSession.selectList("UserMapper.getPoliceList");
+	}
+
+	@Override
+	public int updatePolice(Police police) throws Exception {
+		return sqlSession.update("UserMapper.updatePolice",police);
 	}
 	
 	

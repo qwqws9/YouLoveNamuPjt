@@ -15,8 +15,8 @@
   	
 	<script>
 	//채팅 팝업
-	var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
-	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
+	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
+	var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	
 	function onChat(){
 		$(document).ready(function(){
@@ -36,6 +36,9 @@
 <input type="hidden" id="nodeUserCode" value="${user.userCode }">
 <input type="hidden" id="nodeNickname" value="${user.nickname }">
 <input type="hidden" id="nodeprofileImg" value="${user.profileImg }">
+<input type="hidden" id="nodeprofilePhone" value="${user.phone }">
+<input type="hidden" id="nodeprofileEmail" value="${user.email }">
+<input type="hidden" id="nodeprofileName" value="${user.name }">
 
 	<!-- 사이드바 -->
 	<div id="mySidebar" class="sidebar">
@@ -79,12 +82,11 @@
 										</button>
 										<div class="dropdown-menu">
 									  		<a class="dropdown-item" href="/user/getUser">내 정보</a>
-										    <a class="dropdown-item" href="#">내 작성글/댓글</a>
 										    <a class="dropdown-item" href="/user/getPayList">결제내역</a>
 										    <c:if test="${user.role eq 'admin' }">
 										    <div class="dropdown-divider"></div>
 										    <a class="dropdown-item" href="/user/getUserList">전체회원 조회</a>
-										    <a class="dropdown-item" href="#">신고목록 조회</a>
+										    <a class="dropdown-item" href="/user/getPoliceList">신고목록 조회</a>
 										    </c:if>
 										    <div class="dropdown-divider"></div>
 										    <a class="dropdown-item" href="/user/logout">로그아웃</a>

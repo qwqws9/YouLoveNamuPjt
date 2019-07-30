@@ -16,6 +16,8 @@
 <script src="/resources/javascript/jquery.oLoader.min.js"></script>
 <link rel="stylesheet" href="/resources/css/common.css" >
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="/resources/javascript/payIamport.js"></script>
 
 </head>
 <body>
@@ -162,6 +164,7 @@
       			
       			//숙소 결제버튼
       			$('.hotelPay').on('click',function(){
+      				
       				var tourId = $('#tourId').val().trim();
       				var tourName = $('#tourName').val().trim();
       				var checkin = $('#checkin').val().trim();
@@ -170,28 +173,15 @@
       				var cost = $('#cost').val().trim();
       				var userCode = $('#userCode').val().trim();
       				
-      				$.ajax({
-      					url : '/user/json/addPay',
-      					method : 'post',
-      					data : JSON.stringify({
-      						hotelCode : tourId,
-      						hotelName : tourName,
-      						startDate : checkin,
-      						endDate : checkout,
-      						hotelAddress : address,
-      						paymentPrice : cost,
-      						paymentUser : {
-      							userCode : userCode
-      						}
-      					}),
-      					headers : {
-      						"Accept" : "application/json",
-      						"Content-Type" : "application/json"
-      					},
-      					success : function(data, status){
-      						alert(status);
-      					}
-      				})
+      				var phone = $('#nodeprofilePhone').val().trim();
+      				var email = $('#nodeprofileEmail').val().trim();
+      				var name = $('#nodeprofileName').val().trim();
+      				//var cost2 = cost.substr(1,cost.length);
+      				//console.log(cost2);
+      				hotelPayIamport(tourName,cost,email,name,phone,tourId,checkin,checkout,address,userCode);
+      				
+      				//alert("수행되지마라");
+      				
       				
       			})
       			

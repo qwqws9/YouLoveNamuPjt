@@ -18,6 +18,19 @@ public class Wallet {
 	private String walletImage;
 	private User payer;
 	
+	
+	public Wallet() {
+		// TODO Auto-generated constructor stub
+	}
+	public Wallet(String part) {
+		this.part = part;
+	}
+	
+	public Wallet(String part,String category) {
+		this.part = part;
+		this.category = category;
+	}
+	
 	public int getWalletDetailCode() {
 		return walletDetailCode;
 	}

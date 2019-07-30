@@ -15,6 +15,50 @@
 	
 	<script>
 		$(function(){
+			//신고하기
+			var session =  '${user.nickname}';
+			var check = <%=session.getAttribute("user") != null%>
+			$("#from").val(session);
+			$("#goPolice").on("click",function(){
+				if(check == false){
+					self.location = '/user/loginView';
+				}else{
+					var content = $('#policeContent').val().trim();
+					if(content.length <= 0) {
+						alert('내용을 입력하세요.');
+						return;
+					}else {
+						$.ajax({
+							url : '/user/json/addPolice',
+							method  : 'post',
+							data : JSON.stringify ({
+								fromUser : {
+									userCode : $('#fromUser').val().trim()
+								},
+								toUser : {
+									userCode : $('#toUser').val().trim()
+								},
+								policeBoardCode : $('#policeBoardCode').val().trim(),
+								policeDetailCode : $('#policeDetailCode').val().trim(),
+								policeOption : $('#policeOption').val().trim(),
+								policeContent : $('#policeContent').val().trim()
+							}),
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(data,status) {
+								alert('신고가 완료되었습니다.');
+								$('#policeClose').trigger('click');
+							}
+						});
+					}
+					
+				}
+				
+			})
+			
+			
 			var communityCode = $("#communityCode").val();
 			$("#update").on("click",function(){
 				self.location = "/community/updateCommunityView?communityCode="+$("#communityCode").val();
@@ -58,6 +102,54 @@
 <header><jsp:include page="/layout/header.jsp" /></header>
 <br><br><br><br><br>
 
+<!-- 신고하기 -->
+<div class="col-lg-1">
+</div><!-- 사이드바 -->
+
+
+<form id="policeform">
+<div class="modal fade" id="police" tabindex="-1" role="dialog" aria-labelledby="policeLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel">신고</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          		<span aria-hidden="true">&times;</span>
+        		</button>
+      		</div>
+      		<div class="modal-body">
+      			<div>
+      				<input type="hidden"  id="fromUser" value="${user.userCode }">
+      				<input type="hidden"  id="toUser" value="${community.writer.userCode}">
+      				작성자 : <input type="text"  value="${community.writer.nickname}" style="outline: none;background: none;border: none; width: 30%">
+      				<input type="hidden" id="policeBoardCode" name="policeBoardCode" value="${community.communityBoard }">
+      				게시물번호 : <input type="text" id="policeDetailCode" value="${community.communityCode}" style="outline: none;background: none;border: none; width: 30%">
+      			</div>
+      			<div>
+      				<div class="form-group">
+					    <label for="policeOption">신고 조건</label>
+					    <select name="policeOption" class="form-control" id="policeOption">
+					      <option value="욕설">욕설</option>
+					      <option value="그냥">그냥</option>
+					      <option value="부적절한게시물">부적절한 게시물</option>
+					      <option value="다음">다음</option>
+					      <option value="네이버">네이버</option>
+					    </select>
+					  </div>
+      			</div>
+      			<div>
+	      			<textarea name="policeContent" id="policeContent" style="width:100%;height: 100px;"></textarea>
+      			</div>
+      			
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" id="policeClose" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        		<button type="button" class="btn btn-primary" id="goPolice">신고</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+</form>
 
 
 <!-- Modal -->
@@ -140,7 +232,7 @@
 						<i class="fas fa-ellipsis-v fa-sm" style="position: absolute; bottom: 1px;"></i>
 					</button>
 					<div class="dropdown-menu">
-						<a>신고하기</a>
+						<button type="button" data-target="#police"  data-toggle="modal" style="border: none;background: none; outline: none;">신고하기</button>
 					</div>
 				</div>
 				
