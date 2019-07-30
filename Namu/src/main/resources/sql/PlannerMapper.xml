@@ -64,8 +64,8 @@
 		 SELECT MAX(planner_code)+1 FROM planner
 		</selectKey>
 	 	INSERT
-		INTO planner(PLANNER_CODE , planner_ver, planner_writer, PLANNER_NAME , PLANNER_IMAGE, MEMBER, PRIVACY, STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
-		VALUES	 (seq_planner_code.nextval, 1, #{plannerWriter.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member}, #{privacy}, 'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
+		INTO planner(PLANNER_CODE , planner_ver, planner_writer, PLANNER_NAME , PLANNER_IMAGE, MEMBER,  STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
+		VALUES	 (seq_planner_code.nextval, 1, #{plannerWriter.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member},  'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
 	
 
 	 </insert>
@@ -73,7 +73,7 @@
 	
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
-		p.planner_code, p.planner_ver, p.planner_name, p.planner_image, p.DEPART_DATE, p.planner_writer, p.member, p.privacy, p.reg_Date, p.board_code, u.user_code, u.profile_img,u.nickname
+		p.planner_code, p.planner_ver, p.planner_name, p.planner_image, p.DEPART_DATE, p.planner_writer, p.member,  p.reg_Date, p.board_code, u.user_code, u.profile_img,u.nickname
 		FROM  planner p, users u
 		WHERE p.planner_code =#{value} 
 		AND p.planner_writer =u.user_code 
@@ -86,8 +86,8 @@
 	   		planner_name 	= #{plannerName} ,
 			planner_image	= #{plannerImage},
 			DEPART_DATE = #{departDate} ,
-			member	=	#{member},
-			privacy=#{privacy}
+			member	=	#{member}
+			
 	   	</set>
 	   	WHERE planner_code = #{plannerCode}
 	 </update>
@@ -102,11 +102,12 @@
 SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(
-	  					SELECT  planner_Name, planner_code, planner_image, DEPART_DATE, member, privacy
-	  					FROM planner
+	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member,c.flag_image
+	  					FROM planner p, city c, route r
 	  				
-										 where	planner_writer = #{userCode}
-									
+										 where	p.planner_writer = #{userCode}
+									and  r.city_Name =c.city_name
+									and p.planner_code=r.planner_code
 	  					 ORDER BY planner_code DESC 
 	  						) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
@@ -121,12 +122,12 @@ SELECT *
 	  					<choose>
 	  					<!-- 검색어가 없는 경우 route 테이블 조인 no  -->
 	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
-	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member,u.profile_img,u.nickname
 	  					FROM planner p, users u 
 	  					</when>
 	  					<!-- 검색어가 있는  경우 route 테이블 조인  -->
 	  					<when test="search.searchKeyword != null or search.searchKeyword !=''">
-	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname, r.city_name
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, u.profile_img,u.nickname, r.city_name
 	  					FROM planner p, users u	, route r 
 	  					</when>
 	  					</choose>
@@ -179,7 +180,7 @@ SELECT *
 	
 	<select  id="getTotalCount" parameterType="map" resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT planner_code, planner_name, planner_image, DEPART_DATE, member, privacy
+	  	FROM(	SELECT planner_code, planner_name, planner_image, DEPART_DATE, member
 	  				FROM planner
 						where	planner_writer = #{userCode}
 	  					order by planner_code DESC
@@ -191,12 +192,12 @@ SELECT *
 	  	FROM (	<choose>
 	  					<!-- 검색어가 없는 경우 route 테이블 조인 no  -->
 	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
-	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member,  u.profile_img,u.nickname
 	  					FROM planner p, users u 
 	  					</when>
 	  					<!-- 검색어가 있는  경우 route 테이블 조인  -->
 	  					<when test="search.searchKeyword != null or search.searchKeyword !=''">
-	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, p.privacy, u.profile_img,u.nickname, r.city_name
+	 					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member, u.profile_img,u.nickname, r.city_name
 	  					FROM planner p, users u	, route r 
 	  					</when>
 	  					</choose>

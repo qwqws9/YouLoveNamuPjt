@@ -153,11 +153,11 @@ margin:0 auto
 		  
 		<br/> 
 		
-<div class="col-md-10 col-lg-12" >
+<%-- <div class="col-md-10 col-lg-12" >
 <div class="row">
    <div class="col-md-2"></div>
       <div class="col-md-2">
-		        <label for="member" > 공개여부 </label>
+		        <label for="privacy " > 공개여부 </label>
 		        	   </div>
 		    <div class="col-md-4">
 		    <select class="custom-select mr-sm-2" id="privacy " name="privacy " >
@@ -183,7 +183,7 @@ margin:0 auto
 		  </div>
 		     </div>
 		  
-		<br/> 
+		<br/>  --%>
 		<div class="col-md-10 col-lg-12" >
 <div class="row">
    <div class="col-md-2"></div>
