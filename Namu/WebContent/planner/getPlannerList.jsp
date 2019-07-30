@@ -55,7 +55,9 @@
 </head>
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-	
+		
+		
+		
 	<div class="wrap">
 		<h2 class="wallet_title"><span>내 플래너 목록</span></h2>
 		

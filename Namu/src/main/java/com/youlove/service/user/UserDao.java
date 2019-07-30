@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.youlove.service.domain.Friend;
 import com.youlove.service.domain.Pay;
+import com.youlove.service.domain.Police;
 import com.youlove.service.domain.User;
 
 
@@ -31,5 +32,10 @@ public interface UserDao {
 	
 	public int inviteUser(Friend friend) throws Exception;
 	
+	public int addPolice(Police police) throws Exception;
+	
+	public List<Police> getPoliceList() throws Exception;
+	
+	public int updatePolice(Police police) throws Exception;
 	
 }

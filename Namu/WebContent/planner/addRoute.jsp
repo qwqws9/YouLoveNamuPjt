@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html> 
-<head> 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+   <jsp:include page="/layout/head.jsp" />
 	<!-- bootstrap -->
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -15,10 +14,8 @@
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 	 
 	 <!--  map -->
-	 <script async defer
-    src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
-	  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwQUku8IvfTgFKI9lhoM4tUIHPw8baa-4&libraries=places"></script>
+	 <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
+	
 	 <!-- Font Awesome  -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	
@@ -109,7 +106,7 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
       <div class="col-md-4">
 		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
 		  
-		      <button type="button" class="btn btn-default"  > 다음 단계  </button>
+		      <button type="button" class="btn btn-default"  id="save"> 다음 단계  </button>
 		      </div></div></div>
 	<script type="text/javascript">	
 	
@@ -120,7 +117,7 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
 		
 	
 	$(function(){
-    $("button").on("click",function(){    	
+    $("#save").on("click",function(){    	
     	fncAddRoute();    	
     });
 	

@@ -74,27 +74,16 @@ public class PlannerController {
 			return "redirect:/user/loginView.jsp";
 		}
 		
+		
 		//String path="//Users//minikim//eclipse-workspace//YouLovePlanMini2//WebContent//resources//images//plannerImage";
 		//String path="//Users//minikim//git//YouLovePlanMini//WebContent//resources//images//plannerImage";
 		
 //		String fileName=file.getOriginalFilename();
-		
 		String fileName = FileNameUUId.convert(file, "planner", request);
-		planner.setPlannerImage(fileName);
-//		FileOutputStream fileOutputStream;
 		
-//		try {
-//			//nf.createNewFile();
-//			//fileOutputStream= new FileOutputStream(path+"\\"+fileName);
-//			fileOutputStream= new FileOutputStream(path+"//"+fileName);
-//			fileOutputStream.write(file.getBytes());
-//			fileOutputStream.close();
-//		}
-//		catch(FileNotFoundException e) {
-//			e.printStackTrace();
-//		}catch(IOException e) {
-//			e.printStackTrace();
-//		}	
+		
+		planner.setPlannerImage(fileName);
+
 		
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
 		
@@ -227,9 +216,9 @@ public class PlannerController {
 		
 	System.out.println("PlannerRestController------------------getPlannerList");
 	 
-		int pageUnit = 30;
-		int pageSize = 30;
-		
+		int pageUnit =20;
+		int pageSize =1000;
+//		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}

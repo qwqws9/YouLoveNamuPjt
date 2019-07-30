@@ -86,7 +86,7 @@
 										    <c:if test="${user.role eq 'admin' }">
 										    <div class="dropdown-divider"></div>
 										    <a class="dropdown-item" href="/user/getUserList">전체회원 조회</a>
-										    <a class="dropdown-item" href="#">신고목록 조회</a>
+										    <a class="dropdown-item" href="/user/getPoliceList">신고목록 조회</a>
 										    </c:if>
 										    <div class="dropdown-divider"></div>
 										    <a class="dropdown-item" href="/user/logout">로그아웃</a>

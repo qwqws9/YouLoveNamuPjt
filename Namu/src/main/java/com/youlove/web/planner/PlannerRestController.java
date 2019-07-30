@@ -6,18 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youlove.service.domain.Schedule;
@@ -40,20 +36,22 @@ public class PlannerRestController {
 	@RequestMapping(value = "json/getAllPlannerList" ,method = RequestMethod.POST)
 	public Map<String, Object> getAllPlannerList( @RequestBody Search search ) throws Exception {
 		
-		System.out.println("PlannerRestController------------------getPlannerList");
+		System.out.println("PlannerRestController------------------getPlannerList:post ");
 		
 		search.setPageSize(3);
 		System.out.println(search);
 				
 		Map<String, Object> map = plannerService.getAllPlannerList(search);
+		
 		String message = "ok";
+		
 		List<Planner> list = (List<Planner>) map.get("list");
 		if(list.size()<1) {
 			message = "no";
 		}
 		map.put("message", message);
 		System.out.println(map);		
-		
+		System.out.println("message????????????????"+message);
 		return map;
 	}
 	
@@ -146,8 +144,8 @@ public class PlannerRestController {
 	        start = ((Route) rlist.get(i)).getStartDate();
 	        end = ((Route) rlist.get(i)).getEndDate();
 	        int cityOrder=((Route) rlist.get(i)).getCityOrder();
-	        String allDay="true";
-	        
+//	        String allDay="true";
+//	        
 	        //hard coding...... 방법 알아보기.
 	        if(cityOrder==1){color="#CCCC66";}
 	        if(cityOrder==2){color="#66CCFF";}
@@ -164,7 +162,6 @@ public class PlannerRestController {
 	        map.put("end", end);
 	        map.put("color", color);
 	        map.put("id",cityOrder);
-	        map.put("allDay",allDay);
 	        result.add(map);           
 	     	}
        
@@ -190,7 +187,7 @@ public class PlannerRestController {
 	@RequestMapping( value="getScheduleList", method=RequestMethod.POST) 
 	public  List<Map<String, Object>> getScheduleList(HttpSession session) throws Exception{
 	
-	System.out.println("PlannerRestController------------------getScheduleList");
+	System.out.println("PlannerRestController------------------getScheduleList :post");
 	
 	//plannerCode 받아오기
 	int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();

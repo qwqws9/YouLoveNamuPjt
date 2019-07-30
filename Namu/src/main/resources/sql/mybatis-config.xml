@@ -20,6 +20,7 @@
 		<typeAlias alias="pay" type="com.youlove.service.domain.Pay" />
 		<typeAlias alias="hotel" type="com.youlove.service.domain.Hotel" />
 		<typeAlias alias="timeline" type="com.youlove.service.domain.Timeline" />
+		<typeAlias alias="police" type="com.youlove.service.domain.Police" />
 		<typeAlias alias="wallet" type="com.youlove.service.domain.Wallet" />
 		<!-- 중현 -->
 		<typeAlias alias="community" type="com.youlove.service.domain.Community" />
