@@ -14,5 +14,6 @@ public interface LikeDao {
 	
 	public int checkLike(Map<String,Object> map) throws Exception;
 	
+	public int countLike(Like like) throws Exception;
 
 }

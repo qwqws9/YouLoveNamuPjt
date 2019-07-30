@@ -16,12 +16,13 @@
 	<script>
 	//채팅 팝업
 	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
-	var url = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
+	var chat = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
+	var chatbot = "../chatbot/chatbot.jsp";
 	
 	function onChat(){
 		$(document).ready(function(){
 			$("#getChat").on("click", function(){
-				popup = window.open(url, "popup_chat", "width=450, height=700, location=no, resizable=no, left=1000, top=70")
+				popup = window.open(chat, "popup_chat", "width=450, height=700, location=no, resizable=no, left=1000, top=70")
 				/* popup = window.open(url, "popup_chat", "resizable")
 				popup.resizeTo(450,700);
 				popup.resizeBy(-100,-100); */
@@ -29,10 +30,23 @@
 		});
 	};
 	
+	function onChatbot(){
+		$(document).ready(function(){
+			$("#chat").on("click", function(){
+				popup = window.open(chatbot, "popup_chat", "width=400, height=430, location=no, left=1000, top=70")
+				/* popup = window.open(url, "popup_chat", "resizable")
+				popup.resizeTo(450,700);
+				popup.resizeBy(-100,-100); */
+			});
+		});
+	};
+	
+	
 	</script>
 </head>
 <body>
 <jsp:include page="../user/searchUser.jsp"></jsp:include>
+<jsp:include page="../guide/tourModal.jsp"></jsp:include>
 <input type="hidden" id="nodeUserCode" value="${user.userCode }">
 <input type="hidden" id="nodeNickname" value="${user.nickname }">
 <input type="hidden" id="nodeprofileImg" value="${user.profileImg }">
@@ -57,7 +71,7 @@
 					<br><br><br>
 				
 					<c:if test ="${empty user }"><!-- 로그인 전 -->
-						<div class="col-12 text-center" id="beforeLogin">
+						<div class="col-12 text-center" id="beforeLogin" style="padding-top: 20px;">
 							<div id="logingogo">
 							<a href="#">
 								<img src="/resources/images/profile/img_login.gif" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">
@@ -194,6 +208,16 @@
 										
 										
 										
+									</span>
+								</a>
+							</div>
+						</div>
+						
+						<div class="row"><!-- 채팅 -->
+							<div class="col-lg-12 text-left">
+								<a href="#">
+									<span class="chat">
+										<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="chat_img"  style="height: 60px;" onClick=onChatbot() id='chat'>
 									</span>
 								</a>
 							</div>

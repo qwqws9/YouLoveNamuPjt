@@ -26,8 +26,8 @@ public class TimelineDaoImpl implements TimelineDao{
 
 
 	@Override
-	public void addTimeline(Timeline timeline) throws Exception {
-		sqlSession.insert("TimelineMapper.addTimeline",timeline);
+	public int addTimeline(Timeline timeline) throws Exception {
+		return sqlSession.insert("TimelineMapper.addTimeline",timeline);
 	}
 
 

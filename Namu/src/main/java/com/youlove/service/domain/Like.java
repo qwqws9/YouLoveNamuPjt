@@ -9,6 +9,15 @@ public class Like {
 	private User likeName;
 	private int likeCount;
 	
+	public Like() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Like(int boardCode, int detailCode) {
+		this.boardCode = boardCode;
+		this.detailCode = detailCode;
+				
+	}
 	
 	public int getLikeCode() {
 		return likeCode;

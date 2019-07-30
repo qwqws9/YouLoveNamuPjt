@@ -46,7 +46,11 @@
 	 
 	 </select>
 	
-	
+	<select id="countLike" parameterType="like" resultType="int">
+		SELECT count(*) 
+		FROM likes
+		WHERE BOARD_CODE = #{boardCode} and DETAIL_CODE = #{detailCode}
+	</select>
 	
 	
 	

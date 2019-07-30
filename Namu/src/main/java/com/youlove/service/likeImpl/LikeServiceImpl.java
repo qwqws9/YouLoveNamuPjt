@@ -45,4 +45,9 @@ public class LikeServiceImpl implements LikeService {
 		return res;
 	}
 
+	@Override
+	public int countLike(Like like) throws Exception {
+		return likeDao.countLike(like);
+	}
+
 }

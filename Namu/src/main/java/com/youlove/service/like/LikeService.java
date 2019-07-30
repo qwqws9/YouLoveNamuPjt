@@ -13,5 +13,7 @@ public void addLike(Like like) throws Exception;
 	public Like getCount(Like like) throws Exception;
 	
 	public boolean checkLike(Map<String,Object> map) throws Exception;
+	
+	public int countLike(Like like) throws Exception;
 
 }
