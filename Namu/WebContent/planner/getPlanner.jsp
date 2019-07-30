@@ -146,13 +146,11 @@
 						
 						<div class="row"><!-- 달력 -->
 							<!-- month -->
-							<div class="col-md-6 col-lg-6">
+							<div class="col-md-12">
 								<jsp:include page="/planner/getScheduleList2.jsp" />
 							</div>
 							<!-- list -->
-							<div class="col-md-6 col-lg-6">
-								<jsp:include page="/planner/getScheduleList3.jsp" />
-							</div>
+						
 						</div>
 						
 						<br>

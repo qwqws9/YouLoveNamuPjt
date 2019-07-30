@@ -42,8 +42,16 @@
 		
 		 $($("form")[1]).attr("method", "POST").attr("action","/planner/getAllPlannerList").submit();
 	}
-	
-	
+	$(function() {	
+	$('.wallet_box .square').on('click', function(e) {
+		var plannerCode = $(this).children(':eq(0)').val();
+		
+		if(plannerCode != null && plannerCode != '' && plannerCode != 0){
+			
+				self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
+		}
+	}); 
+	}); 
 $(function() {	
 	/* $('#searchKeyword').on("keypress", function(event){
 		if(event.keyCode == '13'){
@@ -86,6 +94,7 @@ $(function() {
 		
 	 $(window).on("scroll" , function(){
 			if($(window).scrollTop() == $(document).height() - $(window).height()){
+			console.log( $(document).height());
 				if(event == true){
 					return;
 				}else{
@@ -108,12 +117,12 @@ $(function() {
 									"Content-Type" : "application/json"
 								},
 								success : function(JSONData) {
-									
+									console.log( $(document).height());
 									if(JSONData.message=="ok"){
 										
 										$.each(JSONData.list, function( index, planner){
 											displayValue = "	<div class='square'>"	
-													+"	<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"'/>"
+													+"	<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"'>"
 															
 															+"<div style='background-image: url(/resources/images/planner/'"+planner.plannerImage+"'>"
 															+"<div><div class='plan_name text_shadow' id='plannerName'>"+planner.plannerName+"</div>"
@@ -170,7 +179,7 @@ $(function() {
 						        }
 ////////////////////////
 				}); 
-	$("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(request, response){
+	/* $("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(request, response){
 		$.ajax(
 				{
 					url : "/planner/json/getAllPlannerList" ,
@@ -195,10 +204,10 @@ $(function() {
 		                }
 		            });
 		   
-////////////////////////
+
 
 		
-});
+}); */
 	
 });
 		/////////////////////////////////////////////////
@@ -206,25 +215,27 @@ $(function() {
 	
 	////////////////////////////////////////////////////////////////////////////
 	$(function() {
-	
-		$('.wallet_box .square').on('click', function(e) {
-			var plannerCode = $(this).children(':eq(0)').val();
-			
-			if(plannerCode != null && plannerCode != '' && plannerCode != 0){
-				
-					self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
-			}
-		});
+	/* 
+		*/
 		
-	/* 	$("button.btn.btn-default").on("click", function() {
-			fncGetList(1);
-			});
-		 */
-/*  		$("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(){
-			fncGetList(1);
-		});  */
-		 
- 	
+/* 	 	$("button.btn.btn-default").on("click", function() {
+			//fncGetList(1);
+			$('section').load('/planner/getAllPlannerList section', {searchKeyword:$('#searchKeyword').val().trim(), searchCondition:$('#searchCondition').val().trim(), searchCondition2:$('#searchCondition2').val().trim()});
+		}); */
+	 	$(document).on('click','button.btn.btn-default',function(){
+ 			$('section').load('/planner/getAllPlannerList section', {searchKeyword:$('#searchKeyword').val().trim(), searchCondition:$('#searchCondition').val().trim(), searchCondition2:$('#searchCondition2').val().trim()});
+	 	});
+	 	
+	 	$(document).on('change','select[name="searchCondition"],select[name="searchCondition2"]',function(){
+ 			$('section').load('/planner/getAllPlannerList section', {searchKeyword:$('#searchKeyword').val().trim(), searchCondition:$('#searchCondition').val().trim(), searchCondition2:$('#searchCondition2').val().trim()});
+	 	});
+ 		/* $("select[name='searchCondition'],select[name='searchCondition2']").on("change", function(){
+ 			$('section').load('/planner/getAllPlannerList section', {searchKeyword:$('#searchKeyword').val().trim(), searchCondition:$('#searchCondition').val().trim(), searchCondition2:$('#searchCondition2').val().trim()});
+		}); */
+	 /* 	$(document).on('click','.wallet_box .square',function(){
+ 			$('section').load('/planner/getPlanner?plannerCode='+$(this).children(':eq(0)').val().trim());
+	 	});
+ 	 */
 	});
 	
 	
