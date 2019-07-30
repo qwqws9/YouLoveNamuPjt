@@ -115,7 +115,7 @@ function convert(unit) {
 		    },
 			success	: function(JSONData, status) {
 				//console.log(status);
-				//console.log('JSONData :: ' + JSONData.exchangeRate);
+				console.log('JSONData :: ' + JSONData.exchangeRate);
 				
 				$('#exchange_result').text(makeComma(JSONData.exchangeRate));
 				$('#exchange_rate').val(JSONData.exchangeRate);
@@ -162,7 +162,7 @@ function addAjax(form) {
 				$('.pop_wrap_add').html('');
 			
 				//getListAjax(1);
-				walletDetailList();
+				walletDetailList(1);
 			}
 		}
 	});
@@ -307,14 +307,6 @@ function getAjax(walletDetailCode, way) {
 					list.find('.input_money > div:eq(1)').html('<i class="fas fa-won-sign"></i>&nbsp;' + makeComma(JSONData.krwPrice));
 				}
 				
-				if(JSONData.payer != null && JSONData.payer != 0){
-					list.find('.top_input').append(
-						'<div class="input_payer">' +
-							'<span>결제자</span><span>' + JSONData.payer.nickname + '</span>' +
-						'</div>'
-					);
-				}
-				
 				if(JSONData.part == 0){
 					list.find('.top_input').after(
 						'<div class="what_unit">' +
@@ -395,4 +387,40 @@ function deleteAjax(walletDetailCode) {
 			}
 		}
 	});
+}
+
+//getWallet Business Logic
+function getAjax(walletDetailCode) {
+	//console.log('walletDetailCode :: ' + walletDetailCode);
+	
+	var result;
+	
+	$.ajax({
+		url			: '/wallet/json/getWallet/' + walletDetailCode,
+		method		: 'GET',
+		async		: false,
+		headers		: {
+			'Accept'		: 'Application/json',
+			'Content-Type'	: 'Application/json'
+		},
+		error		: function(request, status, error) {
+			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+		},
+		success		: function(JSONData, status) {
+			//console.log(status);
+			//console.log('JSONData :: ' + JSONData.walletDetailCode);
+			
+			//console.log('JSONData 타입 :: ' + typeof JSONData);
+			
+			result = JSONData;
+			//console.log('JSON.stringify(JSONData) 타입 :: ' + typeof result);
+		}
+	});
+	
+	// ajax 내부에서 return 사용시 undefined 되므로 동기 방식으로  ajax 사용 후 외부에서 return 사용
+	if(way == 'update'){
+		//console.log('JSON.stringify(JSONData) :: ' + result);
+		
+		return result;
+	}
 }

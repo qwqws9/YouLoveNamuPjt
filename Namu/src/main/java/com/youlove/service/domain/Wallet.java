@@ -2,6 +2,7 @@ package com.youlove.service.domain;
 
 public class Wallet {
 	
+	///Field
 	private int walletDetailCode;
 	private int walletCode;
 	private String part;
@@ -16,21 +17,21 @@ public class Wallet {
 	private double exchangeRate;
 	private String category;
 	private String walletImage;
-	private User payer;
 	
-	
+	///Constructor
 	public Wallet() {
-		// TODO Auto-generated constructor stub
 	}
-	public Wallet(String part) {
+	public Wallet(int walletCode, String part) {
+		this.walletCode = walletCode;
 		this.part = part;
 	}
-	
-	public Wallet(String part,String category) {
+	public Wallet(int walletCode, String part, String category) {
+		this.walletCode = walletCode;
 		this.part = part;
 		this.category = category;
 	}
 	
+	///Method(getter/setter)
 	public int getWalletDetailCode() {
 		return walletDetailCode;
 	}
@@ -129,21 +130,13 @@ public class Wallet {
 		this.walletImage = walletImage;
 	}
 	
-	public User getPayer() {
-		return payer;
-	}
-	public void setPayer(User payer) {
-		this.payer = payer;
-	}
-	
 	@Override
 	public String toString() {
 		return "WalletVO : [walletDetailCode]" + walletDetailCode + " [walletCode]" + walletCode
 				+ " [part]" + part + " [moneyUnit]" + moneyUnit + " [expression]" + expression
 				+ " [price]" + price + " [krwPrice]" + krwPrice + " [regDate]" + regDate
 				+ " [item]" + item + " [content]" + content + " [payOption]" + payOption
-				+ " [exchangeRate]" + exchangeRate + " [category]" + category
-				+ " [walletImage]" + walletImage + " [payer]" + payer;
+				+ " [exchangeRate]" + exchangeRate + " [category]" + category + " [walletImage]" + walletImage;
 	}
 	
 }

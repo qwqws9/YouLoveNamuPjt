@@ -19,7 +19,6 @@
 		<result property="exchangeRate"		column="EXCHANGE_RATE"	jdbcType="NUMERIC" />
 		<result property="category"			column="CATEGORY"		jdbcType="CHAR" />
 		<result property="walletImage"		column="W_IMAGE"		jdbcType="VARCHAR" />
-		<result property="payer.userCode"	column="PAYER"			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- walletListView.jsp -->
@@ -51,15 +50,15 @@
 	<insert id="addWallet" parameterType="wallet">
 		INSERT
 		INTO wallet_detail ( w_detail_code, w_code, part, money_unit, expression, price, krw_price,
-							 reg_date, item, content, pay_option, exchange_rate, category, w_image, payer )
+							 reg_date, item, content, pay_option, exchange_rate, category, w_image )
 		VALUES ( seq_w_detail_code.nextval, #{walletCode}, #{part}, #{moneyUnit}, #{expression},
 				 #{price}, #{krwPrice}, #{regDate}, #{item:VARCHAR}, #{content:VARCHAR}, #{payOption},
-				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR}, #{payer.userCode:NUMERIC} )
+				 #{exchangeRate:NUMERIC}, #{category}, #{walletImage:VARCHAR} )
 	</insert>
 	
 	<select id="getWallet" parameterType="int" resultMap="walletSelectMap">
 		SELECT w_detail_code, w_code, part, money_unit, expression, price, krw_price,
-			   reg_date, item, content, pay_option, exchange_rate, category, w_image, payer
+			   reg_date, item, content, pay_option, exchange_rate, category, w_image
 		FROM wallet_detail
 		WHERE w_detail_code = #{value}
 	</select>
@@ -77,8 +76,7 @@
 			pay_option = #{payOption},
 			exchange_rate = #{exchangeRate:NUMERIC},
 			category = #{category},
-			w_image = #{walletImage:VARCHAR},
-			payer = #{payer.userCode:NUMERIC}
+			w_image = #{walletImage:VARCHAR}
 		</set>
 	  	WHERE w_detail_code = #{walletDetailCode}
 	</update>
@@ -112,18 +110,21 @@
 			   ORDER BY reg_date DESC, w_detail_code DESC ) countTable
 	</select>
 	
-	<select id="outIncomeSum" parameterType="wallet" resultType="Long">
-		select sum(krw_price) from wallet_detail where part=#{part}
-		<if test="category != null">
-		 and category = #{category}
-		 </if>
+	<select id="totalComes" parameterType="wallet" resultType="double">
+		SELECT SUM(krw_price)
+		FROM wallet_detail
+		WHERE w_code = #{walletCode}
+			  AND part = #{part}
+			  AND category <![CDATA[ < ]]> '9'
 	</select>
 	
-	<select id="outChartTotal" resultMap="walletSelectMap">
-	 select sum(krw_price) KRW_PRICE ,category
-	 from wallet_detail
-	 where part = 1
-	 group by category
+	<select id="totalChart" parameterType="int" resultMap="walletSelectMap">
+		SELECT SUM(krw_price), category
+		FROM wallet_detail
+		WHERE w_code = #{value}
+			  AND part = 1
+			  AND category <![CDATA[ < ]]> '9'
+		GROUP BY category
 	</select>
 	
 </mapper>
