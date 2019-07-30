@@ -126,12 +126,15 @@ CREATE TABLE TIMELINE (
 
 CREATE TABLE POLICE ( 
    POLICE_CODE          NUMBER(10)   ,
-   POLICE_CONTENT           VARCHAR2(100)   ,
-   POLICE_TIME          DATE   ,
-   FROM_POILCE          VARCHAR2(100)   ,
-   TO_POLICE             VARCHAR2(100)   ,
-   POLICE_DETAIL           NUMBER(10)   ,
-   
+   FROM_USER           NUMBER(10)   ,
+   TO_USER              NUMBER(10)   ,
+   POLICE_BOARDCODE          NUMBER(10)   ,
+   POLICE_DETAILCODE             NUMBER(10)   ,
+   POLICE_OPTION           VARCHAR2(1000)   ,
+   POLICE_CONTENT          VARCHAR2(1000),
+   POLICE_DATE              VARCHAR2(1000),
+   PROCESSING               CHAR(1),
+    
    PRIMARY KEY(POLICE_CODE)
 );
 
@@ -202,7 +205,7 @@ CREATE TABLE planner (
 CREATE TABLE route ( 
    route_code                  NUMBER(10)      NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
-   planner_code NUMBER(10) REFERENCES planner(planner_code),
+   planner_code NUMBER(10) not null,
    city_name      VARCHAR2(100),
    stay_day                      NUMBER(2),
    city_order                NUMBER(2),
@@ -210,14 +213,16 @@ CREATE TABLE route (
    lng 							VARCHAR2(100),
    start_Date                     date,
    end_Date                     date,
-  
-   PRIMARY KEY(route_code)
+    CONSTRAINT route_route_code_pk PRIMARY KEY ( route_code ),
+    CONSTRAINT route_planner_code_fk FOREIGN KEY ( planner_code )
+        REFERENCES planner ( planner_code)
+            ON DELETE CASCADE
 );
 
 CREATE TABLE schedule( 
    sche_code               NUMBER(10)          NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
-   planner_code NUMBER(10)  NOT NULL REFERENCES planner(planner_code),
+   planner_code NUMBER(10)  NOT NULL ,
    sche_day DATE,
    time_hour VARCHAR2(10),
    time_min VARCHAR2(10),
@@ -226,7 +231,10 @@ CREATE TABLE schedule(
    SCHE_detail VARCHAR2(2000),
    accomodation VARCHAR2(200),
    color VARCHAR2(10),
-   PRIMARY KEY(sche_code)
+   CONSTRAINT schedule_sche_code_pk PRIMARY KEY (sche_code ),
+    CONSTRAINT schedule_planner_code_fk FOREIGN KEY ( planner_code )
+        REFERENCES planner ( planner_code)
+            ON DELETE CASCADE
 );
 
 CREATE TABLE groups ( 

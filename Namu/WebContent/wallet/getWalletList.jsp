@@ -63,14 +63,14 @@
 				<div class="right_table">
 					<div class="total_table clear">
 						<div class="total_budget">
-							<span>총 예산</span><span>€ 2500.00</span>
+							<span>총 예산</span><span><fmt:formatNumber value="${totalIncome}" pattern="#,###.##" /></span>
 						</div>
 						<div class="total_price">
 							<div class="total_floating">
-								<span>쓴 돈</span><span>€ 2500.00</span>
+								<span>쓴 돈</span><span><fmt:formatNumber value="${totalExpenditure}" pattern="#,###.##" /></span>
 							</div>
 							<div class="total_floating">
-								<span>남은 돈</span><span>€ 2500.00</span>
+								<span>남은 돈</span><span><fmt:formatNumber value="${balance}" pattern="#,###.##" /></span>
 							</div>
 						</div>
 					</div><!-- //total_table -->
@@ -115,7 +115,7 @@
 													<c:if test="${wallet.moneyUnit eq 'GBP'}"><i class="fas fa-pound-sign"></i></c:if>
 													<c:if test="${wallet.moneyUnit eq 'CZK'}">CZK</c:if>
 													<c:if test="${wallet.moneyUnit eq 'HUF'}">HUF</c:if>
-													<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+													<fmt:formatNumber value="${wallet.price}" pattern="#,###.##" />
 													<c:if test="${wallet.payOption eq 2}">
 														&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
 													</c:if>
@@ -123,7 +123,7 @@
 												<span>
 													<c:if test="${wallet.moneyUnit ne 'KRW'}">
 														<c:if test="${! empty wallet.krwPrice}">
-															<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
+															<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.##" />
 														</c:if>
 													</c:if>
 												</span>
@@ -138,7 +138,7 @@
 													<c:if test="${wallet.moneyUnit eq 'GBP'}"><i class="fas fa-pound-sign"></i></c:if>
 													<c:if test="${wallet.moneyUnit eq 'CZK'}">CZK</c:if>
 													<c:if test="${wallet.moneyUnit eq 'HUF'}">HUF</c:if>
-													<fmt:formatNumber value="${wallet.price}" pattern="#,###.00" />
+													<fmt:formatNumber value="${wallet.price}" pattern="#,###.##" />
 													<c:if test="${wallet.payOption eq 2}">
 														&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
 													</c:if>
@@ -146,7 +146,7 @@
 												<span>
 													<c:if test="${wallet.moneyUnit ne 'KRW'}">
 														<c:if test="${! empty wallet.krwPrice}">
-															<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.00" />
+															<i class="fas fa-won-sign"></i>&nbsp;<fmt:formatNumber value="${wallet.krwPrice}" pattern="#,###.##" />
 														</c:if>
 													</c:if>
 												</span>

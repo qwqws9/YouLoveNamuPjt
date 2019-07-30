@@ -136,36 +136,38 @@ SELECT *
 	  					p.planner_writer =u.user_code
 	  					
 	  					<choose>
-	  					<!-- 검색어가 없는 경우 / 검색조건이 있는 경우  -->
+	  					<!-- 검색어가 없는 경우  + 검색조건  -->
 	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
-	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">
-	  			
+	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">		
 	  					AND p.member =#{search.searchCondition} 
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					  search.searchCondition2 >=10 ">
+	  					AND SUBSTR(p.depart_date ,5,2) =#{search.searchCondition2} 
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					 9>=search.searchCondition2  ">
+	  					AND SUBSTR(p.depart_date ,6,1)=#{search.searchCondition2} 
 	  					</if>
 	  			       </when>
 	  					
-	  					<!-- 검색어가 있는 경우  -->
+	  					<!-- 검색어가 있는 경우 + 검색조건  -->
 	  					<when test="search.searchKeyword != null or search.searchKeyword !=''" >
 	  					AND p.planner_code= r.planner_code	
 	  					AND r.city_name =#{search.searchKeyword} 
 	  					<if test ="search.searchCondition!= null  and  search.searchCondition != 0 ">
 	  					AND p.member =#{search.searchCondition}  
-	  				
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					  search.searchCondition2 >=10 ">
+	  					AND SUBSTR(p.depart_date ,5,2) =#{search.searchCondition2} 
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					 9>=search.searchCondition2  ">
+	  					AND SUBSTR(p.depart_date ,6,1)=#{search.searchCondition2} 
 	  					</if>
 	  					</when>
 	  					</choose>
-						
-						
-						<!-- 
-	  				<if test="search.searchKeyword != null  and search.searchCondition == 0">		
-	  					AND r.city_name =#{search.searchKeyword} 
-	  				</if>  
-	  				<if test="search.searchKeyword == null and search.searchCondition!= null  and  search.searchCondition != 0 ">
-	                   AND p.member =#{search.searchCondition} 
-				     </if>  -->
-	                      <!-- 	<if test="planner.searchMonth!= null  and  planner.searchMonth != 0 ">
-	                   	AND SUBSTR(p.depart_date ,5,2) =#{planner.searchMonth} 
-				     	</if>  	 -->
 	  					 </where>
 	  					 ORDER BY p.planner_code DESC 
 	  						) inner_table
@@ -204,29 +206,39 @@ SELECT *
 	  					p.planner_writer =u.user_code
 	  					
 	  					<choose>
-	  					<!-- 검색어가 없는 경우 / 검색조건이 있는 경우  -->
+	  					<!-- 검색어가 없는 경우  + 검색조건  -->
 	  					<when test="search.searchKeyword == null or search.searchKeyword ==''">
-	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">
+	  					<if test= "search.searchCondition!= null  and  search.searchCondition != 0 ">		
 	  					AND p.member =#{search.searchCondition} 
 	  					</if>
-	  					<if test= "planner.searchCondition!= null  and  search.searchCondition != 0 ">
-	  					AND p.member =#{search.searchCondition} 
-	  					</if> 
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					  search.searchCondition2 >=10 ">
+	  					AND SUBSTR(p.depart_date ,5,2) =#{search.searchCondition2} 
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					 9>=search.searchCondition2  ">
+	  					AND SUBSTR(p.depart_date ,6,1)=#{search.searchCondition2} 
+	  					</if>
 	  			       </when>
 	  					
-	  					<!-- 검색어가 있는 경우  -->
+	  					<!-- 검색어가 있는 경우 + 검색조건  -->
 	  					<when test="search.searchKeyword != null or search.searchKeyword !=''" >
 	  					AND p.planner_code= r.planner_code	
 	  					AND r.city_name =#{search.searchKeyword} 
 	  					<if test ="search.searchCondition!= null  and  search.searchCondition != 0 ">
 	  					AND p.member =#{search.searchCondition}  
-	  				
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					  search.searchCondition2 >=10 ">
+	  					AND SUBSTR(p.depart_date ,5,2) =#{search.searchCondition2} 
+	  					</if>
+	  					<if test= "search.searchCondition2!= null  and  search.searchCondition2 != 0 and
+	  					 9>=search.searchCondition2  ">
+	  					AND SUBSTR(p.depart_date ,6,1)=#{search.searchCondition2} 
 	  					</if>
 	  					</when>
 	  					</choose>
-						
-						
-	  					</where>
+	  					 </where>
 	  					 ORDER BY planner_code DESC 
 	  						) countTable 	 <!-- 
 			  	 SELECT COUNT(*)

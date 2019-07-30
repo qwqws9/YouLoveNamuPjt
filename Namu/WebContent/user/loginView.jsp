@@ -13,6 +13,11 @@
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link rel="stylesheet" href="/resources/css/common.css" >
 <script src="/resources/javascript/getProfile.js"></script>
+ <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+ <script src="/resources/javascript/googleLogin.js"></script>
+ <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+ <script src="/resources/javascript/kakaoLogin.js"></script>
+ 
  
 </head>
 
@@ -53,7 +58,10 @@
 		  				</div>
 		  				<br>
 		  				<input type="button"  class="btn btn-lg-6 btn-primary btn-block" id="findInfo" value="아이디/비밀번호찾기">
-		  				
+		  				<input type="button"  class="btn btn-lg-6 btn-danger btn-block" id="googleLogin" value="구글 로그인">
+		  				<input type="button"  class="btn btn-lg-6 btn-warning btn-block" id="kakaoLogin" value="카카오톡 로그인">
+<!-- 		  				<button  class="btn btn-lg-6"><img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" /></button> -->
+<!-- 		  				<button class="btn btn-lg-6"><img src="/resources/images/profile/googleLogin.png" /></button> -->
 				</form>
 			</div>
 		</div>
@@ -68,6 +76,9 @@
 <script type="text/javascript">
 	$(function(){
 		
+		$(document).on('click','#kakaoLogin',function(){
+			loginWithKakao();
+		})
 		
 		$('#findInfo').on('click',function(){
 			var url = '/user/findInfo';

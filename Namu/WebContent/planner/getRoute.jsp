@@ -7,75 +7,35 @@
 
 </head> 
 <body>
-
-<%-- <label class="sr-only" for="searchKeyword"> 도시명 </label> 
-<input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
-value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
- --%>
-<form name="multiForm" id="multiForm" action="/planner/addRoute" method="post">
-	<div class="container">
-		<div class="row">
-	  	<div class="col-md-12 col-lg-12">
-<table border="1" id="list_table">
-	<colgroup>
-		<col style="width:70px;">
-		<col style="width:200px;">
-		<col style="width:300px;">
-		<col style="width:200px;">
-	</colgroup>
-
-	<thead>
-		<tr>
-			<th>No</th>
-			<th>City </th>
-			<th>lat</th>
-			<th>lng</th>
-			<th>몇박  </th>
-			<th>Action</th>
-		</tr>
-	</thead>
-	<tbody>
-
-	</tbody>
-
-	    	 </table>
-	    	 </div>
-	    	 </div>
-	    	 </div>
-	    	</form>
-		<script type="text/javascript">	
+<script type="text/javascript">	
 
 		
-$('#list_table').on("click", ".deletebtn", function () {
-
-  // this == a의 부모의 부모는 tr태그
-  	var deletebtn = $(this);
-				
-		var tr = deletebtn.parent().parent();
-			var td = tr.children();
-			var no = td.eq(0).text();
-			
-			alert(no);
-			  $(this).parent().parent().remove();
-			for (var i = 0; i < myMarkers.length; i++) {
-	            if (myMarkers[i].id == no) {                
-	                myMarkers[i].setMap(null);
-	              
-	                myMarkers.splice(i, 1);
-	                array.splice(i, 1);
-	                poly.getPath().removeAt(i)
-	                return;
-	            	}
-	            }
-			}) 
 </script>
-<div class="container">
-<div class="row">
-<div class="col-md-12 col-lg-12">
-  <div id="map" style="width: 1000px; height: 700px;"></div>
-  </div>
-  </div>
-  </div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-lg-8">
+	  		<div id="map" style="width: 100%; height: 700px;">
+			</div>
+		</div>
+		
+		<div class="col-md-4 col-lg-4" style="border: 1px solid #A3DAFF; overflow: hidden; text-overflow: ellipsis; ">
+			<div class="where" id="where">
+				<div class="row text-center">
+					<div class="col-md-6 col-lg-6">
+						<strong style="font-size: 18px;">
+							<span>체류도시</span>
+						</strong>
+					</div>
+					<div class="col-md-6 col-lg-6">
+						<strong style="font-size: 18px;">
+							<span>체류기간</span>
+						</strong>
+					</div>
+				</div>
+			</div>
+  		</div>
+	</div>
+</div>  
 <!-- 
 	<div id="floating-panel">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
@@ -83,9 +43,6 @@ $('#list_table').on("click", ".deletebtn", function () {
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
     </div>  -->
   <script>
-  var locations = ['런던','파리','니스','프랑크푸르트','베를린','로마','베니스','바르셀로나','마드리드','부다페스트'];
-  var locationLat = ['51.5073509','48.856614','43.7101728','50.1109221','52.52000659999999','41.9027835','45.4408474','41.3850639','40.4167754','47.497912'];
-  var locationLng = ['-0.1277583','2.3522219','7.261953200000001','8.6821267','13.404954','12.4963655','12.3155151','2.1734035','-3.7037902','19.040235'];
     var route=[];
     var routeLat=[];
     var routeLng=[];
@@ -188,31 +145,34 @@ $('#list_table').on("click", ".deletebtn", function () {
 		},
         success:function(JSONData){
         	console.log(JSONData);   
-        	
   
         	var displayValue;
-        	   $(JSONData).each(function(data,value) {
-        		   
-            	displayValue += ('<tr>');                
-            	displayValue += ('<td>'+''+'</td>');
-            	displayValue += ('<td>'+value.city+'</td>');
-            	displayValue += ('<td>'+value.lat+'</td>');
-            	displayValue += ('<td>'+value.lng+'</td>');    
-            	displayValue += ('<td>'+"<select><option value='"+value.stayDay+"' selected='selected'>"+value.stayDay+"</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"+'</td>');
-            	  
-            	//displayValue += ('</tr>');                                    
-            /* //}); */});
-            //displayValue += ('</tbody>');
-            //displayValue += ('</table>');
-            $('#list_table' ).html(displayValue);
-        }
-    });          
+       	   $(JSONData).each(function(data,value) {
+       		
+       		$('#where').append('<hr><div class="row text-center">'+
+	           						'<div class="col-md-6 col-lg-6">'+
+	            						'<strong style="font-size: 18px;">'+
+	            						'<span>'+value.city+'</span>'+
+	            						'</strong>'+
+	            					'</div>'+
+	            					'<div class="col-md-6 col-lg-6">'+
+										'<strong style="font-size: 18px;">'+
+											'<span>'+value.stayDay+'</span>'+
+										'</strong>'+
+									'</div>'+
+	           					'</div>'
+	           					);
+           	  
+           	//$('#where').html(displayValue);
+        	});
+    	}
+	});
             
 	 alert(route);
    /* alert(locations); */ 
     
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 5,
+      zoom: 3,
       center: new google.maps.LatLng(48.864716, 2.349014),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControl: false,

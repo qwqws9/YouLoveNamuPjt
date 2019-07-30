@@ -43,20 +43,23 @@ public class WalletController {
 	@RequestMapping(value="getWalletListView", method=RequestMethod.GET)
 	public ModelAndView getWalletListView(HttpSession session) throws Exception{
 
-		System.out.println("/wallet/getWalletListView :: GET");
+		System.out.println("/wallet/getWalletListView ::: GET");
 		
 		int pageUnit = 30;
 		int pageSize = 30;
 		
 		Search search = new Search();
+		
 		search.setCurrentPage(1);
 		search.setPageSize(pageSize);
+		
 		System.out.println(search);
 		
 		int userCode = ((User)session.getAttribute("user")).getUserCode();
 		System.out.println(userCode);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("userCode", userCode);
 		map.put("search", search);
 		
@@ -65,9 +68,11 @@ public class WalletController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		modelAndView.addObject("today", DateFormat.today());
+		
 		modelAndView.setViewName("/wallet/getWalletListView.jsp");
 		
 		return modelAndView;
@@ -75,10 +80,10 @@ public class WalletController {
 	}
 	
 	// walletList.jsp
-	@RequestMapping("getWalletList")
+	@RequestMapping(value="getWalletList")
 	public ModelAndView getWalletList(@RequestParam(value="walletCode") int walletCode, @ModelAttribute Search search) throws Exception{
 
-		System.out.println("/wallet/getWalletList :: GET");
+		System.out.println("/wallet/getWalletList ::: GET / POST");
 		
 		int pageUnit = 5;
 		int pageSize = 5;
@@ -91,6 +96,7 @@ public class WalletController {
 		System.out.println(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("walletCode", walletCode);
 		map.put("search", search);
 		
@@ -99,8 +105,14 @@ public class WalletController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
+		
+		modelAndView.addObject("totalIncome", map.get("totalIncome"));
+		modelAndView.addObject("totalExpenditure", map.get("totalExpenditure"));
+		modelAndView.addObject("balance", map.get("balance"));
+		
 		modelAndView.setViewName("/wallet/getWalletList.jsp");
 		
 		return modelAndView;
