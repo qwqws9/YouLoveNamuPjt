@@ -348,14 +348,14 @@ CREATE TABLE wallet_detail (
 	expression					VARCHAR2(30)		NOT NULL,
 	price						NUMBER(15, 2)		NOT NULL,
 	krw_price					NUMBER(15, 2)		NOT NULL,
-	reg_date					VARCHAR2(20)		NOT NULL,
+	reg_date					VARCHAR2(15)		NOT NULL,
+	reg_time					VARCHAR2(10)		NOT NULL,
 	item						VARCHAR2(50),
 	content						VARCHAR2(150),
 	pay_option					CHAR(1)				DEFAULT 0,
 	exchange_rate				NUMBER(10, 2),
 	category					CHAR(1)				DEFAULT 0,
 	w_image						VARCHAR2(1000),
-	payer						NUMBER(10),
 	CONSTRAINT wallet_detail_w_detail_code_pk		PRIMARY KEY (w_detail_code),
     CONSTRAINT wallet_detail_w_code_fk				FOREIGN KEY (w_code)			REFERENCES wallet (w_code)
     ON DELETE CASCADE
@@ -501,7 +501,6 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
 
 
 commit;

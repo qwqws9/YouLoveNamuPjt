@@ -99,6 +99,12 @@ public class WalletRestController {
 		
 		System.out.println("/wallet/json/addWallet ::: POST");
 		
+		// 날짜, 시간 분리하여 저장
+		String str = wallet.getRegDate();
+		
+		wallet.setRegDate(str.substring(0, 10));
+		wallet.setRegTime(str.substring(11));
+		
 		if(!file.isEmpty() && file != null){
 			String fileName = FileNameUUId.convert(file, "wallet", request);
 			
@@ -129,6 +135,12 @@ public class WalletRestController {
 	public boolean updateWallet(@ModelAttribute("wallet") Wallet wallet, MultipartFile file, HttpServletRequest request) throws Exception{
 		
 		System.out.println("/wallet/json/updateWallet ::: POST");
+		
+		// 날짜, 시간 분리하여 저장
+		String str = wallet.getRegDate();
+		
+		wallet.setRegDate(str.substring(0, 10));
+		wallet.setRegTime(str.substring(11));
 		
 		if(!file.isEmpty() && file != null){
 			String fileName = FileNameUUId.convert(file, "wallet", request);
