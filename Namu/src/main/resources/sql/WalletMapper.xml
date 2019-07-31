@@ -124,6 +124,14 @@
 			   ORDER BY reg_date DESC, reg_time DESC, w_detail_code DESC ) countTable
 	</select>
 	
+	<select id="getRegDate" parameterType="int" resultMap="walletSelectMap">
+		SELECT reg_date
+		FROM wallet_detail
+		WHERE w_code = #{value}
+			  AND category <![CDATA[ < ]]> '9'
+		GROUP BY reg_date
+	</select>
+	
 	<select id="totalComes" parameterType="wallet" resultType="double">
 		SELECT NVL(wd.krw_price, 0)
 		FROM wallet w, ( SELECT SUM(krw_price) krw_price, w_code

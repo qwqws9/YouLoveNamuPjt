@@ -14,7 +14,6 @@ DROP TABLE party CASCADE CONSTRAINTS ;
 DROP TABLE message CASCADE CONSTRAINTS ;
 DROP TABLE wallet_detail CASCADE CONSTRAINTS ;
 DROP TABLE wallet CASCADE CONSTRAINTS ;
-DROP TABLE groups CASCADE CONSTRAINTS ;
 DROP TABLE planner CASCADE CONSTRAINTS ;
 DROP TABLE USERS CASCADE CONSTRAINTS ;
 DROP TABLE CITY CASCADE CONSTRAINTS ;
@@ -28,7 +27,6 @@ DROP SEQUENCE seq_w_detail_code;
 DROP SEQUENCE seq_planner_code;
 DROP SEQUENCE seq_route_code;
 DROP SEQUENCE seq_schedule_code;
-DROP SEQUENCE seq_group_code;
 DROP SEQUENCE seq_user_code;
 DROP SEQUENCE seq_timeline_code;
 DROP SEQUENCE seq_police_code;
@@ -52,7 +50,6 @@ CREATE SEQUENCE seq_w_detail_code           INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_planner_code          INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_route_code                INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_schedule_code            INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_group_code                INCREMENT BY 1 START WITH 1;
 --성용 시퀀스
 CREATE SEQUENCE seq_user_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_timeline_code                  INCREMENT BY 1 START WITH 1;
@@ -65,7 +62,11 @@ CREATE SEQUENCE seq_paylist_code                  INCREMENT BY 1 START WITH 1;
 
 
 
-
+CREATE TABLE chatbot(
+   KEYWORD          VARCHAR2(100),
+   KEYWORD_TYPE     CHAR(1),
+   ANSWER           VARCHAR2(1000)
+);
 
 CREATE TABLE users ( 
    USER_CODE              NUMBER(10) PRIMARY KEY   ,
@@ -201,7 +202,6 @@ CREATE TABLE planner (
    PRIMARY KEY(planner_code)
 );
 
-
 CREATE TABLE route ( 
    route_code                  NUMBER(10)      NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
@@ -237,16 +237,6 @@ CREATE TABLE schedule(
             ON DELETE CASCADE
 );
 
-CREATE TABLE groups ( 
-   group_code          NUMBER             NOT NULL,
-   planner_code NUMBER(2) REFERENCES planner(planner_code),
-   user_code1    NUMBER ,
-   user_code2    NUMBER ,
-   user_code3    NUMBER ,
-   user_code4    NUMBER ,
-   user_code5    NUMBER ,
-   PRIMARY KEY(group_code)
-);
 
 
 -------------------------------------------------------------중현
@@ -329,37 +319,37 @@ ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES u
 
 ---------------------------- 규리
 
-
 CREATE TABLE wallet ( 
-	w_code								NUMBER(10)					NOT NULL,
+	w_code							NUMBER(10)					NOT NULL,
 	planner_code						NUMBER(10)					NOT NULL,
 	CONSTRAINT wallet_w_code_pk			PRIMARY KEY (w_code),
-    CONSTRAINT wallet_planner_code_fk	FOREIGN KEY (planner_code)	REFERENCES planner (planner_code)
+	CONSTRAINT wallet_planner_code_fk			FOREIGN KEY (planner_code)			REFERENCES planner (planner_code)
 	ON DELETE CASCADE
 );
 
 
 
 CREATE TABLE wallet_detail ( 
-	w_detail_code				NUMBER(10)			NOT NULL,
-	w_code						NUMBER(10)			NOT NULL,
-	part						CHAR(1)				NOT NULL,
-	money_unit					VARCHAR2(30)		NOT NULL,
-	expression					VARCHAR2(30)		NOT NULL,
-	price						NUMBER(15, 2)		NOT NULL,
-	krw_price					NUMBER(15, 2)		NOT NULL,
-	reg_date					VARCHAR2(15)		NOT NULL,
-	reg_time					VARCHAR2(10)		NOT NULL,
-	item						VARCHAR2(50),
-	content						VARCHAR2(150),
-	pay_option					CHAR(1)				DEFAULT 0,
-	exchange_rate				NUMBER(10, 2),
-	category					CHAR(1)				DEFAULT 0,
+	w_detail_code						NUMBER(10)					NOT NULL,
+	w_code							NUMBER(10)					NOT NULL,
+	part							CHAR(1)					NOT NULL,
+	money_unit						VARCHAR2(30)					NOT NULL,
+	expression						VARCHAR2(30)					NOT NULL,
+	price							NUMBER(15, 2)					NOT NULL,
+	krw_price						NUMBER(15, 2)					NOT NULL,
+	reg_date						VARCHAR2(15)					NOT NULL,
+	reg_time						VARCHAR2(10)					NOT NULL,
+	item							VARCHAR2(50),
+	content							VARCHAR2(150),
+	pay_option						CHAR(1)					DEFAULT 0,
+	exchange_rate						NUMBER(10, 2),
+	category						CHAR(1)					DEFAULT 0,
 	w_image						VARCHAR2(1000),
 	CONSTRAINT wallet_detail_w_detail_code_pk		PRIMARY KEY (w_detail_code),
-    CONSTRAINT wallet_detail_w_code_fk				FOREIGN KEY (w_code)			REFERENCES wallet (w_code)
-    ON DELETE CASCADE
+	CONSTRAINT wallet_detail_w_code_fk			FOREIGN KEY (w_code)				REFERENCES wallet (w_code)
+	ON DELETE CASCADE
 );
+
 
 
 
@@ -501,7 +491,7 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
 INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
 
 
 commit;
-

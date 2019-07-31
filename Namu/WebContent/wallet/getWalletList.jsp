@@ -52,10 +52,10 @@
 				<h3 class="skip">가계부 내역</h3>
 				<nav class="left_nav">
 					<a class="day_btn rounded-circle${ empty search.searchCondition ? ' active' : '' }"><span>All</span></a>
-					
-					<span class="day_btn"><span>07</span>월</span>
-					<a class="day_btn rounded-circle" data-search-condition="30"><span>30</span><span class="skip">일</span></a>
-					<a class="day_btn rounded-circle" data-search-condition="31"><span>31</span><span class="skip">일</span></a>
+					<!--<c:forEach var="wallet" items="${days}">
+						<span class="day_btn"><span>07</span>월</span>
+						<a class="day_btn rounded-circle" data-search-condition="${wallet.regDate}"><span>${wallet.regDate}</span><span class="skip">일</span></a>
+					</c:forEach>-->
 				</nav><!-- //left_nav -->
 				
 				<div class="right_table">

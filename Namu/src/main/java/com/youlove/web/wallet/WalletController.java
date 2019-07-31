@@ -110,6 +110,8 @@ public class WalletController {
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("resultPage", resultPage);
 		
+		modelAndView.addObject("days", map.get("days"));
+		
 		modelAndView.addObject("totalIncome", map.get("totalIncome"));
 		modelAndView.addObject("totalExpenditure", map.get("totalExpenditure"));
 		modelAndView.addObject("balance", map.get("balance"));

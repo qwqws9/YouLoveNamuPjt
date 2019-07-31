@@ -106,8 +106,6 @@ function ingWallet(plannerCode, walletCode) {
 
 // getWalletList.jsp
 $(function() {
-	days();
-	
 	// 페이지 이동
 	$(document).on('click', '.paging_wrap li', function() {
 		if($(this).text().trim() == 'PREV'){
