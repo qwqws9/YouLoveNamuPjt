@@ -340,7 +340,7 @@ CREATE TABLE wallet_detail (
 	reg_date						VARCHAR2(15)					NOT NULL,
 	reg_time						VARCHAR2(10)					NOT NULL,
 	item							VARCHAR2(50),
-	content							VARCHAR2(150),
+	content							VARCHAR2(1000),
 	pay_option						CHAR(1)					DEFAULT 0,
 	exchange_rate						NUMBER(10, 2),
 	category						CHAR(1)					DEFAULT 0,

@@ -106,6 +106,8 @@ function ingWallet(plannerCode, walletCode) {
 
 // getWalletList.jsp
 $(function() {
+	createDates();
+	
 	// 페이지 이동
 	$(document).on('click', '.paging_wrap li', function() {
 		if($(this).text().trim() == 'PREV'){
@@ -121,11 +123,11 @@ $(function() {
 	
 	// 정렬 검색
 	$(document).on('click', 'nav.left_nav a.day_btn', function() {
-		var searchCondition = $(this).data('searchCondition');
-		//console.log(searchCondition);
+		var searchKeyword = $(this).data('date');
+		//console.log(searchKeyword);
 		
-		if(searchCondition != null){
-			walletDetailList(1, searchCondition);
+		if(searchKeyword != null){
+			walletDetailList(1, searchKeyword);
 		}else{
 			walletDetailList(1);
 		}
@@ -320,25 +322,31 @@ $(function() {
 });
 
 // 가계부 상세내역 테이블 새로고침
-function walletDetailList(currentPage, searchCondition) {
+function walletDetailList(currentPage, searchKeyword) {
 	//console.log('요청 페이지 :: ' + currentPage);
 	
 	var walletCode = $('#wallet_detail_section').data('walletCode');
 	//console.log('walletCode :: ' + walletCode);
 	
 	// innerHTML
-	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchCondition:searchCondition});
+	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchKeyword:searchKeyword}, function() {
+		createDates();
+	});
 }
 
 // 날짜 버튼 생성
-function days(){
-	var regDates = document.getElementsByClassName('regDate');
+function createDates(){
+	var dates = document.getElementsByClassName('dates');
 	
-	for(var i=0; i<regDates.length; i++){
-	    var plannerCode = regDates[i].getAttribute('data-planner-code');
-	    //console.log('plannerCode : ' + plannerCode);
+	for(var i=0; i<dates.length; i++){
+	    var date = dates[i].getAttribute('data-date');
+	    //console.log('regDate : ' + date);
 	    
-	    isWalletAjax(plannerCode);
+	    var month = date.substring(5, 7);
+	    var day = date.substring(8, 10);
+	    //console.log('BUTTON : ' + month + '/' + day);
+	    
+	    dates[i].textContent = month + '/' + day;
 	}
 }
 

@@ -51,11 +51,12 @@
 			<section class="sec_wrap clear" id="wallet_detail_section" data-wallet-code="${param.walletCode}">
 				<h3 class="skip">가계부 내역</h3>
 				<nav class="left_nav">
-					<a class="day_btn rounded-circle${ empty search.searchCondition ? ' active' : '' }"><span>All</span></a>
-					<!--<c:forEach var="wallet" items="${days}">
-						<span class="day_btn"><span>07</span>월</span>
-						<a class="day_btn rounded-circle" data-search-condition="${wallet.regDate}"><span>${wallet.regDate}</span><span class="skip">일</span></a>
-					</c:forEach>-->
+					<a class="day_btn rounded-circle${ empty search.searchCondition ? ' active' : '' }">All</a>
+					<span>
+						<c:forEach var="wallet" items="${days}">
+							<a class="dates day_btn rounded-circle" data-date="${wallet.regDate}"></a>
+						</c:forEach>
+					</span>
 				</nav><!-- //left_nav -->
 				
 				<div class="right_table">
