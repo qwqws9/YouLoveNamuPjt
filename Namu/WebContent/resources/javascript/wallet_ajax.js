@@ -10,7 +10,7 @@ function isWalletAjax(plannerCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);
@@ -26,7 +26,7 @@ function isWalletAjax(plannerCode) {
 
 // getTotalExpenditure Business Logic
 function getTotalExpenditureAjax(plannerCode, walletCode) {
-	console.log('walletCode :: ' + walletCode);
+	//console.log('walletCode :: ' + walletCode);
 	
 	$.ajax({
 		url			: '/wallet/json/getTotalExpenditure/' + walletCode,
@@ -39,8 +39,8 @@ function getTotalExpenditureAjax(plannerCode, walletCode) {
 			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
-			console.log(status);
-			console.log('JSONData :: ' + JSONData);
+			//console.log(status);
+			//console.log('JSONData :: ' + JSONData);
 			
 			if(JSONData != null && JSONData != '' && JSONData != 0){
 				var totalBudget = $('.square[data-planner-code=' + plannerCode + ']').find('.plan_budget');
@@ -63,7 +63,7 @@ function addWalletAjax(plannerCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);
@@ -88,7 +88,7 @@ function deleteWalletAjax(walletCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);
@@ -139,7 +139,7 @@ function convert(unit) {
 				amount	: 1
 			}),
 			error	: function(request, status, error) {
-				//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+				console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		    },
 			success	: function(JSONData, status) {
 				//console.log(status);
@@ -178,7 +178,7 @@ function addAjax(form) {
 		cache		: false,
 		timeout		: 600000,
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 	    },
 		success		: function(JSONData, status) {
 			//console.log(status);
@@ -248,7 +248,7 @@ function updateAjax(form) {
 		cache		: false,
 		timeout		: 600000,
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 	    },
 		success		: function(JSONData, status) {
 			//console.log(status);
@@ -279,7 +279,7 @@ function getAjax(walletDetailCode, way) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);
@@ -290,7 +290,7 @@ function getAjax(walletDetailCode, way) {
 				
 				var list = $('.pop_wrap_get .padding_boxing');
 				
-				list.find('.input_date').html(JSONData.regDate);
+				list.find('.input_date').html(JSONData.regDate + ' ' + JSONData.regTime);
 				
 				if(JSONData.category == 0){
 					list.find('.input_category').html('<i class="fas fa-coins"></i>');
@@ -397,7 +397,7 @@ function deleteAjax(walletDetailCode) {
 			'Content-Type'	: 'Application/json'
 		},
 		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
 		},
 		success		: function(JSONData, status) {
 			//console.log(status);

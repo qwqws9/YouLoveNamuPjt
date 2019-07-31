@@ -6,8 +6,52 @@
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">
-			<input type="text" class="date_time" name="regDate" readonly />
-			
+			<input class="date_time" name="regDate">
+			<div class="date_background">
+				<script>
+					$(function() {
+						$('.date_time').daterangepicker({
+							startDate			: moment().format('YYYY-MM-DD HH:mm'),
+							showDropdowns		: true,
+							timePicker			: true,
+							timePicker24Hour	: true,
+							opens				: 'center',
+							locale				: {
+								format		: 'YYYY-MM-DD HH:mm',
+								applyLabel	: '입력',
+								cancelLabel	: '취소',
+								daysOfWeek	: [
+									'일',
+									'월',
+									'화',
+									'수',
+									'목',
+									'금',
+									'토'
+								],
+								monthNames	: [
+									'1월',
+									'2월',
+									'3월',
+									'4월',
+									'5월',
+									'6월',
+									'7월',
+									'8월',
+									'9월',
+									'10월',
+									'11월',
+									'12월'
+								],
+								firstDay	: 0
+							},
+							singleDatePicker	: true,
+							
+						});
+					});
+				</script>
+			</div>
+		
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
 				<option value="EUR" selected>EUR</option>
@@ -33,7 +77,7 @@
 		</div><!-- //apply_exchange_rate -->
 		
 		<div class="item">
-			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20" />
+			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20">
 		</div>
 		
 		<div class="option_wrap clear">

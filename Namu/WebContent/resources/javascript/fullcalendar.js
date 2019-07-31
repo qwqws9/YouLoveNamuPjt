@@ -2695,7 +2695,7 @@ exports.globalDefaults = {
     // editable: false,
     // nowIndicator: false,
     scrollTime: '06:00:00',
-    minTime: '10:00:00',
+    minTime: '00:00:00',
     maxTime: '24:00:00',
     showNonCurrentDates: true,
     // event ajax

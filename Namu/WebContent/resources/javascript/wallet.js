@@ -106,6 +106,8 @@ function ingWallet(plannerCode, walletCode) {
 
 // getWalletList.jsp
 $(function() {
+	createDates();
+	
 	// 페이지 이동
 	$(document).on('click', '.paging_wrap li', function() {
 		if($(this).text().trim() == 'PREV'){
@@ -121,7 +123,7 @@ $(function() {
 	
 	// 정렬 검색
 	$(document).on('click', 'nav.left_nav a.day_btn', function() {
-		var searchKeyword = $(this).data('searchKeyword');
+		var searchKeyword = $(this).data('date');
 		//console.log(searchKeyword);
 		
 		if(searchKeyword != null){
@@ -327,7 +329,25 @@ function walletDetailList(currentPage, searchKeyword) {
 	//console.log('walletCode :: ' + walletCode);
 	
 	// innerHTML
-	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchKeyword:searchKeyword});
+	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchKeyword:searchKeyword}, function() {
+		createDates();
+	});
+}
+
+// 날짜 버튼 생성
+function createDates(){
+	var dates = document.getElementsByClassName('dates');
+	
+	for(var i=0; i<dates.length; i++){
+	    var date = dates[i].getAttribute('data-date');
+	    //console.log('regDate : ' + date);
+	    
+	    var month = date.substring(5, 7);
+	    var day = date.substring(8, 10);
+	    //console.log('BUTTON : ' + month + '/' + day);
+	    
+	    dates[i].textContent = month + '/' + day;
+	}
 }
 
 // 수입/지출 추가 팝업 초기 작업
