@@ -106,6 +106,8 @@ function ingWallet(plannerCode, walletCode) {
 
 // getWalletList.jsp
 $(function() {
+	days();
+	
 	// 페이지 이동
 	$(document).on('click', '.paging_wrap li', function() {
 		if($(this).text().trim() == 'PREV'){
@@ -121,11 +123,11 @@ $(function() {
 	
 	// 정렬 검색
 	$(document).on('click', 'nav.left_nav a.day_btn', function() {
-		var searchKeyword = $(this).data('searchKeyword');
-		//console.log(searchKeyword);
+		var searchCondition = $(this).data('searchCondition');
+		//console.log(searchCondition);
 		
-		if(searchKeyword != null){
-			walletDetailList(1, searchKeyword);
+		if(searchCondition != null){
+			walletDetailList(1, searchCondition);
 		}else{
 			walletDetailList(1);
 		}
@@ -320,14 +322,26 @@ $(function() {
 });
 
 // 가계부 상세내역 테이블 새로고침
-function walletDetailList(currentPage, searchKeyword) {
+function walletDetailList(currentPage, searchCondition) {
 	//console.log('요청 페이지 :: ' + currentPage);
 	
 	var walletCode = $('#wallet_detail_section').data('walletCode');
 	//console.log('walletCode :: ' + walletCode);
 	
 	// innerHTML
-	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchKeyword:searchKeyword});
+	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchCondition:searchCondition});
+}
+
+// 날짜 버튼 생성
+function days(){
+	var regDates = document.getElementsByClassName('regDate');
+	
+	for(var i=0; i<regDates.length; i++){
+	    var plannerCode = regDates[i].getAttribute('data-planner-code');
+	    //console.log('plannerCode : ' + plannerCode);
+	    
+	    isWalletAjax(plannerCode);
+	}
 }
 
 // 수입/지출 추가 팝업 초기 작업

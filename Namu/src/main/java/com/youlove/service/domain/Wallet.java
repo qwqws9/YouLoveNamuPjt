@@ -11,6 +11,7 @@ public class Wallet {
 	private double price;
 	private double krwPrice;
 	private String regDate;
+	private String regTime;
 	private String item;
 	private String content;
 	private String payOption;
@@ -88,6 +89,13 @@ public class Wallet {
 		this.regDate = regDate;
 	}
 	
+	public String getRegTime() {
+		return regTime;
+	}
+	public void setRegTime(String regTime) {
+		this.regTime = regTime;
+	}
+	
 	public String getItem() {
 		return item;
 	}
@@ -134,7 +142,7 @@ public class Wallet {
 	public String toString() {
 		return "WalletVO : [walletDetailCode]" + walletDetailCode + " [walletCode]" + walletCode
 				+ " [part]" + part + " [moneyUnit]" + moneyUnit + " [expression]" + expression
-				+ " [price]" + price + " [krwPrice]" + krwPrice + " [regDate]" + regDate
+				+ " [price]" + price + " [krwPrice]" + krwPrice + " [regDate]" + regDate + " [regTime]" + regTime
 				+ " [item]" + item + " [content]" + content + " [payOption]" + payOption
 				+ " [exchangeRate]" + exchangeRate + " [category]" + category + " [walletImage]" + walletImage;
 	}
