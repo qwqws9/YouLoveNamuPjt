@@ -82,19 +82,19 @@ a:link, a:active, a:hover { text-decoration: none; }
 
 
 /* ÁÂÃø »çÀÌµå¹Ù */
-.day_btn { width: 50px; font-weight: 700; text-align: center; }
-a.day_btn { height: 50px; line-height: 50px; background-color: #cbcbcb; }
-a.day_btn.active, a.day_btn:hover { background-color: #f2c029; }
-a.day_btn span { color: #fff; }
+.left_nav a.day_btn { width: 60px; height: 60px; color: #fff !important; font-weight: 700; text-align: center; line-height: 60px; background-color: #cbcbcb; }
+.left_nav a.day_btn.active, a.day_btn:hover { background-color: #f2c029; }
+.left_nav > a.day_btn { font-size: 20px; }
+.left_nav > span { display: inline-block; }
 @media(max-width: 714px){
-	a.day_btn { display: inline-block; transition: all .6s, background-color .3s; }
-	a.day_btn:not(:first-child) { margin-left: 10px; }
-	span.day_btn { margin-left: 25px; padding-left: 25px; border-left: 1px solid #cbcbcb; }
+	.left_nav a.day_btn { display: inline-block; transition: all .6s, background-color .3s; }
+	.left_nav > span { margin-left: 25px; padding-left: 25px; border-left: 2px solid #cbcbcb; }
+	.left_nav > span a.day_btn:not(:first-child) { margin-left: 15px; }
 }
 @media(min-width: 715px){
-	a.day_btn { display: block; }
-	a.day_btn:not(:first-child) { margin-top: 10px; }
-	span.day_btn { display: inline-block; margin-top: 25px; padding-top: 25px; border-top: 1px solid #cbcbcb; }
+	.left_nav a.day_btn { display: block; }
+	.left_nav > span { margin-top: 25px; padding-top: 25px; border-top: 2px solid #cbcbcb; }
+	.left_nav > span a.day_btn:not(:first-child) { margin-top: 15px; }
 }
 
 
@@ -109,7 +109,7 @@ a.day_btn span { color: #fff; }
 /* ¿ìÃø ÄÜÅÙÃ÷ */
 .total_table, .detail_table { width: 95%; margin: auto; }
 .total_budget, .total_price { width: 100%; height: 50px; line-height: 46px; border: 2px solid #cbcbcb; box-sizing: border-box; }
-.total_budget span { display: inline-block; width: 50%; font-size: 20px; font-weight: 700; }
+.total_budget span { display: inline-block; width: 50%; color : #30a9de; font-size: 20px; font-weight: 700; }
 .total_budget span:first-child, .total_floating:first-child, .total_floating span:first-child { border-right: 2px solid #cbcbcb; }
 .total_price { margin-top: 5px; }
 .total_floating { float: left; width: 50%; height: 46px; line-height: 46px; }

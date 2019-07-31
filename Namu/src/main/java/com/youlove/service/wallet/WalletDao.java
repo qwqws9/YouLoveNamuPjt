@@ -29,6 +29,8 @@ public interface WalletDao {
 	
 	public int getTotalCount(Map<String, Object> map) throws Exception;
 	
+	public List<Wallet> getRegDate(int walletCode) throws Exception;
+	
 	public double totalComes(Wallet wallet) throws Exception;
 	
 	public List<Wallet> getWalletChart(int walletCode) throws Exception;

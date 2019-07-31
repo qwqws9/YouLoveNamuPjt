@@ -71,6 +71,9 @@ public class WalletServiceImpl implements WalletService {
 		List<Wallet> list = walletDao.getWalletList(map);
 		int totalCount = walletDao.getTotalCount(map);
 		
+		// 날짜
+		List<Wallet> days = walletDao.getRegDate((Integer)map.get("walletCode"));
+		
 		// 수입
 		double income = walletDao.totalComes(new Wallet(walletCode, "0"));
 		// 지출
@@ -82,6 +85,8 @@ public class WalletServiceImpl implements WalletService {
 		
 		map.put("list", list);
 		map.put("totalCount", new Integer(totalCount));
+		
+		map.put("days", days);
 		
 		map.put("totalIncome", income);
 		map.put("totalExpenditure", expenditure);
