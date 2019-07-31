@@ -26,7 +26,24 @@ $(document).ready(function(){
 	    self.location="/community/getCommunity?communityCode="+$(this).parents(".row.list").find(".communityCode").val();
     });
 }); // end of ready()
+
+$(document).on('click','.profile-box',function(){
+	var writerUser = $(this).children().val().trim();
+	console.log('게시판 : ' + writerUser);
+	getProfile(writerUser);
+});
+
+
 $( function() {
+	//유저 클릭시 프로필 오픈
+	
+	
+	
+//	$('#profile-image').on('click',function(){
+//		var writerUser = $(this).parents('#profile-box').children().val().trim();
+//		getProfile(writerUser);
+//	})
+	
 	//게시물 등록
 	var user = $("#session");
 	$( "#addCommunity" ).on("click" , function() {
@@ -219,11 +236,12 @@ function callCommunityList(page){
 																+ free
 																+'</div>'
 																+'<div class="col-7 col-md-7">'
-																+'<div class="row" id="profile-box" style="position: relative;">'
-																+'<div id="profile-image">'
-																+'<a href="#"><img src="/resources/images/profile/'+item.writer.profileImg+'" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px"></a>'
+																+'<div class="profile-box row" style="position: relative;">'
+																+'<input type="hidden" value="'+item.writer.userCode +'">'
+																+'<div class="profile-image">'
+																+'<img src="/resources/images/profile/'+item.writer.profileImg+'" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px">'
 																+'</div>'
-																+'<div id="profile-nickname" style="position: absolute; top: 8px; left: 52px;">'
+																+'<div class="profile-nickname" style="position: absolute; top: 8px; left: 52px;">'
 																+'<div style="font-size: small; color: #3c64a6;">글쓴이</div>'
 																+'<div style="font-size: small; color: #344157;">'+item.writer.nickname+'</div>'
 																+'</div>'

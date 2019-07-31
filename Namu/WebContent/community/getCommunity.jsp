@@ -16,6 +16,12 @@
 	<script>
 		$(function(){
 			
+			$('.profile-box').on('click',function(){
+				var writerUser = $('#communityUserCode').val().trim();
+				console.log('게시판 : ' + writerUser);
+				getProfile(writerUser);
+			})
+			
 			//로드될때 현재 세션 사용자가 좋아요를 눌렀으면 체크되는 로직
 			$.ajax ({
 				url : '/like/json/checkLike',
@@ -280,9 +286,9 @@
 
 	<input id="communityCode" type="hidden" value="${community.communityCode}" >
 	<div class="row">
-		<div class="col-12">
+		<div class="profile-box col-12">
 			<div class="col-2 order-1">
-				<a href="#"><img src="/resources/images/profile/${community.writer.profileImg }"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="60px" height="60px"></a>
+				<img src="/resources/images/profile/${community.writer.profileImg }"  class="rounded-circle" id="userImage" name="userImage" alt="글쓴이" width="60px" height="60px">
 			</div>
 			<div class="col-2 order-2" id="profile-nickname" style="position: absolute; top: 12px; left: 88px;">  <!-- style="position: absolute; top: 10px; left: 52px;" -->
 				<div class="text-muted" style="font-size:medium;">Writer.</div>
