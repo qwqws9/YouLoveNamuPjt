@@ -276,7 +276,7 @@ SELECT *
 	  	FROM route 
 	  	<where>
 	  	planner_code = #{plannerCode}  and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route where planner_code = #{plannerCode})  
 		</where>
 	  </select>			
 	  				
@@ -285,7 +285,7 @@ SELECT *
 		FROM  route 
 		<where>
 	  	planner_code = #{plannerCode}  and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route) 
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route where planner_code = #{plannerCode})   
 
 		</where>
 	 </select>
@@ -295,7 +295,7 @@ SELECT *
 		FROM  route 
 		<where>
 	  	planner_code = #{plannerCode}   and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route where planner_code = #{plannerCode})  
 		</where>
 	 </select>
 	 
@@ -304,7 +304,7 @@ SELECT *
 		FROM  route 
 		<where>
 	  	planner_code = #{plannerCode}   and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM route)  
+	  	planner_ver=(SELECT MAX(planner_ver) FROM route where planner_code = #{plannerCode})   
 		</where>
 	 </select>			
 	
@@ -318,7 +318,7 @@ SELECT *
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">
 		SELECT
-		planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail
+		sche_code,planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail
 		FROM schedule
 		WHERE sche_code = #{scheCode}
 	 </select>
@@ -342,7 +342,7 @@ SELECT *
  		
 		<delete id="deleteSchedule" parameterType="int">
 		DELETE  schedule
-		WHERE planner_code = #{plannerCode}
+		WHERE sche_code = #{scheCode}
 		</delete>
 		
   	<select  id="getScheduleList"  parameterType="hashmap"	resultMap="scheduleSelectMap">
@@ -352,7 +352,7 @@ SELECT *
 	  	FROM schedule
 	  	<where>
 	  	planner_code = #{plannerCode}  and
-	  	planner_ver=(SELECT MAX(planner_ver) FROM schedule)  
+	  	planner_ver=(SELECT MAX(planner_ver) FROM schedule where planner_code = #{plannerCode})    
 		</where>
 			</select>
 			

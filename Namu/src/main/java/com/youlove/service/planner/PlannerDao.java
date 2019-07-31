@@ -54,7 +54,7 @@ public interface PlannerDao {
 	
 	public Schedule getSchedule(int scheCode)  throws Exception;
 	
-	public void deleteSchedule(int plannerCode) throws Exception;
+	public void deleteSchedule(int scheCode) throws Exception;
 	
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception;
 	
