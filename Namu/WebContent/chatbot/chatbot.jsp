@@ -6,18 +6,31 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Chatbot</title>
 	
-	<script  src="https://code.jquery.com/jquery-3.4.1.slim.js"  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="  crossorigin="anonymous"></script>
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	
+	<!-- <script  src="https://code.jquery.com/jquery-3.4.1.slim.js"  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="  crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
+	
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
+	
+	<!-- Font Awesome SVG with JavaScript -->
+	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
+	
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
 	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 	<!------ Include the above in your HEAD tag ---------->
 	<link  rel="stylesheet"  href="/resources/css/chatbot.css" /> 
-	
-	
-	
+		
 	<script type="text/javascript">
 	//카테고리 전역변수 선언
 	var cataPickNum=0;
@@ -104,7 +117,7 @@
 	function cataPick(pick){
 		insertChat("system", "해당하는 검색어를 입력해주세요.", 0);
 		$(".msj-rta.macro").append('<div class="text text-r" style="background:whitesmoke !important">');
-		$(".text.text-r").append('<input class="mytext" placeholder="검색어를 입력해주세요."/></div>');
+		$(".text.text-r").append('<input class="mytext" id="keyword" placeholder="검색어를 입력해주세요."/></div>');
 		$(".msj-rta.macro").append('</div>');
 		
 		$("#sendButton").append('<span class="glyphicon glyphicon-share-alt" onclick="searchKeyword()"></span>');
@@ -114,7 +127,27 @@
 	//입력한 keyword 챗봇창에 보여주기
 	//입력한 keyword DB검색
 	function searchKeyword(){
-		$(".mytext").on("keydown", function(e){
+		alert("검색");
+		$.ajax({
+		  	url : "/chatbot/json/getChatbot",
+		  	method : "post",
+		  	dataType : "json",
+		  	async:false,
+		  	data : JSON.stringify ({
+		  		keyword : $('#keyword').val().trim()
+			}),
+		  	headers : {
+		  	"Accept" : "application/json",
+		  	"Content-Type" : "application/json"
+		  	},
+
+		  	success : function(data) {
+		  		alert(data);
+		  
+		  	}
+		  	});
+		
+/* 		$(".mytext").on("keydown", function(e){
 		    if (e.which == 13){
 		        var text = $(this).val();
 		        if (text !== ""){
@@ -123,6 +156,7 @@
 		        }
 		    }
 		});
+*/
 	}
 			
 	$('body > div > div > div:nth-child(2) > span').click(function(){

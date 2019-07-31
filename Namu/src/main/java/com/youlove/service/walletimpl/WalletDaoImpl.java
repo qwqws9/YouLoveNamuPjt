@@ -75,7 +75,7 @@ public class WalletDaoImpl implements WalletDao {
 	}
 	
 	public List<Wallet> getWalletChart(int walletCode) throws Exception{
-		return sqlSession.selectList("WalletMapper.getWalletChart", walletCode);
+		return sqlSession.selectList("WalletMapper.totalChart", walletCode);
 	}
 	
 }

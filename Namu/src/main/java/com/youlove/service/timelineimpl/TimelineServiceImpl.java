@@ -26,8 +26,13 @@ public class TimelineServiceImpl implements TimelineService{
 
 
 	@Override
-	public void addTimeline(Timeline timeline) throws Exception {
-		timelineDao.addTimeline(timeline);
+	public boolean addTimeline(Timeline timeline) throws Exception {
+		int res = timelineDao.addTimeline(timeline);
+		boolean result = false;
+		if(res != 0) {
+			result = true;
+		}
+		return result;
 	}
 
 

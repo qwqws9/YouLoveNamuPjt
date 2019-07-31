@@ -31,6 +31,7 @@ import com.youlove.service.domain.Tour;
 import com.youlove.service.domain.User;
 import com.youlove.service.guide.WishBeenDao;
 import com.youlove.service.guide.WishBeenService;
+import com.youlove.service.planner.PlannerService;
 import com.youlove.service.timeline.TimelineService;
 import com.youlove.service.user.UserService;
 
@@ -46,6 +47,10 @@ public class TotalSearchController {
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
 	
+	@Autowired
+	@Qualifier("plannerServiceImpl")
+	private PlannerService plannerService;
+	
 	
 	public TotalSearchController() {
 		System.out.println(this.getClass());
@@ -54,13 +59,15 @@ public class TotalSearchController {
 	
 	
 	@RequestMapping(value="/getTotalSearch",method=RequestMethod.POST)
-	public String getTotalSearch(@ModelAttribute Search search,Model model,Tour tour,Map<String,Object> map ) throws Exception{
+	public String getTotalSearch(@ModelAttribute Search search,Model model,Tour tour,Map<String,Object> map,Map<String,Object> plannerMap ) throws Exception{
 		
 		System.out.println("getTotalSearch 들어옴 : " + search.getSearchKeyword());
 		
 		//관광지 정보
 		tour.setKeyword(search.getSearchKeyword());
 		tour.setPageNum(1);
+		
+		//관광지 검색
 		List<Tour> tourList = wishbeenService.selectPageNum(tour);
 		if(tourList != null) {
 			for(Tour t: tourList) {
@@ -77,7 +84,15 @@ public class TotalSearchController {
 		search.setPageSize(5);
 		search.setCurrentPage(1);
 		map.put("search", search);
+		
+		//게시물 검색
 		map = communityService.getCommunityList(map);
+		
+		search.setSearchCondition(null);
+		plannerMap.put("search", search);
+		//플래너 검색
+		plannerMap = plannerService.getAllPlannerList(plannerMap);
+		model.addAttribute("plannerList",plannerMap.get("list"));
 		
 		
 		model.addAttribute("communityList",map.get("list"));
