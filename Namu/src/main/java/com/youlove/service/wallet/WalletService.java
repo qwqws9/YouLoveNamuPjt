@@ -16,6 +16,8 @@ public interface WalletService {
 	
 	public void deleteWalletView(int walletCode) throws Exception;
 	
+	public double getTotalExpenditure(int walletCode) throws Exception;
+	
 	// walletList.jsp
 	public void addWallet(Wallet wallet) throws Exception;
 	

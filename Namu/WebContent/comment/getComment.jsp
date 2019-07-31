@@ -30,7 +30,7 @@
 <div class="container-fluid">
 	<div class="col-md-12">
 		<div class="my-3 p-3 bg-white rounded shadow-sm">
-   			 <h6 class="count border-bottom border-gray pb-2 mb-0"></h6>
+   			 <h6 class="count border-bottom border-gray pb-2 mb-0">댓글 수</h6>
    			 
     <ul class="commentAjax" style="list-style: none; padding-left: 0px;">
 		
@@ -393,7 +393,7 @@ function deleteLike(commentCode,likeName) {
 					//alert("같지않아서 들어옴");
 					//게시판번호,게시물번호,로그인한 유저,게시물작성자,프로토콜
 					addTimelineCommunity(boardCode,detailCode,sessionUser,writerUser,'1');
-					socketcall(writerUser,'1');
+					//socketcall(writerUser,'1');
 				}
 				
 				
@@ -475,7 +475,7 @@ function deleteLike(commentCode,likeName) {
 			},
 			success : function(JSONData, status) {
 				//alert(JSONData.list);
- 				//$('.count').text("댓글("+JSONData.count+")");
+ 				//$('.count').text("댓글("+JSONData[0].list.count+")");
 				
 				//if(JSONData.list.length != 0) {
 					//return;
@@ -648,6 +648,8 @@ function deleteLike(commentCode,likeName) {
 				"Content-Type" : "application/json"
 			},
 			success : function(JSONData, status) {
+				
+				$('.count').text("댓글 ("+JSONData+")");
 				
 				var totalPage = (Math.floor(JSONData / $("#pageSize").val()) );
 				//var totalPage = 10;

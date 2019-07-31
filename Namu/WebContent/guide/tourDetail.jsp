@@ -18,21 +18,54 @@
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="/resources/javascript/payIamport.js"></script>
-
+<style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 500px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+    
+    <script>
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var uluru = {lat: ${tour.latTour}, lng: ${tour.lngTour}};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 17, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8DDpdqJVfPLVpbX0jetSxRg_TmBCRC2Q&callback=initMap">
+    </script>
 </head>
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
 <br><br><br>
+
+
+
+
+
+
 <div class="text-center">
 <div class="container">
 		<div class="col-md-12">
+		
 			<div class="justify-content-center">
 			<div id="spot-image-carousel" class="carousel slide">
                     <div class="carousel-inner" role="listbox">
-                      
-                      <c:forEach varStatus="status" var="tour" items="${tour.spotImage }">
+                      <c:forEach varStatus="status" var="tour" items="${tour.spotImage }" end="5">
                       <div class="carousel-item" data-index=${status.index }>
-                        <img  src="${tour }" height="400" width="900">
+                        <img alt="https://wishbeen.akamaized.net/v2.5/images/spot_temp.png"  src="${tour }" height="400" width="900">
                       </div>
                       </c:forEach>
                       
@@ -129,7 +162,15 @@
 				</div>
 			</div>
 		</div>
+		
         </div>           
+	
+	<div class="row">
+	<div class="col-lg-12">
+        <div  id="map"></div>
+        </div>
+        </div>
+        
              </div>      
       <jsp:include page="../comment/getComment.jsp" >
       	<jsp:param value="${boardCode}" name="boardCode"/>

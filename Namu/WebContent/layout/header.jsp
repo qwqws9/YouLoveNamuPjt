@@ -46,6 +46,7 @@
 </head>
 <body>
 <jsp:include page="../user/searchUser.jsp"></jsp:include>
+<jsp:include page="../guide/tourModal.jsp"></jsp:include>
 <input type="hidden" id="nodeUserCode" value="${user.userCode }">
 <input type="hidden" id="nodeNickname" value="${user.nickname }">
 <input type="hidden" id="nodeprofileImg" value="${user.profileImg }">
@@ -70,7 +71,7 @@
 					<br><br><br>
 				
 					<c:if test ="${empty user }"><!-- 로그인 전 -->
-						<div class="col-12 text-center" id="beforeLogin">
+						<div class="col-12 text-center" id="beforeLogin" style="padding-top: 20px;">
 							<div id="logingogo">
 							<a href="#">
 								<img src="/resources/images/profile/img_login.gif" alt="..." class="rounded-circle" style="border:2px solid white; height: 100px; width: 100px; padding-right: 0px;">

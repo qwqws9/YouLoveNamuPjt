@@ -134,7 +134,7 @@ margin:0 auto
 		     </div>
 		  
 		<br/> 
-		
+		<!-- 
 <div class="col-md-10 col-lg-12" >
 <div class="row">
    <div class="col-md-2"></div>
@@ -143,16 +143,16 @@ margin:0 auto
 		        	   </div>
 		    <div class="col-md-4">
 		    <select class="custom-select mr-sm-2" id="privacy" name="privacy" >
-		  	<option value="1" selected="selected"> 비공개  </option>
-        	<option value="2">공개  </option>
-        	<option value="3">가계부 비공개  </option>
+		  	<option value="s" selected="selected"> 비공개  </option>
+        	<option value="p">공개  </option>
+        	<option value="w">가계부 비공개  </option>
      </select>
    </div>
 		     <div class="col-md-2"></div>
 		  </div>
 		     </div>
 		  
-		<br/> 
+		<br/>  -->
 		<div class="col-md-10 col-lg-12" >
 <div class="row">
    <div class="col-md-2"></div>

@@ -15,6 +15,32 @@
 	
 	<script>
 		$(function(){
+			
+			//로드될때 현재 세션 사용자가 좋아요를 눌렀으면 체크되는 로직
+			$.ajax ({
+				url : '/like/json/checkLike',
+				method : 'post',
+				async : false,
+				data : JSON.stringify({
+					boardCode : $('#boardCode').val().trim(),
+					detailCode : $('#detailCode').val().trim(),
+					likeName : $('#nodeUserCode').val().trim()
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(data,status){
+					if(data == true) {
+						//현재 접속자가 좋아요를 누른상태
+						$('.boardLike').children().attr('class','fas fa-heart fa-lg').css('color','red');
+					}else {
+						$('.boardLike').children().attr('class','far fa-heart fa-lg').css('color','black');
+					}
+				}
+			})
+			
+			
 			//신고하기
 			var session =  '${user.nickname}';
 			var check = <%=session.getAttribute("user") != null%>
@@ -90,6 +116,82 @@
 			    alert('현재 브라우저 크기가 <= 800px');
 			  }
 		});
+		
+		//게시물 좋아요
+		$(document).on('click','.boardLike',function(){
+			var heart = $(this).children().attr('class').substr(0,3);
+			var boardCode = $('#boardCode').val().trim();
+			var detailCode = $('#detailCode').val().trim();
+			var writerUser = $('#communityUserCode').val().trim();
+			var sessionUser = $('#nodeUserCode').val().trim();
+			
+			
+			if(heart == 'far') {
+				//좋아요
+				$(this).children().attr('class','fas fa-heart fa-lg').css('color','red');
+				addLikeBoard(boardCode,detailCode,sessionUser,writerUser);
+			}else {
+				//좋아요 취소
+				$(this).children().attr('class','far fa-heart fa-lg').css('color','black');
+				deleteLikeBoard(boardCode,detailCode,sessionUser);
+			}
+		});
+		
+		
+		function addLikeBoard(boardCode,detailCode,sessionUser,writerUser) {
+			
+			$.ajax ({
+				url : '/like/json/addLike',
+				method : 'post',
+				data : JSON.stringify({
+					detailCode : detailCode,
+					boardCode : boardCode,
+					likeName : {
+						userCode : sessionUser
+					}
+					
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(data,status){
+					if(data == true) {
+						if(sessionUser != writerUser){
+							addTimelineCommunity(boardCode,detailCode,sessionUser,writerUser,'3');
+						}
+ 						var count = $('.likeCountBoard').text().trim();
+ 						$('.likeCountBoard').text((Number(count)+1));
+					}
+				}
+			})
+		}
+		
+		
+		function deleteLikeBoard(boardCode,detailCode,sessionUser) {
+			
+			$.ajax ({
+				url : '/like/json/deleteLike',
+				method : 'post',
+				data : JSON.stringify({
+					detailCode : detailCode,
+					boardCode : boardCode,
+					likeName : {
+						userCode : sessionUser
+					}
+				}),
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(data,status){
+					var count = $('.likeCountBoard').text().trim();
+						$('.likeCountBoard').text((Number(count)-1));
+				}
+			})
+		}
+		
+		
 		
 	</script>
 	<style>
@@ -221,10 +323,10 @@
 	<div class="row" style="margin-top: 8px;">
 		<div class="col-6">
 			<div class="badge badge-pill" style="border: 1px solid black;">
-				<button type="button" style="border: none; background: none;">
+				<button class="boardLike" type="button" style="border: none; background: none;">
 					<i class="far fa-heart fa-lg" ></i>
 				</button>
-				<span style="font-size: 11px;">20</span>
+				<span class="likeCountBoard" style="font-size: 11px;">${likeCountBoard }</span>
 				
 				
 				<div class="btn-group dropright" style="height: 18px;">

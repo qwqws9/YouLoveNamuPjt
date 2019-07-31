@@ -51,13 +51,13 @@
 			<section class="sec_wrap clear" id="wallet_detail_section" data-wallet-code="${param.walletCode}">
 				<h3 class="skip">가계부 내역</h3>
 				<nav class="left_nav">
-					<a class="day_btn rounded-circle"><span>All</span></a>
-					<a class="day_btn rounded-circle"><span>준비</span></a>
+					<a class="day_btn rounded-circle${ empty search.searchKeyword ? ' active' : '' }"><span>All</span></a>
+					<a class="day_btn rounded-circle" data-search-keyword="0"><span>준비</span></a>
 					
 					<span class="day_btn">8월</span>
-					<a class="day_btn rounded-circle"><span>21</span><span class="skip">일</span></a>
-					<a class="day_btn rounded-circle"><span>22</span><span class="skip">일</span></a>
-					<a class="day_btn rounded-circle"><span>23</span><span class="skip">일</span></a>
+					<a class="day_btn rounded-circle" data-search-keyword="21"><span>21</span><span class="skip">일</span></a>
+					<a class="day_btn rounded-circle" data-search-keyword="22"><span>22</span><span class="skip">일</span></a>
+					<a class="day_btn rounded-circle" data-search-keyword="23"><span>23</span><span class="skip">일</span></a>
 				</nav><!-- //left_nav -->
 				
 				<div class="right_table">

@@ -10,7 +10,7 @@ import com.youlove.service.domain.User;
 
 public interface TimelineService {
 	
-	public void addTimeline(Timeline timeline) throws Exception;
+	public boolean addTimeline(Timeline timeline) throws Exception;
 	
 	public List<Timeline> getTimelineList(User user) throws Exception;
 	

@@ -31,7 +31,7 @@
 	<if test="protocol == 9 or protocol == 8">
 	(timeline_code,from_user,to_user,protocol,invite_code,time_date,comment_code)
 	</if>
-	<if test="protocol == 1">
+	<if test="protocol == 1 or protocol == 3">
 	(timeline_code,from_user,to_user,protocol,invite_code,time_date,board_code,detail_code)
 	</if>
 	<if test="protocol == 2">
@@ -43,7 +43,7 @@
 	<if test="protocol == 9 or protocol == 8">
 	(seq_timeline_code.nextval,#{fromUser.userCode},(select writer_comment from comments where comment_code = #{commentCode}),#{protocol},'0',#{timeDate},#{commentCode})
 	</if>
-	<if test="protocol == 1">
+	<if test="protocol == 1 or protocol == 3">
 	(seq_timeline_code.nextval,#{fromUser.userCode},#{toUser.userCode},#{protocol},'0',#{timeDate},#{boardCode},#{detailCode})
 	</if>
 	<if test="protocol == 2">

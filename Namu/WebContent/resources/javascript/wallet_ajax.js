@@ -18,6 +18,34 @@ function isWalletAjax(plannerCode) {
 			
 			if(JSONData != null && JSONData != '' && JSONData != 0){
 				ingWallet(plannerCode, JSONData);
+				getTotalExpenditureAjax(plannerCode, JSONData);
+			}
+		}
+	});
+}
+
+// getTotalExpenditure Business Logic
+function getTotalExpenditureAjax(plannerCode, walletCode) {
+	console.log('walletCode :: ' + walletCode);
+	
+	$.ajax({
+		url			: '/wallet/json/getTotalExpenditure/' + walletCode,
+		method		: 'GET',
+		headers		: {
+			'Accept'		: 'Application/json',
+			'Content-Type'	: 'Application/json'
+		},
+		error		: function(request, status, error) {
+			console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
+		},
+		success		: function(JSONData, status) {
+			console.log(status);
+			console.log('JSONData :: ' + JSONData);
+			
+			if(JSONData != null && JSONData != '' && JSONData != 0){
+				var totalBudget = $('.square[data-planner-code=' + plannerCode + ']').find('.plan_budget');
+				
+				totalBudget.html('<div>￦<span>' + makeComma(JSONData)) + '</span></div>';
 			}
 		}
 	});
@@ -115,7 +143,7 @@ function convert(unit) {
 		    },
 			success	: function(JSONData, status) {
 				//console.log(status);
-				console.log('JSONData :: ' + JSONData.exchangeRate);
+				//console.log('JSONData :: ' + JSONData.exchangeRate);
 				
 				$('#exchange_result').text(makeComma(JSONData.exchangeRate));
 				$('#exchange_rate').val(JSONData.exchangeRate);
@@ -145,7 +173,6 @@ function addAjax(form) {
 		type		: 'POST',
 		enctype		: 'multipart/form-data',
 		data		: formData,
-		dataType	: 'json',
 		contentType	: false,
 		processData	: false,
 		cache		: false,
@@ -216,7 +243,6 @@ function updateAjax(form) {
 		type		: 'POST',
 		enctype		: 'multipart/form-data',
 		data		: formData,
-		dataType	: 'json',
 		contentType	: false,
 		processData	: false,
 		cache		: false,
@@ -387,40 +413,4 @@ function deleteAjax(walletDetailCode) {
 			}
 		}
 	});
-}
-
-//getWallet Business Logic
-function getAjax(walletDetailCode) {
-	//console.log('walletDetailCode :: ' + walletDetailCode);
-	
-	var result;
-	
-	$.ajax({
-		url			: '/wallet/json/getWallet/' + walletDetailCode,
-		method		: 'GET',
-		async		: false,
-		headers		: {
-			'Accept'		: 'Application/json',
-			'Content-Type'	: 'Application/json'
-		},
-		error		: function(request, status, error) {
-			//console.log('[ERROR]\nCODE :: ' + request.status + '\nMESSAGE : ' + request.responsehtml + '\nERROR : ' + error);
-		},
-		success		: function(JSONData, status) {
-			//console.log(status);
-			//console.log('JSONData :: ' + JSONData.walletDetailCode);
-			
-			//console.log('JSONData 타입 :: ' + typeof JSONData);
-			
-			result = JSONData;
-			//console.log('JSON.stringify(JSONData) 타입 :: ' + typeof result);
-		}
-	});
-	
-	// ajax 내부에서 return 사용시 undefined 되므로 동기 방식으로  ajax 사용 후 외부에서 return 사용
-	if(way == 'update'){
-		//console.log('JSON.stringify(JSONData) :: ' + result);
-		
-		return result;
-	}
 }

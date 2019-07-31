@@ -87,6 +87,27 @@
 						
 						
 						
+						<!-- 게시물 좋아요 -->
+						<c:if test="${item.protocol eq '3' && item.fromUser.userCode ne user.userCode }">
+							<div class="timePreview-${status.index } media text-muted pt-3">
+								<input type="hidden" value="${item.fromUser.userCode }">
+								<img class="timelineProf" alt="" src="/resources/images/profile/${item.fromUser.profileImg }" width="45" height="45">
+								<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+								<span class="timelineTarget d-block" style="position:relative;">
+									<strong class="timelineProf text-gray-dark">@ ${item.fromUser.nickname }</strong>
+									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
+								</span>
+								<span class="timelineContent"><button class="timeCommunity" style="border:none; background: none">회원님의 게시물을 좋아합니다.</button></span>
+								<input type="hidden" id="boardCode" value="${item.boardCode }">
+								<input type="hidden" id="detailCode" value="${item.detailCode }">
+								
+<!-- 								<button class="timelineTrue" >수락</button> -->
+<!-- 								<button class="timelineFalse" >거절</button> -->
+								</p>
+							</div>
+						</c:if>
+						
+						
 						
 						<!-- 친구 초대 -->
 						<c:if test="${item.protocol eq '2' && item.fromUser.userCode ne user.userCode }">

@@ -14,7 +14,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-lg-8">
-	  		<div id="map" style="width: 100%; height: 700px;">
+	  		<div id="map" style="width: 895px; height: 500px;">
 			</div>
 		</div>
 		
@@ -172,7 +172,7 @@
    /* alert(locations); */ 
     
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 3,
+      zoom: 5,
       center: new google.maps.LatLng(48.864716, 2.349014),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControl: false,
