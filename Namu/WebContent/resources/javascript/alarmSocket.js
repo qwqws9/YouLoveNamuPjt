@@ -18,6 +18,8 @@ function socketcall(writerUser,protocol) {
 		socket.emit("timeline", { To: writerUser, msg : '회원님의 게시물에 댓글을 남겼습니다.' });
 	}else if(protocol == '2') {
 		socket.emit("timeline", { To: writerUser, msg : '회원님과 친구맺기를 원합니다.' });
+	}else if(protocol == '3') {
+		socket.emit("timeline", { To: writerUser, msg : '회원님의 게시물을 좋아합니다.' });
 	}
 }
 
@@ -60,9 +62,9 @@ $(function(){
 		$('.timelinePop_wrap').remove();
 		$('body').append(
 '<div class="timelinePop_wrap">'
-+'<div class="timelinePop_contain">'
-+'<img src="/resources/images/profile/'+data.image+'" width="50" height="50" style="float:left;">'
-+'<span style="float:left;">'
++'<div class="timelinePop_contain" style="padding-top:23px;padding-left: 15px;">'
++'<img class="rounded-circle" src="/resources/images/profile/'+data.image+'" width="55" height="55" style="float:left;">'
++'<span style="float:left;padding-top: 6px;padding-left: 10px;">'
 +'<strong class="d-inline-block mb-2 text-primary" style="display:inline;">@'+data.sender+'</strong>'
 +'<p class="card-text mb-auto">'+data.message+'</p>'
 +'</span>'
@@ -74,7 +76,7 @@ $(function(){
 		$(".timelinePop_wrap").css('display','block');
 		setTimeout(function() {
 			$('.timelinePop_wrap').remove();
-			}, 5000);
+			}, 7000);
 	}
 	
 	
@@ -105,9 +107,6 @@ $(function(){
 
 //댓글과 추천 DB 추가
 function addTimelineLike(commentCode,likeName,protocol) {
-	console.log("댓글 번호 : " + commentCode);
-	console.log("로그인한 유저  : " + likeName);
-	console.log("프로토콜 : " + protocol);
 	
 	$.ajax ({
 		url : '/timeline/json/addTimeline',
@@ -124,7 +123,6 @@ function addTimelineLike(commentCode,likeName,protocol) {
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-				//alert(data);
 		}
 	})
 }
@@ -133,7 +131,6 @@ function addTimelineLike(commentCode,likeName,protocol) {
 //게시물에 댓글 DB 추가
 //게시판번호,게시물번호,댓글작성자,게시물작성자,프로토콜
 function addTimelineCommunity(boardCode,detailCode,writerUser,boardWriter,protocol) {
-	
 	$.ajax ({
 		url : '/timeline/json/addTimeline',
 		method : 'post',
@@ -153,7 +150,9 @@ function addTimelineCommunity(boardCode,detailCode,writerUser,boardWriter,protoc
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-				//alert(data);
+				if(data == true) {
+					socketcall(boardWriter,protocol);
+				}
 		}
 	})
 }

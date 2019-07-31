@@ -28,6 +28,7 @@ import com.youlove.service.domain.User;
 import com.youlove.common.FileNameUUId;
 import com.youlove.common.Page;
 import com.youlove.common.Search;
+import com.youlove.service.domain.City;
 import com.youlove.service.domain.Planner;
 
 import com.youlove.service.planner.PlannerService;
@@ -152,7 +153,7 @@ public class PlannerController {
 		
 		plannerService.deletePlanner(plannerCode);
 	
-		return "forward:/planner/getAllPlannerList.jsp";
+		return "forward:/planner/getPlannerList.jsp";
 	}
 	
 	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
@@ -191,11 +192,11 @@ public class PlannerController {
 		int userCode=user.getUserCode();
 		planner.setPlannerWriter(user);
 		System.out.println("userCode?:"+userCode);
-	
-	
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("userCode", userCode);
+
 		map = plannerService.getPlannerList(map);
 	
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);

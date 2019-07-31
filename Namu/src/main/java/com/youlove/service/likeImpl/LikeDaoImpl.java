@@ -42,4 +42,9 @@ public class LikeDaoImpl implements LikeDao {
 		return sqlSession.selectOne("LikeMapper.checkLike",map);
 	}
 
+	@Override
+	public int countLike(Like like) throws Exception {
+		return sqlSession.selectOne("LikeMapper.countLike",like);
+	}
+
 }

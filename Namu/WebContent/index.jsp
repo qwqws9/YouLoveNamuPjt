@@ -40,7 +40,7 @@
 		<br><br>
 		<!-- <button type="button" id="ooo">로그인</button> -->
 		<br><br>
-		
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTourList">관광지모달</button>
 		
 		<div class="row">
 			<!-- 날씨 -->

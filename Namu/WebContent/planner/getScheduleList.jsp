@@ -22,6 +22,7 @@
 	<!-- fullcalendar-->
  	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
 	<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
+	<script type="text/javascript" src="wickedpicker.js"></script>
 	<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
 
  	<!-- Font Awesome  -->
@@ -37,6 +38,7 @@
 	<!-- spectrum -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
 	<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
+	
 
 <style type="text/css">
 input{
@@ -72,6 +74,7 @@ body {
 
 .pop-layer .pop-container {
   padding: 20px 25px;
+ 
 }
 
 .pop-layer p.ctxt {
@@ -94,8 +97,9 @@ body {
   left: 50%;
   width: 410px;
   height: auto;
-	background-color: #a3daff; 
-/*   border: 5px solid #3571B5; */
+background-color: white; 
+border-radius:5px ;
+ border: 5px solid #a3daff; 
   z-index: 10;
 }
 
@@ -138,23 +142,32 @@ a.btn-layerClose {
 
 a.btn-layerClose:hover {
 /*   border: 1px solid #091940; */
-  background-color: #232c37;
+  background-color: #cbcbcb;
   color: #fff;
 }
-
+.input{
+		outline:2px solid ##a3daff;
+	}
+	$(':focus').blur();  
+.input:focus {outline:2px solid ##a3daff;}
+	
+	h5 {
+    width: 100%;
+    text-align:center;
+}
 #submit, #reset, #close{
   display: inline-block;
   height: 25px;
   padding: 0 14px 0;
  /*  border: 1px solid #304a8a; */
-  background-color: #cbcbcb;
+  background-color: #a3daff;
   font-size: 13px;
   color: #fff;
   line-height: 25px;}
   
 #submit:hover, #reset:hover, #close:hover {
 /*   border: 1px solid #091940; */
-  background-color: #232c37;
+  background-color: #f2c029;
   color: #fff;
 }
 
@@ -164,6 +177,17 @@ a.btn-layerClose:hover {
 function onchangeDay(yy,mm,dd,ss){ 
 	 $("#nows").html(yy+"."+mm+"."+dd+".("+ss+")"); 
 	}
+
+$(function(){
+$("#save").on("click",function(){    	
+	self.location = '/planner/getPlanner?plannerCode=' + plannerCode;  	
+});
+
+$("a[href='#']").on("click",function(){
+	
+	history.go(-1);
+	
+});
 
 function layer_open(el){
 	//var temp = $('#'+el);
@@ -180,7 +204,7 @@ function layer_open(el){
     // 화면의 중앙에 레이어를 띄운다.
     if ($elHeight < docHeight || $elWidth < docWidth) {
         $el.css({
-            marginTop: -$elHeight /2,
+            marginTop: -$elHeight /3,
             marginLeft: -$elWidth/2
         })
     } else {
@@ -301,7 +325,7 @@ $(function () {
 		     
 		      /* defaultDate: ddate,  */
 		      editable: true,
-		      droppable: true, // this allows things to be dropped onto the calendar
+		      droppable: true, 
 		     /* dayClick: function(date) { */
 		    /*       var date = (moment(date).format('YYYY-MM-DD'));
 		          document.getElementById("startDate").value=date;
@@ -337,9 +361,10 @@ $(function () {
 								success : function(JSONData , status) {
 
 									var displayValue = "<h6>"
+																+"날짜 : "+JSONData.scheDay+"<br/>"
 																+"일정 : "+JSONData.scheName+"<br/>"
 																+"장소 : "+JSONData.scheDetail+"<br/>"
-																+"일정상세내용 : "+JSONData.scheDetail+"<br/>"
+																+"상세내용 : "+JSONData.scheDetail+"<br/>"
 																;
 																 $('#getSchedule' ).html(displayValue);
 			
@@ -395,27 +420,81 @@ $(function () {
 <div  id="calendar"><p class="date" id="nows"></p>
  </div>
 
-
+<br><br><br><br>
+	 <div class="col-md-10 col-lg-12" >
+<div class="row">
+   <div class="col-md-6"></div>
+      <div class="col-md-4">
+		     <a class="btn btn-default" href="#" role="button"> 이전 단계 </a>
+		  
+		      <button type="button" class="btn btn-default"  id="save"> 내 플래너 보기  </button>
+		      </div></div></div>
 <!--일정 등록 팝업  -->
+
 <div style="height: 300px;"></div>
+
 <a href="#layer1" class="btn-example"></a>
+<div class="dim-layer">
+<div class="dimBg"></div>
+
 <div id="layer1" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
             <div class="addSchedule">
           <form name="scheForm" id="scheForm" action="/planner/addSchedule" method="post">
-          <h3 class="title"> 일정 등록  </h3> 
+          <h5 class="title"> 일정 등록  </h5> 
     		<br/><br/>
-           <p> 날짜 &nbsp;&nbsp;&nbsp;&nbsp;  <input type="date" name="scheDay" id="scheDay"/> 
-          <p>  일정 &nbsp;&nbsp;&nbsp;&nbsp;  <input type="text" name="scheName"/>    
-           <p> 일정시작시간 &nbsp;&nbsp;&nbsp;<input type="text" step="1800" name="timeHour"/>
-           <p> 일정장소 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="schePlace"/>
-           <p> 일정상세 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="scheDetail"/>
-           <p> 표시 색상 선택&nbsp;&nbsp; <input type="color" name="color" id="color"  style="width:100px;">
-          <br/><br/><br/>
-        <p><input type ="submit" value="등록" id="submit">
-        <input type ="reset" value="취소" id="reset">	
-       	<input type='button' id="close"  value='닫기'/>
+ <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4"><p> 날짜 </p></div> 
+
+<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay"/></div> 
+          </div></div>
+ <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4"><p>   일정 </p></div> 
+
+ <div class="col-md-8"> <input type="text" name="scheName"/> </div> 
+          </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">      
+     <p> 일정시작시간 </p></div> 
+<input type="text" name="timepicker" class="timepicker"/>
+ <!-- <div class="col-md-8"><input type="text" step="1800" name="timeHour"/> </div>  -->
+          </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+  <p> 일정장소 </p></div> 
+
+ <div class="col-md-8"><input type="text" name="schePlace"/> </div>
+ </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+           <p> 일정상세 </p></div> 
+    
+ <div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3"></textarea></div>
+ </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+           <p> 표시 색상 선택</p></div> 
+
+ <div class="col-md-8"> <input type="color" name="color" id="color"  style="width:100px;">
+       </div></div></div>  
+        <br/><br/><br/>
+        
+      <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+       <input type ="submit" value="등록" id="submit"></div>
+   
+        <div class="col-md-4">  <input type ="reset" value="취소" id="reset">	
+        </div>
+        <div class="col-md-4">  	<input type='button' id="close"  value='닫기'/>  </div>
+        </div></div>
 		</form>
 		</div></div> </div></div></div>
 <br/><br/>
@@ -430,11 +509,14 @@ $(function () {
 <div class="pop-container">
         <div class="pop-conts">
             <div class="schedule">
-          <h3 class="title"> 일정 상세   </h3> 
+                 <h5 class="title"> 일정 보기  </h5> 
     		<div id="getSchedule"></div>
-        <p><input type ="submit" value="수정" id="submit">
-       	<input type='button' id="close"  value='닫기'/>
-	
+       <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4"> <input type ="submit" value="수정" id="update"></div>
+<div class="col-md-4"> <input type ="submit" value="삭제" id="delete"></div>
+<div class="col-md-4"> <input type='button' id="close"  value='닫기'/></div>
+	</div></div>
 		</div></div> </div></div></div>
 <br/><br/>
 

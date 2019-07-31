@@ -98,13 +98,12 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
 	 <!--    	 <input type="submit" id="mul_input_submit" name="mul_input_submit" />
 	    -->
 	    	</form>
-
-	
+<br><br><br><br>
 	 <div class="col-md-10 col-lg-12" >
 <div class="row">
    <div class="col-md-6"></div>
       <div class="col-md-4">
-		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
+		     <a class="btn btn-default" href="#" role="button"> 이전 단계 </a>
 		  
 		      <button type="button" class="btn btn-default"  id="save"> 다음 단계  </button>
 		      </div></div></div>
@@ -191,7 +190,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  	url : "/guide/json/getCityList/all",
  	method : "get",
  	dataType : "json",
- 	async:"false",
+ 	async:false,
  	headers : {
  	"Accept" : "application/json",
  	"Content-Type" : "application/json"

@@ -26,10 +26,10 @@ public class TimelineRestController {
 		//현재시간 넣어줌
 		timeline.setTimeDate(DateFormat.minute());
 		
-		timelineService.addTimeline(timeline);
+		boolean result = timelineService.addTimeline(timeline);
 		
 		
-		return true;
+		return result;
 	}
 	
 	@RequestMapping("/json/updateTimeline")

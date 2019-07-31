@@ -1,23 +1,44 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"    %>
+
 <!DOCTYPE html>
-<html> 
-<head> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
+	
+	
+<!-- <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
+	<!-- fullcalendar-->
+ 	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
+	<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
+	<script type="text/javascript" src="wickedpicker.js"></script>
+	<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
 
- <script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
-<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
-<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
+ 	<!-- Font Awesome  -->
+	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
+	
+	 <!-- bootstrap css-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
-<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
-<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
+	<!-- css-->
+  	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+   <link rel="stylesheet" type="text/css" href="/resources/css/planner.css">
+
+	<!-- spectrum -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
+	<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
+	
 
 <style type="text/css">
 input{
@@ -25,7 +46,12 @@ background: none; border: 0 none;
 }
  .calendar {
   float:left; width:200px; height:100px; background-color:#234234;}
+  
+  .calendar2 {
+  float:right; width:200px; height:100px; background-color:#234234;}
 /*  . {
+
+
   display:inline-block; width:200px; height:100px; background-color:#666666; margin-left:10px;}  
  */
     body {
@@ -140,10 +166,12 @@ a.btn-layerClose:hover {
 }
 
 </style>
+
 <script>
 function onchangeDay(yy,mm,dd,ss){ 
 	 $("#nows").html(yy+"."+mm+"."+dd+".("+ss+")"); 
 	}
+	
 
 function layer_open(el){
 	//var temp = $('#'+el);
@@ -160,7 +188,7 @@ function layer_open(el){
     // 화면의 중앙에 레이어를 띄운다.
     if ($elHeight < docHeight || $elWidth < docWidth) {
         $el.css({
-            marginTop: -$elHeight /2,
+            marginTop: -$elHeight /3,
             marginLeft: -$elWidth/2
         })
     } else {
@@ -178,9 +206,10 @@ function layer_open(el){
     });
 
 }
-
 $(function () {
-//initialize  calendar
+	//initialize  calendar
+	
+		//alert(departDate);
 var departDate=${planner.departDate};
 	//alert(departDate);
 	var ddd = String(departDate);	
@@ -190,68 +219,13 @@ var departDate=${planner.departDate};
 	
 	var ddate= new Date(); 
 
-	/* var dd = departDate.getDate();
-	var mm = departDate.getMonth()+1; //January is 0! */
-	/* var yyyy = departDate.getFullYear(); */
-	ddate=yyyy+'-'+mm+'-'+dd;
-	/* alert(ddd.substring(0,4)); */
-	
-	
-  var plannerCode=${planner.plannerCode};
-	   $('#calendar').fullCalendar({
-		   
-		    events: function(start, end, timezone, callback) {  
-	         /* $.ajax({
-	                url: '/planner/getRouteList',
-	                type : 'post',
-	                data : { startDate :  start.format('YYYY-MM-DD'), endDate : end.format('YYYY-MM-DD') },
-	                dataType: 'json',
-	               	
-	                success: function(data) {
-	                   var events = [];
-	                   $(data).each(function() {
-	                	    alert(data);
-	                        events.push({
-	                           title: $(this).attr('title'),
-	                            start:moment( $(this).attr('start')),
-	                            end: $(this).attr('end'),
-	                            color: $(this).attr('color'),
-	                            id: $(this).attr('id'),
-	                        
-	                        });
-	                    });
-	                   
-	                   
-	                   
-	                   callback(events);
-	                }
-	            });
-		    },  */
-		        /* $.ajax({
-   	                url: '/planner/getRouteList',
-   	                type : 'post',
-   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'), endDate :  end.format('YYYY-MM-DD HH:MM') },
-   	                dataType: 'json',
-   	               	
-   	                success: function(data) {
-   	                   var events2 = [];
-   	                   $(data).each(function() {
-   	                        events2.push({
-   	                           title: $(this).attr('title'),
-   	                            start:moment( $(this).attr('start')),
-   	                         color: $(this).attr('color'),
-   	                            id: $(this).attr('id') ,
-   	                         end:  moment($(this).attr('end')) 
-   	                  
-   	                    });
-                    callback(events2);
-                }
-                   }); 
-       
-     }, 	 */
-        
-		   /////////////////////////////////////////////////////////////////
-	       $.ajax({
+	  var plannerCode=${planner.plannerCode};
+		   $('#calendar').fullCalendar({
+			   
+			    events: function(start, end, timezone, callback) {  
+		      
+	        /////////////////////////////////////////////////////////////////
+			    	$.ajax({
 	   	                url: "/planner/json/getScheduleList/"+plannerCode,
 	   	                type : 'GET',
 	   	                data : { startDate :  start.format('YYYY-MM-DD 01:00'),endDate :  end.format('YYYY-MM-DD 11:00') },
@@ -274,16 +248,15 @@ var departDate=${planner.departDate};
 	                   }); 
 	       
 	     }, 	 
-	        
 		      header: {
 		        left: 'prev,next today',
 		        center: 'title',
-		        right: 'month,agendaWeek,listDay'
+		        right: 'month'
 		      },
-		      allDay: false,
-		     defaultDate: ddate,
-		     editable: true,
-		      droppable: true, // this allows things to be dropped onto the calendar
+		     
+		      /* defaultDate: ddate,  */
+		      editable: true,
+		      droppable: true, 
 		     /* dayClick: function(date) { */
 		    /*       var date = (moment(date).format('YYYY-MM-DD'));
 		          document.getElementById("startDate").value=date;
@@ -299,12 +272,125 @@ var departDate=${planner.departDate};
 		        	   layer_open('layer1');
 		        	   onchangeDay(yy,mm,dd,ss);
 		        	     },  
-		        	     
-		   		      
+		        
 		     eventLimit: true,
 		    
 		     ////////////////////////////////////////////////////////
-		   eventClick: function(event, element) {
+		    eventClick: function(event, element) {
+		    	/*  alert(event.id); */
+		    	 var scheCode=event.id;
+	
+					$.ajax( 
+							{
+								url : "/planner/json/getSchedule/"+event.id ,
+								method : "GET" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+
+									var displayValue = "<h6>"
+																+"일정 : "+JSONData.scheName+"<br/>"
+																+"장소 : "+JSONData.scheDetail+"<br/>"
+																+"일정상세내용 : "+JSONData.scheDetail+"<br/>"
+																;
+																 $('#getSchedule' ).html(displayValue);
+			
+							/* 		alert(displayValue); */
+				
+								}
+						});
+					 layer_open('layer2');
+				
+		      }, 
+					/////////////////////////////////////////////////////
+	
+		      drop: function() {
+		 
+		        if ($('#drop-remove').is(':checked')) {
+		         
+		          $(this).remove();
+		        }
+		      }
+		    });
+		  });
+		  
+		
+</script>
+<script type="text/javascript">
+$(function () {
+	//initialize  calendar
+	
+		//alert(departDate);
+var departDate=${planner.departDate};
+	//alert(departDate);
+	var ddd = String(departDate);	
+	var yyyy = ddd.substring(0,4);
+	var mm = ddd.substring(4,6);
+	var dd = ddd.substring(6,8) ;
+	
+	var ddate= new Date(); 
+
+	  var plannerCode=${planner.plannerCode};
+		   $('#calendar2').fullCalendar({
+			   
+			    events: function(start, end, timezone, callback) {  
+		        /////////////
+			    	$.ajax({
+	   	                url: "/planner/json/getScheduleList/"+plannerCode,
+	   	                type : 'GET',
+	   	                data : { startDate :  start.format('YYYY-MM-DD 01:00'),endDate :  end.format('YYYY-MM-DD 11:00') },
+	   	                dataType: 'json',
+	   	               	
+	   	                success: function(data) {
+	   	                   var events = [];
+	   	                   $(data).each(function() {
+	   	                        events.push({
+	   	                           title: $(this).attr('title'),
+	   	                            start:moment( $(this).attr('start')),
+	   	                         color: $(this).attr('color'),
+	   	                            id: $(this).attr('id') ,
+	   	                         end: $(this).attr('end') 
+	   	                        });
+	   	                     
+	   	                    });
+	                    callback(events);
+	                }
+	                   }); 
+	       
+	     }, 	 
+	     defaultView: 'agendaWeek',
+		      header: {
+		        left: 'prev,next today',
+		        center: 'title',
+		        right: 'agendaWeek,listDay'
+		      },
+		     
+		      /* defaultDate: ddate,  */
+		      editable: true,
+		      droppable: true, 
+		     /* dayClick: function(date) { */
+		    /*       var date = (moment(date).format('YYYY-MM-DD'));
+		          document.getElementById("startDate").value=date;
+		          layer_open("layer1");
+		         },   */ 
+		   		 dayClick: function(date, allDay, jsEvent, view) {
+		        	   var yy=date.format("YYYY");
+		        	   var mm=date.format("MM");
+		        	   var dd=date.format("DD");
+		        	   var ss=date.format("dd");
+		        	  var date = (moment(date).format('YYYY-MM-DD'));
+		        	  document.getElementById("scheDay").value=date;
+		        	   layer_open('layer1');
+		        	   onchangeDay(yy,mm,dd,ss);
+		        	     },  
+
+		     eventLimit: true,
+		    
+		     ////////////////////////////////////////////////////////
+		    eventClick: function(event, element) {
 		    	/*  alert(event.id); */
 		    	 var scheCode=event.id;
 	
@@ -349,6 +435,7 @@ var departDate=${planner.departDate};
 </script>
 
 
+
 <script type="text/javascript">
  $(function() {
   $("#color").spectrum({
@@ -363,50 +450,133 @@ var departDate=${planner.departDate};
 
 <body>
 <!--캘린더  -->
+<br><br><br><br>
+ <div class="col-md-12" >	
+<div class="row"> 
+	<div class="col-md-6 col-lg-6">
 <div  id="calendar"><p class="date" id="nows"></p>
- </div>
+ </div></div>
 
+ <div class="col-md-6 col-lg-6">
+ <div  id="calendar2">
+ </div></div></div></div>
+ 
 
 <!--일정 등록 팝업  -->
-<!-- <div style="height: 300px;"></div> -->
+
+<div style="height: 300px;"></div>
+
 <a href="#layer1" class="btn-example"></a>
+<div class="dim-layer">
+<div class="dimBg"></div>
+
 <div id="layer1" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
             <div class="addSchedule">
           <form name="scheForm" id="scheForm" action="/planner/addSchedule" method="post">
-          <h3 class="title"> 일정 등록  </h3> 
+          <h5 class="title"> 일정 등록  </h5> 
     		<br/><br/>
-           <p> 날짜 &nbsp;&nbsp;&nbsp;&nbsp;  <input type="date" name="scheDay" id="scheDay"/> 
-          <p>  일정 &nbsp;&nbsp;&nbsp;&nbsp;  <input type="text" name="scheName"/>    
-           <p> 일정시작시간 &nbsp;&nbsp;&nbsp;<input type="text" step="1800" name="timeHour"/>
-           <p> 일정장소 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="schePlace"/>
-           <p> 일정상세 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="scheDetail"/>
-           <p> 표시 색상 선택&nbsp;&nbsp; <input type="color" name="color" id="color"  style="width:100px;">
-          <br/><br/><br/>
-        <p><input type ="submit" value="등록" id="submit">
-        <input type ="reset" value="취소" id="reset">	
-       	<input type='button' id="close"  value='닫기'/>
+ <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4"><p> 날짜 </p></div> 
+
+<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay"/></div> 
+          </div></div>
+ <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4"><p>   일정 </p></div> 
+
+ <div class="col-md-8"> <input type="text" name="scheName"/> </div> 
+          </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">      
+     <p> 일정시작시간 </p></div> 
+<input type="text" name="timepicker" class="timepicker"/>
+ <!-- <div class="col-md-8"><input type="text" step="1800" name="timeHour"/> </div>  -->
+          </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+  <p> 일정장소 </p></div> 
+
+ <div class="col-md-8"><input type="text" name="schePlace"/> </div>
+ </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+           <p> 일정상세 </p></div> 
+    
+ <div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3"></textarea></div>
+ </div></div>
+    <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+           <p> 표시 색상 선택</p></div> 
+
+ <div class="col-md-8"> <input type="color" name="color" id="color"  style="width:100px;">
+       </div></div></div>  
+        <br/><br/><br/>
+        
+      <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4">  
+       <input type ="submit" value="등록" id="submit"></div>
+   
+        <div class="col-md-4">  <input type ="reset" value="취소" id="reset">	
+        </div>
+        <div class="col-md-4">  	<input type='button' id="close"  value='닫기'/>  </div>
+        </div></div>
 		</form>
-		</div></div> </div></div>
+		</div></div> </div></div></div>
 <br/><br/>
 
 
 <!--일정 상세 팝업  -->
-<!-- <div style="height: 300px;"></div> -->
+<div style="height: 300px;"></div>
 <a href="#layer2" class="btn-example"></a>
-<div class="dim-layer">
-<div class="dimBg"></div>
+
 <div id="layer2" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
             <div class="schedule">
-          <h3 class="title"> 일정 상세   </h3> 
+                 <h5 class="title"> 일정 보기  </h5> 
     		<div id="getSchedule"></div>
-        <p><input type ="submit" value="수정" id="submit">
-       	<input type='button' id="close"  value='닫기'/>
-	
-		</div></div> </div></div></div>
+       <div class="col-md-12" >	
+<div class="row"> 
+<div class="col-md-4"> <input type ="submit" value="수정" id="update"></div>
+<div class="col-md-4"> <input type ="submit" value="삭제" id="delete"></div>
+<div class="col-md-4"> <input type='button' id="close"  value='닫기'/></div>
+	</div></div>
+		</div></div> </div></div>
 <br/><br/>
+
+<!--  모 -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

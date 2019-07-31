@@ -192,17 +192,19 @@ $('#list_table').on("click", ".deletebtn", function () {
    	
    	
    	$(function() {	
+   		console.log('1번째');
     	 $.ajax({
     	url : "/guide/json/getCityList/all",
     	method : "get",
     	dataType : "json",
-
+    	async: false,
     	headers : {
     	"Accept" : "application/json",
     	"Content-Type" : "application/json"
     	},
 
     	success : function(JSONData,status){
+    		console.log('2번째');
     		$.each(JSONData,function(index,item){
     			locations.push(item.cityName);
     			locationLat.push(item.lat);
@@ -213,6 +215,7 @@ $('#list_table').on("click", ".deletebtn", function () {
     	 });
     	 
     var plannerCode=${planner.plannerCode};
+    console.log('3번째');
  	 $.ajax({
  	url : "/planner/json/getRouteCityName/"+plannerCode,
  	method : "GET",
@@ -224,7 +227,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  	},
 
  	success : function(JSONData) {
-
+ 		console.log('4번째');
  	route = JSONData;
  	
 /* 
@@ -234,7 +237,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  	}); */
  	}
  	});
- 	
+ 	console.log('5번째');
   	$.ajax({
   	url : "/planner/json/getRouteLat/"+plannerCode,
   	method : "GET",
@@ -246,13 +249,13 @@ $('#list_table').on("click", ".deletebtn", function () {
   	},
 
   	success : function(JSONData2) {
-
+  		console.log('6번째');
   	routeLat = JSONData2;
 
   	}
   	});
   	
-
+  	console.log('7번째');
    	$.ajax({
    	url : "/planner/json/getRouteLng/"+plannerCode,
    	method : "GET",
@@ -264,22 +267,24 @@ $('#list_table').on("click", ".deletebtn", function () {
    	},
 
    	success : function(JSONData3) {
-
+   		console.log('8번째');
    	routeLng = JSONData3;
 
    	}
    	});
-   	
+   	console.log('9번째');
    	$.ajax({
    	  	url:"/planner/json/getRouteList/"+plannerCode,
    		method : "GET" ,
         dataType : "json",
+        async: false,
         headers : {
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"
 		},
         success:function(JSONData){
         	console.log(JSONData);   
+        	console.log('10번째');
         	
   
         	var displayValue;
@@ -310,9 +315,9 @@ $('#list_table').on("click", ".deletebtn", function () {
             
    	//});
  	
-	 alert(route);
+	 //alert(route);
    /* alert(locations); */ 
-    
+    console.log('11번째');
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 5,
       center: new google.maps.LatLng(48.864716, 2.349014),
@@ -346,7 +351,7 @@ $('#list_table').on("click", ".deletebtn", function () {
    	
    	//////////////////marker/////////////////////
    	$(function(){
-   		
+   		console.log('12번째');
    		for (var i = 0; i < locations.length; i++) {
    		      var marker = new google.maps.Marker({
    		        position: new google.maps.LatLng(locationLat[i], locationLng[i]),
@@ -383,11 +388,12 @@ $('#list_table').on("click", ".deletebtn", function () {
 	   		      }
 	   		        
 	   		    }
-   	
+   		console.log('13번째');
    		redMarker();
-		
+   		console.log('15번째');
   	});
    function redMarker() {
+	   console.log('14번째');
 	   for (var i = 0; i < route.length; i++) {
 		      var myMarker = new google.maps.Marker({
 		        position: new google.maps.LatLng(routeLat[i], routeLng[i]),

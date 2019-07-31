@@ -105,7 +105,6 @@ function ingWallet(plannerCode, walletCode) {
 
 
 // getWalletList.jsp
-// 가계부 상세내역 조회 페이지 내 모달창 컨트롤
 $(function() {
 	// 페이지 이동
 	$(document).on('click', '.paging_wrap li', function() {
@@ -118,6 +117,18 @@ $(function() {
 		}
 		
 		walletDetailList(nextPage);
+	});
+	
+	// 정렬 검색
+	$(document).on('click', 'nav.left_nav a.day_btn', function() {
+		var searchKeyword = $(this).data('searchKeyword');
+		//console.log(searchKeyword);
+		
+		if(searchKeyword != null){
+			walletDetailList(1, searchKeyword);
+		}else{
+			walletDetailList(1);
+		}
 	});
 	
 	// 수입 추가 모달창 오픈
@@ -265,9 +276,7 @@ $(function() {
 	// 결산 보고서 모달창 오픈
 	$('.report_btn').on('click', function() {
 		var walletCode = $('#wallet_detail_section').data('walletCode');
-		console.log('walletCode : ' + walletCode);
-		
-		
+		//console.log('walletCode : ' + walletCode);
 		
 		// innerHTML
 		$($('.report_wrap')).load('/wallet/getWalletReport.jsp', function(data) {
@@ -311,14 +320,14 @@ $(function() {
 });
 
 // 가계부 상세내역 테이블 새로고침
-function walletDetailList(currentPage) {
-	console.log('요청 페이지 :: ' + currentPage);
+function walletDetailList(currentPage, searchKeyword) {
+	//console.log('요청 페이지 :: ' + currentPage);
 	
 	var walletCode = $('#wallet_detail_section').data('walletCode');
-	console.log('walletCode :: ' + walletCode);
+	//console.log('walletCode :: ' + walletCode);
 	
 	// innerHTML
-	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage});
+	$('.recall_wrap').load('/wallet/getWalletList?walletCode=' + walletCode + ' .recall_wrap', {currentPage:currentPage, searchKeyword:searchKeyword});
 }
 
 // 수입/지출 추가 팝업 초기 작업
