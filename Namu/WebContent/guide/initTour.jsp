@@ -41,7 +41,7 @@
 					<h3 class="mb-0">${tour.tourName }</h3>
 					<div class="mb-1 text-muted">${tour.hashtag }</div>
 					<p class="card-text mb-auto">${tour.tourShortDesc }</p>
-					<a href="#" class="stretched-link">이곳에는 별점과 댓글수가 들어갈거야</a>
+					<a href="#" class="stretched-link">Continue reading</a>
 				</div>
 				<div class="col-auto d-none d-lg-block">
 					<img src="${tour.tourThumb }"  width="250" height="250">
