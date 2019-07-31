@@ -6,6 +6,7 @@ DROP TABLE LIKES CASCADE CONSTRAINTS ;
 DROP TABLE PAYLIST CASCADE CONSTRAINTS ;
 DROP TABLE schedule CASCADE CONSTRAINTS ;
 DROP TABLE route CASCADE CONSTRAINTS ;
+DROP TABLE chatbot CASCADE CONSTRAINTS ;
 
 DROP TABLE hashtag CASCADE CONSTRAINTS ;
 DROP TABLE community CASCADE CONSTRAINTS ;
@@ -354,11 +355,11 @@ CREATE TABLE wallet_detail (
 
 
 
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','admin','01090720802','김성용','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','관리자입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니','user1','01040200643','김민희','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','미니입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현','user2','01065601257','박중현','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','중현입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','귤','user3','01067479984','권규리','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','귤입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','상욱','user4','01045919093','한상욱','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','상욱입니다',sysdate,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','admin','01090720802','김성용','1234','920802','M','defaultProfile.jpg','관리자입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니','user1','01040200643','김민희','1234','920802','M','defaultProfile.jpg','미니입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현','user2','01065601257','박중현','1234','920802','M','defaultProfile.jpg','중현입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','귤','user3','01067479984','권규리','1234','920802','M','defaultProfile.jpg','귤입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','상욱','user4','01045919093','한상욱','1234','920802','M','defaultProfile.jpg','상욱입니다',sysdate,null,null,null);
 
 INSERT INTO city VALUES ( '런던','GB',51.5073509,-0.1277583,'영국','GB.png','GBP');
 INSERT INTO city VALUES ( '브라이튼','GB',50.82253000000001,-0.137163,'영국','GB.png','GBP');
