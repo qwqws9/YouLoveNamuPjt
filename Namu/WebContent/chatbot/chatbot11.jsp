@@ -9,7 +9,23 @@
 	<title>Chatbot</title>
 	
 	<script  src="https://code.jquery.com/jquery-3.4.1.slim.js"  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="  crossorigin="anonymous"></script>
-	
+	<style type="text/css">
+	.dd{
+		width: 100%;
+/* 		background: rgba(242, 192, 41, 0.2); */
+		background: none;
+		outline: none;
+		border: 2px solid rgba(163, 218, 255, 0.5);
+		border-radius: 4px;
+		height: 30px;
+	}
+	.dd:hover{
+		box-shadow: 0 0 3pt 2pt red;
+/* 		outline: 2px solid red; */
+		transition: 0.3s;
+		border-radius: 4px;
+	}
+	</style>
 </head>
 
 <body onload="defaultChatBot();">
@@ -17,6 +33,19 @@
 
 
 <div id="chatBotArea">
+</div>
+<div style="text-align: center;">
+	<div>
+		<input class="dd" type="button" id="cata1" name="cata1" value="플래너" onclick="cataPick(1);">
+	</div>
+	<br>
+	<div>
+		<input class="dd" type="button" id="cata2" name="cata2" value="커뮤니티" onclick="cataPick(2);">
+	</div>
+	<br>
+	<div>
+		<input class="dd" type="button" id="cata3" name="cata3" value="동행" onclick="cataPick(3);">
+	</div>
 </div>
 
 

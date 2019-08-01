@@ -24,6 +24,7 @@
 		<result property="regDate" 				column="REG_DATE" 			jdbcType="DATE" />
 		<result property="startBlock" 			column="START_BLOCK" 		jdbcType="VARCHAR" />
 		<result property="endBlock" 			column="END_BLOCK" 			jdbcType="VARCHAR" />
+		<result property="sessionNo" 			column="SESSION_NO" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -122,6 +123,12 @@
 		</where> 
 	 </select>
 	 
+	 <select id="searchUser" parameterType="user" resultMap="userSelectMap">
+	 	SELECT * FROM users
+	 	WHERE NICKNAME LIKE &apos;%${nickname}%&apos; 
+	 
+	 </select>
+	 
 	 <select 	id="getCheckUser"	parameterType="string"	resultType="string">
 		SELECT
 		nickname 		
@@ -134,6 +141,9 @@
 	 	<set>
 	 	<if test="target == 'introduce'">
 	 	INTRODUCE = #{value}
+	 	</if>
+	 	<if test="target == 'session'">
+	 	SESSION_NO = #{value}
 	 	</if>
 	 	<if test="target == 'password'">
 	 	PASSWORD = #{value}

@@ -6,8 +6,9 @@
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">
-			<input type="text" class="date_time" name="regDate" readonly />
-			
+			<input class="date_time" name="regDate">
+			<div class="date_background"></div>
+		
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
 				<option value="EUR" selected>EUR</option>
@@ -28,12 +29,12 @@
 			<span>환율</span>
 			<div>
 				<span><span class="second_unit">EUR</span> 1.0 = KRW <span id="exchange_result"></span></span><br/>
-				<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
+				<!-- <input type="button" class="exchange_rate_btn" value="환율 수동 설정"> -->
 			</div>
 		</div><!-- //apply_exchange_rate -->
 		
 		<div class="item">
-			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20" />
+			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20">
 		</div>
 		
 		<div class="option_wrap clear">

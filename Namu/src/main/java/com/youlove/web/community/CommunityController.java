@@ -245,7 +245,8 @@ public class CommunityController {
 		Community community = communityService.getCommunity(communityCode);
 		Hashtag hashtag = community.getCommunityHashtagCode();
 		communityService.deleteCommunity(communityCode);
-		hashtagService.deleteHashtag(hashtag.getHashtagCode());
+//		nullpointException
+		//hashtagService.deleteHashtag(hashtag.getHashtagCode());
 		System.out.println("\nCommunityController:::daleteCommunity() 끝:::");
 		return modelAndView;
 	}

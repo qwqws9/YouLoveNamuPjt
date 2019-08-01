@@ -24,6 +24,12 @@
 	<!-- Chart.js built files -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 	
+	<!-- jQuery, Moment.js and Date Range Picker's files -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     
@@ -51,26 +57,25 @@
 			<section class="sec_wrap clear" id="wallet_detail_section" data-wallet-code="${param.walletCode}">
 				<h3 class="skip">가계부 내역</h3>
 				<nav class="left_nav">
-					<a class="day_btn rounded-circle${ empty search.searchKeyword ? ' active' : '' }"><span>All</span></a>
-					<a class="day_btn rounded-circle" data-search-keyword="0"><span>준비</span></a>
-					
-					<span class="day_btn">8월</span>
-					<a class="day_btn rounded-circle" data-search-keyword="21"><span>21</span><span class="skip">일</span></a>
-					<a class="day_btn rounded-circle" data-search-keyword="22"><span>22</span><span class="skip">일</span></a>
-					<a class="day_btn rounded-circle" data-search-keyword="23"><span>23</span><span class="skip">일</span></a>
+					<a class="day_btn rounded-circle${ empty search.searchCondition ? ' active' : '' }">All</a>
+					<span>
+						<c:forEach var="wallet" items="${days}">
+							<a class="dates day_btn rounded-circle" data-date="${wallet.regDate}"></a>
+						</c:forEach>
+					</span>
 				</nav><!-- //left_nav -->
 				
 				<div class="right_table">
 					<div class="total_table clear">
 						<div class="total_budget">
-							<span>총 예산</span><span><fmt:formatNumber value="${totalIncome}" pattern="#,###.##" /></span>
+							<span>총 예산</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${totalIncome}" pattern="#,###.##" /></span>
 						</div>
 						<div class="total_price">
 							<div class="total_floating">
-								<span>쓴 돈</span><span><fmt:formatNumber value="${totalExpenditure}" pattern="#,###.##" /></span>
+								<span>쓴 돈</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${totalExpenditure}" pattern="#,###.##" /></span>
 							</div>
 							<div class="total_floating">
-								<span>남은 돈</span><span><fmt:formatNumber value="${balance}" pattern="#,###.##" /></span>
+								<span>남은 돈</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${balance}" pattern="#,###.##" /></span>
 							</div>
 						</div>
 					</div><!-- //total_table -->
@@ -104,7 +109,7 @@
 									<a class="detail_line">
 										<span class="table_col">${status.index+1}</span>
 										<span class="table_col">
-											${wallet.regDate}
+											${wallet.regDate} ${wallet.regTime}
 										</span>
 										<span class="table_col">
 											<c:if test="${wallet.part eq 0}">

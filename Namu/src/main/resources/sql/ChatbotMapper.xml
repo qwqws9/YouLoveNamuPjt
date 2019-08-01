@@ -17,6 +17,7 @@
 		SELECT answer
 		FROM chatbot
 		WHERE keyword = #{keyword}
+		
 	</select>
 	 
 </mapper>

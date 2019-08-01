@@ -6,7 +6,7 @@
 		<div class="scroller">
 			<div class="padding_boxing">
 				<div class="text_width">
-					<div class="input_date">${wallet.regDate}</div>
+					<div class="input_date">${wallet.regDate} ${wallet.regTime}</div>
 					<div class="top_input clear">
 						<div class="input_category">
 							<c:if test="${wallet.category eq 0}"><i class="fas fa-coins"></i></c:if>

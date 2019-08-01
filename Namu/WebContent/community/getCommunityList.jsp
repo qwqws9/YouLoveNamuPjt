@@ -15,25 +15,34 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	<!-- SearchBox -->
 	<link href="/resources/css/search.css" rel="stylesheet">
+	
+	
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	
+	
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+	<script src="/resources/javascript/getProfile.js"></script>
 	<script type="text/javascript" src="/resources/javascript/getCommunityList.js"></script>
 	<!-- 이모티콘 -->
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 	
 	<!-- jQuerty -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	
 	<!-- owlCarousel -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 	
+	
+	
+	
 	<style>
 	
 		.owl-item{
- 		position: relative;
- 		height: 330px; 
- 		border: 1px solid rgba(0, 0, 0, 0.25);
-	 	} */
+	 		position: relative;
+	 		height: 330px; 
+	 		border: 1px solid rgba(0, 0, 0, 0.25);
+	 	}
 	 	.bestTitle{ 
 	 		word-break:break-all; 
 	 		position: absolute; 
@@ -253,11 +262,12 @@
 									</c:if>
 								</div>
 								<div class="col-6 col-md-6">
-									<div class="row" id="profile-box" style="position: relative;">
-										<div id="profile-image">
-											<a href="#"><img src="/resources/images/profile/${community.writer.profileImg }" id="userImage" name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px"></a>
+									<div class="profile-box row"  style="position: relative;">
+									<input type="hidden" value="${community.writer.userCode }">
+										<div class="profile-image">
+											<img src="/resources/images/profile/${community.writer.profileImg }"  name="userImage" alt="글쓴이" class="rounded-circle" width="45px" height="45px">
 										</div>
-										<div id="profile-nickname" style="position: absolute; top: 8px; left: 52px;">
+										<div class="profile-nickname" style="position: absolute; top: 8px; left: 52px;">
 											<div style="font-size: small; color: #3c64a6;">글쓴이</div>
 											<div style="font-size: small; color: #344157;">${community.writer.nickname}</div>
 										</div>
@@ -309,6 +319,8 @@
 		<!-- Container -->
 	</div>
 	<!-- row of Container -->
+	<div class="profilePopup" style="disaply:none;"></div>
+	
 <script>
 	var session = <%=session.getAttribute("user") != null%>
 </script>

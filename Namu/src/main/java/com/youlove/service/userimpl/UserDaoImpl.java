@@ -90,6 +90,11 @@ public class UserDaoImpl implements UserDao{
 	public int updatePolice(Police police) throws Exception {
 		return sqlSession.update("UserMapper.updatePolice",police);
 	}
+
+	@Override
+	public List<User> searchUser(User user) throws Exception {
+		return sqlSession.selectList("UserMapper.searchUser",user);
+	}
 	
 	
 }

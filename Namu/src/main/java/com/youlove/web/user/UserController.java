@@ -102,9 +102,9 @@ public class UserController {
 		}
 		map.clear();
 		map.put("userCode", dbUser.getUserCode());
-		map.put("target", "token");
+		map.put("target", "session");
 		map.put("value", sessionId);
-		//userService.updateUser(map);
+		userService.updateUser(map);
 		Cookie c = new Cookie("users",dbUser.getNickname());
 		//c.setDomain("http://192.168.0.13:8005");
 		c.setMaxAge(365 * 24 * 60 * 60);
@@ -220,11 +220,16 @@ public class UserController {
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response,Map<String,Object> map) throws Exception {
 		
 		System.out.println("/user/logout");
 		
 		Cookie[] cookies = request.getCookies();
+		
+		User dbUser = (User)session.getAttribute("user");
+		
+		
+		
 
 		if(cookies != null){
 
@@ -236,6 +241,11 @@ public class UserController {
 				}
 			}
 		}
+		
+		map.put("userCode", dbUser.getUserCode());
+		map.put("target", "session");
+		map.put("value", "");
+		userService.updateUser(map);
 		
 		session.removeAttribute("user");
 		

@@ -6,6 +6,7 @@ DROP TABLE LIKES CASCADE CONSTRAINTS ;
 DROP TABLE PAYLIST CASCADE CONSTRAINTS ;
 DROP TABLE schedule CASCADE CONSTRAINTS ;
 DROP TABLE route CASCADE CONSTRAINTS ;
+DROP TABLE chatbot CASCADE CONSTRAINTS ;
 
 DROP TABLE hashtag CASCADE CONSTRAINTS ;
 DROP TABLE community CASCADE CONSTRAINTS ;
@@ -14,7 +15,6 @@ DROP TABLE party CASCADE CONSTRAINTS ;
 DROP TABLE message CASCADE CONSTRAINTS ;
 DROP TABLE wallet_detail CASCADE CONSTRAINTS ;
 DROP TABLE wallet CASCADE CONSTRAINTS ;
-DROP TABLE groups CASCADE CONSTRAINTS ;
 DROP TABLE planner CASCADE CONSTRAINTS ;
 DROP TABLE USERS CASCADE CONSTRAINTS ;
 DROP TABLE CITY CASCADE CONSTRAINTS ;
@@ -63,7 +63,11 @@ CREATE SEQUENCE seq_paylist_code                  INCREMENT BY 1 START WITH 1;
 
 
 
-
+CREATE TABLE chatbot(
+   KEYWORD          VARCHAR2(100),
+   KEYWORD_TYPE     CHAR(1),
+   ANSWER           VARCHAR2(1000)
+);
 
 CREATE TABLE users ( 
    USER_CODE              NUMBER(10) PRIMARY KEY   ,
@@ -81,7 +85,8 @@ CREATE TABLE users (
     INTRODUCE             VARCHAR2(1000),
     REG_DATE    DATE,
     START_BLOCK   VARCHAR2(100),
-    END_BLOCK VARCHAR2(100)
+    END_BLOCK VARCHAR2(100),
+    SESSION_NO VARCHAR2(1000)
 );
 
 
@@ -199,7 +204,6 @@ CREATE TABLE planner (
    PRIMARY KEY(planner_code)
 );
 
-
 CREATE TABLE route ( 
    route_code                  NUMBER(10)      NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
@@ -235,16 +239,6 @@ CREATE TABLE schedule(
             ON DELETE CASCADE
 );
 
-CREATE TABLE groups ( 
-   group_code          NUMBER             NOT NULL,
-   planner_code NUMBER(2) REFERENCES planner(planner_code),
-   user_code1    NUMBER ,
-   user_code2    NUMBER ,
-   user_code3    NUMBER ,
-   user_code4    NUMBER ,
-   user_code5    NUMBER ,
-   PRIMARY KEY(group_code)
-);
 
 
 -------------------------------------------------------------중현
@@ -327,45 +321,45 @@ ALTER TABLE community add CONSTRAINT writer_fk FOREIGN KEY(writer)  REFERENCES u
 
 ---------------------------- 규리
 
-
 CREATE TABLE wallet ( 
-	w_code								NUMBER(10)					NOT NULL,
+	w_code							NUMBER(10)					NOT NULL,
 	planner_code						NUMBER(10)					NOT NULL,
 	CONSTRAINT wallet_w_code_pk			PRIMARY KEY (w_code),
-    CONSTRAINT wallet_planner_code_fk	FOREIGN KEY (planner_code)	REFERENCES planner (planner_code)
+	CONSTRAINT wallet_planner_code_fk			FOREIGN KEY (planner_code)			REFERENCES planner (planner_code)
 	ON DELETE CASCADE
 );
 
 
 
 CREATE TABLE wallet_detail ( 
-	w_detail_code				NUMBER(10)			NOT NULL,
-	w_code						NUMBER(10)			NOT NULL,
-	part						CHAR(1)				NOT NULL,
-	money_unit					VARCHAR2(30)		NOT NULL,
-	expression					VARCHAR2(30)		NOT NULL,
-	price						NUMBER(15, 2)		NOT NULL,
-	krw_price					NUMBER(15, 2)		NOT NULL,
-	reg_date					VARCHAR2(20)		NOT NULL,
-	item						VARCHAR2(50),
-	content						VARCHAR2(150),
-	pay_option					CHAR(1)				DEFAULT 0,
-	exchange_rate				NUMBER(10, 2),
-	category					CHAR(1)				DEFAULT 0,
+	w_detail_code						NUMBER(10)					NOT NULL,
+	w_code							NUMBER(10)					NOT NULL,
+	part							CHAR(1)					NOT NULL,
+	money_unit						VARCHAR2(30)					NOT NULL,
+	expression						VARCHAR2(30)					NOT NULL,
+	price							NUMBER(15, 2)					NOT NULL,
+	krw_price						NUMBER(15, 2)					NOT NULL,
+	reg_date						VARCHAR2(15)					NOT NULL,
+	reg_time						VARCHAR2(10)					NOT NULL,
+	item							VARCHAR2(50),
+	content							VARCHAR2(1000),
+	pay_option						CHAR(1)					DEFAULT 0,
+	exchange_rate						NUMBER(10, 2),
+	category						CHAR(1)					DEFAULT 0,
 	w_image						VARCHAR2(1000),
-	payer						NUMBER(10),
 	CONSTRAINT wallet_detail_w_detail_code_pk		PRIMARY KEY (w_detail_code),
-    CONSTRAINT wallet_detail_w_code_fk				FOREIGN KEY (w_code)			REFERENCES wallet (w_code)
-    ON DELETE CASCADE
+	CONSTRAINT wallet_detail_w_code_fk			FOREIGN KEY (w_code)				REFERENCES wallet (w_code)
+	ON DELETE CASCADE
 );
 
 
 
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','admin','01090720802','김성용','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','관리자입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니','user1','01040200643','김민희','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','미니입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현','user2','01065601257','박중현','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','중현입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','귤','user3','01067479984','권규리','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','귤입니다',sysdate,null,null);
-INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','상욱','user4','01045919093','한상욱','1234','920802','M','7877e8c81ac0a942265a9b65a049b784.jpg','상욱입니다',sysdate,null,null);
+
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','admin','관리자','admin','01090720802','김성용','1234','920802','M','defaultProfile.jpg','관리자입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니','user1','01040200643','김민희','1234','920802','M','defaultProfile.jpg','미니입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현','user2','01065601257','박중현','1234','920802','M','defaultProfile.jpg','중현입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','귤','user3','01067479984','권규리','1234','920802','M','defaultProfile.jpg','귤입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','상욱','user4','01045919093','한상욱','1234','920802','M','defaultProfile.jpg','상욱입니다',sysdate,null,null,null);
 
 INSERT INTO city VALUES ( '런던','GB',51.5073509,-0.1277583,'영국','GB.png','GBP');
 INSERT INTO city VALUES ( '브라이튼','GB',50.82253000000001,-0.137163,'영국','GB.png','GBP');
@@ -503,4 +497,3 @@ INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
 
 
 commit;
-
