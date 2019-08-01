@@ -111,13 +111,16 @@
 								
 								
 							<div class="row">
-								<div class="col-lg-3 offset-2" style="padding-top: 7px;">
+								<div class="col-md-3 col-lg-3" style="padding-top: 7px;">
+									<button type="button" style="background: none; border: none; cursor: pointer;" onclick="javascript:messageBox()"><i class="fas fa-envelope fa-lg"></i></button>
+								</div>
+								<div class="col-md-3 col-lg-3" style="padding-top: 7px;">
 									<button type="button" style="background: none; border: none; cursor: pointer;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-address-book fa-lg"></i></button>
 								</div>
-								<div class="col-lg-3" style="padding-top: 7px;">
+								<div class="col-md-3 col-lg-3" style="padding-top: 7px;">
 									<button type="button" style="background: none; border: none; cursor: pointer;" onclick="location.href='/planner/getPlannerList'"><i class="far fa-calendar fa-lg" ></i></button>
 								</div>
-								<div class="col-lg-3" style="padding-top: 7px;">
+								<div class="col-md-3 col-lg-3" style="padding-top: 7px;">
 									<button type="button" id="wallet-btn" style="background: none; border: none; cursor: pointer;"><i class="fas fa-money-check-alt fa-lg"></i></button>
 								</div>
 							</div>

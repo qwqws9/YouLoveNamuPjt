@@ -30,10 +30,10 @@
 	<style>
 	
 		.owl-item{
- 		position: relative;
- 		height: 330px; 
- 		border: 1px solid rgba(0, 0, 0, 0.25);
-	 	} */
+	 		position: relative;
+	 		height: 330px; 
+	 		border: 1px solid rgba(0, 0, 0, 0.25);
+	 	}
 	 	.bestTitle{ 
 	 		word-break:break-all; 
 	 		position: absolute; 
