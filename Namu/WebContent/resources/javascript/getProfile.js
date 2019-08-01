@@ -137,6 +137,8 @@ function centerPopUp(modal, modalWidth, modalHeight) {
 }
 	
 function getUserProfile(codeUser) {
+	console.log('여기로 들어오ㅑ아아아앙 : ' + codeUser)
+	//$('.profilePopup').empty();
 	$('.profilePopup').load('/user/searchUserClick/'+codeUser,function(){
 		//alert("로드완료");
 		$(".profilePopup").css('display','block');

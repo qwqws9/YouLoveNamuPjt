@@ -126,6 +126,11 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public List<User> searchUser(User user) throws Exception {
+		return userDao.searchUser(user);
+	}
+
 	
 //	public boolean checkDuplication(String userId) throws Exception {
 //		boolean result=true;

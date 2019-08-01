@@ -76,9 +76,9 @@ background: none; border: 0 none;
 body {
   margin: 100px;
 }
-
 .pop-layer .pop-container {
   padding: 20px 25px;
+ 
 }
 
 .pop-layer p.ctxt {
@@ -101,8 +101,9 @@ body {
   left: 50%;
   width: 410px;
   height: auto;
-	background-color: #a3daff; 
-/*   border: 5px solid #3571B5; */
+background-color: white; 
+border-radius:5px ;
+ border: 5px solid #a3daff; 
   z-index: 10;
 }
 
@@ -145,23 +146,32 @@ a.btn-layerClose {
 
 a.btn-layerClose:hover {
 /*   border: 1px solid #091940; */
-  background-color: #232c37;
+  background-color: #cbcbcb;
   color: #fff;
 }
-
+.input{
+		outline:2px solid ##a3daff;
+	}
+	$(':focus').blur();  
+.input:focus {outline:2px solid ##a3daff;}
+	
+	h5 {
+    width: 100%;
+    text-align:center;
+}
 #submit, #reset, #close{
   display: inline-block;
   height: 25px;
   padding: 0 14px 0;
  /*  border: 1px solid #304a8a; */
-  background-color: #cbcbcb;
+  background-color: #a3daff;
   font-size: 13px;
   color: #fff;
   line-height: 25px;}
   
 #submit:hover, #reset:hover, #close:hover {
 /*   border: 1px solid #091940; */
-  background-color: #232c37;
+  background-color: #f2c029;
   color: #fff;
 }
 
@@ -432,11 +442,6 @@ var departDate=${planner.departDate};
 		  });
 		  
 		
-</script>
-
-
-
-<script type="text/javascript">
  $(function() {
   $("#color").spectrum({
    flat: false,

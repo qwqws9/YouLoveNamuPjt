@@ -45,7 +45,7 @@ public interface PlannerService {
 	
 	public Schedule getSchedule(int scheCode) throws Exception;	//ok
 	
-	public void deleteSchedule(int plannerCode) throws Exception;
+	public void deleteSchedule(int scheCode) throws Exception;
 	
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception;	//ok route, schedule 한번에
 

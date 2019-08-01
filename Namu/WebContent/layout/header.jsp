@@ -14,6 +14,7 @@
 	<script src="/resources/javascript/sidebar.js"></script>
   	
 	<script>
+
 	//채팅 팝업
 	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
 	var chat = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
@@ -33,14 +34,13 @@
 	function onChatbot(){
 		$(document).ready(function(){
 			$("#chat").on("click", function(){
-				popup = window.open(chatbot, "popup_chat", "width=400, height=430, location=no, left=1000, top=70")
+				popup = window.open(chatbot, "popup_chat", "width=450, height=451, location=no, left=1000, top=70")
 				/* popup = window.open(url, "popup_chat", "resizable")
 				popup.resizeTo(450,700);
 				popup.resizeBy(-100,-100); */
 			});
 		});
 	};
-	
 	
 	</script>
 </head>
@@ -57,10 +57,13 @@
 	<!-- 사이드바 -->
 	<div id="mySidebar" class="sidebar">
 		<div class="container">
-			<div class="col-lg-3" style="padding-top: 23px;">
-				<c:if test ="${!empty user }">
-					<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button>
-				</c:if>
+			<div class="col-lg-6" style="padding-top: 65px;">
+<%-- 				<c:if test ="${!empty user }"> --%>
+<!-- <!-- 					<button type="button" style="background: none; border: none;" onclick="location.href='/timeline/getTimelineList'"><span class="badge" style="background: #ff7d75; color: white;">4</span></button> -->
+<!-- 					<button type="button" style="border: none;" class="btn btn-outline-primary" onclick="location.href='/timeline/getTimelineList'"> -->
+<!-- 						  <div>Timeline <div class="timelineCount badge badge-light">9</div></div> -->
+<!-- 					</button> -->
+<%-- 				</c:if> --%>
 			</div>
 			
 		  	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -96,6 +99,7 @@
 										</button>
 										<div class="dropdown-menu">
 									  		<a class="dropdown-item" href="/user/getUser">내 정보</a>
+										    <a class="dropdown-item" href="/timeline/getTimelineList">내 활동알림</a>
 										    <a class="dropdown-item" href="/user/getPayList">결제내역</a>
 										    <c:if test="${user.role eq 'admin' }">
 										    <div class="dropdown-divider"></div>
@@ -132,7 +136,7 @@
 						<div class="row"><!-- 플래너 -->
 							<div class="col-lg-12 text-left">
 								<div class="accordion" id="Planner">
-							        <button class="btn" type="button" data-toggle="collapse" data-target="#PlannerMenu" aria-expanded="true" aria-controls="collapseOne">
+							        <button class="accordionAuto btn" type="button" data-toggle="collapse" data-target="#PlannerMenu" aria-expanded="true" aria-controls="collapseOne">
 							    		<strong><span>플래너</span></strong>
 							        </button>
 								    <div id="PlannerMenu" class="collapse" aria-labelledby="headingOne" data-parent="#Planner">
@@ -149,7 +153,7 @@
 						<div class="row"><!-- 커뮤니티 -->
 							<div class="col-lg-12 text-left">
 								<div class="accordion" id="Community">
-							        <button class="btn" type="button" data-toggle="collapse" data-target="#CommunityMenu" aria-expanded="true" aria-controls="collapseOne">
+							        <button class="accordionAuto btn" type="button" data-toggle="collapse" data-target="#CommunityMenu" aria-expanded="true" aria-controls="collapseOne">
 							    		<strong><span>커뮤니티</span></strong>
 							        </button>
 								    <div id="CommunityMenu" class="collapse" aria-labelledby="headingOne" data-parent="#Community">
@@ -166,7 +170,7 @@
 						<div class="row"><!-- 동행 -->
 							<div class="col-lg-12 text-left">
 								<div class="accordion" id="Party">
-							        <button class="btn" type="button" data-toggle="collapse" data-target="#PartyMenu" aria-expanded="false" aria-controls="collapseOne">
+							        <button class="accordionAuto btn" type="button" data-toggle="collapse" data-target="#PartyMenu" aria-expanded="false" aria-controls="collapseOne">
 							    		<strong><span>동행</span></strong>
 							        </button>
 								    <div id="PartyMenu" class="collapse" aria-labelledby="headingOne" data-parent="#Party">
@@ -183,7 +187,7 @@
 						<div class="row"><!-- 여행 가이드 -->
 							<div class="col-lg-12 text-left">
 								<div class="accordion" id="Guide">
-							        <button class="btn" type="button" data-toggle="collapse" data-target="#GuideMenu" aria-expanded="false" aria-controls="collapseOne">
+							        <button class="accordionAuto btn" type="button" data-toggle="collapse" data-target="#GuideMenu" aria-expanded="false" aria-controls="collapseOne">
 							    		<strong><span>여행 가이드</span></strong>
 							        </button>
 								    <div id="GuideMenu" class="collapse" aria-labelledby="headingOne" data-parent="#Guide">

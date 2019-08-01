@@ -78,14 +78,14 @@ public class PlannerRestController {
              lng = ((Route) rlist.get(i)).getLng();
              cityOrder=((Route) rlist.get(i)).getCityOrder();
              stayDay=((Route) rlist.get(i)).getStayDay();
-             String allDay = "true";
+            
              
              map.put("city", city);
              map.put("lat", lat);
              map.put("lng", lng);
              map.put("cityOrder",cityOrder);
              map.put("stayDay",stayDay);
-             map.put("allDay",allDay);
+            
              result.add(map);           
            }
   return result;
@@ -187,6 +187,7 @@ public class PlannerRestController {
 	@RequestMapping( value="getScheduleList", method=RequestMethod.POST) 
 	public  List<Map<String, Object>> getScheduleList(HttpSession session) throws Exception{
 	
+	
 	System.out.println("PlannerRestController------------------getScheduleList :post");
 	
 	//plannerCode 받아오기
@@ -203,6 +204,8 @@ public class PlannerRestController {
      String color = "";
      
      rlist =  plannerService.getRouteList(plannerCode);
+     System.out.println(plannerCode);
+     System.out.println(rlist.size());
 		for(int i=0; i<rlist.size(); i++){   
 	     	Map<String, Object> map = new HashMap<String, Object>();
 	        title = ((Route) rlist.get(i)).getCityName();   
@@ -272,5 +275,16 @@ public class PlannerRestController {
 		return plannerService.getSchedule(scheCode);
 		}
 
+	 
+	@RequestMapping(value = "/json/updateSchedule/{scheCode}", method = RequestMethod.GET)
+	public Schedule updateSchedule(@PathVariable int scheCode) throws Exception{
+
+		System.out.println("plannerController------------------------updateSchedule: GET");
+		
+		return plannerService.getSchedule(scheCode);
+	}
+	
+
+	
 	}
 

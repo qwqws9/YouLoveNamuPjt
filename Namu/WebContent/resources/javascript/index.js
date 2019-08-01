@@ -11,6 +11,12 @@ $(function(){
 		 
 		});
 	
+	$('.nodeTest').on('click',function(){
+		console.log("현재접속 호출 전");
+		currentUser('1');
+		console.log("현재접속 호출 후");
+	})
+	
 	// 날씨 init
 	getWeather("37.499427","127.029422");
 	// 37.499427, 127.029422

@@ -106,13 +106,14 @@ public class UserRestController {
 		System.out.println("/user/json/multipleAdd");
 		List<User> list = new ArrayList<User>();
 		boolean continueGo = true;
-		
+		System.out.println("여러명 친구 : "+map.get("multipleUser"));
 		String[] mul = map.get("multipleUser").split("#");
 		String sessionUser = map.get("sessionUser");
 		for(int i = 1; i< mul.length; i++) {
 			if(sessionUser.equals(mul[i])) {
 				continue;
 			}else {
+				System.out.println("222222222222222222222222222222222222");
 				continueGo = true;
 				//이미 등록된 친구인지 판별
 				friend.setUserCode(Integer.parseInt(sessionUser));
@@ -128,6 +129,7 @@ public class UserRestController {
 				}
 				
 				if(continueGo) {
+					System.out.println("3333333333333333333333333333333333333");
 					//타임라인에 신청중인지 판별
 					List<Timeline> timelineList = timelineService.getTimelineList(new User(Integer.parseInt(sessionUser)));
 					
@@ -143,6 +145,7 @@ public class UserRestController {
 					}
 				}
 				if(continueGo) {
+					System.out.println("444444444444444444444444444444444444444444");
 					timeline.setFromUser(new User(Integer.parseInt(sessionUser)));
 					timeline.setToUser(new User(Integer.parseInt(mul[i])));
 					timeline.setProtocol(map.get("protocol"));
@@ -228,14 +231,14 @@ public class UserRestController {
 	
 	
 	@RequestMapping(value="json/getUser", method=RequestMethod.POST)
-	public User getUser(@RequestBody Map<String,Object> map) throws Exception {
+	public List<User> getUser(@RequestBody User user) throws Exception {
 		
 		System.out.println("/user/json/getUser");
 		
-		User user = userService.getUser(map);
+		List<User> listUser = userService.searchUser(user);
 	
 		
-		return user;
+		return listUser;
 	}
 
 	
@@ -415,15 +418,17 @@ public class UserRestController {
 	
 	 @RequestMapping(value="/json/updateImg/{userCode}", method=RequestMethod.POST)
 	   public User updateImg(MultipartFile file,HttpServletRequest request,@PathVariable String userCode,Map<String,Object> map,HttpSession session) throws Exception{
-	      
+	      String fileName = "defaultProfile.jpg";
 	      if(!file.isEmpty() && file != null){
-	         String fileName = FileNameUUId.convert(file, "profile", request);
+	        fileName = FileNameUUId.convert(file, "profile", request);
 	         System.out.println(fileName + "         파일이름 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	         map.put("userCode", userCode);
-	         map.put("target", "img");
-	         map.put("value", fileName);
+	        
 	      }
-//	      
+	      
+	      map.put("userCode", userCode);
+	      map.put("target", "img");
+	      map.put("value", fileName);
+	      
 	      
 	      boolean result = userService.updateUser(map);
 	      User user;

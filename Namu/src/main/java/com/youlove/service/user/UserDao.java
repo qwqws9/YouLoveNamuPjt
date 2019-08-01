@@ -38,4 +38,6 @@ public interface UserDao {
 	
 	public int updatePolice(Police police) throws Exception;
 	
+	public List<User> searchUser(User user) throws Exception;
+	
 }

@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.User;
+import com.youlove.service.domain.Wallet;
 import com.youlove.common.FileNameUUId;
 import com.youlove.common.Page;
 import com.youlove.common.Search;
@@ -100,12 +101,20 @@ public class PlannerController {
 	
 
 	@RequestMapping( value="updatePlanner", method=RequestMethod.GET )
-	public String updatePlanner( @RequestParam("plannerCode") int plannerCode , Model model ) throws Exception{
+	public String updatePlanner( @RequestParam("plannerCode") int plannerCode , MultipartFile file, HttpServletRequest request, Model model ) throws Exception{
 
 		System.out.println("plannerController ---------------------updatePlanner:GET ");
 		System.out.println(plannerCode);
 		Planner planner = plannerService.getPlanner(plannerCode);
-		
+		if(file != null){
+			String fileName = FileNameUUId.convert(file, "planner", request);
+			
+			planner.setPlannerImage(fileName);
+		}else{
+			
+			planner.setPlannerImage(planner.getPlannerImage());
+		}
+
 		model.addAttribute("planner", planner);
 
 		return "forward:/planner/updatePlanner.jsp";
@@ -133,15 +142,7 @@ public class PlannerController {
 	
 	}
 	
-//	@RequestMapping(value="deleteSchedule", method=RequestMethod.GET)
-//	public String deleteSchedule(@RequestParam("plannerCode") int plannerCode )throws Exception{
-//		System.out.println("plannerController -----------------------deletePlanner:GET ");
-//
-//		plannerService.deleteSchedule(plannerCode);
-//	
-//		return "forward:/planner/deleteRoute?plannerCode="+plannerCode;
-//	}
-//	
+	
 
 	@RequestMapping(value="deletePlanner", method=RequestMethod.GET)
 	public String deletePlanner(@RequestParam("plannerCode") int plannerCode,Model model)throws Exception{
@@ -271,12 +272,12 @@ public class PlannerController {
 		String departDate=planner.getDepartDate();
 		System.out.println(departDate);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date=null;
 		
 		try {
-			date=dateFormat.parse(departDate);  
-			
+			date=dateFormat.parse(departDate+"090000");  
+		
 		}catch(ParseException e) {
 			e.printStackTrace();
 		}
@@ -304,6 +305,9 @@ public class PlannerController {
 		//String endDate = dateFormat.format(cal.getTime());
 		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+//		cal.add(Calendar.HOUR,9); 
+//		cal.add(Calendar.MINUTE,9); 
+//		cal.add(Calendar.SECOND,9); 
 		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
@@ -356,7 +360,7 @@ public class PlannerController {
 		String departDate=planner.getDepartDate();
 		System.out.println("여행출발일  :?"+departDate);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date=null;
 		
 		try {
@@ -367,6 +371,7 @@ public class PlannerController {
 		}
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(date);
+
 		
 		//addRoute jsp form value 배열에 담기. 
 		String[] cityNames = request.getParameterValues("cityName");
@@ -394,6 +399,9 @@ public class PlannerController {
 		
 		route.setStartDate(cal.getTime());
 		cal.add(Calendar.DATE, Integer.parseInt(stayDays[i]));
+		cal.add(Calendar.HOUR,9); 
+		cal.add(Calendar.MINUTE,9); 
+		cal.add(Calendar.SECOND,9); 
 		route.setEndDate(cal.getTime());
 		
 		plannerService.addRoute(route);
@@ -407,7 +415,7 @@ public class PlannerController {
 	//3. schedule 
 
 	@RequestMapping(value = "addSchedule")
-	public String addSchedule(HttpSession session, HttpServletRequest request, HttpServletResponse response,@ModelAttribute("schedule") Schedule schedule, @ModelAttribute("route") Route route) throws Exception{
+	public String addSchedule(HttpSession session, HttpServletRequest request,@ModelAttribute("schedule") Schedule schedule) throws Exception{
 
 		System.out.println("PlannerController------------------- addSchedule :POST start");
 		//session에 담긴 plannerCode 받아와서 set
@@ -415,9 +423,40 @@ public class PlannerController {
 		System.out.println(plannerCode);
 		schedule.setPlannerCode(plannerCode);
 		
-		plannerService.addSchedule(schedule);
+		//시간 설정해서 등록하기. 
+				String timeHour= request.getParameter("timeHour");
+				String timeMin= request.getParameter("timeMin");
+				String scheDay= request.getParameter("scheDay");
+				System.out.println(scheDay.substring(0, 3)+scheDay.substring(5, 6)+scheDay.substring(8, 9)+" "+timeHour+""+timeMin);
+//			
+//				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+//				Date date=null;
+//
+//				try {
+//					date=dateFormat.parse(scheDay.substring(0, 3)+scheDay.substring(5, 6)+scheDay.substring(8, 9)+timeHour+timeMin+"00");
+//
+//				}catch(ParseException e) {
+//					e.printStackTrace();
+//				}
+//				Calendar cal=Calendar.getInstance();
+//				cal.setTime(date);
+//
+//				schedule.setScheDay(cal.getTime());
+//			
+//				plannerService.addSchedule(schedule);
 
 		return "forward:/planner/getScheduleList.jsp";
 		}
+
+	@RequestMapping(value="deleteSchedule", method=RequestMethod.GET)
+	public String deleteSchedule(@RequestParam("scheCode") int scheCode ,Model model)throws Exception{
+		System.out.println("plannerController -----------------------deleteSchedule:GET ");
+
+		Schedule schedule = plannerService.getSchedule(scheCode);
+		model.addAttribute("schedule", schedule);
+		
+		plannerService.deleteSchedule(scheCode);
 	
+		return "forward:/planner/getScheduleList.jsp";
+	}
 }

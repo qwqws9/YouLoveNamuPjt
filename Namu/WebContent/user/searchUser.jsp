@@ -84,6 +84,7 @@ $(function(){
 	$(document).on('click','.searchAddFriend',function(){
 		var multipleUser;
 		if($('.uploadNick').length === 0) {
+			alert('회원을 한명이상 선택해주세요.')
 			return;
 		}else {
 			multipleUser = '';
@@ -92,6 +93,7 @@ $(function(){
 				multipleUser += '#'+$(this).children().next().val().trim();
 			});
 			multipleAdd(multipleUser,'2');
+			alert('초대메시지를 보냈습니다.')
 		}
 		//alert(multipleUser);
 			
@@ -273,8 +275,7 @@ $(function(){
 		$('.userList').empty();
 		var nick = $(this).val();
 		if(nick != '') {
-			$('.userList').empty();
-			setTimeout(searchUser(nick),100);
+			searchUser(nick);
 		}else {
 			return;
 		}
@@ -284,13 +285,14 @@ $(function(){
 $(document).on('click','.userCheck',function(){
 	var nick = $(this).next().text().trim();
 	//console.log('코드코드'+$(this).next().children().next().val().trim());
-	var userCode = $(this).next().children().next().val().trim();
+	var userCode = $(this).next().children().next().next().val().trim();
 	var check = true;
 	$.each($('.uploadNick'),function(){
-		console.log('들어옴')
+		//console.log('들어옴')
 		var nick2 = $(this).text().trim();
-		console.log(nick);
-		console.log(nick2);
+		//console.log(nick);
+		//console.log(nick2);
+		//console.log(userCode);
 		
 		if(nick == nick2) {
 			check = false;
@@ -330,7 +332,7 @@ $(document).on('click','.getUserCode',function(){
 		url : '/user/json/getUser',
 		method : 'post',
 		data : JSON.stringify({
-			nick : nick
+			nickname : nick
 		}),
 		headers : {
 			"Accept" : "application/json",
@@ -338,16 +340,25 @@ $(document).on('click','.getUserCode',function(){
 		},
 		success : function(data, status) {
 			if(data != '') {
-				//alert("데이터있음");
-				$('.userList').append(
-						'<div class="userNick">'
-					    +' <input class="userCheck" type="checkbox">'
-					    +'<button class="getUserCode" style="border:none; background: none">'
-					     +' <small>'+data.nickname+'</small>'
-					     +'<input type="hidden" value="'+data.userCode+'"'
-					     +'</button>'
-					      +' </div>'
-				);
+				$('.userList').empty();
+				
+				$.each(data,function(index,item){
+					$('.userList').append(
+							'<div class="userNick'+index+'">'
+						    +' <input class="userCheck" type="checkbox">'
+						    +'<button class="getUserCode" style="border:none; background: none">'
+						     +' <small>'+item.nickname+'</small>&nbsp;&nbsp;<i class="fas fa-user-circle" style="color:darkgray;"></i>'
+						     +'<input type="hidden" value="'+item.userCode+'"'
+						     +'</button>'
+						      +' </div>'
+					);
+					//현재 접속중인 사람 체크 후 컬러 변경
+					//setTimeout(currentUser(item.userCode,'userNick'+index),5000);
+					setTimeout(function(){
+						currentUser(item.userCode,'userNick'+index);
+					},100)
+				})
+				
 			}	else {
 				//alert("데이터없음");
 			}

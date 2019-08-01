@@ -172,8 +172,8 @@ import com.youlove.service.user.UserDao;
 		}
 		
 		@Override
-		public void deleteSchedule(int plannerCode) throws Exception {
-			plannerDao.deleteSchedule(plannerCode);
+		public void deleteSchedule(int scheCode) throws Exception {
+			plannerDao.deleteSchedule(scheCode);
 		}
 		
 		@Override
