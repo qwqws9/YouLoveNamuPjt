@@ -110,8 +110,13 @@
 	<div class="wrap">
 	<h2 class="wallet_title"><span> 여행 플래너 공유 </span></h2>
 	<section class="wallet_box">
-	 <div class="square_wrap clear" id="bestPlanner">
+	<div class="square_wrap clear" id="bestPlanner">
+	</div>
 	 
+	<div class="row">
+		<div class="col-md-12 col-lg-12">
+	 		<jsp:include page="/community/bestCommunity.jsp"></jsp:include>
+	 	</div>
 	 </div>
 	 
 </section>
