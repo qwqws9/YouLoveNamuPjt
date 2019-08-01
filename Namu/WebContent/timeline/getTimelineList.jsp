@@ -255,7 +255,7 @@ $(function(){
 			"Content-Type" : "application/json"
 		},
 		success : function(data,status){
-				alert(data);
+				//alert(data);
 		}
 	})
 	
@@ -278,7 +278,7 @@ $.ajax ({
 		"Content-Type" : "application/json"
 	},
 	success : function(data,status){
-			alert(data);
+			//alert(data);
 	}
 })
 

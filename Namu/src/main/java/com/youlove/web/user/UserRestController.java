@@ -369,8 +369,8 @@ public class UserRestController {
 			map.put("target", "email");
 		
 		}else if(target.equals("phone")) {
-//			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
-			boolean result = true;
+			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
+//			boolean result = true;
 			System.out.println(result);
 			if(result == true) {
 				map.put("target", "phone");

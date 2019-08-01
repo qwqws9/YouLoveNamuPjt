@@ -249,12 +249,12 @@ $(function(){
 			success : function(data,status) {
 				$.each(data,function(index,item){
 					//alert(item.friendCode.profileImg);
-					
+					// 메모 삭제 아이콘 &nbsp;&nbsp;&nbsp;<i class="friendMemoDelete far fa-trash-alt"></i>
 					$('button[class^=friendRole'+item.friendRole).after(
 					'<div class="friend_click" style="padding-top:10px;">'
 					+'<div><img class="rounded-circle" height="50" width="55" style="float:left; margin-left: 5px;" src="/resources/images/profile/'+item.friendCode.profileImg+'"></img>'
-					+'<div style="float:left; margin-left: 15px;"><strong>'+item.friendCode.nickname+'</strong>'
-					+'<div class="friend_memo" style="font-size: 13px;">'+item.memo+'&nbsp;&nbsp;<i class="friendMemoEdit far fa-edit" style="color:black;"></i>&nbsp;&nbsp;&nbsp;<i class="friendMemoDelete far fa-trash-alt"></i></div></div>'
+					+'<div style="float:left; margin-left: 15px;"><strong>'+item.friendCode.nickname+'&nbsp;&nbsp;<i class="currentUserFriend'+index+ ' fas fa-user-circle" style="color:darkgray;"></i></strong>'
+					+'<div class="friend_memo" style="font-size: 13px;">'+item.memo+'&nbsp;&nbsp;<i class="friendMemoEdit far fa-edit" style="color:black;"></i></div></div>'
 					+'<div style="float:right;" class="custom-control custom-checkbox">'
 					 +' <input type="checkbox" class="custom-control-input">'
 					+'</div></div>'
@@ -263,7 +263,12 @@ $(function(){
 					+'<input type="hidden" value="'+item.friendNo+'">'
 					+'<input type="hidden" value="'+item.friendRole+'"></span></div></div>'
 					);
-				})
+					//console.log(index+' : '+item.friendCode.userCode)
+					setTimeout(function(){
+						currentUser(item.friendCode.userCode,'currentUserFriend'+index);
+					},200)
+				});
+				
 			}
 			
 		});// end ajax
@@ -356,7 +361,7 @@ $(document).on('click','.getUserCode',function(){
 					//setTimeout(currentUser(item.userCode,'userNick'+index),5000);
 					setTimeout(function(){
 						currentUser(item.userCode,'userNick'+index);
-					},100)
+					},200)
 				})
 				
 			}	else {

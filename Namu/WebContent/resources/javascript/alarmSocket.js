@@ -63,9 +63,20 @@ $(function(){
 		    	//notify(data);
 		    	//alert(data.message);
 		    	//console.log(data.message);
+		    	var location = data.loc.substr(0,8);
+		    	console.log('1타임라인 위치 : '+location);
+		    	console.log('트루  : ? '+data.message)
 		    	if(data.message) {
 		    		//console.log('한명은 들어오지마');
-		    		$('.'+data.loc).children().next().children().next().css('color','lawngreen');
+		    		if(location == 'userNick'){
+		    			console.log('2타임라인 위치 : '+location);
+		    			//회원검색으로 보냄
+		    			$('.'+data.loc).children().next().children().next().css('color','lawngreen');
+		    		}else {
+		    			console.log('3타임라인 위치 : '+location);
+		    			//친구목록으로 보냄
+		    			$('.'+data.loc).css('color','lawngreen');
+		    		}
 		    	}
 		    	//console.log(data.message);
 		    });

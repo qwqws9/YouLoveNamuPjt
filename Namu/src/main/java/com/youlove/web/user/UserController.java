@@ -250,7 +250,7 @@ public class UserController {
 		
 		session.removeAttribute("user");
 		
-		return "/";
+		return "forward:/user/deleteToken";
 	}
 	
 	@RequestMapping("/getPoliceList")
