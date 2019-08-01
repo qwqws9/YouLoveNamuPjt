@@ -107,14 +107,7 @@ public class PlannerController {
 		System.out.println("plannerController ---------------------updatePlanner:GET ");
 		System.out.println(plannerCode);
 		Planner planner = plannerService.getPlanner(plannerCode);
-//		if(file != null){
-//			String fileName = FileNameUUId.convert(file, "planner", request);
-//			
-//			planner.setPlannerImage(fileName);
-//		}else{
-//			
-//			planner.setPlannerImage(planner.getPlannerImage());
-//		}
+
 
 		model.addAttribute("planner", planner);
 
@@ -127,16 +120,21 @@ public class PlannerController {
 			MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
 
 		System.out.println("plannerController -----------------------updatePlanner:POST ");
-		
-		String fileName = FileNameUUId.convert(file, "planner", request);
-		planner.setPlannerImage(fileName);
 	
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
 		System.out.println(planner);
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
 		System.out.println(planner.getPlannerCode());
-
+		
+		if(file != null ){
+			String fileName = FileNameUUId.convert(file, "planner", request);
+			
+			planner.setPlannerImage(fileName);
+		}else{
+			
+			planner.setPlannerImage(planner.getPlannerImage());
+		}
 		plannerService.updatePlanner(planner);
 		
 		return "forward:/planner/updateRoute.jsp";
