@@ -85,7 +85,10 @@
 
 $(document).on("click",".like",function(){  
 	var userCode = $('#sessionId').val();
-	
+	if(userCode == '') {
+		alert('로그인 후 사용하세요.');
+		return;
+	}
 		console.log($(this).attr('class'));
 //		if($(this).children().attr('class') == 'fas fa-heart') {
 		if($(this).attr('class') == 'like activeLike') {
@@ -324,7 +327,12 @@ function deleteLike(commentCode,likeName) {
 	});
 	
 			
-	$(document).on("click",".reply",function(){ 
+	$(document).on("click",".reply",function(){
+		var sessionId = $('#sessionId').val().trim();
+		if(sessionId == '') {
+			alert('로그인 후 사용하세요.');
+			return;
+		}
 		$('.comment').remove();
 		$('.edit').remove();
 		
@@ -358,7 +366,13 @@ function deleteLike(commentCode,likeName) {
 	});
 	
 	//댓글 등록
-	$(document).on("click","button:contains('등록')",function(){ 
+	$(document).on("click","button:contains('등록')",function(){
+		var sessionId = $('#sessionId').val().trim();
+		if(sessionId == '') {
+			alert('로그인 후 사용하세요.');
+			return;
+		}
+		
 		if($(this).prev().val().length < 1) {
 			alert('내용을 입력하세요');
 			return;
@@ -423,6 +437,11 @@ function deleteLike(commentCode,likeName) {
 		
 	//닉네임 클릭시 회원코드로 프로필 출력
 	$(document).on("click",".prof",function(){ 
+		var sessionId = $('#sessionId').val().trim();
+		if(sessionId == '') {
+			alert('로그인 후 사용하세요.');
+			return;
+		}
 		console.log("유저코드 : " + $(this).parents('div').next().val());
 		getProfile($(this).parents('div').next().val());
 		

@@ -38,10 +38,10 @@
 	//카테고리 전역변수 선언
 	var keywordTypeNum=0;
 	//챗봇 프로필
-	var chatbotProfile = "../resources/images/youloveplan_logo.png";
+	var chatbotProfile = "../resources/images/favicon.ico";
 	//비회원 공통 프로필
 	//var userProfile= "../resources/images/captcha/stitch.png";
-	var userProfile= "../resources/images/profile/1.jpg";
+	var userProfile= "../resources/images/blank-profile.png";
 		
 	//시간 설정
 	function formatAMPM(date) {
@@ -66,10 +66,10 @@
 	    if (who == "system"){
 	        control = '<li style="width:100%">' +
 	                        '<div class="msj macro">' +
-	                        '<div class="avatar"><img class="img-circle" style="width:100%;" src="'+ chatbotProfile +'" /></div>' +
+	                        '<div class="avatar"><img class="img-circle" style="width:60%;" src="'+ chatbotProfile +'" /></div>' +
 	                            '<div class="text text-l">' +
 	                                '<p>'+ text +'</p>' +
-	                                '<p><small>'+date+'</small></p>' +
+	                                '<p><small style="font-size: 12px;">'+date+'</small></p>' +
 	                            '</div>' +
 	                        '</div>' +
 	                    '</li>';
@@ -77,10 +77,10 @@
 	    }else if(who == "my"){
 	        control = '<li style="width:100%;">' +
 	                   		'<div class="msj-rta macro">' +
-	                   		'<div class="avatar"><img class="img-circle" style="width:100%;" src="'+ userProfile +'" /></div>' +
+	                   		'<div class="avatar"><img class="img-circle" style="width:60%;" src="'+ userProfile +'" /></div>' +
 	                            '<div class="text text-r">' +
 	                                '<p>'+text+'</p>' +
-	                                '<p><small>'+date+'</small></p>' +
+	                                '<p><small style="font-size: 12px;">'+date+'</small></p>' +
 	                            '</div>' +
 	                  '</li>';
 	    }
@@ -123,7 +123,7 @@
 	function keywordType(num){
 		//검색 keywordType 확인
 		keywordTypeNum = num;
-		alert(keywordTypeNum);
+		//alert(keywordTypeNum);
 		
 		if(keywordTypeNum == 1){
 			insertChat("system", $('#keywordType1').val()+" 카테고리를 선택하셨습니다." +"<br>" +"검색어를 입력해주세요.", 0);
