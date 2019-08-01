@@ -128,8 +128,8 @@ public class PlannerDaoImpl implements PlannerDao{
 	}
 	
 	@Override
-	public void deleteSchedule(int plannerCode) throws Exception {
-		sqlSession.delete("PlannerMapper.deleteSchedule", plannerCode);
+	public void deleteSchedule(int scheCode) throws Exception {
+		sqlSession.delete("PlannerMapper.deleteSchedule", scheCode);
 	}
 	
 	@Override

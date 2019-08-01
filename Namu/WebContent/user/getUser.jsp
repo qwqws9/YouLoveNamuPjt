@@ -351,8 +351,8 @@ label {margin:0;padding:0;}
 		}) 
 		
 		$('.img2').on('click',function(){
-			var value = '7877e8c81ac0a942265a9b65a049b784.jpg';
-			$('#img0').attr('src', '/resources/images/profile/7877e8c81ac0a942265a9b65a049b784.jpg').attr("width",500).attr('height',232);
+			var value = 'defaultProfile.jpg';
+			$('#img0').attr('src', '/resources/images/profile/defaultProfile.jpg').attr("width",500).attr('height',232);
 			updateUser(userCode,"img",value);
 		})
 		
@@ -655,7 +655,7 @@ label {margin:0;padding:0;}
 			cache		: false,
 			timeout		: 600000,
 			success		: function(JSONData, status){
-				alert(JSONData);
+				//alert(JSONData);
 			},
 			error		: function(request, status, error){
 				console.log('[ERROR]\nCODE : ' + request.status + '\nMESSAGE : ' + request.responseText + '\nERROR : ' + error);

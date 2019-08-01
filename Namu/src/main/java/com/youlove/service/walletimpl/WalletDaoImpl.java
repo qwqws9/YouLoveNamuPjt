@@ -69,6 +69,10 @@ public class WalletDaoImpl implements WalletDao {
 	public int getTotalCount(Map<String, Object> map) throws Exception{
 		return sqlSession.selectOne("WalletMapper.getTotalCount", map);
 	}
+	
+	public List<Wallet> getRegDate(int walletCode) throws Exception{
+		return sqlSession.selectList("WalletMapper.getRegDate", walletCode);
+	}
 
 	public double totalComes(Wallet wallet) throws Exception{
 		return sqlSession.selectOne("WalletMapper.totalComes", wallet);

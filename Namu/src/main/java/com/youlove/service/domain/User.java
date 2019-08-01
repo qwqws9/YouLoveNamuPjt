@@ -22,7 +22,17 @@ public class User {
 	private String endBlock;
 	//로그인시 판별위한 필드
 	private String userId;
+	//세션
+	private String sessionNo;
 	
+	
+	
+	public String getSessionNo() {
+		return sessionNo;
+	}
+	public void setSessionNo(String sessionNo) {
+		this.sessionNo = sessionNo;
+	}
 	public User(int userCode) {
 		this.userCode = userCode;
 	}

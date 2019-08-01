@@ -24,7 +24,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+<!--         <button type="button" class="btn btn-primary">Save changes</button> -->
       </div>
     </div>
   </div>
@@ -36,13 +36,13 @@
 	
 	$(function(){
 		
-	
+	function tourModal(searchKeyword) {
 	$.ajax({
 		url : '/guide/json/selectTourPage',
 		method : 'POST',
 		data : JSON.stringify({
 			pageNum : '1',
-			keyword : '파리'
+			keyword : searchKeyword
 		}),
 		headers : {
 			"Accept" : "application/json",
@@ -50,7 +50,7 @@
 		},
 		success : function(JSONData , status) {
 			
-			
+			$('.tourBody').empty();
 			
 			$.each(JSONData, function(index,item){
 			
@@ -64,7 +64,7 @@
 				+'<h3 class="mb-0">'+item.tourName+'</h3>'
 				+'<div class="mb-1 text-muted">'+item.hashtag+'</div>'
 				+'<p class="card-text mb-auto">'+item.tourShortDesc+'</p>'
-				+'<a href="#" class="stretched-link">이곳에는 별점과 댓글수가 들어갈거야</a>'
+				+'<a href="#" class="stretched-link"></a>'
 				+'</div>'
 				+'<div class="col-auto d-none d-lg-block">'
 				+'<img src="'+item.tourThumb+'"  width="250" height="250">'
@@ -75,23 +75,9 @@
 			);
 			
 			})
-			
-			
-			
-			
-			
-			
-// 			//관광지 정보 삭제
-// 				 	$("div[class^=preview-]").each(function(idx){ // idx 0부터 시작함
-// 			 			if(JSONData.length <= idx) {
-// 			 				$(".preview-"+(idx+1)).remove();
-// 			 			}
-// 			 		});
-				
-				 	
-				 	
 		}
  	})
+	}
 	})
 // }
 

@@ -37,5 +37,7 @@ public interface UserService {
 	
 	public boolean updatePolice(Police police) throws Exception;
 	
+	public List<User> searchUser(User user) throws Exception;
+	
 }
 

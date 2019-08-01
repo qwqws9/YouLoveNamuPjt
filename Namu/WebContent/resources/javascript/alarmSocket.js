@@ -23,6 +23,10 @@ function socketcall(writerUser,protocol) {
 	}
 }
 
+function currentUser(searchUserCode,classLoc) {
+	socket.emit("currentUser", { search: searchUserCode, loc : classLoc });
+}
+
 $(function(){
 	
 	// 수입/지출 추가 모달창 닫기 버튼
@@ -53,6 +57,17 @@ $(function(){
 		    socket.on('timeline',function(data) {
 		    	//notify(data);
 		    	alarmPopup(data);
+		    });
+		    
+		    socket.on('currentUser',function(data) {
+		    	//notify(data);
+		    	//alert(data.message);
+		    	//console.log(data.message);
+		    	if(data.message) {
+		    		//console.log('한명은 들어오지마');
+		    		$('.'+data.loc).children().next().children().next().css('color','lawngreen');
+		    	}
+		    	//console.log(data.message);
 		    });
 		   
 		    
