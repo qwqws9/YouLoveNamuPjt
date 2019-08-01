@@ -12,9 +12,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 
-	
-	
-	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script> 
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
@@ -46,7 +43,6 @@
 	<!-- spectrum -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
 	<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
-	
 
 <style type="text/css">
 input{
@@ -187,7 +183,6 @@ function onchangeDay(yy,mm,dd,ss){
 function deleteSchedule(){
 
 	 self.location = "/planner/deleteSchedule?scheCode="+$("#scheCode").val();
-	  	
 	}
 	    
 
@@ -224,10 +219,21 @@ function layer_open(el){
     });
 
 }
+function fncAddSchedule(){
+	// 유효성 검사 
+	
+ 	var scheName = $("input[name='scheName']").val();
+	
+	if(scheName == null || scheName.length<1){
+		alert("일정명을 입력해주세요.");
+		return;
+	} 
 
+	$($("#scheForm")).attr("method" , "POST").attr("action" , "/planner/addSchedule").attr("enctype" , "multipart/form-data").submit();
+}		
+ 
 $(function () {
-
-	alert('0번째');
+	
 		   $('#calendar').fullCalendar({
 			   
 			    events: function(start, end, timezone, callback) {  
@@ -237,7 +243,7 @@ $(function () {
 	        $.ajax({
 	   	                url: "/planner/getScheduleList",
 	   	                type : 'post',
-	   	                data : { startDate :  start.format('YYYY-MM-DD HH:MM'),endDate :  end.format('YYYY-MM-DD HH:MM') },
+	   	                data : { startDate :  start.format('yyyy-MM-dd HH:mm:ss'),endDate :  end.format('yyyy-MM-dd HH:mm:ss') },
 	   	                dataType: 'json',
 	   	               	/* async:false, */
 	   	                success: function(data) {
@@ -246,14 +252,18 @@ $(function () {
 	   	                   $(data).each(function() {
 	   	                        events2.push({
 	   	                           title: $(this).attr('title'),
-	   	                            start:moment( $(this).attr('start')),
+	   	                            start: $(this).attr('start'),
 	   	                         color: $(this).attr('color'),
 	   	                            id: $(this).attr('id') ,
-	   	                         end: $(this).attr('end') 
+	   	                         end: $(this).attr('end'),
+	   	                       allDay: $(this).attr('allDay')
+	   	                     
 	   	                        });
+	   	                     
 	   	                     
 	   	                    });
 	   	                 console.log(data);
+	   	              
 	                    callback(events2);
 	                }
 	                   }); 
@@ -264,9 +274,10 @@ $(function () {
 		        center: 'title',
 		        right: 'month,agendaWeek,listDay'
 		      },
+		     
 		      editable: true,
 		      droppable: true, 
-
+				
 		   		 dayClick: function(date, allDay, jsEvent, view) {
 		        	   var yy=date.format("YYYY");
 		        	   var mm=date.format("MM");
@@ -285,6 +296,7 @@ $(function () {
 		    	/*  alert(event.id); */
 		    		 var scheCode=event.id;
 		    	   	console.log('3번째');
+		
 					$.ajax( 
 			
 							{
@@ -364,9 +376,22 @@ $(function () {
 	 	
 	 	history.go(-1);
 	 });
+	
+	 $("#save").on("click",function(){
+		
+			var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
+				 self.location = "/planner/getPlanner?plannerCode="+plannerCode;
+		 	
+		 });
 	 });
 
- 
+/* 
+$(document).on('click','#delete',function(){
+
+	 tourModal(tourId);
+	 $('#tourModalShow').trigger('click');
+}) */
+
 </script>
 </head>
 
@@ -384,14 +409,14 @@ $(function () {
 <h4 class="text-center"> 상세 플랜 짜기 </h4>
 		<br><br>
 <!--캘린더  -->
-<div  id="calendar"><p class="date" id="nows"></p>
+<div  id="calendar"><!-- <p class="date" id="nows"></p> -->
  </div>
 
 <br><br><br><br>
 	 <div class="col-md-10 col-lg-12" >
 <div class="row">
    <div class="col-md-6"></div>
-      <div class="col-md-4">
+      <div class="col-md-4" >
 		     <a class="btn btn-default" href="#" role="button"> 이전 단계 </a>
 		  
 		      <button type="button" class="btn btn-default"  id="save"> 내 플래너 보기  </button>
@@ -403,20 +428,18 @@ $(function () {
 
 <div style="height: 300px;"></div>
 <a href="#layer1" class="btn-example"></a>
-<div class="dim-layer">
-<div class="dimBg"></div>
 <div id="layer1" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
             <div class="addSchedule">
-          <form name="scheForm" id="scheForm" action="/planner/addSchedule" method="post">
+          <form name="scheForm" id="scheForm" action="javascript:fncAddSchedule();" method="post">
           <h5 class="title"> 일정 등록  </h5> 
     		<br/><br/>
     		
  <div class="col-md-12" >	
 <div class="row"> 
 <div class="col-md-4"><p> 날짜 </p></div> 
-<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay"/></div> 
+<div class="col-md-8"> <input type="text" name="scheDay" id="scheDay"/></div> 
  </div></div>
  
  <div class="col-md-12" >	
@@ -428,10 +451,20 @@ $(function () {
 <div class="col-md-12" >	
 <div class="row"> 
 <div class="col-md-4"> <p> 일정시작시간 </p></div> 
-<div class="col-md-4"><input type="text" name="timeHour" /></div>
-<div class="col-md-4"><input type="text" name="timeMin" /></div>
-</div></div>
+<div class="col-md-4"><select class="custom-select mr-sm-2" id="timeHour" name="timeHour">
 
+  	 <option value='00' selected='selected'>00</option><option value='01'>01</option><option value='02'>02</option><option value='03'>03</option><option value='04'>04</option><option value='05'>05</option><option value='06'>06</option><option value='07'>07</option><option value='08'>08</option><option value='09'>09</option><option value='10'>10</option>
+<option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option>
+  	 <option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option>
+  	 </select>
+  	 </div>
+<div class="col-md-4"><select class="custom-select mr-sm-2" id="timeMin" name="timeMin">
+
+  	 <option value='00' selected='selected'>00</option><option value='10'>10</option><option value='20'>20</option>
+  	 <option value='30'>30</option><option value='40'>40</option><option value='50'>50</option>
+  	 </select>
+  	 </div>
+</div></div>
  <div class="col-md-12" >	
 <div class="row"> 
 <div class="col-md-4">  
@@ -463,7 +496,7 @@ $(function () {
         <div class="col-md-4"> <input type='button' id="close"  value='닫기'/></div>
         </div></div>
 		</form>
-		</div></div> </div></div></div>
+		</div></div> </div></div>
 <br/><br/>
 
 
@@ -472,7 +505,8 @@ $(function () {
 <!--일정 상세 팝업  -->
 <div style="height: 300px;"></div>
 <a href="#layer2" class="btn-example"></a>
-
+<div class="dim-layer">
+<div class="dimBg"></div>
 <div id="layer2" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
@@ -481,11 +515,11 @@ $(function () {
    <div id="getSchedule"></div>
     	
 <div class="row"> 
-<div class="col-md-4"> <input type ="submit" value="수정" id="update"></div>
+ <div class="col-md-4"> <input type ="submit" value="수정" id="update"></div> 
 <div class="col-md-4"> <input type ="submit" value="삭제" id="delete" onclick="deleteSchedule();"></div>
 <div class="col-md-4"> <input type='button' id="close"  value='닫기' ></div>
 	</div></div>
-		</div></div> </div>
+		</div></div> </div></div>
 <br/><br/>
 
 

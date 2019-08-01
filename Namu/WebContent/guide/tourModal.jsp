@@ -34,7 +34,6 @@
 //클릭한 페이지 , 키워드
 // function selectTourModal(keyword) {
 	
-	$(function(){
 		
 	function tourModal(searchKeyword) {
 	$.ajax({
@@ -78,7 +77,7 @@
 		}
  	})
 	}
-	})
+
 // }
 
 </script>

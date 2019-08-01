@@ -6,6 +6,7 @@
 	<div class="pop_left">
 		<div class="result_top">
 			<input type="text" class="date_time" name="regDate" readonly />
+			<div class="date_background"></div>
 
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>

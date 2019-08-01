@@ -225,7 +225,7 @@ CREATE TABLE schedule(
    sche_code               NUMBER(10)          NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL ,
-   sche_day DATE,
+   sche_day VARCHAR2(10),
    time_hour VARCHAR2(10),
    time_min VARCHAR2(10),
    SCHE_NAME VARCHAR2(500) NOT NULL,
