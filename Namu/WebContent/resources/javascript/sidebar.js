@@ -74,8 +74,12 @@
 			self.location = '/party/getPartyList';
 		})
 	});
-
-
+	
+	function messageBox(){
+		var url = '../message/messageBox.jsp';
+		var option = 'width=1100px, height=600px, top=200, left=400, toolbar=no, menubar=no, location=no, directories=no, status=no, resizable=no';
+		window.open(url,"",option);
+	}
 
 
 
