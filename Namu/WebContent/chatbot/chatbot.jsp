@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Chatbot</title>
+	<jsp:include page="/layout/head.jsp" />
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Chatbot</title> -->
 	
 	
 	<script  src="https://code.jquery.com/jquery-3.4.1.slim.js"  integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="  crossorigin="anonymous"></script>
@@ -14,7 +15,7 @@
 	
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.j5s"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 	
@@ -142,16 +143,8 @@
 		
 		$("li").remove();
 		
-		//insertChat("system", $(keywordType).val()+" 카테고리를 선택하셨습니다." +"<br>" +"검색어를 입력해주세요.", 0);
-		
-		//채팅 입력칸 출력
-		/* $(".msj-rta.macro").append('<div class="text text-r" style="background:whitesmoke !important">');
-		$(".text.text-r").append('<input class="mytext" id="keyword" placeholder="검색어를 입력해주세요." autofocus=""/></div>');
-		$(".msj-rta.macro").append('</div>');
-		
-		$("#sendButton").append('<span class="glyphicon glyphicon-share-alt" onclick="searchKeyword()"></span>');
-		$("li").remove(); */
 	}
+	
 	
 	//입력한 keyword 챗봇창에 보여주기
 	//입력한 keyword DB검색
@@ -169,7 +162,7 @@
 		  	method : "post",
 		  	dataType : "json",
 		  	data : JSON.stringify ({
-		  		keywordType : keywordTypeNum,//1:플래너 2:커뮤니티 3:동행
+		  		//keywordType : keywordTypeNum,//1:플래너 2:커뮤니티 3:동행
 		  		keyword : $('#keyword').val().trim()
 			}),
 		  	headers : {
@@ -177,16 +170,25 @@
 		  	"Content-Type" : "application/json"
 		  	},
 			success : function(data) {
-		  		alert(data);
-		  		//insertChat("system", data, 0);
-		   	}
+		  		console.log("data ====="+ data)
+				//db에 없는 내용이면
+				var answer = JSON.stringify(data.answer)
+		  		insertChat("system", answer+"<br>"+"더 검색하실 내용이 있으신가요??", 0);
+		  	},
+		  	error : function(data){
+		  		console.log('검색내용 없음')
+		  		insertChat("system", "검색하신 내용을 찾을 수 없습니다."
+	  					+"<br>"+"다시 검색하시거나 "+"<br>"+
+	  					"QnA 게시판을 이용해주세요.", 0);
+		  	},
+	  		//insertChat("system", data.answer, 0);
 		});
-		
+				
 		//data 가져와서 뿌려주기
   		//insertChat("system", data, 0);
 		//data전송 후 입력칸 clear
-		alert('ajax실행')
 		$('.mytext').val('');
+		
 		
 				
 /* 		$(".mytext").on("keydown", function(e){
@@ -200,6 +202,9 @@
 		});
 */
 	}
+	$(".text.text-r").on("keydown", function(){
+		searchKeyword();
+	})
 			
 	$('body > div > div > div:nth-child(2) > span').click(function(){
 	    $(".mytext").trigger({type: 'keydown', which: 13, keyCode: 13});
@@ -213,6 +218,7 @@
 	</head>
 	
     <body>
+    	<input type="hidden" id="answer" value="${chatbot.answer }">
         <div class="col-sm-3 col-sm-offset-4 frame">
             
             <!-- 채팅 표시되는 ul -->
