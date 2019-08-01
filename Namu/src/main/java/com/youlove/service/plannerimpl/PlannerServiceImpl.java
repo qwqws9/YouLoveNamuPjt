@@ -70,6 +70,19 @@ import com.youlove.service.user.UserDao;
 			map.put("totalCount", new Integer(totalCount));
 			return map;
 		}
+	
+		@Override
+		public Map<String, Object> getBestPlannerList(Search search) throws Exception {
+
+			List<Planner> list= plannerDao.getBestPlannerList(search);
+//			int totalCount = plannerDao.getAllTotalCount(search);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list );
+//			map.put("totalCount", new Integer(totalCount));
+//			
+			return map;
+		}
 		
 		@Override
 		public Map<String, Object> getAllPlannerList(Map<String, Object> map) throws Exception{

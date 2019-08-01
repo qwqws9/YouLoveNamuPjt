@@ -51,7 +51,6 @@
 		<result property="etimeHour"				column="ETIME_HOUR" 				jdbcType="VARCHAR" />
 		<result property="etimeMin"				column="ETIME_MIN" 				jdbcType="VARCHAR" />
 		
-		
 		<result property="scheName"				column="SCHE_NAME" 				jdbcType="VARCHAR" />
 		<result property="schePlace"				column="SCHE_PLACE" 				jdbcType="VARCHAR" />
 		<result property="scheDetail" 			column="SCHE_DETAIL" 			jdbcType="VARCHAR"/>	
@@ -118,6 +117,16 @@ SELECT *
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
 			  	 
+	</select>
+	
+<select  id="getBestPlannerList"  parameterType="map"	resultMap="plannerSelectMap">
+SELECT *
+			FROM planner p, (select count(*) orderCount ,detail_code
+				from likes
+					where board_code = 4
+					group by detail_code) lik
+				where p.planner_code = lik.detail_code
+				order by orderCount desc
 	</select>
 	 		
 	 <select  id="getAllPlannerList"  parameterType="map"	resultMap="plannerSelectMap">

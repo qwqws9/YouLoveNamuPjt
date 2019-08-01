@@ -55,6 +55,11 @@ public class PlannerDaoImpl implements PlannerDao{
 	}
 	
 	@Override
+	public List<Planner> getBestPlannerList(Search search) throws Exception{
+		return sqlSession.selectList("PlannerMapper.getBestPlannerList", search);
+	}
+	
+	@Override
 	public List<Planner> getAllPlannerList(Map<String, Object> map) throws Exception{
 		return sqlSession.selectList("PlannerMapper.getAllPlannerList", map);
 	}
