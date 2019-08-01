@@ -140,6 +140,7 @@ public class UserController {
 				map.put("login", c.getValue());
 				User user = userService.getUser(map);
 				session.setAttribute("user", user);
+				return "redirect:/";
 			}else if(c.getName().equals("saveId")) {
 				model.addAttribute("saveId",c.getValue());
 			}
