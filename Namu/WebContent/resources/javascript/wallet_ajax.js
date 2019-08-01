@@ -147,11 +147,15 @@ function convert(unit) {
 				
 				$('#exchange_result').text(makeComma(JSONData.exchangeRate));
 				$('#exchange_rate').val(JSONData.exchangeRate);
+				
+				multiply();
 			}
 		})
 	}else{
 		$('#exchange_result').text('1.0');
 		$('#exchange_rate').val('1.0');
+		
+		multiply();
 	}
 }
 

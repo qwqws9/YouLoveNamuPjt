@@ -22,6 +22,8 @@ public interface PlannerDao {
 	
 	public List<Planner> getPlannerList(Map<String, Object> map)  throws Exception;
 	
+	public List<Planner> getBestPlannerList(Search search)  throws Exception;
+	
 	public int getAllTotalCount(Map<String, Object> map) throws Exception;
 	
 	public int getAllTotalCount(Search search) throws Exception;

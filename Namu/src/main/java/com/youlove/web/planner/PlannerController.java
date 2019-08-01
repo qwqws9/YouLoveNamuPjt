@@ -26,10 +26,12 @@ import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
 import com.youlove.service.domain.User;
 import com.youlove.service.domain.Wallet;
+import com.youlove.service.like.LikeService;
 import com.youlove.common.FileNameUUId;
 import com.youlove.common.Page;
 import com.youlove.common.Search;
 import com.youlove.service.domain.City;
+import com.youlove.service.domain.Like;
 import com.youlove.service.domain.Planner;
 
 import com.youlove.service.planner.PlannerService;
@@ -47,6 +49,11 @@ public class PlannerController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("likeServiceImpl")
+	private LikeService likeService;
+	
 	
 	public PlannerController(){
 		System.out.println(this.getClass());
@@ -82,8 +89,7 @@ public class PlannerController {
 		//String path="//Users//minikim//git//YouLovePlanMini//WebContent//resources//images//plannerImage";
 		
 //		String fileName=file.getOriginalFilename();
-		String fileName = FileNameUUId.convert(file, "planner", request);
-		
+		String fileName = FileNameUUId.convertMINI(file, "planner", request);
 		
 		planner.setPlannerImage(fileName);
 
@@ -107,14 +113,7 @@ public class PlannerController {
 		System.out.println("plannerController ---------------------updatePlanner:GET ");
 		System.out.println(plannerCode);
 		Planner planner = plannerService.getPlanner(plannerCode);
-//		if(file != null){
-//			String fileName = FileNameUUId.convert(file, "planner", request);
-//			
-//			planner.setPlannerImage(fileName);
-//		}else{
-//			
-//			planner.setPlannerImage(planner.getPlannerImage());
-//		}
+
 
 		model.addAttribute("planner", planner);
 
@@ -127,16 +126,21 @@ public class PlannerController {
 			MultipartFile file,  HttpServletRequest request, HttpServletResponse response)  throws Exception{
 
 		System.out.println("plannerController -----------------------updatePlanner:POST ");
-		
-		String fileName = FileNameUUId.convert(file, "planner", request);
-		planner.setPlannerImage(fileName);
 	
 		planner.setDepartDate(planner.getDepartDate().replace("-", ""));
 		System.out.println(planner);
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
 		System.out.println(planner.getPlannerCode());
-
+		
+		if(file != null ){
+			String fileName = FileNameUUId.convert(file, "planner", request);
+			
+			planner.setPlannerImage(fileName);
+		}else{
+			
+			planner.setPlannerImage(planner.getPlannerImage());
+		}
 		plannerService.updatePlanner(planner);
 		
 		return "forward:/planner/updateRoute.jsp";
@@ -171,7 +175,9 @@ public class PlannerController {
 		//comment
 		model.addAttribute("boardCode", 4);
 		model.addAttribute("detailCode",plannerCode);
-
+		//게시글 좋아요 개수
+				int likeCount = likeService.countLike(new Like(planner.getBoardCode(),plannerCode));
+				model.addAttribute("likeCountBoard",likeCount);
 		
 //		System.out.println("작성자는요???????"+planner.getPlannerWriter().getUserCode());
 		return "forward:/planner/getPlanner.jsp";
@@ -213,6 +219,40 @@ public class PlannerController {
 	
 		return "forward:/planner/getPlannerList.jsp";
 	}
+	
+//	@RequestMapping( value="getBestPlannerList")
+//	public String getBestPlannerList(@ModelAttribute("planner") Planner planner,@ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
+//		
+//	System.out.println("PlannerRestController------------------getBestPlannerList");
+//	 
+//		int pageUnit =20;
+//		int pageSize =1000;
+////		
+//		if(search.getCurrentPage() ==0 ){
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//		System.out.println("search ??? :"+search);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("search", search);
+//
+//		map = plannerService.getBestPlannerList(map);
+//		
+//		
+//		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+//
+//		System.out.println(map);
+//		model.addAttribute("list", map.get("list"));
+//		model.addAttribute("search", search);
+//		model.addAttribute("resultPage", resultPage);
+//
+//		System.out.println(search);
+//		System.out.println(map.get("list"));
+//		return "forward:/planner/getBestPlannerList.jsp";
+//	}
+//	
+	
 	
 	@RequestMapping( value="getAllPlannerList")
 	public String getAllPlannerList(@ModelAttribute("planner") Planner planner,@ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {

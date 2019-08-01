@@ -6,7 +6,8 @@
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">
-			<input type="text" class="date_time" name="regDate" value="${param.regDate} ${param.regTime}" readonly />
+			<input type="text" class="date_time" name="regDate" value="${param.regDate} ${param.regTime}" />
+			<div class="date_background"></div>
 
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW" ${param.moneyUnit eq 'KRW' ? 'selected' : ''}>KRW</option>

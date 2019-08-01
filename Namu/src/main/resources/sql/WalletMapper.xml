@@ -130,6 +130,7 @@
 		WHERE w_code = #{value}
 			  AND category <![CDATA[ < ]]> '9'
 		GROUP BY reg_date
+		ORDER BY reg_date
 	</select>
 	
 	<select id="totalComes" parameterType="wallet" resultType="double">

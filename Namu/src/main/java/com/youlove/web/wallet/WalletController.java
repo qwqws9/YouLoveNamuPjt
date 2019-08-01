@@ -86,8 +86,8 @@ public class WalletController {
 
 		System.out.println("/wallet/getWalletList ::: GET / POST");
 		
-		int pageUnit = 5;
-		int pageSize = 5;
+		int pageUnit = 10;
+		int pageSize = 10;
 		
 		if(search.getCurrentPage() == 0){
 			search.setCurrentPage(1);

@@ -57,10 +57,10 @@ public class PartyController {
 		System.out.println("\nPartyController:::addParty() 시작:::");
 		ModelAndView modelAndView = new ModelAndView();
 		//회원정보
-		//User user = (User) session.getAttribute("user");
-		//party.setPartyWriter(user);
-		User user = new User();
-		user.setUserCode(2);
+		User user = (User) session.getAttribute("user");
+		party.setPartyWriter(user);
+		//User user = new User();
+		//user.setUserCode(2);
 		party.setPartyWriter(user);
 		//국가, 도시
 		City city = new City();
@@ -160,10 +160,10 @@ public class PartyController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/party/updateParty.jsp");
 		//회원정보
-		//User user = (User) session.getAttribute("user");
-		//party.setPartyWriter(user);
-		User user = new User();
-		user.setUserCode(2);
+		User user = (User) session.getAttribute("user");
+		party.setPartyWriter(user);
+		//User user = new User();
+		//user.setUserCode(2);
 		party.setPartyWriter(user);
 		//국가, 도시
 		City city = new City();
@@ -191,7 +191,7 @@ public class PartyController {
 		Party party = partyService.getParty(partyCode);
 		Hashtag hashtag = party.getPartyHashtagCode();
 		partyService.deleteParty(partyCode);
-		hashtagService.deleteHashtag(hashtag.getHashtagCode());
+		//hashtagService.deleteHashtag(hashtag.getHashtagCode());
 		
 		
 		System.out.println("\nPartyController:::deleteParty() 끝:::");

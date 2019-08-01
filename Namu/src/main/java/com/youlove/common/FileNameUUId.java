@@ -50,7 +50,7 @@ public class FileNameUUId {
 		System.out.println(request.getSession().getServletContext().getRealPath("resources") + "  파일 경로");
 		
 		//업로드된 파일이 없으면 NotImage 리턴
-		String saveName = "NotImage";
+		String saveName = "alternative_image.png";
 		
 		
 		if(!file.getOriginalFilename().equals("")) {

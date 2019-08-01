@@ -56,12 +56,20 @@
 			success : function(data,status){
 				if(data == true) {
 					//현재 접속자가 좋아요를 누른상태
-					$('.boardLike').children().attr('class','fas fa-heart fa-lg').css('color','red');
+					//0801 추가
+					$('.boardLike').addClass('activeLike');
+					
+					$('.boardLike').html('<i class="fas fa-heart fa-lg" style="color:red;"></i>');
+					//$('.boardLike').children().attr('class','fas fa-heart fa-lg').css('color','red');
 				}else {
-					$('.boardLike').children().attr('class','far fa-heart fa-lg').css('color','black');
+					//0801 변경
+					$('.boardLike').removeClass('activeLike');
+					$('.boardLike').html('<i class="far fa-heart fa-lg" style="color:black;"></i>');
+					//$('.boardLike').children().attr('class','far fa-heart fa-lg').css('color','black');
 				}
 			}
 		})
+		
 		
 		
 			$("#updatep").on("click",function(){    	
@@ -79,27 +87,36 @@
 
 		});
 		 
-	
 	//게시물 좋아요
 	$(document).on('click','.boardLike',function(){
-		var heart = $(this).children().attr('class').substr(0,3);
+		//0801  변경
+		var heart = $(this).attr('class');
+//		var heart = $(this).children().attr('class').substr(0,3);
 		var boardCode = $('#boardCode').val().trim();
 		var detailCode = $('#detailCode').val().trim();
 		var writerUser = $('#communityUserCode').val().trim();
 		var sessionUser = $('#nodeUserCode').val().trim();
-		console.log(heart);
 		
 		
-		if(heart == 'far') {
+		if(heart == 'boardLike') {
 			//좋아요
-			$(this).children().attr('class','fas fa-heart fa-lg').css('color','red');
+			//0801 추가
+			$(this).addClass('activeLike');
+			//0801 변경
+			$('.boardLike').html('<i class="fas fa-heart fa-lg" style="color:red;"></i>');
+			//$(this).children().attr('class','fas fa-heart fa-lg').css('color','red');
 			addLikeBoard(boardCode,detailCode,sessionUser,writerUser);
 		}else {
 			//좋아요 취소
-			$(this).children().attr('class','far fa-heart fa-lg').css('color','black');
+			//0801 추가
+			$(this).removeClass('activeLike');
+			//0801 변경
+			$('.boardLike').html('<i class="far fa-heart fa-lg" style="color:black;"></i>');
+			//$(this).children().attr('class','far fa-heart fa-lg').css('color','black');
 			deleteLikeBoard(boardCode,detailCode,sessionUser);
 		}
 	});
+	
 	
 	function addLikeBoard(boardCode,detailCode,sessionUser,writerUser) {
 		
@@ -195,7 +212,7 @@
 								<div class="row text-left" style="padding-left: 15px;">
 									<span>
 <%-- 										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px"> --%>
-										<img src="/resources/images/profile/img_login.gif"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
+										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
 										<span style="padding-left: 10px;">${planner.plannerWriter.nickname}</span>
 									</span>
 								</div>

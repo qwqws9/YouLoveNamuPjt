@@ -21,6 +21,8 @@ public interface PlannerService {
 	
 	public Map<String, Object> getPlannerList(Map<String, Object> map) throws Exception;
 	
+	public Map<String, Object> getBestPlannerList(Search search) throws Exception;
+	
 	public Map<String, Object> getAllPlannerList(Map<String, Object> map) throws Exception;
 	
 	public Map<String, Object> getAllPlannerList(Search search) throws Exception;

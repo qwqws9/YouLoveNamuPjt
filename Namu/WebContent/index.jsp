@@ -23,7 +23,7 @@
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-		
+		<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	
@@ -66,6 +66,7 @@
 				</div>
 			</div>
 		</div>
+		
 			<br><br>
 			<!-- <button id="callCountry">국가 정보 호출</button> -->
 		<input type="hidden" id="weatherCountry" value="대한민국">
@@ -94,7 +95,15 @@
 	}) */
 	
 	</script> -->
-
+	<div class="wrap">
+	<h2 class="wallet_title"><span> 여행 플래너 공유 </span></h2>
+	<section class="wallet_box">
+	 <div class="square_wrap clear" id="bestPlanner">
+	 
+	 </div>
+	 
+</section>
+</div>
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
 
 </body>

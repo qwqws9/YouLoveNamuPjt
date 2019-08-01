@@ -206,7 +206,7 @@ margin:0 auto
 		     </div>
 		    <div class="col-md-4">
 		     <div class="custom-file">
-		 <input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;">
+		 <input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;" value="${planner.plannerImage }">
 			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
 	 </div>
 		     <div class="col-md-2"></div>

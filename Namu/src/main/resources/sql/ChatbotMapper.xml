@@ -13,11 +13,13 @@
 	</resultMap>
 	
 	<!-- SQL : SELECT ONE -->
-	<select id="getUser"	parameterType="chatbot">
+	<select id="getChatbot"	parameterType="chatbot" resultMap="chatbotSelectMap">
+		<!-- SELECT answer
+		FROM chatbot
+		WHERE keyword LIKE '%${keyword}%' -->
 		SELECT answer
 		FROM chatbot
 		WHERE keyword = #{keyword}
-		
 	</select>
 	 
 </mapper>

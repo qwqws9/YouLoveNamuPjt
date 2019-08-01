@@ -59,6 +59,27 @@ public class PlannerRestController {
 		return map;
 	}
 	
+	@RequestMapping(value = "json/getBestPlannerList" ,method = RequestMethod.POST)
+	public Map<String, Object> getBestPlannerList() throws Exception {
+		
+		System.out.println("PlannerRestController------------------getPlannerList:post ");
+		Search search = new Search();
+		
+		search.setPageSize(3);
+		System.out.println(search);
+				
+		Map<String, Object> map = plannerService.getBestPlannerList(search);
+		
+		String message = "ok";
+		
+		List<Planner> list = (List<Planner>) map.get("list");
+		
+		map.put("message", message);
+		System.out.println(map);		
+		System.out.println("message????????????????"+message);
+		return map;
+	}
+	
 	
 	
 	@RequestMapping( value="json/getRouteList/{plannerCode}", method=RequestMethod.GET)
