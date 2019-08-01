@@ -90,8 +90,8 @@ label {margin:0;padding:0;}
     <div class="col-md-6">
       <div class="card-body">
         <h5 class="card-title">프로필 사진</h5>
-        <p class="card-text">여기는 뭐라고 쓸까 비어있으면 허전할것같은데,..,...,.,.,.,.</p>
-        <span style="display:inline-block; margin-top:50px;">
+        <p class="card-text"></p>
+        <span style="display:inline-block; margin-top:140px;">
 		        <button type="button" class="img2 btn btn-outline-danger btn-sm" >사진삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="file" name="file" id="img1" style="display: none">
 				<label class="btn btn-outline-success btn-sm" for="img1">사진변경</label>

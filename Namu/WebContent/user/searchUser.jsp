@@ -52,7 +52,7 @@
     		 <div class="list-group">
 			  <button type="button" class="friendRole1 list-group-item list-group-item-action text-center">친구 목록</button>
 			  <button type="button" class="friendRole2 list-group-item list-group-item-action text-center">동행 목록</button>
-			  <button type="button" class="friendRole3 list-group-item list-group-item-action text-center">일행 목록</button>
+<!-- 			  <button type="button" class="friendRole3 list-group-item list-group-item-action text-center">일행 목록</button> -->
 			</div>
        </div>
        
@@ -68,7 +68,7 @@
 		      <a class="searchAddFriend dropdown-item" href="#">친구추가</a>
 		      <a class="searchChatInvite dropdown-item" href="#">채팅초대</a>
 		      <a class="searchMessageSend dropdown-item" href="#">쪽지전송</a>
-		      <a class="searchGroupInvite dropdown-item" href="#">일행초대</a>
+<!-- 		      <a class="searchGroupInvite dropdown-item" href="#">일행초대</a> -->
 		    </div>
 		  </div>
       </div>

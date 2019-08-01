@@ -113,7 +113,7 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
 		      <button type="button" class="btn btn-default"  id="save"> 다음 단계  </button>
 		      </div></div></div>
 	<script type="text/javascript">	
-	
+
 	function fncAddRoute(){
 		
 		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/addRoute").attr("enctype" , "multipart/form-data").submit();

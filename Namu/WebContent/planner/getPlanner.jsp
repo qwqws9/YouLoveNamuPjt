@@ -195,7 +195,7 @@
 								<div class="row text-left" style="padding-left: 15px;">
 									<span>
 <%-- 										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px"> --%>
-										<img src="/resources/images/profile/img_login.gif"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
+										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
 										<span style="padding-left: 10px;">${planner.plannerWriter.nickname}</span>
 									</span>
 								</div>
