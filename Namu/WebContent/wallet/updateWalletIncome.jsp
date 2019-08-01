@@ -7,7 +7,8 @@
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">
-			<input type="text" class="date_time" name="regDate" value="${param.regDate} ${param.regTime}" readonly />
+			<input type="text" class="date_time" name="regDate" value="${param.regDate} ${param.regTime}" />
+			<div class="date_background"></div>
 			
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW" ${param.moneyUnit eq 'KRW' ? 'selected' : ''}>KRW</option>
@@ -29,7 +30,7 @@
 			<span>환율</span>
 			<div>
 				<span><span class="second_unit">EUR</span> 1.0 = KRW <span id="exchange_result">${param.exchangeRate}</span></span><br/>
-				<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
+				<!-- <input type="button" class="exchange_rate_btn" value="환율 수동 설정"> -->
 			</div>
 		</div><!-- //apply_exchange_rate -->
 		

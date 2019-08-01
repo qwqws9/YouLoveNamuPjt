@@ -81,13 +81,13 @@ $( function() {
     
     //$(".content").text("")
     
-    
+    //이거
     $.each($(".content"),function(){
     	$(this).text($(this).text().trim());
     })
-    $.each($(".card-body"),function(){
-    	$(this).text($(this).text().trim());
-    })
+//    $.each($(".card-body"),function(){
+//    	$(this).text($(this).text().trim());
+//    })
     //도시
     $("#searchSelect").change(function(){
 		var selected = $("#searchSelect option:selected").val();

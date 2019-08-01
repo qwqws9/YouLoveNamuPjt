@@ -25,7 +25,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 	
 	<!-- jQuery, Moment.js and Date Range Picker's files -->
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -68,14 +67,14 @@
 				<div class="right_table">
 					<div class="total_table clear">
 						<div class="total_budget">
-							<span>총 예산</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${totalIncome}" pattern="#,###.##" /></span>
+							<span>총 예산</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${totalIncome}" pattern="#,###.##" /></span>
 						</div>
 						<div class="total_price">
 							<div class="total_floating">
-								<span>쓴 돈</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${totalExpenditure}" pattern="#,###.##" /></span>
+								<span>쓴 돈</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${totalExpenditure}" pattern="#,###.##" /></span>
 							</div>
 							<div class="total_floating">
-								<span>남은 돈</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${balance}" pattern="#,###.##" /></span>
+								<span>남은 돈</span><span><i class="fas fa-won-sign"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${balance}" pattern="#,###.##" /></span>
 							</div>
 						</div>
 					</div><!-- //total_table -->
@@ -121,10 +120,10 @@
 													<c:if test="${wallet.moneyUnit eq 'CZK'}">CZK</c:if>
 													<c:if test="${wallet.moneyUnit eq 'HUF'}">HUF</c:if>
 													<fmt:formatNumber value="${wallet.price}" pattern="#,###.##" />
-													<c:if test="${wallet.payOption eq 2}">
-														&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
-													</c:if>
 												</span>
+												<c:if test="${wallet.payOption eq 2}">
+													<span class="card_icon"><i class="fas fa-credit-card"></i></span>
+												</c:if>
 												<span>
 													<c:if test="${wallet.moneyUnit ne 'KRW'}">
 														<c:if test="${! empty wallet.krwPrice}">
@@ -144,10 +143,10 @@
 													<c:if test="${wallet.moneyUnit eq 'CZK'}">CZK</c:if>
 													<c:if test="${wallet.moneyUnit eq 'HUF'}">HUF</c:if>
 													<fmt:formatNumber value="${wallet.price}" pattern="#,###.##" />
-													<c:if test="${wallet.payOption eq 2}">
-														&nbsp;&nbsp;&nbsp;<i class="fas fa-credit-card"></i>
-													</c:if>
 												</span>
+												<c:if test="${wallet.payOption eq 2}">
+													<span class="card_icon"><i class="fas fa-credit-card"></i></span>
+												</c:if>
 												<span>
 													<c:if test="${wallet.moneyUnit ne 'KRW'}">
 														<c:if test="${! empty wallet.krwPrice}">

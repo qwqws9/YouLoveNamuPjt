@@ -66,6 +66,7 @@
 				</div>
 			</div>
 		</div>
+		
 			<br><br>
 			<!-- <button id="callCountry">국가 정보 호출</button> -->
 		<input type="hidden" id="weatherCountry" value="대한민국">
