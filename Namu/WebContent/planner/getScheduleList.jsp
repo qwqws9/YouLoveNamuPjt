@@ -115,6 +115,7 @@ border-radius:5px ;
   left: 50%;
   width: 410px;
   height: auto;
+  z-index:100;
 }
 
 .dim-layer .dimBg {
@@ -201,7 +202,7 @@ function layer_open(el){
     // 화면의 중앙에 레이어를 띄운다.
     if ($elHeight < docHeight || $elWidth < docWidth) {
         $el.css({
-            marginTop: -$elHeight /3,
+            marginTop: -$elHeight /2,
             marginLeft: -$elWidth/2
         })
     } else {
@@ -219,6 +220,33 @@ function layer_open(el){
     });
 
 }
+
+/* 
+$(document).ready(function(){
+	$(document).mousedown(function(e){
+		$('.dim-layer').each(function(){
+		        if( $(this).css('display') == 'block' )
+		        {
+		            var l_position = $(this).offset();
+		            l_position.right = parseInt(l_position.left) + ($(this).width());
+		            l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
+
+
+		            if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
+		                && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
+		            {
+		                //alert( 'popup in click' );
+		            }
+		            else
+		            {
+		                //alert( 'popup out click' );
+		                $(this).hide("fast");
+		            }
+		        }
+		    });
+		}); 
+		})
+ */
 function fncAddSchedule(){
 	// 유효성 검사 
 	
@@ -231,14 +259,39 @@ function fncAddSchedule(){
 
 	$($("#scheForm")).attr("method" , "POST").attr("action" , "/planner/addSchedule").attr("enctype" , "multipart/form-data").submit();
 }		
+
+
+function fncUpdateSchedule(scheCode){
+	$.ajax({
+		type :"post",
+		url :"/planner/updateSchedule",
+		data : {id:event.id},
+		success : function(contents){
+			var lay = $('#layer2');lay.fadeOut();
+        	var con = $('#main-container');con.fadeOut();
+       		var insert = $('#insertForm-container');insert.fadeIn();
+       		$(".insertForm-sdate-li").html("<input type=date name=sdate value="+contents.cl_sdate+"></input><input type=time name=stime step=1800 value="+contents.cl_stime+"></input>");
+       		$(".insertForm-edate-li").html("<input type=date name=edate value="+contents.cl_edate+"></input><input type=time name=etime step=1800 value="+contents.cl_etime+"></input>");
+       		$(".insertForm-name-li").html("<select name=title><optgroup label=업무일정><option value=회사일정>회사일정</option><option value=지점일정>지점일정</option><option value=부서일정>부서일정</option><option value=개인업무>개인업무</option></optgroup><optgroup label=개인일정><option value=출장>출장</option><option value=연차>연차</option></optgroup></select>");
+       		$(".insertForm-suject-li").html("<input type=text placeholder= 제목 name=subject class=subject value="+contents.cl_subject+"></input>");
+       		$(".insertForm-place-li").html("<input type=text placeholder= 장소 name=place class=place value="+contents.cl_place+"></input>");
+       		
+       		$(".insertForm-contents-li2").html("<textarea name=contents class=insertForm-contents placeholder= 내용 >"+contents.cl_contents+"</textarea>");
+       		$(".insertForm-hidden").html("<input type=hidden name=num value="+contents.cl_num+"></input>");
+		}, 
+		error : function(){
+			alert("error");
+		}
+		});
+}
+
  
 $(function () {
 	
 		   $('#calendar').fullCalendar({
 			   
 			    events: function(start, end, timezone, callback) {  
-		        
-	       
+
 	        	console.log('1번째');
 	        $.ajax({
 	   	                url: "/planner/getScheduleList",
@@ -290,7 +343,15 @@ $(function () {
 		        	     },  
 
 		    			 eventLimit: true,
-		    
+		    			  
+		    		    eventDrop: function(event, delta, revertFunc) {
+		    			
+		    		            alert(event.title + "를 " + event.start.format() + " 로 이동합니다");
+		    		            if (!confirm("수정하시겠습니까?")) {
+		    		                revertFunc();
+		    		            } 
+		    		        },
+		    		    
 		     ////////////////////////////////////////////////////////
 		  			 eventClick: function(event, element) {
 		    	/*  alert(event.id); */
@@ -343,7 +404,7 @@ $(function () {
 												
 																 $('#getSchedule' ).html(displayValue);
 			
-					alert(displayValue);
+					/* alert(displayValue); */
 				
 								}
 						});
@@ -396,7 +457,7 @@ $(document).on('click','#delete',function(){
 </head>
 
 <body>
-	<%-- <header><jsp:include page="/layout/header.jsp" /></header> --%>
+	 <header><jsp:include page="/layout/header.jsp" /></header> 
 <!-- progress bar  -->
 	<div class="container-fluid " id="progress">
       <ul class="progressbar">
@@ -465,6 +526,7 @@ $(document).on('click','#delete',function(){
   	 </select>
   	 </div>
 </div></div>
+
  <div class="col-md-12" >	
 <div class="row"> 
 <div class="col-md-4">  
@@ -486,17 +548,18 @@ $(document).on('click','#delete',function(){
  <div class="col-md-8"> <input type="color" name="color" id="color"  style="width:100px;"></div>
  </div></div>  
 <br/><br/><br/>
-        
+       
  <div class="col-md-12" >	
-<div class="row"> 
 <div class="col-md-4">  
   <input type ="submit" value="등록" id="submit"></div>
     <div class="col-md-4">  
     <input type ="reset" value="취소" id="reset"> </div>
         <div class="col-md-4"> <input type='button' id="close"  value='닫기'/></div>
         </div></div>
-		</form>
-		</div></div> </div></div>
+       
+</div> </div>
+        	</form>
+		</div></div> 
 <br/><br/>
 
 

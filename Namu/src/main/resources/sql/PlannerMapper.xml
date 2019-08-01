@@ -286,7 +286,7 @@ SELECT *
 	 <select  id="getRouteList"  parameterType="hashmap"	resultMap="routeSelectMap">
 
 	  	SELECT
-		city_name ,city_order, stay_day, start_Date,end_Date, lat, lng
+		city_name ,city_order, stay_day, start_Date,end_Date, lat, lng 
 	  	FROM route 
 	  	<where>
 	  	planner_code = #{plannerCode}  and

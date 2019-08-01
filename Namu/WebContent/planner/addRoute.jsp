@@ -245,7 +245,7 @@ $('#list_table').on("click", ".deletebtn", function () {
     iconsLength = icons.length;
    ////////////////////////////////////////////////////
       poly = new google.maps.Polyline({
-          strokeColor: '#f25c5c',
+          strokeColor: '#f2c029',
           strokeOpacity: 1.0,
           strokeWeight: 3
         });
