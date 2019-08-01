@@ -215,19 +215,24 @@ $(function() {
 	$(document).on('submit', '#save_income_form, #save_expenditure_form', function() {
 		//console.log('제출할 FORM : ' + $(this).html());
 		
-		$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
-		
-		event.preventDefault();
-		
-		var walletDetailCode = $(this).children('input:first-child').attr('data-wallet-detail-code');
-		//.log('walletDetailCode : ' + walletDetailCode);
-		
-		if(walletDetailCode == null){
-			addAjax($(this)[0]);
+		if($(this).find('#price').val() != null && $(this).find('#price').val() != ''){
+			$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
+			
+			event.preventDefault();
+			
+			var walletDetailCode = $(this).children('input:first-child').attr('data-wallet-detail-code');
+			//.log('walletDetailCode : ' + walletDetailCode);
+			
+			if(walletDetailCode == null){
+				addAjax($(this)[0]);
+			}else{
+				updateAjax($(this)[0]);
+			}
 		}else{
-			updateAjax($(this)[0]);
+			alert('금액 입력은 필수입니다.');
+			
+			return false;
 		}
-		
 	});
 	
 	// 수입/지출 추가 모달창 클로즈
@@ -301,11 +306,13 @@ $(function() {
 		//console.log(': BODY ONCLICK EVENT :');
 		
 		if($('#save_income_form').css('display') == 'block' || $('#save_expenditure_form').css('display') == 'block'){
-			if($('.pop_wrap_add').has(e.target).length === 0 && $('.daterangepicker').has(e.target).length === 0){
-				$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css('color', '#282c37');
-				
-				$('.pop_wrap_add').html('');
-				$('.pop_wrap_add').hide();
+			if($('.pop_wrap_add').has(e.target).length === 0 && $('.daterangepicker').has(e.target).length === 0 &&
+			   $(e.target).attr('class') != 'prev available' && $(e.target).parent().attr('class') != 'prev available' &&
+			   $(e.target).attr('class') != 'next available' && $(e.target).parent().attr('class') != 'next available'){
+					$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css('color', '#282c37');
+					
+					$('.pop_wrap_add').html('');
+					$('.pop_wrap_add').hide();
 			}
 		}else if(e.target.className == 'pop_wrap_contain'){
 			if($('.pop_wrap_get').has(e.target).length === 0){
@@ -359,7 +366,7 @@ function initPopUp() {
 	calculation();
 }
 
-//날짜 및 시간 입력기 실행
+// 날짜 및 시간 입력기 실행
 function dateRangePicker() {
 	$('.date_time').daterangepicker({
 		startDate			: moment().format('YYYY-MM-DD HH:mm'),
@@ -398,7 +405,6 @@ function exchangeRate() {
 		$('.apply_exchange_rate .second_unit').text($('#moneyUnit').val());
 		
 		convert($(this).val());
-		multiply();
 	});
 }
 
@@ -418,6 +424,7 @@ function memoPopUp() {
 	// 메모장 입력
 	$('.memo_cont').on('keyup', function(){
 		//console.log($(this).val());
+		//console.log('글자수 : ' + $(this).val().length);
 		
 		$('.memo_cont').val(removeTag($(this).val()));
 	});
@@ -425,10 +432,10 @@ function memoPopUp() {
 function removeTag(memo) {
 	memo.replace(/(<([^>]+)>)/gi, '');
 	
-	if(memo.length > 100){
-        alert('최대 100자까지 입력 가능합니다.');
+	if(memo.length > 150){
+		alert('최대 150자까지 입력 가능합니다.');
         
-        $('.memo_cont').val(memo.substring(0, 100));
+		return memo.substring(0, 150);
     }
 
 	return memo;
@@ -514,7 +521,8 @@ function calculation() {
 		
 		if(test){
 			// . 입력시 앞에 숫자가 없으면 0 추가
-			if($('#expression').val() == '' || operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1){
+			if($('#expression').val() == '' ||
+			   operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1){
 				// . 연속 입력 방지
 				if($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length) != '.'){
 					pressNumber('0' + $(this).val());
@@ -537,20 +545,23 @@ function calculation() {
 var operStr = '+-*/.';
 
 function pressNumber(num) {
-	// 15자까지 입력 제한
-	if($('#expression').val().length < 15){
-		// 연산자 중복 클릭시 기존 연산자 삭제
-		if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1 && operStr.indexOf(num) != -1){
-			backspace();
-		}
-		
-		$('#expression').val($('#expression').val() + num);
-		
-		// 연산자 중복 입력 방지
-		if(operStr.indexOf(num) == -1 && $('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length) != '.'){
-			answer($('#expression').val());
-		}
-	}else{
+	//console.log('글자수 : ' + $('#expression').val().length);
+	
+	// 연산자 중복 클릭시 기존 연산자 삭제
+	if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) != -1 &&
+	   operStr.indexOf(num) != -1){
+		backspace();
+	}
+	
+	$('#expression').val($('#expression').val() + num);
+	
+	// 연산자 중복 입력 방지
+	if(operStr.indexOf(num) == -1 && $('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length) != '.'){
+		answer($('#expression').val());
+	}
+	
+	// 10자까지 입력 제한
+	if($('#expression').val().length > 9){
 		backspace();
 	}
 }
@@ -587,7 +598,8 @@ function backspace() {
 	$('#expression').val($('#expression').val().substring(0, $('#expression').val().length-1));
 	
 	// 다시 계산
-	if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) == -1 || $('#expression').val() == ''){
+	if(operStr.indexOf($('#expression').val().substring($('#expression').val().length-1, $('#expression').val().length)) == -1 ||
+	   $('#expression').val() == ''){
 		answer($('#expression').val());
 		multiply();
 	}
