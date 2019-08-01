@@ -28,7 +28,6 @@ DROP SEQUENCE seq_w_detail_code;
 DROP SEQUENCE seq_planner_code;
 DROP SEQUENCE seq_route_code;
 DROP SEQUENCE seq_schedule_code;
-DROP SEQUENCE seq_group_code;
 DROP SEQUENCE seq_user_code;
 DROP SEQUENCE seq_timeline_code;
 DROP SEQUENCE seq_police_code;
@@ -52,7 +51,6 @@ CREATE SEQUENCE seq_w_detail_code           INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_planner_code          INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_route_code                INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_schedule_code            INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_group_code                INCREMENT BY 1 START WITH 1;
 --성용 시퀀스
 CREATE SEQUENCE seq_user_code                  INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_timeline_code                  INCREMENT BY 1 START WITH 1;
@@ -223,7 +221,7 @@ CREATE TABLE schedule(
    sche_code               NUMBER(10)          NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL ,
-   sche_day DATE,
+   sche_day VARCHAR2(10),
    time_hour VARCHAR2(10),
    time_min VARCHAR2(10),
    SCHE_NAME VARCHAR2(500) NOT NULL,

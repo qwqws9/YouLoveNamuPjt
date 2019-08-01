@@ -1,25 +1,25 @@
 package com.youlove.service.domain;
 
-import java.util.Date;
-
 public class Schedule {
 
 		///Field
 		private int scheCode;
 		private int plannerVer;
-		private Date scheDay;
+		private String scheDay;
 		private String timeHour;
 		private String timeMin;
+		
+		private String etimeHour;
+		private String etimeMin;
 		
 		private String scheName;
 		private String schePlace;
 		private String scheDetail;
-	
+
 		private String accomodation;
-//		private Planner plannerCode;
-//		private Route routeCode;
 		private int plannerCode;
 		private String color;
+
 		
 		///Constructor
 		public Schedule(){
@@ -41,11 +41,11 @@ public class Schedule {
 			this.plannerVer = plannerVer;
 		}
 
-		public Date getScheDay() {
+		public String getScheDay() {
 			return scheDay;
 		}
 
-		public void setScheDay(Date scheDay) {
+		public void setScheDay(String scheDay) {
 			this.scheDay = scheDay;
 		}
 
@@ -112,13 +112,30 @@ public class Schedule {
 		public void setColor(String color) {
 			this.color = color;
 		}
+		
+		public String getEtimeHour() {
+			return etimeHour;
+		}
+
+		public void setEtimeHour(String etimeHour) {
+			this.etimeHour = etimeHour;
+		}
+
+		public String getEtimeMin() {
+			return etimeMin;
+		}
+
+		public void setEtimeMin(String etimeMin) {
+			this.etimeMin = etimeMin;
+		}
 
 		@Override
 		public String toString() {
 			return "Schedule [scheCode=" + scheCode + ", plannerVer=" + plannerVer + ", scheDay=" + scheDay
-					+ ", timeHour=" + timeHour + ", timeMin=" + timeMin + ", scheName=" + scheName + ", schePlace="
-					+ schePlace + ", scheDetail=" + scheDetail + ", accomodation=" + accomodation + ", plannerCode="
-					+ plannerCode + ", color=" + color + "]";
+					+ ", timeHour=" + timeHour + ", timeMin=" + timeMin + ", etimeHour="
+					+ etimeHour + ", etimeMin=" + etimeMin + ", scheName=" + scheName + ", schePlace=" + schePlace
+					+ ", scheDetail=" + scheDetail + ", accomodation=" + accomodation + ", plannerCode=" + plannerCode
+					+ ", color=" + color + "]";
 		}
 
 }

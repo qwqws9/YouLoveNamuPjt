@@ -1,6 +1,10 @@
 package com.youlove.web.planner;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -136,7 +140,7 @@ public class PlannerRestController {
      Date start;
      Date end;
      String color = "";
-     
+     Boolean allDay;
      rlist =  plannerService.getRouteList(plannerCode);
 		for(int i=0; i<rlist.size(); i++){   
 	     	Map<String, Object> map = new HashMap<String, Object>();
@@ -144,8 +148,11 @@ public class PlannerRestController {
 	        start = ((Route) rlist.get(i)).getStartDate();
 	        end = ((Route) rlist.get(i)).getEndDate();
 	        int cityOrder=((Route) rlist.get(i)).getCityOrder();
-//	        String allDay="true";
-//	        
+	        allDay= true;
+//	        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			Calendar cal=Calendar.getInstance();
+//			cal.setTime(start);
+//			
 	        //hard coding...... 방법 알아보기.
 	        if(cityOrder==1){color="#CCCC66";}
 	        if(cityOrder==2){color="#66CCFF";}
@@ -161,7 +168,8 @@ public class PlannerRestController {
 	        map.put("start", start);
 	        map.put("end", end);
 	        map.put("color", color);
-	        map.put("id",cityOrder);
+	        map.put("id",title);
+	        map.put("allDay", allDay);
 	        result.add(map);           
 	     	}
        
@@ -170,14 +178,29 @@ public class PlannerRestController {
 
        	 Map<String, Object> map2 = new HashMap<String, Object>();
          title = ((Schedule) slist.get(j)).getScheName();   
-         start = ((Schedule) slist.get(j)).getScheDay();
+         String starts = ((Schedule) slist.get(j)).getScheDay()+" "+((Schedule) slist.get(j)).getTimeHour()+":"+((Schedule) slist.get(j)).getTimeMin() +":00";
+        System.out.println(starts);
          int scheCode=((Schedule) slist.get(j)).getScheCode();
          color= ((Schedule) slist.get(j)).getColor();   
+         allDay= false;
+         ////////////////////////////////////////
+         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+ 		Date date=null;
+ 		
+ 		try {
+ 			date=dateFormat.parse(starts); 
+ 		}catch(ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(date);
 
+         ////////////////////////////////////////
          map2.put("title", title);
-         map2.put("start", start);
+         map2.put("start", starts);
          map2.put("id",scheCode);
          map2.put("color", color);
+         map2.put("allDay", allDay);
          result.add(map2);  
    	}
 
@@ -202,7 +225,7 @@ public class PlannerRestController {
      Date start;
      Date end;
      String color = "";
-     
+     Boolean allDay;
      rlist =  plannerService.getRouteList(plannerCode);
      System.out.println(plannerCode);
      System.out.println(rlist.size());
@@ -212,7 +235,8 @@ public class PlannerRestController {
 	        start = ((Route) rlist.get(i)).getStartDate();
 	        end = ((Route) rlist.get(i)).getEndDate();
 	        int cityOrder=((Route) rlist.get(i)).getCityOrder();
-	        
+	        //allDay= ((Route) rlist.get(i)).getAllDay();
+	        allDay=true;
 	        //hard coding...... 방법 알아보기.
 	        if(cityOrder==1){color="#CCCC66";}
 	        if(cityOrder==2){color="#66CCFF";}
@@ -228,7 +252,8 @@ public class PlannerRestController {
 	        map.put("start", start);
 	        map.put("end", end);
 	        map.put("color", color);
-	        map.put("id",cityOrder);
+	        map.put("id",title);
+	        map.put("allDay", allDay);
 	        result.add(map);           
 	     	}
        
@@ -237,14 +262,30 @@ public class PlannerRestController {
 
        	 Map<String, Object> map2 = new HashMap<String, Object>();
          title = ((Schedule) slist.get(j)).getScheName();   
-         start = ((Schedule) slist.get(j)).getScheDay();
+         String starts = ((Schedule) slist.get(j)).getScheDay()+" "+((Schedule) slist.get(j)).getTimeHour()+":"+((Schedule) slist.get(j)).getTimeMin() +":00";
          int scheCode=((Schedule) slist.get(j)).getScheCode();
          color= ((Schedule) slist.get(j)).getColor(); 
-
+         //allDay= ((Schedule) slist.get(j)).getAllDay();
+         allDay=false;
+         System.out.println(starts);
+         ///////////////////////////////////////////////
+         
+         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  		Date date=null;
+  		
+  		try {
+  			date=dateFormat.parse(starts); 
+  		}catch(ParseException e) {
+ 			e.printStackTrace();
+ 		}
+ 		Calendar cal=Calendar.getInstance();
+ 		cal.setTime(date);
+ 		///////////////////////////////////////////////////////////////
          map2.put("title", title);
-         map2.put("start", start);
+         map2.put("start", starts);
          map2.put("id",scheCode);
          map2.put("color", color);
+         map2.put("allDay", allDay);
          result.add(map2);  
    	}
 

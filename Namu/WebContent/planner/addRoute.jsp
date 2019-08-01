@@ -4,6 +4,8 @@
 <html> 
 <head>
    <jsp:include page="/layout/head.jsp" />
+   	
+<jsp:include page="/guide/tourModal.jsp" />
 	<!-- bootstrap -->
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -55,6 +57,9 @@ tr:nth-child(odd):hover td {
 </head> 
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
+<div style="display:none">
+<button type="button" class="btn btn-primary" data-toggle="modal" id="tourModalShow"  data-target="#modalTourList" >관광지</button>
+</div>
 <!-- progress bar  -->
 <div class="container-fluid " id="progress">
       <ul class="progressbar">
@@ -113,8 +118,9 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
 		
 		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/addRoute").attr("enctype" , "multipart/form-data").submit();
 	}	
-		
 	
+
+ 	
 	$(function(){
     $("#save").on("click",function(){    	
     	fncAddRoute();    	
@@ -125,6 +131,15 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
     	history.go(-1);
     	
     });
+    
+     
+     
+     $(document).on('click','#tourModal',function(){
+    	 var tourId = $(this).next().val().trim();
+    	 tourModal(tourId);
+    	 $('#tourModalShow').trigger('click');
+     })
+	 
     
 });
 $('#list_table').on("click", ".deletebtn", function () {
@@ -207,6 +222,8 @@ $('#list_table').on("click", ".deletebtn", function () {
  	 });
  
    alert(locations); 
+   
+
   
    ////////////////////initmap setting///////////////
     map = new google.maps.Map(document.getElementById('map'), {
@@ -250,9 +267,14 @@ $('#list_table').on("click", ".deletebtn", function () {
 ///////////////location marker mouseover event -infowindow /////////////////////
    		   google.maps.event.addListener(marker, 'mouseover', function(){
 			var marker= this;
-				  
+			var keyword=this.id;
+		
 			infowindow.setContent('<img src="/resources/images/flag/'+this.content+'" alt="..." height="20" width="35">'    
-						+"　"+this.id+ '</p>' + "도시설명");
+						+"　"+this.id+ '</p>'+'	<button type="button" class="btn btn-info btn-sm" id="tourModal" >'+this.id+'<p> 관광지 살펴보기 </button>'
+						+'<input type="hidden" value="'+this.id+'">'
+						/* onclick="tourModal('+this.id+');"  */
+						);
+
 	        infowindow.open(map, marker);
    		   });
 	
@@ -307,6 +329,10 @@ $('#list_table').on("click", ".deletebtn", function () {
 				);
 		   }
 	 
+	 
+	 
+	 
+	 
 	  //////////////////////////////////////////전체마커 관리용//////////////////
 	  function setMapOnAll(map) {
 		 for (var j = 0; j < myMarkers.length; j++) {
@@ -326,14 +352,13 @@ $('#list_table').on("click", ".deletebtn", function () {
 	      }
 
 	      function deleteMarkers() {
-	    	  
 	        clearMarkers();
 	      	myMarkers = [];
 	      	 poly.setPath(null);
-	 			
 	      }
 
 	</script> 
+
 	</body>
 
 </html>

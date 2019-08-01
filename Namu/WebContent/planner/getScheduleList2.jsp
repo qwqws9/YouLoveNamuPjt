@@ -232,39 +232,42 @@ var departDate=${planner.departDate};
 	  var plannerCode=${planner.plannerCode};
 		   $('#calendar').fullCalendar({
 			   
-			    events: function(start, end, timezone, callback) {  
-		      
-	        /////////////////////////////////////////////////////////////////
-			    	$.ajax({
-	   	                url: "/planner/json/getScheduleList/"+plannerCode,
-	   	                type : 'GET',
-	   	                data : { startDate :  start.format('YYYY-MM-DD 01:00'),endDate :  end.format('YYYY-MM-DD 11:00') },
-	   	                dataType: 'json',
-	   	               	
-	   	                success: function(data) {
-	   	                   var events = [];
-	   	                   $(data).each(function() {
+			   events: function(start, end, timezone, callback) {  
+			        /////////////
+				    	$.ajax({
+		   	                url: "/planner/json/getScheduleList/"+plannerCode,
+		   	                type : 'GET',
+		   	                data : { startDate :  start.format('YYYY-MM-DD mm:ss'),endDate :  end.format('YYYY-MM-DD mm:ss') },
+		   	                dataType: 'json',
+		   	               	
+		   	                success: function(data) {
+		   	                   var events = [];
+		   	                $(data).each(function() {
 	   	                        events.push({
 	   	                           title: $(this).attr('title'),
-	   	                            start:moment( $(this).attr('start')),
+	   	                            start: $(this).attr('start'),
 	   	                         color: $(this).attr('color'),
 	   	                            id: $(this).attr('id') ,
-	   	                         end: $(this).attr('end') 
-	   	                        });
-	   	                     
-	   	                    });
-	                    callback(events);
-	                }
-	                   }); 
-	       
-	     }, 	 
+	   	                         end: $(this).attr('end'),
+	   	                      allDay:  $(this).attr('allDay') 
+		   	                        });
+	   	                   
+		   	                     console.log(events);
+		   	                  console.log("베ㅏㅇㅇ");
+		   	                  
+		   	                    });
+		                    callback(events);
+		                }
+		                   }); 
+		       
+		     }, 	 
 		      header: {
 		        left: 'prev,next today',
 		        center: 'title',
 		        right: 'month'
 		      },
 		     
-		      /* defaultDate: ddate,  */
+		      defaultDate: ddate,  
 		      editable: true,
 		      droppable: true, 
 		     /* dayClick: function(date) { */
@@ -282,7 +285,7 @@ var departDate=${planner.departDate};
 		        	   layer_open('layer1');
 		        	   onchangeDay(yy,mm,dd,ss);
 		        	     },  
-		        
+
 		     eventLimit: true,
 		    
 		     ////////////////////////////////////////////////////////
@@ -294,21 +297,48 @@ var departDate=${planner.departDate};
 							{
 								url : "/planner/json/getSchedule/"+event.id ,
 								method : "GET" ,
+								
 								dataType : "json" ,
 								headers : {
 									"Accept" : "application/json",
 									"Content-Type" : "application/json"
 								},
 								success : function(JSONData , status) {
+								   	console.log('4번째');
+									var displayValue = 
+														'<h5 class="title">일정 보기 </h5><br/><br/>'
+														 +'<div class="col-md-12" ><div class="row">'
+														+'<div class="col-md-4"><p> 날짜 </p></div>'
+														+'<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay" value="'+JSONData.scheDay+'"/></div>' 
+														+'</div></div>'
+														 
+														 +'<div class="col-md-12" ><div class="row">'
+														+'<div class="col-md-4"><p>   일정 </p></div> '
+														 +'<div class="col-md-8"> <input type="text" name="scheName" value="'+JSONData.scheName+'"readonly/> </div>'
+														 +'</div></div>'
+														          
+														+'<div class="col-md-12" ><div class="row">' 
+														+'<div class="col-md-4"> <p> 일정시작시간 </p></div>' 
+														+'<div class="col-md-4"><input type="text" name="timeHour" value="'+JSONData.timeHour+'"readonly/></div>'
+														+'<div class="col-md-4"><input type="text" name="timeMin" value="'+JSONData.timeMin+'"readonly/></div>'
+														+'</div></div>'
 
-									var displayValue = "<h6>"
-																+"일정 : "+JSONData.scheName+"<br/>"
-																+"장소 : "+JSONData.scheDetail+"<br/>"
-																+"일정상세내용 : "+JSONData.scheDetail+"<br/>"
-																;
+														+' <div class="col-md-12" ><div class="row">'
+														+'<div class="col-md-4"><p> 일정장소 </p></div>'
+														+' <div class="col-md-8"><input type="text" name="schePlace" value="'+JSONData.schePlace+'"readonly/> </div>'
+														+'</div></div>'
+														 
+														 +'<div class="col-md-12" ><div class="row"> '
+														+'<div class="col-md-4"> <p> 일정상세 </p></div>'
+														 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" readonly> '+JSONData.scheDetail+'" </textarea></div>'
+														 +'</div></div>'
+														 +'<div class><input type="hidden" id="scheCode" name="scheCode" value="'+JSONData.scheCode+'"></div>'
+														+'<br/><br/><br/>';
+								
+												
 																 $('#getSchedule' ).html(displayValue);
 			
-							/* 		alert(displayValue); */
+					alert(displayValue);
 				
 								}
 						});
@@ -333,9 +363,8 @@ var departDate=${planner.departDate};
 $(function () {
 	//initialize  calendar
 	
-		//alert(departDate);
 var departDate=${planner.departDate};
-	//alert(departDate);
+	alert(departDate);
 	var ddd = String(departDate);	
 	var yyyy = ddd.substring(0,4);
 	var mm = ddd.substring(4,6);
@@ -344,6 +373,7 @@ var departDate=${planner.departDate};
 	var ddate= new Date(); 
 
 	  var plannerCode=${planner.plannerCode};
+	  
 		   $('#calendar2').fullCalendar({
 			   
 			    events: function(start, end, timezone, callback) {  
@@ -351,18 +381,19 @@ var departDate=${planner.departDate};
 			    	$.ajax({
 	   	                url: "/planner/json/getScheduleList/"+plannerCode,
 	   	                type : 'GET',
-	   	                data : { startDate :  start.format('YYYY-MM-DD 01:00'),endDate :  end.format('YYYY-MM-DD 11:00') },
+	   	                data : { startDate :  start.format('YYYY-MM-DD mm:ss'),endDate :  end.format('YYYY-MM-DD mm:ss') },
 	   	                dataType: 'json',
 	   	               	
 	   	                success: function(data) {
 	   	                   var events = [];
-	   	                   $(data).each(function() {
-	   	                        events.push({
-	   	                           title: $(this).attr('title'),
-	   	                            start:moment( $(this).attr('start')),
-	   	                         color: $(this).attr('color'),
-	   	                            id: $(this).attr('id') ,
-	   	                         end: $(this).attr('end') 
+	   	                $(data).each(function() {
+   	                        events.push({
+   	                           title: $(this).attr('title'),
+   	                            start: $(this).attr('start'),
+   	                         color: $(this).attr('color'),
+   	                            id: $(this).attr('id') ,
+   	                         end: $(this).attr('end'),
+   	                      allDay: $(this).attr('allDay')
 	   	                        });
 	   	                     
 	   	                    });
@@ -378,7 +409,7 @@ var departDate=${planner.departDate};
 		        right: 'agendaWeek,listDay'
 		      },
 		     
-		      /* defaultDate: ddate,  */
+		      defaultDate: ddate,  
 		      editable: true,
 		      droppable: true, 
 		     /* dayClick: function(date) { */
@@ -408,21 +439,48 @@ var departDate=${planner.departDate};
 							{
 								url : "/planner/json/getSchedule/"+event.id ,
 								method : "GET" ,
+								
 								dataType : "json" ,
 								headers : {
 									"Accept" : "application/json",
 									"Content-Type" : "application/json"
 								},
 								success : function(JSONData , status) {
+								   	console.log('4번째');
+									var displayValue = 
+														'<h5 class="title">일정 보기 </h5><br/><br/>'
+														 +'<div class="col-md-12" ><div class="row">'
+														+'<div class="col-md-4"><p> 날짜 </p></div>'
+														+'<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay" value="'+JSONData.scheDay+'"/></div>' 
+														+'</div></div>'
+														 
+														 +'<div class="col-md-12" ><div class="row">'
+														+'<div class="col-md-4"><p>   일정 </p></div> '
+														 +'<div class="col-md-8"> <input type="text" name="scheName" value="'+JSONData.scheName+'"readonly/> </div>'
+														 +'</div></div>'
+														          
+														+'<div class="col-md-12" ><div class="row">' 
+														+'<div class="col-md-4"> <p> 일정시작시간 </p></div>' 
+														+'<div class="col-md-4"><input type="text" name="timeHour" value="'+JSONData.timeHour+'"readonly/></div>'
+														+'<div class="col-md-4"><input type="text" name="timeMin" value="'+JSONData.timeMin+'"readonly/></div>'
+														+'</div></div>'
 
-									var displayValue = "<h6>"
-																+"일정 : "+JSONData.scheName+"<br/>"
-																+"장소 : "+JSONData.scheDetail+"<br/>"
-																+"일정상세내용 : "+JSONData.scheDetail+"<br/>"
-																;
+														+' <div class="col-md-12" ><div class="row">'
+														+'<div class="col-md-4"><p> 일정장소 </p></div>'
+														+' <div class="col-md-8"><input type="text" name="schePlace" value="'+JSONData.schePlace+'"readonly/> </div>'
+														+'</div></div>'
+														 
+														 +'<div class="col-md-12" ><div class="row"> '
+														+'<div class="col-md-4"> <p> 일정상세 </p></div>'
+														 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" readonly> '+JSONData.scheDetail+'" </textarea></div>'
+														 +'</div></div>'
+														 +'<div class><input type="hidden" id="scheCode" name="scheCode" value="'+JSONData.scheCode+'"></div>'
+														+'<br/><br/><br/>';
+								
+												
 																 $('#getSchedule' ).html(displayValue);
 			
-							/* 		alert(displayValue); */
+					alert(displayValue);
 				
 								}
 						});
@@ -439,16 +497,16 @@ var departDate=${planner.departDate};
 		        }
 		      }
 		    });
-		  });
-		  
-		
- $(function() {
+		 
+
   $("#color").spectrum({
    flat: false,
    showInput: true,
    preferredFormat: "hex",
    color: "#000000"
   });
+  
+  
  });
 </script>
 </head>
@@ -469,8 +527,7 @@ var departDate=${planner.departDate};
 
 <!--일정 등록 팝업  -->
 
-<div style="height: 300px;"></div>
-
+<!-- <div style="height: 300px;"></div>
 <a href="#layer1" class="btn-example"></a>
 <div class="dim-layer">
 <div class="dimBg"></div>
@@ -499,7 +556,7 @@ var departDate=${planner.departDate};
 <div class="col-md-4">      
      <p> 일정시작시간 </p></div> 
 <input type="text" name="timepicker" class="timepicker"/>
- <!-- <div class="col-md-8"><input type="text" step="1800" name="timeHour"/> </div>  -->
+ <div class="col-md-8"><input type="text" step="1800" name="timeHour"/> </div> 
           </div></div>
     <div class="col-md-12" >	
 <div class="row"> 
@@ -537,51 +594,28 @@ var departDate=${planner.departDate};
 		</div></div> </div></div></div>
 <br/><br/>
 
-
+ -->
 <!--일정 상세 팝업  -->
 <div style="height: 300px;"></div>
 <a href="#layer2" class="btn-example"></a>
-
+<div class="dim-layer">
+<div class="dimBg"></div>
 <div id="layer2" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
             <div class="schedule">
-                 <h5 class="title"> 일정 보기  </h5> 
-    		<div id="getSchedule"></div>
-       <div class="col-md-12" >	
+               
+   <div id="getSchedule"></div>
+    	
 <div class="row"> 
-<div class="col-md-4"> <input type ="submit" value="수정" id="update"></div>
-<div class="col-md-4"> <input type ="submit" value="삭제" id="delete"></div>
-<div class="col-md-4"> <input type='button' id="close"  value='닫기'/></div>
-	</div></div>
+ <div class="col-md-12">
+ 
+<div class="col-md-4"> <input type='button' id="close"  value='닫기' ></div>
+	</div></div></div>
 		</div></div> </div></div>
 <br/><br/>
 
-<!--  모 -->
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 </body>
 </html>

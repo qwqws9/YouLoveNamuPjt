@@ -37,6 +37,7 @@
 		<result property="lng" 			column="lng" 		jdbcType="VARCHAR" />
 		<result property="startDate" 			column="START_DATE" 		jdbcType="DATE"  />
 		<result property="endDate" 			column="END_DATE" 		jdbcType="DATE" />
+		
 <!-- 		<association property="planner" 			column="planner_code" 		select="PlannerMapper.getPlanner" javaType="planner"/> -->
 		</resultMap>
 		
@@ -44,14 +45,19 @@
 		<result property="scheCode"				column="SCHE_CODE" 				jdbcType="NUMERIC" />
 		<result property="plannerCode" 			column="PLANNER_CODE" 			jdbcType="NUMERIC"/> 
 		<result property="plannerVer" 			column="planner_ver" 			jdbcType="NUMERIC"/>
-		<result property="scheDay"				column="SCHE_DAY" 				jdbcType="DATE" />
+		<result property="scheDay"				column="SCHE_DAY" 				jdbcType="VARCHAR" />
 		<result property="timeHour"				column="TIME_HOUR" 				jdbcType="VARCHAR" />
 		<result property="timeMin"				column="TIME_MIN" 				jdbcType="VARCHAR" />
+		<result property="etimeHour"				column="ETIME_HOUR" 				jdbcType="VARCHAR" />
+		<result property="etimeMin"				column="ETIME_MIN" 				jdbcType="VARCHAR" />
+		
+		
 		<result property="scheName"				column="SCHE_NAME" 				jdbcType="VARCHAR" />
 		<result property="schePlace"				column="SCHE_PLACE" 				jdbcType="VARCHAR" />
 		<result property="scheDetail" 			column="SCHE_DETAIL" 			jdbcType="VARCHAR"/>	
 		<result property="accomodation" 			column="ACCOMODATION" 			jdbcType="VARCHAR"/>	
 		<result property="color" 			column="COLOR " 			jdbcType="VARCHAR"/>	
+		
 
 	<!-- <association property="PLANNER" column="PLANNER_CODE"  select="PlannerMapper.getPlanner" javaType="planner"/>
 	<association property="ROUTE" column="ROUTE_CODE"  select="PlannerMapper.getRoute" javaType="route"/> -->
@@ -102,12 +108,11 @@
 SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(
-	  					SELECT  p.planner_Name, p.planner_code, p.planner_image, p.DEPART_DATE, p.member,c.flag_image
-	  					FROM planner p, city c, route r
+	  					SELECT  planner_code, planner_name, planner_image, DEPART_DATE, member
+	  					FROM planner
 	  				
-										 where	p.planner_writer = #{userCode}
-									and  r.city_Name =c.city_name
-									and p.planner_code=r.planner_code
+										 where	planner_writer = #{userCode}
+								
 	  					 ORDER BY planner_code DESC 
 	  						) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
@@ -258,7 +263,7 @@ SELECT *
 	
 		 <select 	id="getRoute"	parameterType="string"	resultMap="routeSelectMap">
 		SELECT
-		city_name ,stay_day, city_order,  lat, lng
+		city_name ,stay_day, city_order,  lat, lng 
 		FROM route
 		WHERE planner_code = #{plannerCode}
 	 </select>
@@ -313,7 +318,7 @@ SELECT *
 		<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
 		INTO schedule (sche_code, planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail,accomodation, color ) 
-		VALUES	 (seq_schedule_code.nextval, 1, #{plannerCode}, #{scheDay:DATE} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
+		VALUES	 (seq_schedule_code.nextval, 1, #{plannerCode}, #{scheDay:VARCHAR} ,#{timeHour:VARCHAR}, #{timeMin:VARCHAR}, #{scheName:VARCHAR}, #{schePlace:VARCHAR}, #{scheDetail:VARCHAR},null,#{color:VARCHAR})
 	 </insert>
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">
@@ -334,12 +339,7 @@ SELECT *
 		</set>
 		WHERE sche_code = #{scheCode}
 	 </update>
-	 
-	 <!-- <delete id="deleteSchedule" parameterType="int">
-	  	DELETE  schedule 
-	  	WHERE sche_code = #{scheCode} 
-  	</delete> -->
- 		
+
 		<delete id="deleteSchedule" parameterType="int">
 		DELETE  schedule
 		WHERE sche_code = #{scheCode}
@@ -348,7 +348,7 @@ SELECT *
   	<select  id="getScheduleList"  parameterType="hashmap"	resultMap="scheduleSelectMap">
 
 	  	SELECT
-		sche_code, sche_day, sche_name, color
+		sche_code, sche_day, sche_name, color, time_hour, time_min
 	  	FROM schedule
 	  	<where>
 	  	planner_code = #{plannerCode}  and
