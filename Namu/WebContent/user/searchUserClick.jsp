@@ -29,7 +29,7 @@
 					<div class="card bg-light mb-3">
 					  <div class="row no-gutters">
 					    <div class="col-md-4">
-					      <img src="/resources/images/profile/${userForm.profileImg }" class="userProfile card-img" alt="...">
+					      <img src="/resources/images/profile/${userForm.profileImg }" class="userProfile card-img" alt="..." style="height: 175px; padding: 10px;">
 					    </div>
 					    <div class="col-md-8">
 					      <div class="card-body">

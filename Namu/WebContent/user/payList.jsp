@@ -138,7 +138,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
          <c:if test="${!empty item.hotelCode }">
-        <button type="button" class="btn btn-primary" value="${item.hotelCode }">숙소 보기</button>
+        <button type="button" class="hotelDetailPayView btn btn-primary" value="${item.hotelCode }">숙소 보기</button>
          </c:if>
       </div>
     </div>
@@ -152,6 +152,10 @@
 		$('tr[class^=paymentCode]').on('click',function(){
 			var mod = $(this).attr('class');
 			$('#'+mod).modal();
+		})
+		
+		$('.hotelDetailPayView').on('click',function(){
+			self.location = '/guide/selectTourDetail/'+$(this).val().trim();
 		})
 	})
 </script>

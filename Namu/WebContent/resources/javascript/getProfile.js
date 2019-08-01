@@ -25,6 +25,8 @@
 			//console.log(container.has(e.target).length);
 			if(container.has(e.target).length === 0){
 				$(".profilePop_wrap").css('display','none');
+				$(".profilePopup").css('display','none');
+				$('.profilePopup').empty();
 			}
 		});
 		
@@ -36,6 +38,8 @@
 			//console.log(container.has(e.target).length);
 			if(container.has(e.target).length === 0){
 				$(".profilePop_wrap").css('display','none');
+				$(".profilePopup").css('display','none');
+				$('.profilePopup').empty();
 			}
 			//console.log("종료");
 		})
