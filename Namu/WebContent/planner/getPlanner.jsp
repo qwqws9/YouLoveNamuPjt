@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -37,23 +36,126 @@
 	 	}
 	</style>
 	<script type="text/javascript">
-		 $(function() {
-
-			$("#update").on("click",function(){    	
+	
+	$(function(){
+		
+		//로드될때 현재 세션 사용자가 좋아요를 눌렀으면 체크되는 로직
+		$.ajax ({
+			url : '/like/json/checkLike',
+			method : 'post',
+			async : false,
+			data : JSON.stringify({
+				boardCode : $('#boardCode').val().trim(),
+				detailCode : $('#detailCode').val().trim(),
+				likeName : $('#nodeUserCode').val().trim()
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status){
+				if(data == true) {
+					//현재 접속자가 좋아요를 누른상태
+					$('.boardLike').children().attr('class','fas fa-heart fa-lg').css('color','red');
+				}else {
+					$('.boardLike').children().attr('class','far fa-heart fa-lg').css('color','black');
+				}
+			}
+		})
+		
+		
+			$("#updatep").on("click",function(){    	
 			 self.location = "/planner/updatePlanner?plannerCode=${planner.plannerCode}";
 			  });
 			
 			/* $("#delete").on("click",function(){    	
 			 self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
-			  }); */
+			  }); /* */ 
 			$("a[href='#']").on("click",function(){
 			  	
 			 self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
 			  	
 			});
-			    
+
 		});
 		 
+	
+	//게시물 좋아요
+	$(document).on('click','.boardLike',function(){
+		var heart = $(this).children().attr('class').substr(0,3);
+		var boardCode = $('#boardCode').val().trim();
+		var detailCode = $('#detailCode').val().trim();
+		var writerUser = $('#communityUserCode').val().trim();
+		var sessionUser = $('#nodeUserCode').val().trim();
+		console.log(heart);
+		
+		
+		if(heart == 'far') {
+			//좋아요
+			$(this).children().attr('class','fas fa-heart fa-lg').css('color','red');
+			addLikeBoard(boardCode,detailCode,sessionUser,writerUser);
+		}else {
+			//좋아요 취소
+			$(this).children().attr('class','far fa-heart fa-lg').css('color','black');
+			deleteLikeBoard(boardCode,detailCode,sessionUser);
+		}
+	});
+	
+	function addLikeBoard(boardCode,detailCode,sessionUser,writerUser) {
+		
+		$.ajax ({
+			url : '/like/json/addLike',
+			method : 'post',
+			data : JSON.stringify({
+				detailCode : detailCode,
+				boardCode : boardCode,
+				likeName : {
+					userCode : sessionUser
+				}
+				
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status){
+				if(data == true) {
+					if(sessionUser != writerUser){
+						addTimelineCommunity(boardCode,detailCode,sessionUser,writerUser,'4');
+					}
+						var count = $('.likeCountBoard').text().trim();
+						$('.likeCountBoard').text((Number(count)+1));
+				}
+			}
+		})
+	}
+	
+	
+	function deleteLikeBoard(boardCode,detailCode,sessionUser) {
+		
+		$.ajax ({
+			url : '/like/json/deleteLike',
+			method : 'post',
+			data : JSON.stringify({
+				detailCode : detailCode,
+				boardCode : boardCode,
+				likeName : {
+					userCode : sessionUser
+				}
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status){
+				var count = $('.likeCountBoard').text().trim();
+					$('.likeCountBoard').text((Number(count)-1));
+			}
+		})
+	}
+	
+	
+	
 		 
 // 		 $(document).ready(function(){
 // 			var owl = $(".owl-carousel");
@@ -71,9 +173,9 @@
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
 	
-	<form role="form" method="post">
 	<input type="hidden" name="plannerCode" value="${planner.plannerCode}" />
-	</form>
+		<input type="hidden" id="communityUserCode" value="${planner.plannerWriter.userCode} ">
+
 	
 	
 	<br><br><br>
@@ -93,7 +195,7 @@
 								<div class="row text-left" style="padding-left: 15px;">
 									<span>
 <%-- 										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px"> --%>
-										<img src="/resources/images/profile/img_login.gif"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
+										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
 										<span style="padding-left: 10px;">${planner.plannerWriter.nickname}</span>
 									</span>
 								</div>
@@ -133,7 +235,15 @@
 						</div>
 						
 						<br>
-						
+						<div class="row" style="margin-top: 8px;">
+		<div class="col-6">
+			<div class="badge badge-pill" style="border: 1px solid black;">
+				<button class="boardLike" type="button" style="border: none; background: none;">
+					<i class="far fa-heart fa-lg" ></i>
+				</button>
+				<span class="likeCountBoard" style="font-size: 11px;">${likeCountBoard }</span>
+				
+				</div></div></div></div>
 						<div class="row"><!-- map -->
 							<div class="col-md-12 col-lg-12">
 								<jsp:include page="/planner/getRoute.jsp" />
@@ -158,7 +268,7 @@
 						<c:if test="${user.userCode == planner.plannerWriter.userCode}">
 							<div class="row">
 								<div class="col-md-4">
-									<button type="button" class="btn btn-default" id="update"> 수정 </button>
+									<button type="button" class="btn btn-default" id="updatep"> 수정 </button>
 									 <a onclick="return confirm('플래너를 삭제하시겠습니까?')" href="#" class="btn btn-default">삭제</a> 
 								</div>
 							</div>
@@ -210,7 +320,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
 	
  
  
@@ -218,12 +328,11 @@
 	<%-- <input type="hidden" id="sessionId" value="${user.userCode }"> --%>
 
 
-
 <%-- 
-<input type="hidden" class="plannerWriter" name="plannerWriter" value="${planner.plannerWriter}"> --%> 
+<input type="hidden" class="plannerWriter" name="plannerWriter" value="${planner.plannerWriter}"> 
 
       
-      
+       --%>
 	
 </body>
 </html>

@@ -7,50 +7,7 @@
 	<div class="pop_left">
 		<div class="result_top">
 			<input class="date_time" name="regDate">
-			<div class="date_background">
-				<script>
-					$(function() {
-						$('.date_time').daterangepicker({
-							startDate			: moment().format('YYYY-MM-DD HH:mm'),
-							showDropdowns		: true,
-							timePicker			: true,
-							timePicker24Hour	: true,
-							opens				: 'center',
-							locale				: {
-								format		: 'YYYY-MM-DD HH:mm',
-								applyLabel	: '입력',
-								cancelLabel	: '취소',
-								daysOfWeek	: [
-									'일',
-									'월',
-									'화',
-									'수',
-									'목',
-									'금',
-									'토'
-								],
-								monthNames	: [
-									'1월',
-									'2월',
-									'3월',
-									'4월',
-									'5월',
-									'6월',
-									'7월',
-									'8월',
-									'9월',
-									'10월',
-									'11월',
-									'12월'
-								],
-								firstDay	: 0
-							},
-							singleDatePicker	: true,
-							
-						});
-					});
-				</script>
-			</div>
+			<div class="date_background"></div>
 		
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
@@ -72,12 +29,12 @@
 			<span>환율</span>
 			<div>
 				<span><span class="second_unit">EUR</span> 1.0 = KRW <span id="exchange_result"></span></span><br/>
-				<input type="button" class="exchange_rate_btn" value="환율 수동 설정">
+				<!-- <input type="button" class="exchange_rate_btn" value="환율 수동 설정"> -->
 			</div>
 		</div><!-- //apply_exchange_rate -->
 		
 		<div class="item">
-			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20">
+			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="15">
 		</div>
 		
 		<div class="option_wrap clear">

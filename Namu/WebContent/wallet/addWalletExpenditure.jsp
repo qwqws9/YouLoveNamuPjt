@@ -6,6 +6,7 @@
 	<div class="pop_left">
 		<div class="result_top">
 			<input type="text" class="date_time" name="regDate" readonly />
+			<div class="date_background"></div>
 
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">
 				<option value="KRW">KRW</option>
@@ -55,7 +56,7 @@
 		</div>
 		
 		<div class="item">
-			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="20" />
+			<input type="text" name="item" placeholder="항목명을 기입해주세요." maxlength="15" />
 		</div>
 		
 		<div class="option_wrap clear">

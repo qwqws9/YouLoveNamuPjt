@@ -4,6 +4,8 @@
 <html> 
 <head>
    <jsp:include page="/layout/head.jsp" />
+   
+<jsp:include page="/guide/tourModal.jsp" />
 	<!-- bootstrap -->
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -50,6 +52,9 @@ tr:nth-child(odd):hover td {
 </head>
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
+<div style="display:none">
+<button type="button" class="btn btn-primary" data-toggle="modal" id="tourModalShow"  data-target="#modalTourList" >관광지</button>
+</div>
 <!-- progress bar  -->
 <div class="container-fluid " id="progress">
       <ul class="progressbar">
@@ -99,7 +104,7 @@ tr:nth-child(odd):hover td {
 		      </div></div></div>
 	<script type="text/javascript">	
 
-		function fncUpateRoute(){
+		function fncUpdateRoute(){
 			
 			$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/updateRoute").attr("enctype" , "multipart/form-data").submit();
 		}	
@@ -107,7 +112,7 @@ tr:nth-child(odd):hover td {
 		
 		$(function(){
 	    $("#save").on("click",function(){    	
-	    	fncUpateRoute();    	
+	    	fncUpdateRoute();    	
 	    });
 		
 	    $("a[href='#']").on("click",function(){
@@ -115,6 +120,15 @@ tr:nth-child(odd):hover td {
 	    	history.go(-1);
 	    	
 	    });
+	    
+	    
+	     
+	     $(document).on('click','#tourModal',function(){
+	    	 var tourId = $(this).next().val().trim();
+	    	 tourModal(tourId);
+	    	 $('#tourModalShow').trigger('click');
+	     })
+		 
 	    
 	});
 		
@@ -144,12 +158,6 @@ $('#list_table').on("click", ".deletebtn", function () {
 			}) 
 </script>
 
-  <div id="map" style="width: 1200px; height: 700px;"></div>
-	 <div id="floating-panel">
-      <input onclick="clearMarkers();" type=button value="Hide Markers">
-      <input onclick="showMarkers();" type=button value="Show All Markers">
-      <input onclick="deleteMarkers();" type=button value="Delete Markers">
-    </div> 
   <script>
     var locations = [];
     var locationLat = [];
@@ -372,10 +380,12 @@ $('#list_table').on("click", ".deletebtn", function () {
    			var marker= this;
    			
    			infowindow.setContent('<img src="/resources/images/flag/'+this.content+'" alt="..." height="20" width="35">'    
-					+"　"+this.id+ '</p>' + "도시설명");
-       		infowindow.open(map, marker);
-		   });
-
+					+"　"+this.id+ '</p>'+'	<button type="button" class="btn btn-info btn-sm" id="tourModal" >'+this.id+'<p> 관광지 살펴보기 </button>'
+					+'<input type="hidden" value="'+this.id+'">'
+					/* onclick="tourModal('+this.id+');"  */
+					);
+   		  infowindow.open(map, marker);
+   		   });
 			   google.maps.event.addListener(marker, 'click', function(){
 				   var marker= this;
 			  		array.push(this.id);

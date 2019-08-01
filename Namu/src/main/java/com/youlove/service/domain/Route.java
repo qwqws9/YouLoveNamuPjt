@@ -19,7 +19,7 @@ public class Route {
 	
 	private Date startDate;
 	private Date endDate;
-	
+	private String allDay;
 	
 	///Constructor
 	public Route(){
@@ -124,11 +124,21 @@ public class Route {
 	}
 
 
+	public String getAllDay() {
+		return allDay;
+	}
+
+
+	public void setAllDay(String allDay) {
+		this.allDay = allDay;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Route [plannerCode=" + plannerCode + ", plannerVer=" + plannerVer + ", routeNo=" + routeNo
 				+ ", cityName=" + cityName + ", lat=" + lat + ", lng=" + lng + ", stayDay=" + stayDay + ", cityOrder="
-				+ cityOrder + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ cityOrder + ", startDate=" + startDate + ", endDate=" + endDate + ", allDay=" + allDay + "]";
 	}
 
 

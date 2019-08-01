@@ -74,9 +74,11 @@
 								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
+							
 									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<%-- <div id=plannerCode style="display: none">${planner.plannerCode}</div> --%></div>
-									<div class="plan_flag">　</div>
+
 									<div class="plan_period text_shadow">${planner.departDate} ~</div>
+									<div class="plan_budget text_shadow"></div>
 								<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
 											<label class="btn btn-secondary">
@@ -86,7 +88,7 @@
 												<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
 											</label>
 										</div>
-									</div> <!-- //wallet_is -->
+									</div>
 								</div>
 							</div>
 						</div><!-- //square -->
@@ -108,19 +110,20 @@
 								<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">style="background-image: url(/resources/images/wallet/alternative_image.png)"</c:if>
 							>
 								<div>
-									<div class="plan_name text_shadow">${planner.plannerName}</div>
-									<div class="plan_flag">　   </div> 
-									<div class="plan_period text_shadow">${planner.departDate} ~ </div>
-									 <div class="wallet_is">
+									<div class="plan_name text_shadow" id="plannerName">${planner.plannerName}<%-- <div id=plannerCode style="display: none">${planner.plannerCode}</div> --%></div>
+
+									<div class="plan_period text_shadow">${planner.departDate} ~</div>
+									<div class="plan_budget text_shadow"></div>
+								<div class="wallet_is">
 										<div class="btn-group btn-group-toggle isWallet" data-toggle="buttons" style=" visibility:hidden">
-											<label class="btn btn-secondary" >
+											<label class="btn btn-secondary">
 												<input type="radio" name="options" id="opened" autocomplete="off"><span class="txt">사용중</span>
 											</label>
 											<label class="btn btn-secondary active">
 												<input type="radio" name="options" id="closed" autocomplete="off" checked><span class="txt">사용안함</span>
 											</label>
 										</div>
-									</div> --><!-- //wallet_is -->
+									</div>
 								</div>
 							</div>
 						</div><!-- //square -->

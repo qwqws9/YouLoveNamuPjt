@@ -225,7 +225,7 @@ CREATE TABLE schedule(
    sche_code               NUMBER(10)          NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL ,
-   sche_day DATE,
+   sche_day VARCHAR2(10),
    time_hour VARCHAR2(10),
    time_min VARCHAR2(10),
    SCHE_NAME VARCHAR2(500) NOT NULL,
@@ -490,10 +490,8 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S
 
 
 
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 4);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1 );
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2 );
 
 
 commit;

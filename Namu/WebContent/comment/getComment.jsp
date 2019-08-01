@@ -86,12 +86,17 @@
 $(document).on("click",".like",function(){  
 	var userCode = $('#sessionId').val();
 	
-		//console.log($(this).children().attr('class'));
-		if($(this).children().attr('class') == 'fas fa-heart') {
+		console.log($(this).attr('class'));
+//		if($(this).children().attr('class') == 'fas fa-heart') {
+		if($(this).attr('class') == 'like activeLike') {
+			//0801 추가
+			$(this).removeClass('activeLike');
 			$(this).html('<i class="far fa-heart"></i>');
 			deleteLike($(this).parents('div').children().val(),userCode);
 			
 		}else {
+			//0801 추가
+			$(this).addClass('activeLike');
 			$(this).html('<i class="fas fa-heart" style="color:red;"></i>');
 			var writerUser = $(this).parents('li').find('input[class=writerUserCode]').val().trim();
 			addLike($(this).parents('div').children().val(),userCode,writerUser);
@@ -520,7 +525,13 @@ function deleteLike(commentCode,likeName) {
 							//alert(result);
 						var result = checkLike(item.commentCode,userCode);
 						if(result == true) {
-							$('.apto-'+index).find('button[class="like"]').children().attr('class','fas fa-heart').css('color','red');
+							//0801 추가
+							console.log('getComment 불러오기');
+							console.log('1 : '+$('.apto-'+index).find('button[class="like"]').attr('class'));
+							
+							$('.apto-'+index).find('button[class="like"]').addClass('activeLike');
+							console.log('2 : '+$('.apto-'+index).find('button[class^="like"]').attr('class'));
+							$('.apto-'+index).find('button[class^="like"]').children().attr('class','fas fa-heart').css('color','red');
 							//$('<i class="fas fa-heart" style="color:red;"></i>'+item.likeCount).appendTo('.apto-'+index+'.like');
 						}
 						}
@@ -558,8 +569,11 @@ function deleteLike(commentCode,likeName) {
 						var result = checkLike(item.commentCode,userCode);
 						//alert(result);
 						if(result == true) {
+							//0801 추가
+							$('.aptoo-'+index).find('button[class="like"]').addClass('activeLike');
+							
 							//$('<i class="fas fa-heart" style="color:red;"></i>'+item.likeCount).appendTo('.aptoo-'+index+'.like');
-							$('.aptoo-'+index).find('button[class="like"]').children().attr('class','fas fa-heart').css('color','red');
+							$('.aptoo-'+index).find('button[class^="like"]').children().attr('class','fas fa-heart').css('color','red');
 						}
 						}
 // 						}else {
