@@ -33,7 +33,7 @@
 	function onChatbot(){
 		$(document).ready(function(){
 			$("#chat").on("click", function(){
-				popup = window.open(chatbot, "popup_chat", "width=400, height=430, location=no, left=1000, top=70")
+				popup = window.open(chatbot, "popup_chat", "width=450, height=451, location=no, left=1000, top=70")
 				/* popup = window.open(url, "popup_chat", "resizable")
 				popup.resizeTo(450,700);
 				popup.resizeBy(-100,-100); */

@@ -95,4 +95,24 @@ input:focus{
 }
 :-moz-placeholder { /* Firefox 18- */
     color: #d4d4d4;
-}  
+}
+
+.dd{
+		align-self: center;
+		margin-top:10px;
+		font-size: 13px;
+		width: 80%;
+		background: none;
+		outline: none;
+		border: 2px solid rgba(163, 218, 255, 0.5);
+		border-radius: 4px;
+		height: 30px;
+	}
+	.dd:hover{
+		box-shadow: 0 0 2pt 2pt rgba(163, 218, 255, 0.5);
+		transition: 0.2s;
+		border-radius: 4px;
+	}
+
+
+

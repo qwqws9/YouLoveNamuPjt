@@ -27,6 +27,8 @@ public class ChatbotDaoImpl implements ChatbotDao{
 	@Override
 	public Chatbot getChatbot(String keyword) throws Exception{
 		
+		System.out.println("chatbotDaoImpl");
+		
 		return sqlSession.selectOne("ChatbotMapper.getChatbot", keyword);
 	}
 

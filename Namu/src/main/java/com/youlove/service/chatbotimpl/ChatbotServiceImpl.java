@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.youlove.service.chatbot.ChatbotDao;
 import com.youlove.service.chatbot.ChatbotService;
 import com.youlove.service.domain.Chatbot;
+import com.youlove.service.domain.Community;
 
 @Service("chatbotServiceImpl")
 public class ChatbotServiceImpl implements ChatbotService{
@@ -25,7 +26,10 @@ public class ChatbotServiceImpl implements ChatbotService{
 
 	public Chatbot getChatbot(String keyword) throws Exception{
 		
-		return chatbotDao.getChatbot(keyword);
+		System.out.println("chatbotserviceImpl");
+		Chatbot chatbot = chatbotDao.getChatbot(keyword);
+			
+		return chatbot;
 	}
 
 }
