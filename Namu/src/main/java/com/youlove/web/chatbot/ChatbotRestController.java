@@ -31,34 +31,24 @@ public class ChatbotRestController {
 		System.out.println("keywordType : " + keywordType);
 		String keyword = chatbot.getKeyword();
 		System.out.println("keyword : " + keyword);
-				
-		System.out.println("chatbot : " + chatbot);
+		//System.out.println("chatbot : " + chatbot);
 		
 		if(keyword.trim().length() <=0) {
 			 // 잘못들어온것
 			System.out.println("키워드 없음");
-			return chatbot;
+			return null;
 		}else {
 			System.out.println("json/getChatbot 정상 실행 :: ");
 		 
 			//service getChatbot 호출
-			//Chatbot dbChatbot = chatbotService.getChatbot(chatbot);
-			chatbotService.getChatbot(keyword);
+			//Chatbot dbChatbot = chatbotService.getChatbot(chatbot.getKeyword());
+			//chatbot = chatbotService.getChatbot(keyword);
+			
 			//chatbotService.getChatbot(keywordType);
 			// 서비스 -> 다오(db) -> 조건절에  keyword 을 like 또는 == 비교해서 출력값 string 값만 리턴해주면 
-			//Chatbot dbChatbot = (Chatbot) chatbotService.getChatbot(chatbotService.getChatbot(keyword));
-						
-			return chatbot;
+			
+			
+			return chatbotService.getChatbot(keyword);
 		}	
 	}
-	
-//	@RequestMapping(value="json/getChatbot", method=RequestMethod.POST)
-//	public ModelAndView getChatbot(@ModelAttribute("chatbot") Chatbot chatbot) throws Exception{
-//	
-//		ModelAndView modelandView = new ModelAndView();
-//		modelandView.setViewName("/chatbot/chatbot.jsp");
-//		
-//		System.out.println("json/getChatbot 정상 실행 :: ");
-//		return modelandView;
-//	}
 }
