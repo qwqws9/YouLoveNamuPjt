@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -15,7 +15,6 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	<!-- SearchBox -->
 	<link href="/resources/css/search.css" rel="stylesheet">
-	
 	
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	
@@ -25,13 +24,14 @@
 	<script type="text/javascript" src="/resources/javascript/getCommunityList.js"></script>
 	<!-- 이모티콘 -->
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
-	
 	<!-- jQuerty -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
 	
 	<!-- owlCarousel -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	
 	
 	
 	
@@ -54,11 +54,13 @@
 
 <body>
 	<header><jsp:include page="/layout/header.jsp" /></header>
-	
+	<input type="hidden" class="side" value="getCommunityList">
 
-	<div class="container-fluid">
+	<div class="container-fluid" id="listCommunity" >
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
+			
+			
 				<div class="row" style="background-color: rgba(242, 192, 41, 0.1); height: 500px;">
 					<div class="col-md-12 col-lg-12">
 					
@@ -261,7 +263,7 @@
 										<p class="text-center" ><i class="far fa-comments fa-2x"></i></p>
 									</c:if>
 								</div>
-								<div class="col-6 col-md-6">
+								<div class="col-7 col-md-7">
 									<div class="profile-box row"  style="position: relative;">
 									<input type="hidden" value="${community.writer.userCode }">
 										<div class="profile-image">
@@ -288,11 +290,10 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-2 col-md-2 col-lg-2">
+								<div class="col-3 col-md-3 col-lg-3">
 									<img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/ThumbNail/${community.communityThumbnail }" width="250px" height="160px" style="border-radius: 6px; cursor: pointer;">
 								</div>
 								
-								<div class="col-1 col-md-1 col-lg-1"></div>
 							</div>
 							<hr>
 						</c:forEach>

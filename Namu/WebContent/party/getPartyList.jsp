@@ -41,8 +41,6 @@
 	
 	
 		.marker {
-		  border: 1px solid rgba(0, 0, 0, 0.25);
-		  border-radius: 30px;
 		  cursor: pointer;
 		  background-color: rgba(0, 0, 0, 0);
 		}
@@ -463,108 +461,108 @@
 	
 	
 	
-		function partySearch(e){
+// 		function partySearch(e){
 			
-			//비우고 안돌아온다.
-			if($(".listings").length != 0){
-				alert("dsdd");
-				$(".listings").empty();
+// 			//비우고 안돌아온다.
+// 			if($(".listings").length != 0){
+// 				alert("dsdd");
+// 				$(".listings").empty();
 					
-			}
-			if($(".marker").length != 0){
-				//alert($(".marker").length);
-				//$('div').remove('.marker');
-			}
+// 			}
+// 			if($(".marker").length != 0){
+// 				//alert($(".marker").length);
+// 				//$('div').remove('.marker');
+// 			}
 			
 			
 			
-			var keyword = $(".partySearch").val();
+// 			var keyword = $(".partySearch").val();
 			
-			$.ajax({
-				url : "/party/json/getPartyList?sea",
-			    method : "POST",
-			    data : JSON.stringify({
-			    	'searchKeyword' : keyword,
-			    	'pageSize' : '3'
-			    }),
-			    dataType : "json",
-			    headers : {
-	     			 "Accept" : "application/json",
-	                 "Content-Type" : "application/json"
-	     		},
-	     		success : function(JSONData, status){
-	     			$.each(JSONData.list,function(index,item){
-	     				geo = {type: 'Feature',
-					    		geometry: {type: 'Point', coordinates: [item.latitude, item.longitude]},
-					    		properties: { 
-					    			writer: item.partyWriter.nickname,
-					    			writerGender: item.partyWriter.gender,
-					    			writerBirth: item.partyWriter.birth,
-					    			writerProfileImg: item.partyWriter.profileImg,
-					    			partyCode: item.partyCode,
-							    	partyTitle: item.partyTitle,
-							    	partyAge: item.age,
-							    	partyContent: item.partyContent,
-							    	regDate: item.regDate,
-							    	partyStart: item.partyStart,
-							    	partyEnd: item.partyEnd,
-							    	partyRecruitment: item.partyRecruitment,
-							    	gender: item.gender,
-							    	country: item.city.countryName,
-							    	city: item.city.cityName,
-							    	flag: item.city.flagImage
-					    		}};
-	     				json.push(geo);
-	     				profile = item.partyWriter.profileImg
+// 			$.ajax({
+// 				url : "/party/json/getPartyList?sea",
+// 			    method : "POST",
+// 			    data : JSON.stringify({
+// 			    	'searchKeyword' : keyword,
+// 			    	'pageSize' : '3'
+// 			    }),
+// 			    dataType : "json",
+// 			    headers : {
+// 	     			 "Accept" : "application/json",
+// 	                 "Content-Type" : "application/json"
+// 	     		},
+// 	     		success : function(JSONData, status){
+// 	     			$.each(JSONData.list,function(index,item){
+// 	     				geo = {type: 'Feature',
+// 					    		geometry: {type: 'Point', coordinates: [item.latitude, item.longitude]},
+// 					    		properties: { 
+// 					    			writer: item.partyWriter.nickname,
+// 					    			writerGender: item.partyWriter.gender,
+// 					    			writerBirth: item.partyWriter.birth,
+// 					    			writerProfileImg: item.partyWriter.profileImg,
+// 					    			partyCode: item.partyCode,
+// 							    	partyTitle: item.partyTitle,
+// 							    	partyAge: item.age,
+// 							    	partyContent: item.partyContent,
+// 							    	regDate: item.regDate,
+// 							    	partyStart: item.partyStart,
+// 							    	partyEnd: item.partyEnd,
+// 							    	partyRecruitment: item.partyRecruitment,
+// 							    	gender: item.gender,
+// 							    	country: item.city.countryName,
+// 							    	city: item.city.cityName,
+// 							    	flag: item.city.flagImage
+// 					    		}};
+// 	     				json.push(geo);
+// 	     				profile = item.partyWriter.profileImg
 	     				
-	     			});
+// 	     			});
 	     			
-					console.log(geo);
+// 					console.log(geo);
 					
 					
-					geojson = {
-							  type: 'FeatureCollection',
-							  features: json
-					};
-					map.on('load', function(e) {
-				  		map.addSource('places', {
-						  type: 'geojson',
-						  data: geojson
-						});
-						  buildLocationList(geojson);
+// 					geojson = {
+// 							  type: 'FeatureCollection',
+// 							  features: json
+// 					};
+// 					map.on('load', function(e) {
+// 				  		map.addSource('places', {
+// 						  type: 'geojson',
+// 						  data: geojson
+// 						});
+// 						  buildLocationList(geojson);
 					  
-					});
-				 	//회원 변경되었을때 프로필사진 변경되는지 체크필요?????????????????
-					geojson.features.forEach(function(marker) {
-						  var el = document.createElement('div');
-						  el.className = 'marker';
-						  el.style.cssText = 'background-size: cover;width: 50px;height: 50px;background-image: url("/resources/images/profile/'+profile+'");';
-						  new mapboxgl.Marker(el, { offset: [0, -23] })
-						    .setLngLat(marker.geometry.coordinates)
-						    .addTo(map);
+// 					});
+// 				 	//회원 변경되었을때 프로필사진 변경되는지 체크필요?????????????????
+// 					geojson.features.forEach(function(marker) {
+// 						  var el = document.createElement('div');
+// 						  el.className = 'marker';
+// 						  el.style.cssText = 'background-size: cover;width: 50px;height: 50px;background-image: url("/resources/images/profile/'+profile+'");';
+// 						  new mapboxgl.Marker(el, { offset: [0, -23] })
+// 						    .setLngLat(marker.geometry.coordinates)
+// 						    .addTo(map);
 						  
-						  el.addEventListener('click', function(e) {
-							  var activeItem = document.getElementsByClassName('active');
-							  getParty(marker);
-							  createPopUp(marker);
-							  e.stopPropagation();
-							  if (activeItem[0]) {
-							    activeItem[0].classList.remove('active');
-							  }
-							  var listing = document.getElementById('listing-' + i);
-							  console.log(listing);
-							});
-					});
+// 						  el.addEventListener('click', function(e) {
+// 							  var activeItem = document.getElementsByClassName('active');
+// 							  getParty(marker);
+// 							  createPopUp(marker);
+// 							  e.stopPropagation();
+// 							  if (activeItem[0]) {
+// 							    activeItem[0].classList.remove('active');
+// 							  }
+// 							  var listing = document.getElementById('listing-' + i);
+// 							  console.log(listing);
+// 							});
+// 					});
 					
-	     		},
-	     		error:function(jqXHR, textStatus, errorThrown){
-	    			alert(textStatus );
-	    			alert( errorThrown );
-	    		}
-			});
+// 	     		},
+// 	     		error:function(jqXHR, textStatus, errorThrown){
+// 	    			alert(textStatus );
+// 	    			alert( errorThrown );
+// 	    		}
+// 			});
 			
 			
-		}
+// 		}
 	
 		$(function(){
 			
@@ -751,7 +749,13 @@
 					  var el = document.createElement('div');
 					  // Add a class called 'marker' to each div
 					  el.className = 'marker';
-					  el.style.cssText = 'background-size: cover;width: 50px;height: 50px;background-image: url("/resources/images/profile/'+profile+'");';
+// 					  el.style.cssText = 'background-size: cover;width: 45px;height: 45px;background-image: url("/resources/images/profile/'+profile+'");';
+					  
+					  var img = el.appendChild(document.createElement('img'));
+					  img.className = 'rounded-circle';
+					  img.src = '/resources/images/profile/'+profile;
+					  img.style.cssText = 'width: 45px;height: 45px;  border: 1px solid rgba(0, 0, 0, 0.25);'
+					  
 					  // By default the image for your custom marker will be anchored
 					  // by its center. Adjust the position accordingly
 					  // Create the custom markers, set their position, and add to map

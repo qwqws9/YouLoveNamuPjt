@@ -81,25 +81,31 @@
 		window.open(url,"",option);
 	}
 
-
-
-	/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+	
 	 function openNav() {
+	   var page = $('.side').val();
+	   
 	   document.getElementById("mySidebar").style.width = "300px";
 	   document.getElementById("main").style.marginLeft = "300px";
 	   document.getElementById("topbar").style.marginLeft = "300px";
+	   if(page == 'getCommunityList'){
+		   document.getElementById("listCommunity").style.marginLeft = "300px";
+	   }
 //	   document.getElementById("initTour").style.marginLeft = "300px";
 //	   document.getElementById("tourDetailJsp").style.marginLeft = "300px";
 //	   document.getElementById("initHotelJsp").style.marginLeft = "0px";
 	   
 	   $('#main').css('display','none');
 	 }
-
-	 /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
 	 function closeNav() {
+	   var page = $('.side').val();
+	   
 	   document.getElementById("mySidebar").style.width = "0";
 	   document.getElementById("main").style.marginLeft = "0";
 	   document.getElementById("topbar").style.marginLeft = "0";
+	   if(page == 'getCommunityList'){
+		   document.getElementById("listCommunity").style.marginLeft = "0";
+	   }
 //	   document.getElementById("initTour").style.marginLeft = "230px";
 //	   document.getElementById("tourDetailJsp").style.marginLeft = "0";
 //	   document.getElementById("initHotelJsp").style.marginLeft = "250px";
