@@ -154,11 +154,13 @@ a:link, a:active, a:hover { text-decoration: none; }
 .apply_exchange_rate { position: relative; width: inherit; height: 80px; border: 1px solid #cbcbcb; border-radius: .25em; }
 .apply_exchange_rate > span, .apply_exchange_rate > div { position: absolute; }
 .apply_exchange_rate > span { left: 15px; line-height: 80px; }
-.apply_exchange_rate > div { top: 0; right: 15px; font-size: 12px; }
+.apply_exchange_rate > div { top: 18px; right: 15px; font-size: 13px; }
 .apply_exchange_rate > div > span { line-height: 42px; color: #cbcbcb; }
+/*
 .exchange_rate_btn
 	{ width: 90px; height: 21px; color: #fff; font-size: 11px; text-align: center; line-height: 21px;
 	  background-color: #f2c029 !important; border-radius: .7em;}
+*/
 
 
 /* 카테고리 선택 */

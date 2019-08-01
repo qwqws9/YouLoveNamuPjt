@@ -147,7 +147,7 @@ $(function() {
 			//console.log('addWalletIncome.jsp :\n' + data);
 			
 			$(this).show();
-			currentTime();
+			dateRangePicker();
 			initPopUp();
 		});
 	});
@@ -166,7 +166,7 @@ $(function() {
 			//console.log('addWalletExpenditure.jsp :\n' + data);
 			
 			$(this).show();
-			currentTime();
+			dateRangePicker();
 			initPopUp();
 		});
 	});
@@ -301,7 +301,7 @@ $(function() {
 		//console.log(': BODY ONCLICK EVENT :');
 		
 		if($('#save_income_form').css('display') == 'block' || $('#save_expenditure_form').css('display') == 'block'){
-			if($('.pop_wrap_add').has(e.target).length === 0){
+			if($('.pop_wrap_add').has(e.target).length === 0 && $('.daterangepicker').has(e.target).length === 0){
 				$('#income_modal, #expenditure_modal').children().removeClass('fas').addClass('far').css('color', '#282c37');
 				
 				$('.pop_wrap_add').html('');
@@ -359,30 +359,35 @@ function initPopUp() {
 	calculation();
 }
 
-// 현재 날짜 및 시간 입력
-function currentTime() {
-	var day = new Date();
+//날짜 및 시간 입력기 실행
+function dateRangePicker() {
+	$('.date_time').daterangepicker({
+		startDate			: moment().format('YYYY-MM-DD HH:mm'),
+		showDropdowns		: true,
+		timePicker			: true,
+		timePicker24Hour	: true,
+		opens				: 'center',
+		locale				: {
+			format		: 'YYYY-MM-DD HH:mm',
+			applyLabel	: '입력',
+			cancelLabel	: '취소',
+			daysOfWeek	: [
+				'일', '월', '화', '수', '목', '금', '토'
+			],
+			monthNames	: [
+				'1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'
+			]
+		},
+		singleDatePicker	: true
+	});
 	
-	var month = slice(day.getMonth() + 1);
-	var date = slice(day.getDate());
-	var hours = slice(day.getHours());
-	var minutes = slice(day.getMinutes());
+	$('.date_time').on('show.daterangepicker', function() {
+		$('.date_background').show();
+	});
 	
-	var nowDay = day.getFullYear() + '-' + month + '-' + date;
-	var nowTime = hours + ':' + minutes;
-	//console.log('현재 시각 : ' + nowDay + ' ' + nowTime);
-	
-	$('input.date_time').val(nowDay + ' ' + nowTime);
-}
-function slice(day) {
-	var str = String(day);
-	//console.log(str.length);
-	
-	if(str.length == 1){
-		return '0' + str;
-	}else{
-		return str;
-	}
+	$('.date_time').on('hide.daterangepicker', function() {
+		$('.date_background').hide();
+	});
 }
 
 // 환율 적용
