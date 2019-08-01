@@ -23,7 +23,7 @@
 	function onChat(){
 		$(document).ready(function(){
 			$("#getChat").on("click", function(){
-				popup = window.open(chat, "popup_chat", "width=450, height=700, location=no, resizable=no, left=1000, top=70")
+				popup = window.open(chat, "popup_chat", "width=600, height=700, location=no, resizable=no, left=800, top=70")
 				/* popup = window.open(url, "popup_chat", "resizable")
 				popup.resizeTo(450,700);
 				popup.resizeBy(-100,-100); */
