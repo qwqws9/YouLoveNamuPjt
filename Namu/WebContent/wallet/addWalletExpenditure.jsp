@@ -5,7 +5,7 @@
 <div class="pop_wrap clear">
 	<div class="pop_left">
 		<div class="result_top">
-			<input type="text" class="date_time" name="regDate" readonly />
+			<input type="text" class="date_time" name="regDate" />
 			<div class="date_background"></div>
 
 			<select class="unit_selec" id="moneyUnit" name="moneyUnit">

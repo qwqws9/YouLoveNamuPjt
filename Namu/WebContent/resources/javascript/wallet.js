@@ -195,6 +195,7 @@ $(function() {
 				//console.log('updateWalletIncome.jsp :\n' + data);
 				
 				$(this).show();
+				dateRangePicker(list.regDate + ' ' + list.regTime);
 				initPopUp();
 				multiply();
 			});
@@ -205,6 +206,7 @@ $(function() {
 				//console.log('updateWalletIncome.jsp :\n' + data);
 				
 				$(this).show();
+				dateRangePicker(list.regDate + ' ' + list.regTime);
 				initPopUp();
 				multiply();
 			});
@@ -367,9 +369,13 @@ function initPopUp() {
 }
 
 // 날짜 및 시간 입력기 실행
-function dateRangePicker() {
+function dateRangePicker(date) {
+	if(date == null){
+		date = moment().format("YYYY-MM-DD HH:mm");
+	}
+	
 	$('.date_time').daterangepicker({
-		startDate			: moment().format('YYYY-MM-DD HH:mm'),
+		startDate			: date,
 		showDropdowns		: true,
 		timePicker			: true,
 		timePicker24Hour	: true,
