@@ -93,8 +93,20 @@
 			alert(data);
 		}
 	}) */
+
 	
 	</script> -->
+	
+		<script type="text/javascript">
+		$(function() {
+		$(document).on('click','.wallet_box .square',function(){
+			var plannerCode = $(this).children(':eq(0)').val();
+			self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
+	 	});
+		});
+	
+	</script>
+	
 	<div class="wrap">
 	<h2 class="wallet_title"><span> 여행 플래너 공유 </span></h2>
 	<section class="wallet_box">
