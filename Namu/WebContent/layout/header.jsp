@@ -31,44 +31,8 @@
 		});
 	};
 	
-	/* function onChatbot(){
-		$(document).ready(function(){
-			$("#getChatbot").on("click", function(){
-				popup = window.open(chatbot, "popup_chat", "width=450, height=451, location=no, left=1000, top=70")
-				/* popup = window.open(url, "popup_chat", "resizable")
-				popup.resizeTo(450,700);
-				popup.resizeBy(-100,-100);
-			});
-		});
-	}; */
-	//챗봇창 모달창으로 변경
-	/* function onChatbot(){
-		$(document).on('click', function(){
-			$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
-			$(this).children().addClass('fas').css('color', '#f2c029');
-			
-			$('.pop_wrap_add').html('');
-			
-			// innerHTML
-			$('#save_income_form').load('/chatbot/getChatbot.jsp', function(data) {
-				$(this).show();
-				initPopUp();
-			});
-		});
-	}; */
 	
-	$(document).on('click', '#getChatbot', function(){
-		$('.modal_btn').children().removeClass('fas').addClass('far').css('color', '#282c37');
-		$(this).children().addClass('fas').css('color', '#f2c029');
-		
-		$('#openChatbot').html('');
-		
-		// innerHTML
-		$('#openChatbot').load('/chatbot/getChatbot.jsp', function(data) {
-			$(this).show();
-			initPopUp();
-		});
-	});
+
 	
 	</script>
 </head>
@@ -233,15 +197,26 @@
 						<div class="row"><!-- 챗봇 -->
 							<div class="col-lg-12 text-left">
 								<a href="#">
-									<div class="chat">
-										<img src="/resources/images/favicon.ico" alt="챗봇 발발이" class="chat_img"  style="height: 60px;" onClick=onChatbot() id='getChatbot'>
-										<span class=".modal_btn" style="display:none;position:fixed;top: 200px; right: 200px;width:500px;height:500px;background-color:#f00">
-										</span>
-										<form id="openChatbot"></form>
-									</div>
+									<span class="chat">
+										<img src="/resources/images/favicon.ico" style="height: 60px;" data-toggle="modal" data-target="#myModal">
+									</span>
 								</a>
 							</div>
 						</div>
+						
+						<!-- 모달창.... -->
+						<div class="modal fade" id="myModal">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header"></div>
+						      <div class="modal-body">
+						        Hello! Webisfree.com
+						      </div>
+						      <div class="modal-footer"></div>
+						    </div>
+						  </div>
+						</div>
+						
 						
 						<div class="row"><!-- 채팅 -->
 							<div class="col-lg-12 text-left">
@@ -254,30 +229,7 @@
 								</a>
 							</div>
 						</div>
-						
-						<!-- 챗봇 모달창으로 변경 -->
-						<!-- <div class="modal fade" id="myModal" role="dialog">
-						    <div class="modal-dialog">
-						    
-						    Modal content
-						    <div class="modal-content">
-						    	<div class="modal-header">
-						        	<button type="button" class="close" data-dismiss="modal">×</button>
-						        </div>
-						        <div class="modal-body">
-						        	
-						        </div>
-						        <div class="modal-footer">
-						        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						        </div>
-						    </div>
-						    </div>
-						</div> -->
-
-
-
-						
-						
+												
 						
 					</div><!-- end of menu -->
 				</div><!-- end of row -->
