@@ -193,7 +193,8 @@
 			method : 'POST',
 			data : JSON.stringify({
 				pageNum : pageNum,
-				keyword : keyword
+				keyword : keyword,
+				address : 'tour'
 			}),
 			headers : {
 				"Accept" : "application/json",
@@ -231,7 +232,7 @@
 					$(".preview-"+(index+1)+ " > div > div > div > h3").text(item.tourName);
 					$(".preview-"+(index+1)+ " > div > div > div > div").text(item.hashtag);
 					$(".preview-"+(index+1)+ " > div > div > div > p").text(item.tourShortDesc);
-					$(".preview-"+(index+1)+ " > div > div > div > a").text('이곳에는 별점');
+					$(".preview-"+(index+1)+ " > div > div > div > a").text('Continue reading');
 					$(".preview-"+(index+1)+ " > div > div > div.col-auto.d-none.d-lg-block > img").attr('src',item.tourThumb);
 					
 				});
