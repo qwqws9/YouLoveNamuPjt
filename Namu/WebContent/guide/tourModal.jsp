@@ -41,7 +41,8 @@
 		method : 'POST',
 		data : JSON.stringify({
 			pageNum : '1',
-			keyword : searchKeyword
+			keyword : searchKeyword,
+			address : 'tour'
 		}),
 		headers : {
 			"Accept" : "application/json",

@@ -20,4 +20,8 @@ public interface WishBeenDao {
 	
 	public List<Flight> searchFlight(Flight flight) throws Exception;
 	
+	public List<Tour> initFood() throws Exception;
+	
+	
+	
 }

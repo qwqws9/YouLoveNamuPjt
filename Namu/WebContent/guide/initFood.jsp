@@ -23,7 +23,7 @@
 <div class="col-md-12">
 <div class="row">
 <div class="col-md-6">
-<input type="text" id="inputKeyword" class="form-control" placeholder="어디로 떠나고 싶으세요?" >
+<input type="text" id="inputKeyword" class="form-control" placeholder="어느나라 맛집을 원하시나요?" >
 </div>
 <div class="col-md-6">
 <button type="button" class="btn btn-outline-primary" id="userSearch" ><i class="fas fa-search-location"></i></button>
@@ -194,7 +194,7 @@
 			data : JSON.stringify({
 				pageNum : pageNum,
 				keyword : keyword,
-				address : 'tour'
+				address : 'food'
 			}),
 			headers : {
 				"Accept" : "application/json",
