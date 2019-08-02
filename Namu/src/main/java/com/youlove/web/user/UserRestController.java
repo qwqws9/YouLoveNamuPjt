@@ -344,7 +344,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(value="json/sendNum", method=RequestMethod.POST)
-	public Map<String,Object> sendNum(@RequestBody Map<String, Object> param) throws Exception {
+	public Map<String,Object> sendNum(@RequestBody Map<String, Object> param,HttpServletRequest request) throws Exception {
 		
 		System.out.println("/user/json/sendNum");
 		
@@ -358,13 +358,14 @@ public class UserRestController {
 		Map<String,Object> map = new HashMap<>();
 		
 		String number = RandomNumber.getRandom();
-		String content = "YouLovePlan 회원가입 인증번호는 " + number +" 입니다.";
+		//String content = "YouLovePlan 회원가입 인증번호는 " + number +" 입니다.";
+		String content = "<h1>제목</h1>";
 		String title = "[YouLove]회원가입 인증메일";
 		
 		map.put("checkNum", number);
 		
 		if(target.equals("email")) {
-			CheckEmailTransfer.gmailSend(title, content, receiver);
+			CheckEmailTransfer.gmailSend(title, content, receiver,request);
 		
 			map.put("target", "email");
 		
