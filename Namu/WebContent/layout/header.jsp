@@ -6,8 +6,8 @@
 <head>
 	<meta charset="utf-8">
 	<!-- 타임라인을 위한 노드 서버 연결 -->
-<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
-<!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
+	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script>
+	<script src="/resources/javascript/alarmSocket.js"></script>
 	<!-- 지우지 말것...... -->
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
@@ -31,16 +31,8 @@
 		});
 	};
 	
-	function onChatbot(){
-		$(document).ready(function(){
-			$("#chat").on("click", function(){
-				popup = window.open(chatbot, "popup_chat", "width=450, height=451, location=no, left=1000, top=70")
-				/* popup = window.open(url, "popup_chat", "resizable")
-				popup.resizeTo(450,700);
-				popup.resizeBy(-100,-100); */
-			});
-		});
-	};
+	
+
 	
 	</script>
 </head>
@@ -195,6 +187,7 @@
 									  		<a href="/guide/initTour">관광지</a>
 										    <a href="/guide/initHotel">숙소</a>
 										    <a href="/guide/searchFlight">항공권</a>
+										    <a href="/guide/initFood">맛집</a>
 								      	</div>
 								    </div>
 								</div>
@@ -205,11 +198,25 @@
 							<div class="col-lg-12 text-left">
 								<a href="#">
 									<span class="chat">
-										<img src="/resources/images/favicon.ico" alt="챗봇 발발이" class="chat_img"  style="height: 60px;" onClick=onChatbot() id='chat'>
+										<img src="/resources/images/favicon.ico" style="height: 60px;" data-toggle="modal" data-target="#myModal">
 									</span>
 								</a>
 							</div>
 						</div>
+						
+						<!-- 모달창.... -->
+						<div class="modal fade" id="myModal">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header"></div>
+						      <div class="modal-body">
+						        Hello! Webisfree.com
+						      </div>
+						      <div class="modal-footer"></div>
+						    </div>
+						  </div>
+						</div>
+						
 						
 						<div class="row"><!-- 채팅 -->
 							<div class="col-lg-12 text-left">
@@ -222,8 +229,7 @@
 								</a>
 							</div>
 						</div>
-						
-						
+												
 						
 					</div><!-- end of menu -->
 				</div><!-- end of row -->

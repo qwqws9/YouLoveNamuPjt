@@ -347,7 +347,7 @@ $('#list_table').on("click", ".deletebtn", function () {
     
     ///////////////////////////////////////////
       poly = new google.maps.Polyline({
-          strokeColor: '#f25c5c',
+    	  strokeColor: '#f2c029',
           strokeOpacity: 1.0,
           strokeWeight: 3
         });
@@ -438,6 +438,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 	          position: event.latLng,
 	         title: '#' + path.getLength(),
 	         // id:path.getLength(),
+	         icon:image,
 	          map: map,
 	          zIndex: 205
 	        });

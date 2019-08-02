@@ -97,13 +97,13 @@
 	
 	</script> -->
 	
-		<script type="text/javascript">
-		$(function() {
+	<script type="text/javascript">
+	$(function() {
 		$(document).on('click','.wallet_box .square',function(){
 			var plannerCode = $(this).children(':eq(0)').val();
 			self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
 	 	});
-		});
+	});
 	
 	</script>
 	
@@ -113,6 +113,9 @@
 	<div class="square_wrap clear" id="bestPlanner">
 	</div>
 	 
+	 <br><br>
+	 <h2 class="wallet_title"><span> 커뮤니티 게시판 </span></h2>
+	 <br><br>
 	<div class="row">
 		<div class="col-md-12 col-lg-12">
 	 		<jsp:include page="/community/bestCommunity.jsp"></jsp:include>

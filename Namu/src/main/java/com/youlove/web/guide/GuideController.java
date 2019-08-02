@@ -49,6 +49,16 @@ public class GuideController {
 		return "/guide/initTour.jsp";
 	}
 	
+	@RequestMapping("/initFood")
+	public String initFood(Model model) throws Exception {
+		
+		List<Tour> list = wishBeenService.initFood();
+		
+		model.addAttribute("tourList", list);
+		
+		return "/guide/initFood.jsp";
+	}
+	
 	@RequestMapping(value = "/selectTourDetail/{tourId}")
 	public String selectTourDetail(@PathVariable String tourId, Tour tour, Model model, Map<String, Object> map) throws Exception {
 		

@@ -11,29 +11,35 @@
 
 		
 </script>
-<div class="container-fluid">
+
+		<div class="col-md-12">
 	<div class="row">
-		<div class="col-md-8 col-lg-8">
-	  		<div id="map" style="width: 895px; height: 500px;">
+	
+	<div class="col-md-1"></div>
+		<div class="col-md-8">
+	  		<div id="map" style="width: 950px; height: 500px;">
 			</div>
 		</div>
-		
-		<div class="col-md-4 col-lg-4" style="border: 1px solid #A3DAFF; overflow: hidden; text-overflow: ellipsis; ">
+		<div class="col-md 2">
+	<!-- 	<div class="col-md-2" style="border: 1px solid #A3DAFF; overflow: hidden; text-overflow: ellipsis; "> -->
 			<div class="where" id="where">
 				<div class="row text-center">
 					<div class="col-md-6 col-lg-6">
-						<strong style="font-size: 18px;">
-							<span>체류도시</span>
+						<strong style="font-size: 15px;">
+							<span style="color:#a3daff;">체류도시</span>
 						</strong>
 					</div>
 					<div class="col-md-6 col-lg-6">
-						<strong style="font-size: 18px;">
-							<span>체류기간</span>
+						<strong style="font-size: 15px;">
+							<span style="color:#a3daff;">체류기간</span>
 						</strong>
-					</div>
-				</div>
+					</div></div></div>
+			
+			
 			</div>
-  		</div>
+  		<!-- </div> -->
+  		<div class="col-md-1"></div>
+  
 	</div>
 </div>  
 <!-- 
@@ -74,7 +80,7 @@
     var infowindow;
     var map;
    	var myMarkerId;
-   	
+   	var image = "/resources/images/favicon.ico";
    	
   $(function() {
     var plannerCode=${planner.plannerCode};
@@ -151,12 +157,12 @@
        		
        		$('#where').append('<hr><div class="row text-center">'+
 	           						'<div class="col-md-6 col-lg-6">'+
-	            						'<strong style="font-size: 18px;">'+
+	            						'<strong style="font-size: 15px;">'+
 	            						'<span>'+value.city+'</span>'+
 	            						'</strong>'+
 	            					'</div>'+
 	            					'<div class="col-md-6 col-lg-6">'+
-										'<strong style="font-size: 18px;">'+
+										'<strong style="font-size: 15px;">'+
 											'<span>'+value.stayDay+'</span>'+
 										'</strong>'+
 									'</div>'+
@@ -168,7 +174,7 @@
     	}
 	});
             
-	 alert(route);
+	 
    /* alert(locations); */ 
     
     map = new google.maps.Map(document.getElementById('map'), {
@@ -275,7 +281,9 @@
 	          position: event.latLng,
 	          title: '#' + path.getLength(),
 	         // id:path.getLength(),
-	          map: map 
+	              icon:image,
+	              map: map 
+	          
 	        });
 	        
 	     myMarker.id=uniqueId;

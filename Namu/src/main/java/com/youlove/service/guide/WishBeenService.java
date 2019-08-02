@@ -21,5 +21,7 @@ public interface WishBeenService {
 	
 	public List<Flight> searchFlight(Flight flight) throws Exception;
 	
+	public List<Tour> initFood() throws Exception;
+	
 }
 
