@@ -36,7 +36,9 @@
 <body>
 	<section class="visual_image">
 		<div class="main_txt">
-			여행은<br/>유럽 플랜과
+			don't<br/>
+			call it a dream.<br/>
+			call it a <span>PLAN</span>.
 		</div>
 		<span class="down_down"><i class="fas fa-plane"></i></span>
 	</section>

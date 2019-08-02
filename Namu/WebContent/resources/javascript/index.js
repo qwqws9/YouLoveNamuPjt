@@ -155,23 +155,31 @@ $(function(){
 
 $(function() {
 	// 메인 이미지 랜덤
-	var imgRandom = Math.floor(Math.random() * 5) + 1;
+	var imgRandom = Math.floor(Math.random() * 3);
+	var top, right, bottom, left;
 	
 	if(imgRandom == 0){
 		imgRandom = 'main_images_01.jpg';
+		top = '150px';
+		right = '250px';
 	}else if(imgRandom == 1){
 		imgRandom = 'main_images_02.jpg';
+		top = '200px';
+		right = '250px';
 	}else if(imgRandom == 2){
 		imgRandom = 'main_images_03.jpg';
-	}else if(imgRandom == 3){
-		imgRandom = 'main_images_04.png';
-	}else if(imgRandom == 4){
-		imgRandom = 'main_images_05.jpg';
+		top = '150px';
+		left = '350px';
 	}
 	//console.log(imgRandom);
 	
 	$('.visual_image').css('background-image', 'url(/resources/images/main/' + imgRandom + ')');
 	
+	if(right != null){
+		$('.main_txt').css({'top':top, 'right':right});
+	}else if(left != null){
+		$('.main_txt').css({'top':top, 'left':left});
+	}
 	
 	// 환율 정보 .jsp 온로드
 	$($('#exchange_container')).load('/wallet/mainExchangeRates.jsp', function(data) {
