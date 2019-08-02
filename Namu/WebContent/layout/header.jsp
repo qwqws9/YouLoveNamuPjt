@@ -31,16 +31,25 @@
 		});
 	};
 	
-	function onChatbot(){
+	/* function onChatbot(){
 		$(document).ready(function(){
-			$("#chat").on("click", function(){
+			$("#getChatbot").on("click", function(){
 				popup = window.open(chatbot, "popup_chat", "width=450, height=451, location=no, left=1000, top=70")
 				/* popup = window.open(url, "popup_chat", "resizable")
 				popup.resizeTo(450,700);
-				popup.resizeBy(-100,-100); */
+				popup.resizeBy(-100,-100);
 			});
 		});
-	};
+	}; */
+	
+	function onChatbot(){
+		$(document).ready(function(){
+		    $("#myBtn").click(function(){
+		        $("#myModal").modal();
+		    });
+		});
+	}
+
 	
 	</script>
 </head>
@@ -205,7 +214,8 @@
 							<div class="col-lg-12 text-left">
 								<a href="#">
 									<span class="chat">
-										<img src="/resources/images/favicon.ico" alt="챗봇 발발이" class="chat_img"  style="height: 60px;" onClick=onChatbot() id='chat'>
+										<!-- <img src="/resources/images/favicon.ico" alt="챗봇 발발이" class="chat_img"  style="height: 60px;" onClick=onChatbot() id='getChatbot'> -->
+										<img src="/resources/images/favicon.ico" alt="챗봇 발발이" class="chat_img"  style="height: 60px;" data-toggle="modal" data-target="#myModal">
 									</span>
 								</a>
 							</div>
@@ -222,6 +232,29 @@
 								</a>
 							</div>
 						</div>
+						
+						<!-- 챗봇 모달창으로 변경 -->
+						<div class="modal fade" id="myModal" role="dialog">
+						    <div class="modal-dialog">
+						    
+						    <!-- Modal content-->
+						    <div class="modal-content">
+						    	<div class="modal-header">
+						        	<button type="button" class="close" data-dismiss="modal">×</button>
+						        	<h4 class="modal-title">Modal Header</h4>
+						        </div>
+						        <div class="modal-body">
+						        	<p>Some text in the modal.</p>
+						        </div>
+						        <div class="modal-footer">
+						        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						    </div>
+						    </div>
+						</div>
+
+
+
 						
 						
 						
