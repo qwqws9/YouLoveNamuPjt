@@ -23,7 +23,7 @@
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	
@@ -34,7 +34,15 @@
 	</style>
 </head>
 <body>
+	<section class="visual_image">
+		<div class="main_txt">
+			여행은<br/>유럽 플랜과
+		</div>
+		<span class="down_down"><i class="fas fa-plane"></i></span>
+	</section>
+	
 	<header><jsp:include page="/layout/header.jsp" /></header>
+	
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
 	<div class="container">
 		<br><br>

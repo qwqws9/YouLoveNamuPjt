@@ -1,15 +1,15 @@
 $(function(){
-	
-	$('body').oLoader({
-		  wholeWindow: true, //makes the loader fit the window size
-		  lockOverflow: true, //disable scrollbar on body
-		   
-		  backgroundColor: '#282c37',
-		  fadeInTime: 1000,
-		  fadeLevel: 0.7,
-		  image: '../resources/images/ownageLoader/430377_e43058e053634b499f67c63cd1e3ba02_mv2.gif',  
-		 
-		});
+//	
+//	$('body').oLoader({
+//		  wholeWindow: true, //makes the loader fit the window size
+//		  lockOverflow: true, //disable scrollbar on body
+//		   
+//		  backgroundColor: '#282c37',
+//		  fadeInTime: 1000,
+//		  fadeLevel: 0.7,
+//		  image: '../resources/images/ownageLoader/430377_e43058e053634b499f67c63cd1e3ba02_mv2.gif',  
+//		 
+//		});
 	
 	$('.nodeTest').on('click',function(){
 		console.log("현재접속 호출 전");
@@ -149,20 +149,38 @@ $(function(){
 	
 });
 
-$(window).load(function(){
-	$('body').oLoader('hide');
-});;
+//$(window).load(function(){
+//	$('body').oLoader('hide');
+//});;
 
-// 환율 정보 .jsp 온로드
 $(function() {
-	// innerHTML
+	// 메인 이미지 랜덤
+	var imgRandom = Math.floor(Math.random() * 5) + 1;
+	
+	if(imgRandom == 0){
+		imgRandom = 'main_images_01.jpg';
+	}else if(imgRandom == 1){
+		imgRandom = 'main_images_02.jpg';
+	}else if(imgRandom == 2){
+		imgRandom = 'main_images_03.jpg';
+	}else if(imgRandom == 3){
+		imgRandom = 'main_images_04.png';
+	}else if(imgRandom == 4){
+		imgRandom = 'main_images_05.jpg';
+	}
+	//console.log(imgRandom);
+	
+	$('.visual_image').css('background-image', 'url(/resources/images/main/' + imgRandom + ')');
+	
+	
+	// 환율 정보 .jsp 온로드
 	$($('#exchange_container')).load('/wallet/mainExchangeRates.jsp', function(data) {
 		//console.log(data);
 		
 		exchangeRatesData();
 	});
 	
-	
+	// 플래너 리스트 Ajax
 	$.ajax(
 			{
 				url : "/planner/json/getBestPlannerList" ,
