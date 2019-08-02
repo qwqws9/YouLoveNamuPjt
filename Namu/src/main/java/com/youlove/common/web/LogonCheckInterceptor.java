@@ -87,8 +87,10 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 				uri.indexOf("addComment") != -1				                             ||
 				uri.indexOf("updateComment") != -1		 	                             ||
 				uri.indexOf("deleteComment") != -1		 	                             ||
-				uri.indexOf("getCommentOne") != -1
-				
+				uri.indexOf("getCommentOne") != -1						                 ||
+				// WalletController                                                      ||
+				uri.indexOf("getWalletListView") != -1				                     ||
+				uri.indexOf("getWalletList") != -1		
 				
 				
 				// LikeController                                                        ||

@@ -2,7 +2,7 @@
 html, body, div, span, ul, li, input, button { margin: 0; padding: 0; }
 body { line-height: 1; direction: ltr; }
 h2, h3 { margin: 0; padding: 0; font-size: inherit; font-weight: inherit; }
-ul, li { list-style:none; }
+ul, li { list-style: none; }
 input, button, select, textarea { background: none; border: 0 none; }
 input[type=button] { background: transparent; outline: 0; cursor: pointer; }
 input[type=radio], input[type=file]
