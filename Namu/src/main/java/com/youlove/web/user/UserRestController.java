@@ -211,18 +211,6 @@ public class UserRestController {
 	@RequestMapping(value="json/addPay",method=RequestMethod.POST)
 	public boolean addPay(@RequestBody Pay pay) throws Exception{
 		
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println(pay.toString());
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
 		boolean result = userService.addPay(pay);
 		
 		return result;
@@ -359,8 +347,8 @@ public class UserRestController {
 		
 		String number = RandomNumber.getRandom();
 		//String content = "YouLovePlan 회원가입 인증번호는 " + number +" 입니다.";
-		String content = "<h1>제목</h1>";
-		String title = "[YouLove]회원가입 인증메일";
+		String content = number;
+		String title = "[YouLovePlan] 인증메일 입니다";
 		
 		map.put("checkNum", number);
 		

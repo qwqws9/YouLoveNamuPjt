@@ -350,11 +350,20 @@ public class WishBeenDaoImpl implements WishBeenDao {
 	public List<Tour> selectPageNum(Tour tour) throws Exception {
 		
 		String address = "";
-		if(tour.getKeyword().equals("init")) {
-			address = "https://www.wishbeen.co.kr/city?serviceType=europe&tab=attraction&viewPageNum="+tour.getPageNum()+"&perPage=20";
-		}else {
-			address = "https://www.wishbeen.co.kr/city?serviceType=europe&searchByContent="+tour.getKeyword()+"&tab=attraction&viewPageNum="+tour.getPageNum()+"&perPage=20";
+		if(tour.getAddress().equals("tour")) {
+			if(tour.getKeyword().equals("init")) {
+				address = "https://www.wishbeen.co.kr/city?serviceType=europe&tab=attraction&viewPageNum="+tour.getPageNum()+"&perPage=20";
+			}else {
+				address = "https://www.wishbeen.co.kr/city?serviceType=europe&searchByContent="+tour.getKeyword()+"&tab=attraction&viewPageNum="+tour.getPageNum()+"&perPage=20";
+			}
+		}else if(tour.getAddress().equals("food")) {
+			if(tour.getKeyword().equals("init")) {
+				address = "https://www.wishbeen.co.kr/city/europe?tab=food&viewPageNum="+tour.getPageNum()+"&perPage=20";
+			}else {
+				address = "https://www.wishbeen.co.kr/city/europe?&searchByContent="+tour.getKeyword()+"&tab=food&viewPageNum="+tour.getPageNum()+"&perPage=20";
+			}
 		}
+		
 		Document doc = Jsoup.connect(address).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36").get();
 		
 				List<Tour> list = new ArrayList<>();

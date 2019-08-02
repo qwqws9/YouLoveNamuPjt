@@ -6,7 +6,6 @@ DROP TABLE LIKES CASCADE CONSTRAINTS ;
 DROP TABLE PAYLIST CASCADE CONSTRAINTS ;
 DROP TABLE schedule CASCADE CONSTRAINTS ;
 DROP TABLE route CASCADE CONSTRAINTS ;
-DROP TABLE chatbot CASCADE CONSTRAINTS ;
 
 DROP TABLE hashtag CASCADE CONSTRAINTS ;
 DROP TABLE community CASCADE CONSTRAINTS ;
@@ -18,6 +17,7 @@ DROP TABLE wallet CASCADE CONSTRAINTS ;
 DROP TABLE planner CASCADE CONSTRAINTS ;
 DROP TABLE USERS CASCADE CONSTRAINTS ;
 DROP TABLE CITY CASCADE CONSTRAINTS ;
+DROP TABLE chatbot CASCADE CONSTRAINTS ;
 
 DROP SEQUENCE seq_party_code;
 DROP SEQUENCE seq_community_code;
@@ -204,6 +204,7 @@ CREATE TABLE planner (
    PRIMARY KEY(planner_code)
 );
 
+
 CREATE TABLE route ( 
    route_code                  NUMBER(10)      NOT NULL,
    planner_ver            NUMBER(2)    NOT NULL,
@@ -226,8 +227,10 @@ CREATE TABLE schedule(
    planner_ver            NUMBER(2)    NOT NULL,
    planner_code NUMBER(10)  NOT NULL ,
    sche_day VARCHAR2(10),
-   time_hour VARCHAR2(10),
-   time_min VARCHAR2(10),
+   time_hour VARCHAR2(4),
+   time_min VARCHAR2(4),
+   etime_hour VARCHAR2(4),
+   etime_min VARCHAR2(4),
    SCHE_NAME VARCHAR2(500) NOT NULL,
    SCHE_place VARCHAR2(200),
    SCHE_detail VARCHAR2(2000),
@@ -361,6 +364,29 @@ INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현','user2'
 INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','귤','user3','01067479984','권규리','1234','920802','M','defaultProfile.jpg','귤입니다',sysdate,null,null,null);
 INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','상욱','user4','01045919093','한상욱','1234','920802','M','defaultProfile.jpg','상욱입니다',sysdate,null,null,null);
 
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니미','user5','01045919093','김철수','1234','900802','M','defaultProfile.jpg','반가워요',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니미니','user6','01045919093','김영희','1234','880802','F','defaultProfile.jpg','브뤼셀가고싶어요',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','초미니','user7','01045919093','김수철','1234','870802','F','defaultProfile.jpg','잘부탁드려요',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','큰미니','user8','01045919093','박수철','1234','860802','M','defaultProfile.jpg','상욱입니다',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','작은미니','user9','01045919093','박철수','1234','800802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','김미니','user10','01045919093','이철수','1234','780802','F','defaultProfile.jpg','자기소개',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니짱이다','user11','01045919093','이수철','1234','980802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니이','user12','01045919093','한철수','1234','990802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니다','user13','01045919093','한수철','1234','750802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니^^','user14','01045919093','권영희','1234','740802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니미^^','user15','01045919093','한영희','1234','730802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중혀언','user16','01045919093','한부아','1234','720802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','상우욱','user17','01045919093','박규리','1234','710802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','미니짱','user18','01045919093','한규리','1234','700802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','지존미니','user19','01045919093','한욱상','1234','850802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','중현짱','user20','01045919093','박중상','1234','870802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','규리짱','user21','01045919093','한상중','1234','900802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','규리짱짱','user22','01045919093','한중현','1234','910802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','지존규리','user23','01045919093','한현중','1234','920802','M','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+INSERT INTO users VALUES (seq_user_code.nextval,null,'T','user','작은규리','user24','01045919093','김중현','1234','930802','F','defaultProfile.jpg','놀러가요~',sysdate,null,null,null);
+
+
+
 INSERT INTO city VALUES ( '런던','GB',51.5073509,-0.1277583,'영국','GB.png','GBP');
 INSERT INTO city VALUES ( '브라이튼','GB',50.82253000000001,-0.137163,'영국','GB.png','GBP');
 INSERT INTO city VALUES ( '캠브릿지','GB',52.205337,0.121817,'영국','GB.png','GBP');
@@ -453,7 +479,7 @@ INSERT INTO friend values (seq_friend_code.nextval, '1','4','안녕','1');
 INSERT 
 
 
-INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member ,PRIVACY, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
    
@@ -464,7 +490,7 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희의유럽배낭여행 ', NULL, '1
 
 INSERT 
 
-INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , PRIVACY, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
 
@@ -473,25 +499,26 @@ VALUES ( seq_planner_code.nextval,1, 2, '민희의신혼여행 ', NULL, '2', 'S'
 
 INSERT 
 
-INTO planner ( planner_code , planner_ver,planner_writer, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code , planner_ver,planner_writer, planner_name , planner_image , member , PRIVACY, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
 VALUES ( seq_planner_code.nextval,1, 2,'민희와 친구들 goonight 여행 ', NULL, '3', 'p','B','N','4','20190807',sysdate); 
 
 INSERT 
 
-INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , privacy, status, 
+INTO planner ( planner_code ,planner_ver, planner_writer, planner_name , planner_image , member , PRIVACY, status, 
 
    isgroup, board_code, depart_date, reg_date ) 
 
 VALUES ( seq_planner_code.nextval,1, 2, '민희네 가족여행 ', NULL, '4', 'S','B','N','4', '20190810',sysdate); 
 
+--상욱 chatbot 데이터
 
-
-
-
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 1 );
-INSERT INTO wallet VALUES ( seq_w_code.nextval, 2 );
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 1);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 2);
+INSERT INTO wallet VALUES ( seq_w_code.nextval, 3);
 
 
 commit;
+
+

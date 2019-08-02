@@ -23,7 +23,7 @@
 <div class="col-md-12">
 <div class="row">
 <div class="col-md-6">
-<input type="text" id="inputKeyword" class="form-control" placeholder="어디로 떠나고 싶으세요?" >
+<input type="text" id="inputKeyword" class="form-control" placeholder="어느나라 맛집을 원하시나요?" >
 </div>
 <div class="col-md-6">
 <button type="button" class="btn btn-outline-primary" id="userSearch" ><i class="fas fa-search-location"></i></button>
@@ -193,7 +193,8 @@
 			method : 'POST',
 			data : JSON.stringify({
 				pageNum : pageNum,
-				keyword : keyword
+				keyword : keyword,
+				address : 'food'
 			}),
 			headers : {
 				"Accept" : "application/json",
@@ -231,7 +232,7 @@
 					$(".preview-"+(index+1)+ " > div > div > div > h3").text(item.tourName);
 					$(".preview-"+(index+1)+ " > div > div > div > div").text(item.hashtag);
 					$(".preview-"+(index+1)+ " > div > div > div > p").text(item.tourShortDesc);
-					$(".preview-"+(index+1)+ " > div > div > div > a").text('이곳에는 별점');
+					$(".preview-"+(index+1)+ " > div > div > div > a").text('Continue reading');
 					$(".preview-"+(index+1)+ " > div > div > div.col-auto.d-none.d-lg-block > img").attr('src',item.tourThumb);
 					
 				});
