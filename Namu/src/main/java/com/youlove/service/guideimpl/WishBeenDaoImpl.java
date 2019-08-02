@@ -41,6 +41,96 @@ public class WishBeenDaoImpl implements WishBeenDao {
     
     //크롤링 할 URL
     private String base_url;
+    
+    @Override
+	public List<Tour> initFood() throws Exception {
+    	String address = "https://www.wishbeen.co.kr/city/europe?tab=food";
+		Document doc = Jsoup.connect(address).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36").get();
+		
+		List<Tour> list = new ArrayList<>();
+		
+		//true면 10페이지 이후도 존재하는것. 아래 searchKeyword , viewPageNum=11 , url 파라미터로 보낼것
+		System.out.println(doc.select(".paging .btn-next").text().equals("다음"));
+		
+		System.out.println(doc.select(".paging li"));
+		Elements el = doc.select(".paging li");
+		
+		int pageCount = 0;
+		int firstPageNum = Integer.parseInt(el.first().text());
+		for(Element e : el) {
+			pageCount = Integer.parseInt(e.text());
+		}
+		System.out.println("개수만큼 페이지 수 만들것"+pageCount); // 개수만큼 페이지 수 만들것.
+		
+		Tour tour;
+		
+		String hashtag;
+		String[] sp;
+		int idx;
+		for(int i = 1; i < 100; i++) {
+			tour = new Tour();
+			el = doc.select(".spots-contents:nth-child("+i+")");
+			// for문 돌리면서 비교하자 마지막 자식까지 왔는지 체크
+			if(el.isEmpty()) {
+				break;
+			}
+			for(Element e : el) {
+				//System.out.println("상세 조회시 아이디값 : "+e.select(".spot-info-box").attr("data-id"));
+				//System.out.println("관광지명 : "+e.select(".spot-name").text());
+				//System.out.println("관광지 썸네일 src : "+e.select(".spots-contents > .spot-img a img").attr("src"));
+				//System.out.println("관광지 간략설명 : "+e.select(".spot-state").text());
+				//System.out.println("관광지 위치 도시?? : " + e.select(".desc > .town").text());
+				//System.out.println("태그 : " + e.select(".tag").text());
+				//System.out.println();
+				//System.out.println("=======================================================================================");
+				tour.setTourId(e.select(".spot-info-box").attr("data-id"));
+				tour.setTourName(e.select(".spot-name").text());
+				tour.setTourThumb(e.select(".spots-contents > .spot-img a img").attr("src"));
+				tour.setTourShortDesc(e.select(".spot-state").text());
+				tour.setTourLoc(e.select(".desc > .town").text());
+				hashtag = e.select(".tag").text();
+				idx = 1;
+				if(hashtag.contains(",")) {
+					hashtag.trim();
+					sp = hashtag.split(",");
+					hashtag="";
+					for(String s : sp) {
+						if(sp.length == idx) {
+							hashtag += "#"+s;
+						}else {
+							hashtag += "#"+s+" ";
+						}
+						idx++;
+					}
+				}else if(hashtag.contains(" ")) {
+					sp = hashtag.split("\\s");
+					hashtag="";
+					for(String s : sp) {
+						if(sp.length == idx) {
+							hashtag += "#"+s;
+						}else {
+							hashtag += "#"+s+" ";
+						}
+						idx++;
+					}
+				}else if(!hashtag.equals("")) {
+					hashtag = "#"+hashtag;
+				}
+				tour.setHashtag(hashtag);
+			}
+			tour.setPageCount(pageCount);
+			tour.setFirstPageNum(firstPageNum);
+			tour.setNextBtn(doc.select(".paging .btn-next").text().equals("다음"));
+			tour.setKeyword("init");
+			tour.setPageNum(1);
+			list.add(tour);
+		}
+
+
+		return list;
+	}
+
+    
 	
 	@Override
 	public List<Flight> searchFlight(Flight flight) throws Exception {
@@ -601,6 +691,9 @@ public class WishBeenDaoImpl implements WishBeenDao {
 		return list;
 	}
 
+
+
+	
 	
 
 	

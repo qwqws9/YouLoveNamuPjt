@@ -2,6 +2,10 @@ package com.youlove.common.api;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -9,7 +13,10 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
@@ -30,7 +37,7 @@ public class CheckEmailTransfer {
 	
 	
 	
-	public static void gmailSend(String title, String content, String receiver) {
+	public static void gmailSend(String title, String content, String receiver,HttpServletRequest request) {
 		
 	final String user = "bityong0802@gmail.com";
 	final String password = "gnfkqh12";
@@ -48,8 +55,11 @@ public class CheckEmailTransfer {
             return new PasswordAuthentication(user, password);
         }
     });
+	
+	
 
     try {
+    	//Transport transport = session.getTransport();
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(user));
 
@@ -60,9 +70,38 @@ public class CheckEmailTransfer {
         message.setSubject(title); 
 
         // 메일 내용
-        message.setText(content);   
+        //message.setText(content);
+        //message.setContent(content,"text/html; charset=UTF-8");
 
+        
+        MimeMultipart multipart = new MimeMultipart("related");
+        
+     // first part  (the html)
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<img width='200' src=\"cid:image\">"+content;
+        messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+        
+        // add it
+        multipart.addBodyPart(messageBodyPart);
+        
+        
+     // second part (the image)
+        messageBodyPart = new MimeBodyPart();
+        DataSource fds = new FileDataSource
+        		(request.getSession().getServletContext().getRealPath("resources")+"\\images\\youloveplan_logo.png");
+          //("C:\\images\\AT.png");
+        messageBodyPart.setDataHandler(new DataHandler(fds));
+        messageBodyPart.setHeader("Content-ID","<image>");
+        
+     // add it
+        multipart.addBodyPart(messageBodyPart);
+        
+     // put everything together
+        message.setContent(multipart);
+        
+       
         // 메일 전송
+        
         Transport.send(message);
         
         System.out.println("message sent successfully...");
