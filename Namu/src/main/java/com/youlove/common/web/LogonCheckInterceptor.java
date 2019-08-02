@@ -8,18 +8,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.youlove.service.domain.User;
 
-
-/*
- * FileName : LogonCheckInterceptor.java
- *  ¤· Controller È£ÃâÀü interceptor ¸¦ ÅëÇØ ¼±Ã³¸®/ÈÄÃ³¸®/¿Ï·áÃ³¸®¸¦ ¼öÇà
- *  	- preHandle() : Controller È£ÃâÀü ¼±Ã³¸®   
- * 			(true return ==> Controller È£Ãâ / false return ==> Controller ¹ÌÈ£Ãâ ) 
- *  	- postHandle() : Controller È£Ãâ ÈÄ ÈÄÃ³¸®
- *    	- afterCompletion() : view »ı¼ºÈÄ Ã³¸®
- *    
- *    ==> ·Î±×ÀÎÇÑ È¸¿øÀÌ¸é Controller È£Ãâ : true return
- *    ==> ºñ ·Î±×ÀÎÇÑ È¸¿øÀÌ¸é Controller ¹Ì È£Ãâ : false return
- */
 public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 
 	///Field
@@ -36,41 +24,90 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		System.out.println("\n[ LogonCheckInterceptor start........]");
 		
-		//==> ·Î±×ÀÎ À¯¹«È®ÀÎ
 		HttpSession session = request.getSession(true);
 		User user = (User)session.getAttribute("user");
-
-		//==> ·Î±×ÀÎÇÑ È¸¿øÀÌ¶ó¸é...
-		if(   user != null   )  {
-			//==> ·Î±×ÀÎ »óÅÂ¿¡¼­ Á¢±Ù ºÒ°¡ URI
-			String uri = request.getRequestURI();
+		String uri = request.getRequestURI();
+		
+		
+		if( user != null) {
 			
-			if(		uri.indexOf("addUser") != -1 ||	uri.indexOf("login") != -1 		|| 
-					uri.indexOf("checkDuplication") != -1 ){
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
-				System.out.println("[ ·Î±×ÀÎ »óÅÂ.. ·Î±×ÀÎ ÈÄ ºÒÇÊ¿ä ÇÑ ¿ä±¸.... ]");
-				System.out.println("[ LogonCheckInterceptor end........]\n");
+			if(user.getRole().equals("admin")) {
+				return true;
+			}else {
+				// ê´€ë¦¬ìë§Œ ì ‘ê·¼ ê°€ëŠ¥í•œ URL
+				if(uri.indexOf("getUserList") != -1 ||
+				   uri.indexOf("getPoliceList") != -1 ||
+				   uri.indexOf("setUserBlock") != -1
+						) {
+					System.out.println(uri);
+					System.out.println("ì¼ë°˜íšŒì› ì ‘ê·¼ ë¶ˆê°€......");
+					response.sendRedirect("/");
+					return false;
+				}
+			}
+			
+		// ë¹„íšŒì› ì ‘ê·¼ ë§‰ì„ê³³ 
+		}else {
+			
+			if(uri.indexOf("getUser") != -1) {
+				if(uri.indexOf("json/getUser") != -1) {
+					return true;
+				}else {
+					response.sendRedirect("/");
+					return false;
+				}
+			}
+			
+			
+			if( // UserController                       
+				uri.indexOf("getPayList") != -1			                                 ||
+				uri.indexOf("logout") != -1				                                 ||
+				uri.indexOf("getUserList") != -1		                                 ||
+				uri.indexOf("getPoliceList") != -1		                                 ||
+				uri.indexOf("getPoliceList") != -1		                                 ||
+				uri.indexOf("addPolice") != -1			                                 ||
+				uri.indexOf("updatePolice") != -1		                                 ||
+				uri.indexOf("updatePolice") != -1		                                 ||
+				uri.indexOf("multipleAdd") != -1		                                 ||
+				uri.indexOf("inviteUser") != -1			                                 ||
+				uri.indexOf("addFriendMemo") != -1		                                 ||
+				uri.indexOf("getFriend") != -1			                                 ||
+				uri.indexOf("addPay") != -1				                                 ||
+				uri.indexOf("updateImg") != -1			                                 ||
+				uri.indexOf("updateUser") != -1			                                 ||
+				uri.indexOf("setUserBlock") != -1		                                 ||
+				// TimelineController                                                    ||
+				uri.indexOf("getTimelineList") != -1	 	                             ||
+				uri.indexOf("addTimeline") != -1		 	                             ||
+				uri.indexOf("updateTimeline") != -1		 	                             ||
+				// LikeController                                                        ||
+				uri.indexOf("addLike") != -1				                             ||
+				uri.indexOf("deleteLike") != -1				                             ||
+				// CommentController                                                     ||
+				uri.indexOf("addComment") != -1				                             ||
+				uri.indexOf("updateComment") != -1		 	                             ||
+				uri.indexOf("deleteComment") != -1		 	                             ||
+				uri.indexOf("getCommentOne") != -1
+				
+				
+				
+				// LikeController                                                        ||
+//				uri.indexOf("addLike") != -1				                             ||
+//				uri.indexOf("deleteLike") != -1				                             ||  
+				
+				
+				
+				
+				
+				
+				
+					) {
+				System.out.println(uri);
+				System.out.println("ë¹„íšŒì› ì ‘ê·¼ë¶ˆê°€.........");
+				response.sendRedirect("/");
 				return false;
 			}
-			
-			System.out.println("[ ·Î±×ÀÎ »óÅÂ ... ]");
-			System.out.println("[ LogonCheckInterceptor end........]\n");
-			return true;
-		}else{ //==> ¹Ì ·Î±×ÀÎÇÑ È­¿øÀÌ¶ó¸é...
-			//==> ·Î±×ÀÎ ½Ãµµ Áß.....
-			String uri = request.getRequestURI();
-			
-			if(		uri.indexOf("addUser") != -1 ||	uri.indexOf("login") != -1 		|| 
-					uri.indexOf("checkDuplication") != -1 ){
-				System.out.println("[ ·Î±× ½Ãµµ »óÅÂ .... ]");
-				System.out.println("[ LogonCheckInterceptor end........]\n");
-				return true;
-			}
-			
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
-			System.out.println("[ ·Î±×ÀÎ ÀÌÀü ... ]");
-			System.out.println("[ LogonCheckInterceptor end........]\n");
-			return false;
 		}
+		return true;
 	}
 }//end of class

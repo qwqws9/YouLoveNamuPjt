@@ -25,8 +25,10 @@
 		} 
     </style>
 	<script>
+	
+	
 		$(document).ready(function(){
-			
+		
 			var owl = $(".owl-carousel");
 			owl.owlCarousel({
 				items:4,
@@ -66,16 +68,27 @@
 	     		success : function(JSONData, status){
 	     			//console.log(JSONData);
 	     			$.each(JSONData.list,function(index,item){
+	     				console.log(item);
 	     				
-	     				$(".owl-stage").append(
-			     			'<div class="owl-item" style="">'+
-								'<img src="/resources/images/ThumbNail/'+item.communityThumbnail+'" class="card-img-top" alt="..." style="height: 250px;">'+
-			            		'<input type="hidden" class="bestCommunityCode" value="'+item.communityCode+'" />'+
-								'<div class="bestTitle" style="overflow: hidden; text-overflow: ellipsis;font-size: 20px; font-weight: bold;">'+
-								item.communityTitle+
-								'</div>'+
-			            	'</div>'
-	     				);
+	     				$(".owl-stage").owlCarousel().trigger('add.owl.carousel',
+	     					[$( '<div class="owl-item" style="">'+
+	 								'<img src="/resources/images/ThumbNail/'+item.communityThumbnail+'" class="card-img-top" alt="..." style="height: 250px;">'+
+	 			            		'<input type="hidden" class="bestCommunityCode" value="'+item.communityCode+'" />'+
+	 								'<div class="bestTitle" style="overflow: hidden; text-overflow: ellipsis;font-size: 20px; font-weight: bold;">'+
+	 								item.communityTitle+
+	 								'</div>'+
+	 			            	'</div>'		
+	     					)]).trigger('refresh.owl.carousel');
+	     				
+// 	     				$(".owl-stage").append(
+// 			     			'<div class="owl-item" style="">'+
+// 								'<img src="/resources/images/ThumbNail/'+item.communityThumbnail+'" class="card-img-top" alt="..." style="height: 250px;">'+
+// 			            		'<input type="hidden" class="bestCommunityCode" value="'+item.communityCode+'" />'+
+// 								'<div class="bestTitle" style="overflow: hidden; text-overflow: ellipsis;font-size: 20px; font-weight: bold;">'+
+// 								item.communityTitle+
+// 								'</div>'+
+// 			            	'</div>'
+// 	     				);
 	     				
 	     			});
 	     			

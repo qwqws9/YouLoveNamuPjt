@@ -21,6 +21,11 @@
   	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
    <link rel="stylesheet" type="text/css" href="/resources/css/planner.css">
    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
    
 <style>
@@ -59,11 +64,21 @@ margin:0 auto
 	        $(this).next('.custom-file-label').html(fileName);
 	    });
 		
-	    $( "#departDate" ).datepicker({
+	    /* $( "#departDate" ).datepicker({
 	    	changeMonth: true,
 	        changeYear: true,
 	        dateFormat: 'yy-mm-dd'			        
+	    }); */
+	    
+	    $(".selector").flatpickr({ 
+
+	    	dateFormat: "Y-m-d",
+
+	    	minDate:"today",
+
+	    	/* maxDate: new Date().fp_incr(30) */
 	    });
+
 	    
 	    $("#save").on("click",function(){    	
 	    	fncAddPlanner();    	
@@ -160,7 +175,11 @@ margin:0 auto
 		    <label for="departDate">여행 시작일 </label>
 		     </div>
 		    <div class="col-md-4">
-		      <input type="text" class="form-control" id="departDate" name="departDate"   >
+		   <!--    <input type="text" class="form-control" id="departDate" name="departDate"   > -->
+		   <input type="text" class="selector"  id="departDate" name="departDate" placeholder="날짜를 선택하세요." />
+<!-- 
+<a class="input-button" title="toggle" data-toggle><i class="icon-calendar"></i></a>
+		    -->
 		   </div>
 		     <div class="col-md-2"></div>
 		  </div>

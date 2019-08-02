@@ -29,6 +29,12 @@
 	
 	
 	<style>
+	.container-fluid { 
+	padding-right: 30px; 
+	padding-left: 30px; 
+	margin-right: auto; 
+	margin-left: auto; }
+
 		.owl-item{
 	 		position: relative;
 	 		height: 330px; 
@@ -196,13 +202,46 @@
 	
 	
 	<br><br><br>
-	<div class="container-fluid" >
+<div class="container-fluid">
+	<!-- <div class="container-fluid" > -->
+	<h4 class="text-center"> ${planner.plannerName}  </h4>
+	<br><hr>
+	
+	<div class="col-md-12">
 		<div class="row">
-			<div class="col-md-12 col-lg-12">
-			
-			
-				<div class="row"><!-- title -->
-					<div class="col-md-1 col-lg-1"></div>
+			<div class="col-md-1"></div>
+		<div class="col-md-8">	<img class="thumb"src="/resources/images/planner/${planner.plannerImage}"  width="100%"></div>
+		<%-- <div class="col-md-4"> <img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="200px" height="200px"></div>
+ --%>		<div class="col-md-2 text-left">  
+		작성자 : &nbsp; ${planner.plannerWriter.nickname}<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="20px" height="20px"> <p><p>
+		작성일 : &nbsp;${planner.regDate}<p>
+		여행멤버 :&nbsp;	<c:if test="${! empty planner.member && (planner.member eq '1')}">
+									혼자 </c:if>
+									<c:if test="${! empty planner.member && (planner.member eq '2')}">
+									연인과 </c:if>
+									<c:if test="${! empty planner.member && (planner.member eq '3')}">
+									친구들과 </c:if>
+									<c:if test="${! empty planner.member && (planner.member eq '4')}">
+									가족들과 </c:if>
+								 <p> 
+		여행출발일 :&nbsp;  ${planner.departDate}<p>
+		 <div class="badge badge-pill" style="border: 1px solid black;">
+				<button class="boardLike" type="button" style="border: none; background: none;">
+				좋아요 <i class="far fa-heart fa-lg" ></i>
+				</button>
+				<span class="likeCountBoard" style="font-size: 11px;">${likeCountBoard }</span>
+					</div>
+					<div class="col-md-1">
+					<br><br><br><br>
+					</div></div></div>
+					<%-- 
+					
+			<div class="col-md-2">	작성일 : &nbsp;${planner.regDate}  <p>작성자 : &nbsp;
+					<span style="padding-left: 10px;">${planner.plannerWriter.nickname}</span></div>
+						</div></div>
+									
+									
+	
 					<div class="col-md-10 col-lg-10">
 						<div class="row">
 							<div class="col-md-7 col-lg-7">
@@ -211,7 +250,8 @@
 							<div class="col-md-5 col-lg-5">
 								<div class="row text-left" style="padding-left: 15px;">
 									<span>
-<%-- 										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px"> --%>
+									
+										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
 										<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="40px" height="40px">
 										<span style="padding-left: 10px;">${planner.plannerWriter.nickname}</span>
 									</span>
@@ -250,8 +290,8 @@
 								</div>
 							</div>
 						</div>
-						
-						<br>
+						 --%>
+					<%-- 	<br>
 						<div class="row" style="margin-top: 8px;">
 		<div class="col-6">
 			<div class="badge badge-pill" style="border: 1px solid black;">
@@ -260,9 +300,10 @@
 				</button>
 				<span class="likeCountBoard" style="font-size: 11px;">${likeCountBoard }</span>
 				
-				</div></div></div></div>
-						<div class="row"><!-- map -->
-							<div class="col-md-12 col-lg-12">
+				</div></div></div></div> --%>
+				<br><br><br><br>
+	<!-- map -->
+							<div class="col-md-12">
 								<jsp:include page="/planner/getRoute.jsp" />
 							</div>
 							
@@ -271,7 +312,7 @@
 						
 						<br>
 						
-						<div class="row"><!-- 달력 -->
+						<!-- 달력 -->
 							<!-- month -->
 							<div class="col-md-12">
 								<jsp:include page="/planner/getScheduleList2.jsp" />
@@ -281,16 +322,8 @@
 						</div>
 						
 						<br>
-						
-						<c:if test="${user.userCode == planner.plannerWriter.userCode}">
-							<div class="row">
-								<div class="col-md-4">
-									<button type="button" class="btn btn-default" id="updatep"> 수정 </button>
-									 <a onclick="return confirm('플래너를 삭제하시겠습니까?')" href="#" class="btn btn-default">삭제</a> 
-								</div>
-							</div>
-						</c:if>
-						
+				<%-- 		
+	
 						<div class="row">
 							<div class="owl-carousel owl-theme owl-loaded">
 								<div class="owl-stage-outer" style="height: 300px;">
@@ -320,23 +353,35 @@
 							    </div>
 							</div>	
 						</div>
-						
-						<div class="row">
+						 --%>
+							<div class="container-fluid">
+							<div class="col-md-12">
+					
 							<!-- 댓글 -->
 						    <jsp:include page="../comment/getComment.jsp" >
 						    	<jsp:param value="${boardCode}" name="boardCode"/>
 						    	<jsp:param value="${detailCode}" name="detailCode"/>
 						    </jsp:include>
 						</div>
-						
+						</div>
 					</div><!-- end of center -->
-					
-					
-					<div class="col-md-1 col-lg-1"></div>
-					
+			
+					<div class="col-md-12">
+				
+					<c:if test="${user.userCode == planner.plannerWriter.userCode}">
+							<div class="row">
+								<div class="col-md-8"></div>
+								<div class="col-md-4">
+									<button type="button" class="btn btn-primary" id="updatep"> 수정 </button>
+									 <a onclick="return confirm('플래너를 삭제하시겠습니까?')" href="#" class="btn btn-primary">삭제</a> 
+								</div>
+							</div>
+						</c:if>
+						</div>
+			<br><br>
 				</div>
 			</div>
-		</div>
+	
 
 	
  

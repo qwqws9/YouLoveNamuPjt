@@ -22,7 +22,6 @@
 	<!-- fullcalendar-->
  	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
 	<script type="text/javascript"  src="/resources/javascript/fullcalendar.js"></script>
-	<script type="text/javascript" src="wickedpicker.js"></script>
 	<link  rel="stylesheet"  href="/resources/css/fullcalendar.css" /> 
 
  	<!-- Font Awesome  -->
@@ -44,12 +43,7 @@
 input{
 background: none; border: 0 none;
 }
- .calendar {
-  float:left; width:200px; height:100px; background-color:#234234;}
-  
-  .calendar2 {
-  float:right; width:200px; height:100px; background-color:#234234;}
-/*  . {
+
 
 
   display:inline-block; width:200px; height:100px; background-color:#666666; margin-left:10px;}  
@@ -61,7 +55,11 @@ background: none; border: 0 none;
         font-size : 14px;
     }
     #calendar {
-        max-width : 900px;
+        max-width : 600px;
+        margin : 0 auto;
+    }
+    #calendar2 {
+        max-width : 600px;
         margin : 0 auto;
     }
    /*  .fc-time{
@@ -282,7 +280,7 @@ var departDate=${planner.departDate};
 		        	   var ss=date.format("dd");
 		        	  var date = (moment(date).format('YYYY-MM-DD'));
 		        	  document.getElementById("scheDay").value=date;
-		        	   layer_open('layer1');
+		        	   layer_open('#layer1');
 		        	   onchangeDay(yy,mm,dd,ss);
 		        	     },  
 
@@ -338,11 +336,11 @@ var departDate=${planner.departDate};
 												
 																 $('#getSchedule' ).html(displayValue);
 			
-					alert(displayValue);
+				/* 	alert(displayValue); */
 				
 								}
 						});
-					 layer_open('layer2');
+					 layer_open('#layer2');
 				
 		      }, 
 					/////////////////////////////////////////////////////
@@ -364,7 +362,7 @@ $(function () {
 	//initialize  calendar
 	
 var departDate=${planner.departDate};
-	alert(departDate);
+	console.log(departDate); 
 	var ddd = String(departDate);	
 	var yyyy = ddd.substring(0,4);
 	var mm = ddd.substring(4,6);
@@ -480,7 +478,7 @@ var departDate=${planner.departDate};
 												
 																 $('#getSchedule' ).html(displayValue);
 			
-					alert(displayValue);
+				console.log(displayValue);
 				
 								}
 						});
@@ -512,21 +510,26 @@ var departDate=${planner.departDate};
 </head>
 
 <body>
+
+
 <!--캘린더  -->
 <br><br><br><br>
+
  <div class="col-md-12" >	
 <div class="row"> 
-	<div class="col-md-6 col-lg-6">
-<div  id="calendar"><p class="date" id="nows"></p>
+  <div class="col-md-1"></div>
+	<div class="col-md-5 ">
+<div  id="calendar">
  </div></div>
 
- <div class="col-md-6 col-lg-6">
+ <div class="col-md-5">
  <div  id="calendar2">
- </div></div></div></div>
- 
+ </div> </div>
+  <div class="col-md-1"></div>
+ </div></div>
+ <!-- 
 
 <!--일정 등록 팝업  -->
-
 <!-- <div style="height: 300px;"></div>
 <a href="#layer1" class="btn-example"></a>
 <div class="dim-layer">
@@ -592,9 +595,8 @@ var departDate=${planner.departDate};
         </div></div>
 		</form>
 		</div></div> </div></div></div>
-<br/><br/>
+<br/><br/> -->
 
- -->
 <!--일정 상세 팝업  -->
 <div style="height: 300px;"></div>
 <a href="#layer2" class="btn-example"></a>
