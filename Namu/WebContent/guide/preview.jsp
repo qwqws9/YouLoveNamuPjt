@@ -14,12 +14,18 @@
 	.three_wrap { float: left; width: 33.33%; padding: 12px 15px; }
 	.preview_wrap h3 { margin: 0; padding: 0; font-size: 20px; font-weight: 700; line-height: 2.5em; border-bottom: 3px solid #282c37; }
 	.preview_wrap h3 span { margin-left: 10px; }
-	.preview_cont { margin-top: 20px; padding: 5px; border: 1px solid #cbcbcb; }
+	.preview_cont { width: 100%; margin-top: 20px; padding: 5px; border: 1px solid #cbcbcb; }
 	.preview_cont::after { content: ''; display: block; clear: both; }
 	.preview_cont img, .preview_cont div { float: left; }
-	.preview_cont div { margin-left: 10px; }
-	.img_rounded { width: auto; height: 100px; }
-	h2 { margin: 0; padding: 0; font-size: 14px; font-weight: 600; }
+	.preview_cont > div { width: 210px; margin-top: 5px; margin-left: 10px; }
+	.img_rounded { width: 100px; height: 100px; }
+	.preview_cont h4 { width: 90%; margin: 0; padding: 0; font-size: 14px; font-weight: 600; line-height: 22px; }
+	.preview_cont h4 span
+		{ display: inline-block; width: 82%; overflow: hidden; margin-left: 10px; text-overflow: ellipsis; box-sizing: border-box; white-space: nowrap; }
+	.preview_cont div { margin-top: 5px; }
+	.preview_cont p
+		{ display: -webkit-box; max-height: 60px; font-size: 14px; line-height: 1.48; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+		  overflow: hidden; text-overflow:ellipsis; }
 </style>
 
 <div class="preview_wrap">
@@ -62,8 +68,8 @@
 					'<div class="tour'+index+' preview_cont">'
 					+'<img class="img_rounded" src="'+tour.tourThumb+'">'
 					+'<div>'
-					+'<h2><img src="/resources/images/spot-type01-01.png" width="24" height="24">'+tour.tourName+'</h5>'
-					+'<p>'+tour.tourShortDesc+'</p>'
+					+'<h4><img src="/resources/images/spot-type01-01.png" width="22" height="22"><span>'+tour.tourName+'</span></h4>'
+					+'<div><p>'+tour.tourShortDesc+'</p></div>'
 					+'</div>'
 					+'</div>');
 				});
@@ -76,8 +82,8 @@
 					'<div class="food'+index+' preview_cont">'
 					+'<img class="img_rounded" src="'+food.tourThumb+'">'
 					+'<div>'
-					+'<h2><img src="/resources/images/spot-type01-02.png" width="24" height="24">'+food.tourName+'</h5>'
-					+'<p>'+food.tourShortDesc+'</p>'
+					+'<h4><img src="/resources/images/spot-type01-02.png" width="22" height="22"><span>'+food.tourName+'</span></h4>'
+					+'<div><p>'+food.tourShortDesc+'</p></div>'
 					+'</div>'
 					+'</div>');
 				});
@@ -90,8 +96,8 @@
 					'<div class="hotel'+index+' preview_cont">'
 					+'<img class="img_rounded" src="'+hotel.hotelThumb+'">'
 					+'<div>'
-					+'<h2><img src="/resources/images/spot-type01-03.png" width="24" height="24">'+hotel.hotelName+'</h5>'
-					+'<p>'+hotel.hotelShortDesc+'</p>'
+					+'<h4><img src="/resources/images/spot-type01-03.png" width="22" height="22"><span>'+hotel.hotelName+'</span></h4>'
+					+'<div><p>'+hotel.hotelShortDesc+'</p></div>'
 					+'</div>'
 					+'</div>');
 				});
