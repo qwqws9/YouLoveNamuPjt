@@ -40,17 +40,13 @@
 			call it a dream.<br/>
 			call it a <span>PLAN</span>.
 		</div>
-		<span class="down_down"><i class="fas fa-plane"></i></span>
+		<a href="#" class="scrolll"><span></span>Scroll</a>
 	</section>
 	
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<div class="container">
-		<br><br>
-		<!-- <button type="button" id="ooo">로그인</button> -->
-		<br><br>
-		
+	<div class="container" style="padding-top: 150px;">
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">
