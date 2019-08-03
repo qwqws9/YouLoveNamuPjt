@@ -192,7 +192,7 @@
 							$(".preview-"+(index+1)+ " > div > div > div > h3").html('<img src="/resources/images/spot-type01-03.png" width="24px" height="24px" style="margin-top: -5px;">&nbsp;'+item.hotelName);
 							$(".preview-"+(index+1)+ " > div > div > div > div").text(item.price);
 							$(".preview-"+(index+1)+ " > div > div > div > p").text(item.hotelShortDesc);
-							$(".preview-"+(index+1)+ " > div > div > div > a").text('이곳에는 별점');
+							$(".preview-"+(index+1)+ " > div > div > div > a").text('Continue reading');
 							$(".preview-"+(index+1)+ " > div > div > div.col-auto.d-none.d-lg-block > img").attr('src',item.hotelThumb);
 							
 						});

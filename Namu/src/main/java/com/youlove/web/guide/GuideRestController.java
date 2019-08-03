@@ -1,6 +1,8 @@
 package com.youlove.web.guide;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.youlove.common.DateFormat;
 import com.youlove.common.api.OpenWeather;
 import com.youlove.service.domain.City;
 import com.youlove.service.domain.Flight;
@@ -127,6 +130,90 @@ public class GuideRestController {
 	}
 	
 	
+	
+	@RequestMapping(value = "/json/getWishbeenPreview", method=RequestMethod.POST)
+	public Map<String,Object> getWishbeenPreview(@RequestBody Tour tour,Hotel hotel) throws Exception {
+		
+		System.out.println("/json/getWishbeenPreview : POST");
+		
+		//관광지 정보
+		tour.setPageNum(1);
+		
+		//관광지 검색
+		tour.setAddress("tour");
+		List<Tour> tourList = wishBeenService.selectPageNum(tour);
+		if(tourList != null) {
+			for(Tour t: tourList) {
+				String cut= t.getTourShortDesc();
+				if(cut.length() > 10) {
+					cut = cut.substring(0, 10);
+					cut += "...";
+					t.setTourShortDesc(cut);
+				}
+				cut = t.getTourName();
+				if(cut.length() > 10) {
+					cut = cut.substring(0, 10);
+					cut += "...";
+					t.setTourName(cut);
+				}
+			}
+		}
+		Map<String,Object> map = new HashMap<>();
+		map.put("tour", tourList);
+		
+		
+		//맛집 검색
+		tour.setAddress("food");
+		List<Tour> foodList = wishBeenService.selectPageNum(tour);
+		if(foodList != null) {
+			for(Tour t: foodList) {
+				String cut= t.getTourShortDesc();
+				if(cut.length() > 10) {
+					cut = cut.substring(0, 10);
+					cut += "...";
+					t.setTourShortDesc(cut);
+				}
+				cut = t.getTourName();
+				if(cut.length() > 10) {
+					cut = cut.substring(0, 10);
+					cut += "...";
+					t.setTourName(cut);
+				}
+			}
+		}
+		map.put("food", foodList);
+		
+		
+		//숙소 검색
+		String[] date = DateFormat.hotelDate();
+		
+		hotel.setCheckin(date[0]);
+		hotel.setCheckout(date[1]);
+		hotel.setKeyword(tour.getKeyword());
+		hotel.setAdult("2");
+		hotel.setChildren("0");
+		List<Hotel> hotelList = wishBeenService.initHotel(hotel);
+		if(hotelList != null) {
+			for(Hotel h: hotelList) {
+				String cut= h.getHotelShortDesc();
+				if(cut.length() > 10) {
+					cut = cut.substring(0, 10);
+					cut += "...";
+					h.setHotelShortDesc(cut);
+				}
+				cut = h.getHotelName();
+				if(cut.length() > 10) {
+					cut = cut.substring(0, 10);
+					cut += "...";
+					h.setHotelName(cut);
+				}
+			}
+		}
+		map.put("hotel", hotelList);
+		
+		
+		return map;
+	}
 	
 	
 	
