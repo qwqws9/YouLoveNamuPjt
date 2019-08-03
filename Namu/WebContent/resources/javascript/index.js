@@ -180,7 +180,22 @@ $(function() {
 	}else if(left != null){
 		$('.main_txt').css({'top':top, 'left':left});
 	}
-	
+
+	// 스크롤 애니메이션
+	$('html, body').on('mousewheel', function(e) {
+		//console.log($(window).scrollTop());
+		
+		if($(window).scrollTop() < $('header').offset().top){
+			//console.log(e.originalEvent.wheelDelta);
+			
+			if(e.originalEvent.wheelDelta < 0){
+				$('html, body').stop().animate({scrollTop:$('header').offset().top});
+			}else if(e.originalEvent.wheelDelta >= 0){
+				$('html, body').stop().animate({scrollTop:0});
+			}
+		}
+	});
+    
 	// 환율 정보 .jsp 온로드
 	$($('#exchange_container')).load('/wallet/mainExchangeRates.jsp', function(data) {
 		//console.log(data);
@@ -189,48 +204,36 @@ $(function() {
 	});
 	
 	// 플래너 리스트 Ajax
-	$.ajax(
-			{
-				url : "/planner/json/getBestPlannerList" ,
-				method : "POST" ,
-	
-				dataType : "json" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(JSONData) {
-
-				
-						
-						$.each(JSONData.list, function( index, planner){
-							
-							displayValue = "	<div class='square'>"	
-									+"	<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"'/>"
-									+" <div style='background-image: url(/resources/images/planner/"+planner.plannerImage+")'><div>"
-									+"<div class='plan_name text_shadow' id='plannerName'>"+planner.plannerName+"<div>"
-											
-											+"<div class='plan_period text_shadow'>"+planner.departDate +"</div>"
-											+"<div class='plan_budget text_shadow'></div>"
-											+"<div class='wallet_is'>	" 
-											+"<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
-											+"<label class='btn btn-secondary'>"
-											+"	<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
-											+"</label>"
-											+"<label class='btn btn-secondary active'>"
-											+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
-											+"</label></div></div></div></div>"
-										
-											if(index <4) {
-												
-											
-											$("#bestPlanner").append(displayValue);
-											}
-											//$('.plannerImageMain'+index).css('background-image','url(/resources/images/planner/'+planner.plannerImage+')');
-							});
-
-					} 	
-
-				});	
-						
+	$.ajax({
+		url : "/planner/json/getBestPlannerList" ,
+		method : "POST" ,
+		dataType : "json" ,
+		headers : {
+			"Accept" : "application/json" ,
+			"Content-Type" : "application/json"
+		} ,
+		success : function(JSONData) {
+			$.each(JSONData.list, function(index, planner) {
+				displayValue = "<div class='square'>"
+					+"<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"' />"
+					+"<div style='background-image: url(/resources/images/planner/"+planner.plannerImage+")'><div>"
+					+"<div class='plan_name text_shadow' id='plannerName'>"+planner.plannerName+"<div>"
+					+"<div class='plan_period text_shadow'>"+planner.departDate +"</div>"
+					+"<div class='plan_budget text_shadow'></div>"
+					+"<div class='wallet_is'>" 
+					+"<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
+					+"<label class='btn btn-secondary'>"
+					+"<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
+					+"</label>"
+					+"<label class='btn btn-secondary active'>"
+					+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
+					+"</label></div></div></div></div>";
+					
+				if(index < 4){
+					$("#bestPlanner").append(displayValue);
+				}
+				//$('.plannerImageMain'+index).css('background-image','url(/resources/images/planner/'+planner.plannerImage+')');
+			});
+		}
+	});
 });
