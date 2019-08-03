@@ -142,22 +142,22 @@ public class GuideRestController {
 		//관광지 검색
 		tour.setAddress("tour");
 		List<Tour> tourList = wishBeenService.selectPageNum(tour);
-		if(tourList != null) {
-			for(Tour t: tourList) {
-				String cut= t.getTourShortDesc();
-				if(cut.length() > 10) {
-					cut = cut.substring(0, 10);
-					cut += "...";
-					t.setTourShortDesc(cut);
-				}
-				cut = t.getTourName();
-				if(cut.length() > 10) {
-					cut = cut.substring(0, 10);
-					cut += "...";
-					t.setTourName(cut);
-				}
-			}
-		}
+//		if(tourList != null) {
+//			for(Tour t: tourList) {
+//				String cut= t.getTourShortDesc();
+//				if(cut.length() > 10) {
+//					cut = cut.substring(0, 10);
+//					cut += "...";
+//					t.setTourShortDesc(cut);
+//				}
+//				cut = t.getTourName();
+//				if(cut.length() > 10) {
+//					cut = cut.substring(0, 10);
+//					cut += "...";
+//					t.setTourName(cut);
+//				}
+//			}
+//		}
 		Map<String,Object> map = new HashMap<>();
 		map.put("tour", tourList);
 		
@@ -165,22 +165,22 @@ public class GuideRestController {
 		//맛집 검색
 		tour.setAddress("food");
 		List<Tour> foodList = wishBeenService.selectPageNum(tour);
-		if(foodList != null) {
-			for(Tour t: foodList) {
-				String cut= t.getTourShortDesc();
-				if(cut.length() > 10) {
-					cut = cut.substring(0, 10);
-					cut += "...";
-					t.setTourShortDesc(cut);
-				}
-				cut = t.getTourName();
-				if(cut.length() > 10) {
-					cut = cut.substring(0, 10);
-					cut += "...";
-					t.setTourName(cut);
-				}
-			}
-		}
+//		if(foodList != null) {
+//			for(Tour t: foodList) {
+//				String cut= t.getTourShortDesc();
+//				if(cut.length() > 10) {
+//					cut = cut.substring(0, 10);
+//					cut += "...";
+//					t.setTourShortDesc(cut);
+//				}
+//				cut = t.getTourName();
+//				if(cut.length() > 10) {
+//					cut = cut.substring(0, 10);
+//					cut += "...";
+//					t.setTourName(cut);
+//				}
+//			}
+//		}
 		map.put("food", foodList);
 		
 		
@@ -193,22 +193,22 @@ public class GuideRestController {
 		hotel.setAdult("2");
 		hotel.setChildren("0");
 		List<Hotel> hotelList = wishBeenService.initHotel(hotel);
-		if(hotelList != null) {
-			for(Hotel h: hotelList) {
-				String cut= h.getHotelShortDesc();
-				if(cut.length() > 10) {
-					cut = cut.substring(0, 10);
-					cut += "...";
-					h.setHotelShortDesc(cut);
-				}
-				cut = h.getHotelName();
-				if(cut.length() > 10) {
-					cut = cut.substring(0, 10);
-					cut += "...";
-					h.setHotelName(cut);
-				}
-			}
-		}
+//		if(hotelList != null) {
+//			for(Hotel h: hotelList) {
+//				String cut= h.getHotelShortDesc();
+//				if(cut.length() > 10) {
+//					cut = cut.substring(0, 10);
+//					cut += "...";
+//					h.setHotelShortDesc(cut);
+//				}
+//				cut = h.getHotelName();
+//				if(cut.length() > 10) {
+//					cut = cut.substring(0, 10);
+//					cut += "...";
+//					h.setHotelName(cut);
+//				}
+//			}
+//		}
 		map.put("hotel", hotelList);
 		
 		
