@@ -4,8 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>회원검색/친구목록</title>
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>회원검색/친구목록</title> -->
+<jsp:include page="/layout/head.jsp" />
+
 
 <style>
 /* .friend_click {height: 35px; background-size: cover;background-repeat:no-repeat;background-position: center; margin: 0; padding:0; border: 0;} */
@@ -66,7 +68,7 @@
 		    </button>
 		    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 		      <a class="searchAddFriend dropdown-item" href="#">친구추가</a>
-		      <a class="searchChatInvite dropdown-item" href="#">채팅초대</a>
+<!-- 		      <a class="searchChatInvite dropdown-item" href="#">채팅초대</a> -->
 		      <a class="searchMessageSend dropdown-item" href="#">쪽지전송</a>
 <!-- 		      <a class="searchGroupInvite dropdown-item" href="#">일행초대</a> -->
 		    </div>

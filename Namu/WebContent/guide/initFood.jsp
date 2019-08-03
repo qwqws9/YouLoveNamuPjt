@@ -4,8 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>Insert title here</title> -->
+<jsp:include page="/layout/head.jsp" />
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -38,7 +40,7 @@
 			<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 				<div class="col p-4 d-flex flex-column position-static">
 					<strong class="d-inline-block mb-2 text-primary">${tour.tourLoc }</strong>
-					<h3 class="mb-0">${tour.tourName }</h3>
+					<h3 class="mb-0"><img src="/resources/images/spot-type01-02.png" width="24px" height="24px" style="margin-top: -5px;">&nbsp;${tour.tourName }</h3>
 					<div class="mb-1 text-muted">${tour.hashtag }</div>
 					<p class="card-text mb-auto">${tour.tourShortDesc }</p>
 					<a href="#" class="stretched-link">Continue reading</a>
@@ -229,7 +231,7 @@
 					//alert(index + item.tourId);
 					$(".preview-"+(index+1)+ " > input[name='tourId']").val(item.tourId);
 					$(".preview-"+(index+1)+ " > div > div > div > strong").text(item.tourLoc);
-					$(".preview-"+(index+1)+ " > div > div > div > h3").text(item.tourName);
+					$(".preview-"+(index+1)+ " > div > div > div > h3").html('<img src="/resources/images/spot-type01-02.png" width="24px" height="24px" style="margin-top: -5px;">&nbsp;'+item.tourName);
 					$(".preview-"+(index+1)+ " > div > div > div > div").text(item.hashtag);
 					$(".preview-"+(index+1)+ " > div > div > div > p").text(item.tourShortDesc);
 					$(".preview-"+(index+1)+ " > div > div > div > a").text('Continue reading');

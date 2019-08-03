@@ -358,6 +358,7 @@ public class UserRestController {
 			map.put("target", "email");
 		
 		}else if(target.equals("phone")) {
+			content = "[YouLovePlan] 요청하신 인증번호는 " + number + " 입니다.";
 			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
 //			boolean result = true;
 			System.out.println(result);
