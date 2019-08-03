@@ -36,7 +36,7 @@
 <body>
 	<section class="visual_image">
 		<div class="main_txt">
-			don't<br/>
+			Don't<br/>
 			call it a dream.<br/>
 			call it a <span>PLAN</span>.
 		</div>
