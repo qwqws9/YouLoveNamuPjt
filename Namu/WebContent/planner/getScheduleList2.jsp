@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"    %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,12 +11,6 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script>
-	
-	
-<!-- <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbf0HKJJ4i60j9RDc4qMj_bNR7prq4FxI"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 
 	<!-- fullcalendar-->
  	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
@@ -179,55 +172,64 @@ a.btn-layerClose:hover {
 function onchangeDay(yy,mm,dd,ss){ 
 	 $("#nows").html(yy+"."+mm+"."+dd+".("+ss+")"); 
 	}
-	
 
 function layer_open(el){
-	//var temp = $('#'+el);
-    var $el = $('#'+el);    //레이어의 id를 $el 변수에 저장
-    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
+	
+    var $el = $('#'+el);   
+    var isDim = $el.prev().hasClass('dimBg');   
+    var isDi = $el.prev().hasClass('diBg');  
+    
     isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
+    isDi ? $('.di-layer').fadeIn() : $el.fadeIn();
+    
     var $elWidth = ~~($el.outerWidth()),
         $elHeight = ~~($el.outerHeight()),
         docWidth = $(document).width(),
         docHeight = $(document).height();
 
-    // 화면의 중앙에 레이어를 띄운다.
+   /*  $el.css({
+    	"top": (($(window).height() -$elHeight )/2+$(window).scrollTop())+"px",
+       "left":  (($(window).width()-$elWidth) /2+$(window).scrollLeft())+"px"
+    }); */
+
+   // 화면의 중앙에 레이어를 띄운다.
     if ($elHeight < docHeight || $elWidth < docWidth) {
         $el.css({
-            marginTop: -$elHeight /3,
+            marginTop: -$elHeight /2,
             marginLeft: -$elWidth/2
         })
     } else {
         $el.css({top: 0, left: 0});
     }
-
+ 
     $el.find('#close').click(function(){
         isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
+        isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
         return false;
     });
 
-    $('.layer .dimBg').click(function(){
+/*     $('.layer .dimBg').click(function(){
         $('.dim-layer').fadeOut();
         return false;
     });
-
+ */
 }
+
+
+
 $(function () {
 	//initialize  calendar
-	
-		//alert(departDate);
-var departDate=${planner.departDate};
-	//alert(departDate);
+	console.log("출발일"+departDate);
+	var plannerCode=${planner.plannerCode};
+	var departDate=${planner.departDate};
+
 	var ddd = String(departDate);	
 	var yyyy = ddd.substring(0,4);
 	var mm = ddd.substring(4,6);
 	var dd = ddd.substring(6,8) ;
 	
 	var ddate= new Date(); 
-
-	  var plannerCode=${planner.plannerCode};
+	ddate=yyyy+'-'+mm+'-'+dd;
 		   $('#calendar').fullCalendar({
 			   
 			   events: function(start, end, timezone, callback) {  
@@ -235,9 +237,8 @@ var departDate=${planner.departDate};
 				    	$.ajax({
 		   	                url: "/planner/json/getScheduleList/"+plannerCode,
 		   	                type : 'GET',
-		   	                data : { startDate :  start.format('YYYY-MM-DD mm:ss'),endDate :  end.format('YYYY-MM-DD mm:ss') },
+		   	            	 data : { startDate :  start.format('yyyy-MM-dd HH:mm:ss'),endDate :  end.format('yyyy-MM-dd HH:mm:ss') },
 		   	                dataType: 'json',
-		   	               	
 		   	                success: function(data) {
 		   	                   var events = [];
 		   	                $(data).each(function() {
@@ -246,12 +247,11 @@ var departDate=${planner.departDate};
 	   	                            start: $(this).attr('start'),
 	   	                         color: $(this).attr('color'),
 	   	                            id: $(this).attr('id') ,
-	   	                         end: $(this).attr('end'),
-	   	                      allDay:  $(this).attr('allDay') 
+	   	                         	end: $(this).attr('end'),
+	   	                      		allDay:  $(this).attr('allDay') 
 		   	                        });
 	   	                   
 		   	                     console.log(events);
-		   	                  console.log("베ㅏㅇㅇ");
 		   	                  
 		   	                    });
 		                    callback(events);
@@ -288,7 +288,15 @@ var departDate=${planner.departDate};
 		    
 		     ////////////////////////////////////////////////////////
 		    eventClick: function(event, element) {
-		    	/*  alert(event.id); */
+		    	if(event.end!=null){
+  					var displayValue = 
+  					'<button type="button" style="border-radius:10px;border:0;width:200px;height:60px;background:#F2C029;color:#ffffff; " id="tourModal" >'+event.id+'<p> 관광지 살펴보기 </button><input type="hidden" value="'+event.id+'">'
+  					$('#getSchedule' ).html(displayValue);
+  				
+			layer_open('layer2');
+  			
+  				}else{
+  				
 		    	 var scheCode=event.id;
 	
 					$.ajax( 
@@ -317,8 +325,7 @@ var departDate=${planner.departDate};
 														          
 														+'<div class="col-md-12" ><div class="row">' 
 														+'<div class="col-md-4"> <p> 일정시작시간 </p></div>' 
-														+'<div class="col-md-4"><input type="text" name="timeHour" value="'+JSONData.timeHour+'"readonly/></div>'
-														+'<div class="col-md-4"><input type="text" name="timeMin" value="'+JSONData.timeMin+'"readonly/></div>'
+														+'<div class="col-md-8"><input type="text" id ="alarm" name="timeHour" value="'+JSONData.timeHour+'"/> </div> '
 														+'</div></div>'
 
 														+' <div class="col-md-12" ><div class="row">'
@@ -340,8 +347,8 @@ var departDate=${planner.departDate};
 				
 								}
 						});
-					 layer_open('#layer2');
-				
+					 layer_open('layer2');
+  				}
 		      }, 
 					/////////////////////////////////////////////////////
 	
@@ -369,7 +376,7 @@ var departDate=${planner.departDate};
 	var dd = ddd.substring(6,8) ;
 	
 	var ddate= new Date(); 
-
+	ddate=yyyy+'-'+mm+'-'+dd;
 	  var plannerCode=${planner.plannerCode};
 	  
 		   $('#calendar2').fullCalendar({
@@ -379,9 +386,8 @@ var departDate=${planner.departDate};
 			    	$.ajax({
 	   	                url: "/planner/json/getScheduleList/"+plannerCode,
 	   	                type : 'GET',
-	   	                data : { startDate :  start.format('YYYY-MM-DD mm:ss'),endDate :  end.format('YYYY-MM-DD mm:ss') },
+	   	             	data : { startDate :  start.format('yyyy-MM-dd HH:mm:ss'),endDate :  end.format('yyyy-MM-dd HH:mm:ss') },
 	   	                dataType: 'json',
-	   	               	
 	   	                success: function(data) {
 	   	                   var events = [];
 	   	                $(data).each(function() {
@@ -406,7 +412,6 @@ var departDate=${planner.departDate};
 		        center: 'title',
 		        right: 'agendaWeek,listDay'
 		      },
-		     
 		      defaultDate: ddate,  
 		      editable: true,
 		      droppable: true, 
@@ -430,7 +435,15 @@ var departDate=${planner.departDate};
 		    
 		     ////////////////////////////////////////////////////////
 		    eventClick: function(event, element) {
-		    	/*  alert(event.id); */
+		    	if(event.end!=null){
+  					var displayValue = 
+  					'<button type="button" style="border-radius:10px;border:0;width:200px;height:60px;background:#F2C029;color:#ffffff; " id="tourModal" >'+event.id+'<p> 관광지 살펴보기 </button><input type="hidden" value="'+event.id+'">'
+  					$('#getSchedule' ).html(displayValue);
+  				
+			layer_open('layer2');
+  			
+  				}else{
+  				
 		    	 var scheCode=event.id;
 	
 					$.ajax( 
@@ -481,9 +494,10 @@ var departDate=${planner.departDate};
 				console.log(displayValue);
 				
 								}
+			
 						});
 					 layer_open('layer2');
-				
+		    }
 		      }, 
 					/////////////////////////////////////////////////////
 	
@@ -495,16 +509,7 @@ var departDate=${planner.departDate};
 		        }
 		      }
 		    });
-		 
 
-  $("#color").spectrum({
-   flat: false,
-   showInput: true,
-   preferredFormat: "hex",
-   color: "#000000"
-  });
-  
-  
  });
 </script>
 </head>
@@ -517,8 +522,8 @@ var departDate=${planner.departDate};
 
  <div class="col-md-12" >	
 <div class="row"> 
-  <div class="col-md-1"></div>
-	<div class="col-md-5 ">
+<div class="col-md-1"></div>
+<div class="col-md-5 ">
 <div  id="calendar">
  </div></div>
 
@@ -527,97 +532,6 @@ var departDate=${planner.departDate};
  </div> </div>
   <div class="col-md-1"></div>
  </div></div>
- <!-- 
-
-<!--일정 등록 팝업  -->
-<!-- <div style="height: 300px;"></div>
-<a href="#layer1" class="btn-example"></a>
-<div class="dim-layer">
-<div class="dimBg"></div>
-
-<div id="layer1" class="pop-layer">
-<div class="pop-container">
-        <div class="pop-conts">
-            <div class="addSchedule">
-          <form name="scheForm" id="scheForm" action="/planner/addSchedule" method="post">
-          <h5 class="title"> 일정 등록  </h5> 
-    		<br/><br/>
- <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4"><p> 날짜 </p></div> 
-
-<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay"/></div> 
-          </div></div>
- <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4"><p>   일정 </p></div> 
-
- <div class="col-md-8"> <input type="text" name="scheName"/> </div> 
-          </div></div>
-    <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">      
-     <p> 일정시작시간 </p></div> 
-<input type="text" name="timepicker" class="timepicker"/>
- <div class="col-md-8"><input type="text" step="1800" name="timeHour"/> </div> 
-          </div></div>
-    <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
-  <p> 일정장소 </p></div> 
-
- <div class="col-md-8"><input type="text" name="schePlace"/> </div>
- </div></div>
-    <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
-           <p> 일정상세 </p></div> 
-    
- <div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3"></textarea></div>
- </div></div>
-    <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
-           <p> 표시 색상 선택</p></div> 
-
- <div class="col-md-8"> <input type="color" name="color" id="color"  style="width:100px;">
-       </div></div></div>  
-        <br/><br/><br/>
-        
-      <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
-       <input type ="submit" value="등록" id="submit"></div>
-   
-        <div class="col-md-4">  <input type ="reset" value="취소" id="reset">	
-        </div>
-        <div class="col-md-4">  	<input type='button' id="close"  value='닫기'/>  </div>
-        </div></div>
-		</form>
-		</div></div> </div></div></div>
-<br/><br/> -->
-
-<!--일정 상세 팝업  -->
-<div style="height: 300px;"></div>
-<a href="#layer2" class="btn-example"></a>
-<div class="dim-layer">
-<div class="dimBg"></div>
-<div id="layer2" class="pop-layer">
-<div class="pop-container">
-        <div class="pop-conts">
-            <div class="schedule">
-               
-   <div id="getSchedule"></div>
-    	
-<div class="row"> 
- <div class="col-md-12">
- 
-<div class="col-md-4"> <input type='button' id="close"  value='닫기' ></div>
-	</div></div></div>
-		</div></div> </div></div>
-<br/><br/>
-
-
-
+ <jsp:include page="/planner/getSchedule2.jsp" />
 </body>
 </html>

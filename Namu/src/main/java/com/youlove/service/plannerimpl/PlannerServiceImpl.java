@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.youlove.service.domain.Route;
 import com.youlove.service.domain.Schedule;
+import com.youlove.service.domain.Wallet;
 import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
 import com.youlove.service.planner.PlannerDao;
@@ -190,9 +191,44 @@ import com.youlove.service.user.UserDao;
 		}
 		
 		@Override
+		public void deleteAllSchedule(int plannerCode) throws Exception {
+			plannerDao.deleteAllSchedule(plannerCode);
+		}
+		
+		
+		@Override
 		public List<Schedule> getScheduleList(int plannerCode) throws Exception{
 			return plannerDao.getScheduleList(plannerCode);
 		}
-			
 	
+		@Override
+		public boolean updateSchedule(Schedule schedule) throws Exception {
+			//plannerDao.updateSchedule(schedule);
+			int data =plannerDao.updateSchedule(schedule);
+			boolean result=false;
+			if(data!=0) {
+				 result=true;
+			
+			}
+			return result;
+		}
+		
+//		@Override
+//		public boolean updateSchedule2(Schedule schedule) throws Exception {
+//			int data =plannerDao.updateSchedule2(schedule);
+//			boolean result=false;
+//			if(data!=0) {
+//				 result=true;
+//			
+//			}
+//			return result;
+//		}
+		
+
+		@Override
+		public void updateSchedule2(Schedule schedule)throws Exception {
+			plannerDao.updateSchedule2(schedule);
+		}
+		
 }
+	

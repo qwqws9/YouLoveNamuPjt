@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+	    <jsp:include page="/layout/head.jsp" />
+	<title>YouLovePlan</title>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -22,6 +23,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+
 	<!-- owlCarousel -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
@@ -30,10 +32,10 @@
 	
 	<style>
 	.container-fluid { 
-	padding-right: 30px; 
-	padding-left: 30px; 
-	margin-right: auto; 
-	margin-left: auto; }
+  padding-left: 500px;
+  margin-right: auto;
+  margin-left: auto;
+  }
 
 		.owl-item{
 	 		position: relative;
@@ -85,10 +87,10 @@
 			/* $("#delete").on("click",function(){    	
 			 self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
 			  }); /* */ 
-			$("a[href='#']").on("click",function(){
-			  	
+			$("#deletep").on("click",function(){
+				if (confirm("작성하신 모든 일정을 삭제하시겠습니까?") == true){ 
 			 self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
-			  	
+				}
 			});
 
 		});
@@ -213,6 +215,7 @@
 		<div class="col-md-8">	<img class="thumb"src="/resources/images/planner/${planner.plannerImage}"  width="100%"></div>
 		<%-- <div class="col-md-4"> <img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="200px" height="200px"></div>
  --%>		<div class="col-md-2 text-left">  
+ 		<br><br>
 		작성자 : &nbsp; ${planner.plannerWriter.nickname}<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="20px" height="20px"> <p><p>
 		작성일 : &nbsp;${planner.regDate}<p>
 		여행멤버 :&nbsp;	<c:if test="${! empty planner.member && (planner.member eq '1')}">
@@ -354,33 +357,30 @@
 							</div>	
 						</div>
 						 --%>
-							<div class="container-fluid">
-							<div class="col-md-12">
-					
+						
 							<!-- 댓글 -->
+								<div class="container-fluid">
 						    <jsp:include page="../comment/getComment.jsp" >
 						    	<jsp:param value="${boardCode}" name="boardCode"/>
 						    	<jsp:param value="${detailCode}" name="detailCode"/>
 						    </jsp:include>
 						</div>
-						</div>
-					</div><!-- end of center -->
+				
+					<!-- end of center -->
 			
 					<div class="col-md-12">
 				
 					<c:if test="${user.userCode == planner.plannerWriter.userCode}">
 							<div class="row">
-								<div class="col-md-8"></div>
-								<div class="col-md-4">
-									<button type="button" class="btn btn-primary" id="updatep"> 수정 </button>
-									 <a onclick="return confirm('플래너를 삭제하시겠습니까?')" href="#" class="btn btn-primary">삭제</a> 
+								<div class="col-md-10"></div>
+								<div class="col-md-2">
+									<button type="button" id="updatep" class="btn btn-default" style="color:#868296"> 수정 </button>
+									 <button type="button" id="deletep" class="btn btn-default" style="color:#868296">삭제</button>
 								</div>
 							</div>
 						</c:if>
 						</div>
 			<br><br>
-				</div>
-			</div>
 	
 
 	

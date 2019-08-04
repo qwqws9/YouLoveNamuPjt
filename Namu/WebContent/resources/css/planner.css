@@ -63,8 +63,10 @@
   
   
   /* calendar */
-  .pop-layer .pop-container {
+ 
+.pop-layer .pop-container {
   padding: 20px 25px;
+ 
 }
 
 .pop-layer p.ctxt {
@@ -87,8 +89,9 @@
   left: 50%;
   width: 410px;
   height: auto;
-	background-color: #a3daff; 
-/*   border: 5px solid #3571B5; */
+background-color: white; 
+border-radius:5px ;
+ border: 5px solid #a3daff; 
   z-index: 10;
 }
 
@@ -100,7 +103,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 100;
+  z-index:100;
+}
+.di-layer {
+  display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index:100;
 }
 
 .dim-layer .dimBg {
@@ -113,6 +126,18 @@
   opacity: .5;
   filter: alpha(opacity=50);
 }
+
+.di-layer .diBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
 
 .dim-layer .pop-layer {
   display: block;
@@ -131,23 +156,6 @@ a.btn-layerClose {
 
 a.btn-layerClose:hover {
 /*   border: 1px solid #091940; */
-  background-color: #232c37;
-  color: #fff;
-}
-
-#submit, #reset, #close{
-  display: inline-block;
-  height: 25px;
-  padding: 0 14px 0;
- /*  border: 1px solid #304a8a; */
   background-color: #cbcbcb;
-  font-size: 13px;
-  color: #fff;
-  line-height: 25px;}
-  
-#submit:hover, #reset:hover, #close:hover {
-/*   border: 1px solid #091940; */
-  background-color: #232c37;
   color: #fff;
 }
-  

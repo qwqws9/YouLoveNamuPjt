@@ -10,19 +10,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.youlove.service.domain.Schedule;
+import com.youlove.service.domain.User;
+import com.youlove.service.domain.Wallet;
+import com.youlove.common.FileNameUUId;
 import com.youlove.common.Search;
 import com.youlove.service.domain.Planner;
+import com.youlove.service.domain.Police;
 import com.youlove.service.domain.Route;
 import com.youlove.service.planner.PlannerService;
 
@@ -40,7 +49,7 @@ public class PlannerRestController {
 	@RequestMapping(value = "json/getAllPlannerList" ,method = RequestMethod.POST)
 	public Map<String, Object> getAllPlannerList( @RequestBody Search search ) throws Exception {
 		
-		System.out.println("PlannerRestController------------------getPlannerList:post ");
+		System.out.println("PlannerRestController------------------getAllPlannerList:post ");
 		
 		search.setPageSize(3);
 		System.out.println(search);
@@ -69,8 +78,7 @@ public class PlannerRestController {
 		System.out.println(search);
 				
 		Map<String, Object> map = plannerService.getBestPlannerList(search);
-		
-		String message = "ok";
+		String message = "success";
 		
 		List<Planner> list = (List<Planner>) map.get("list");
 		
@@ -79,9 +87,7 @@ public class PlannerRestController {
 		System.out.println("message????????????????"+message);
 		return map;
 	}
-	
-	
-	
+
 	@RequestMapping( value="json/getRouteList/{plannerCode}", method=RequestMethod.GET)
 	public  List<Map<String, Object>> getRouteList(@PathVariable int plannerCode) throws Exception{
 	
@@ -94,7 +100,6 @@ public class PlannerRestController {
        int cityOrder;
        int stayDay;
 
-       
        rlist =  plannerService.getRouteList(plannerCode);
           for(int i=0; i<rlist.size(); i++){   
              Map<String, Object> map = new HashMap<String, Object>();
@@ -103,8 +108,7 @@ public class PlannerRestController {
              lng = ((Route) rlist.get(i)).getLng();
              cityOrder=((Route) rlist.get(i)).getCityOrder();
              stayDay=((Route) rlist.get(i)).getStayDay();
-            
-             
+
              map.put("city", city);
              map.put("lat", lat);
              map.put("lng", lng);
@@ -140,10 +144,8 @@ public class PlannerRestController {
 		System.out.println("PlannerRestController-------------------getRouteLng:GET");
 		System.out.println(data3);
 		return data3;
-
 	}
 
-	
 	@RequestMapping( value="json/getScheduleList/{plannerCode}", method=RequestMethod.GET) 
 	public  List<Map<String, Object>> getScheduleList( @PathVariable int plannerCode) throws Exception{
 	
@@ -333,20 +335,50 @@ public class PlannerRestController {
 	public Schedule getSchedule( @PathVariable int scheCode) throws Exception{
 		
 		System.out.println("plannerController------------------------getSchedule: GET");
-		
+		Schedule schedule=plannerService.getSchedule(scheCode);
+	 
 		return plannerService.getSchedule(scheCode);
 		}
 
 	 
-	@RequestMapping(value = "/json/updateSchedule/{scheCode}", method = RequestMethod.GET)
-	public Schedule updateSchedule(@PathVariable int scheCode) throws Exception{
+	@RequestMapping(value = "/json/updateSchedule/{scheCode}", method = RequestMethod.POST)
+	public boolean updateSchedule(@PathVariable int scheCode,@RequestBody Schedule schedule) throws Exception{
 
-		System.out.println("plannerController------------------------updateSchedule: GET");
+		System.out.println("plannerController------------------------updateSchedule: POST");
+		schedule.setScheDay((schedule.getScheDay()).substring(0, 10));
+		boolean result =plannerService.updateSchedule(schedule);
 		
-		return plannerService.getSchedule(scheCode);
+		return result;
+	}
+	
+//	@RequestMapping(value = "/json/updateSchedule2/{scheCode}", method = RequestMethod.POST)
+//	public boolean updateSchedule2(@PathVariable int scheCode,@RequestBody Schedule schedule) throws Exception{
+//
+//		System.out.println("plannerController------------------------updateSchedule: POST");
+//		
+//		boolean result =plannerService.updateSchedule2(schedule);
+//		
+//		return result;
+//	}
+	
+	@RequestMapping(value="json/deleteSchedule/{scheCode}", method=RequestMethod.GET)
+	public int deleteSchedule(@PathVariable int scheCode ,HttpSession session)throws Exception{
+		System.out.println("plannerRestController -----------------------deleteSchedule:GET ");
+
+		plannerService.deleteSchedule(scheCode);
+	
+		return scheCode;
+	}
+	
+	@RequestMapping(value="json/deleteAllSchedule/{plannerCode}", method=RequestMethod.GET)
+	public int deleteAllSchedule(@PathVariable int plannerCode ,HttpSession session)throws Exception{
+		System.out.println("plannerRestController -----------------------deleteSchedule:GET ");
+
+		plannerService.deleteAllSchedule(plannerCode);
+	
+		return plannerCode;
 	}
 	
 
-	
 	}
 

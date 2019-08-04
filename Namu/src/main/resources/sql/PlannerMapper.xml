@@ -79,7 +79,7 @@
 	 <select 	id="getPlanner"	parameterType="string"	resultMap="plannerSelectMap">
 		SELECT
 		p.planner_code, p.planner_ver, p.planner_name, p.planner_image, p.DEPART_DATE, p.planner_writer, p.member,  p.reg_Date, p.board_code, u.user_code, u.profile_img,u.nickname
-		FROM  planner p, users u
+		FROM  planner p, users u 
 		WHERE p.planner_code =#{value} 
 		AND p.planner_writer =u.user_code 
 	 </select>
@@ -332,7 +332,7 @@ SELECT *
 	
 		<select 	id="getSchedule"	parameterType="string"	resultMap="scheduleSelectMap">
 		SELECT
-		sche_code,planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail
+		sche_code,planner_ver, planner_code, sche_day, time_hour,  time_min,  sche_name, sche_place, sche_detail,color
 		FROM schedule
 		WHERE sche_code = #{scheCode}
 	 </select>
@@ -340,18 +340,33 @@ SELECT *
 		 <update	id="updateSchedule"	parameterType="schedule" >
 	 	UPDATE schedule 
 	 	<set>
-	 		SCHE_NAME	= #{scheName},
-	 		SCHE_PLACE = #{schePlace},
-	 		SCHE_DETAIL = #{scheDetail},
-			TIME_HOUR = #{timeHour},
-			TIME_MIN = #{timeMin}
+	 	SCHE_Day	= #{scheDay}
 		</set>
 		WHERE sche_code = #{scheCode}
 	 </update>
+	 
+	 		 <update	id="updateSchedule2"	parameterType="schedule" >
+	 	UPDATE schedule 
+	 	<set>
+	 		SCHE_NAME = #{scheName},
+	 		SCHE_PLACE = #{schePlace},
+	 		SCHE_DETAIL = #{scheDetail},
+			TIME_HOUR = #{timeHour},
+			TIME_MIN = #{timeMin},
+			COLOR= #{color}
+		</set>
+		WHERE sche_code = #{scheCode}
+	 </update>
+	 
 
 		<delete id="deleteSchedule" parameterType="int">
 		DELETE  schedule
 		WHERE sche_code = #{scheCode}
+		</delete>
+		
+		<delete id="deleteAllSchedule" parameterType="int">
+		DELETE  schedule
+		WHERE planner_code = #{plannerCode}
 		</delete>
 		
   	<select  id="getScheduleList"  parameterType="hashmap"	resultMap="scheduleSelectMap">

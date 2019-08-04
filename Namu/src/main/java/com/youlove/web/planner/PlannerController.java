@@ -3,9 +3,11 @@ package com.youlove.web.planner;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,7 +92,7 @@ public class PlannerController {
 		
 //		String fileName=file.getOriginalFilename();
 		String fileName = FileNameUUId.convertMINI(file, "planner", request);
-		
+		System.out.println(fileName);
 		planner.setPlannerImage(fileName);
 
 		
@@ -113,8 +115,8 @@ public class PlannerController {
 		System.out.println("plannerController ---------------------updatePlanner:GET ");
 		System.out.println(plannerCode);
 		Planner planner = plannerService.getPlanner(plannerCode);
-
-
+		planner.setDepartDate(planner.getDepartDate().substring(0,4)+"-"+planner.getDepartDate().substring(4,6)+"-"+planner.getDepartDate().substring(6,8));
+		
 		model.addAttribute("planner", planner);
 
 		return "forward:/planner/updatePlanner.jsp";
@@ -132,15 +134,15 @@ public class PlannerController {
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
 		System.out.println(planner.getPlannerCode());
-		
-		if(file != null ){
+//		if(file.getOriginalFilename() == "") {
+//		
+//			planner.setPlannerImage(planner.getPlannerImage());
+//			System.out.println(planner.getPlannerImage());
+//		}else {
 			String fileName = FileNameUUId.convert(file, "planner", request);
-			
 			planner.setPlannerImage(fileName);
-		}else{
-			
-			planner.setPlannerImage(planner.getPlannerImage());
-		}
+
+		//}
 		plannerService.updatePlanner(planner);
 		
 		return "forward:/planner/updateRoute.jsp";
@@ -159,7 +161,7 @@ public class PlannerController {
 		
 		plannerService.deletePlanner(plannerCode);
 	
-		return "forward:/planner/getPlannerList.jsp";
+		return "redirect:/planner/getPlannerList.jsp";
 	}
 	
 	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
@@ -170,6 +172,11 @@ public class PlannerController {
 		
 		Planner planner = plannerService.getPlanner(plannerCode);
 		model.addAttribute("planner", planner);
+		
+		 List rlist = new ArrayList();
+		 rlist =  plannerService.getRouteList(plannerCode);
+	
+		System.out.println(rlist);
 //		planner.setPlannerWriter(user);
 		
 		//comment
@@ -220,48 +227,14 @@ public class PlannerController {
 		return "forward:/planner/getPlannerList.jsp";
 	}
 	
-//	@RequestMapping( value="getBestPlannerList")
-//	public String getBestPlannerList(@ModelAttribute("planner") Planner planner,@ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
-//		
-//	System.out.println("PlannerRestController------------------getBestPlannerList");
-//	 
-//		int pageUnit =20;
-//		int pageSize =1000;
-////		
-//		if(search.getCurrentPage() ==0 ){
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//		System.out.println("search ??? :"+search);
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("search", search);
-//
-//		map = plannerService.getBestPlannerList(map);
-//		
-//		
-//		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-//
-//		System.out.println(map);
-//		model.addAttribute("list", map.get("list"));
-//		model.addAttribute("search", search);
-//		model.addAttribute("resultPage", resultPage);
-//
-//		System.out.println(search);
-//		System.out.println(map.get("list"));
-//		return "forward:/planner/getBestPlannerList.jsp";
-//	}
-//	
-	
-	
 	@RequestMapping( value="getAllPlannerList")
 	public String getAllPlannerList(@ModelAttribute("planner") Planner planner,@ModelAttribute("search") Search search, Model model ,HttpSession session ) throws Exception {
 		
-	System.out.println("PlannerRestController------------------getPlannerList");
+	System.out.println("PlannerRestController------------------getAllPlannerList");
 	 
 		int pageUnit =20;
 		int pageSize =1000;
-//		
+
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -351,7 +324,7 @@ public class PlannerController {
 		
 		}
 
-		return "forward:/planner/getScheduleList.jsp";
+		return "redirect:/planner/getScheduleList.jsp";
 			
 		}
 	
@@ -436,7 +409,7 @@ public class PlannerController {
 		plannerService.addRoute(route);
 		}
 
-		return "forward:/planner/getScheduleList.jsp";
+		return "redirect:/planner/getScheduleList.jsp";
 			
 		}
 
@@ -453,19 +426,18 @@ public class PlannerController {
 		schedule.setPlannerCode(plannerCode);
 		//DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 		//시간 설정해서 등록하기. 
+		
 				String timeHour= request.getParameter("timeHour");
 				String timeMin= request.getParameter("timeMin");
 				String scheDay= request.getParameter("scheDay");    
 		
-	
 				//String scheDay=dateFormat1.format(schedule.getScheDay());
 				System.out.println("++++++++++++++++++");
-//			System.out.println(timeHour);
-//			System.out.println(timeMin);
-			
+
 			System.out.println(schedule.getScheDay());
 			System.out.println("날짜 : "+scheDay +"시 : "+timeHour+"분 : "+timeMin);
 			System.out.println("+++++++"+scheDay.substring(0, 4)+""+scheDay.substring(5, 7)+" "+scheDay.substring(8, 10)+"+++++++++");
+			System.out.println("+++++++"+timeHour.substring(0,2)+"+++++++++"+timeHour.substring(timeHour.length()-2, timeHour.length())+"");
 			
 			//schedule.setScheDay(scheDay.substring(0, 4)+scheDay.substring(5, 7)+scheDay.substring(8, 10));
 //				
@@ -483,19 +455,71 @@ public class PlannerController {
 //
 //				schedule.setScheDay(cal.getTime());
 //			
-				plannerService.addSchedule(schedule);
+			schedule.setTimeHour(timeHour.substring(0,2));
+			schedule.setTimeMin(timeHour.substring(timeHour.length()-2, timeHour.length()));
+			plannerService.addSchedule(schedule);
 //return "/";
-			return "forward:/planner/getScheduleList.jsp";
+			return "redirect:/planner/getScheduleList.jsp";
 		}
 
+
+	@RequestMapping(value="updateSchedule2", method=RequestMethod.POST)
+	public String updateSchedule2(@ModelAttribute("schedule") Schedule schedule, Model model,HttpSession session,  HttpServletRequest request)throws Exception{
+		System.out.println("plannerController -----------------------updateSchedule2:POST ");
+		
+		
+			//시간 설정해서 등록하기. 
+//		int plannerCode=((Integer)session.getAttribute("plannerCode")).intValue();
+//		System.out.println("플래너코드"+plannerCode);
+//		schedule.setPlannerCode(plannerCode);
+//	
+//	                int scheCode=Integer.parseInt(request.getParameter("scheCode"));
+//	            	System.out.println("스케줄코드"+scheCode);
+//	                schedule.setScheCode(scheCode);
+					String timeHour= request.getParameter("timeHour");
+//					String timeMin= request.getParameter("timeMin");
+//					String scheDay= request.getParameter("scheDay");    
+//					
+//					 System.out.println(scheCode);
+//				
+//					System.out.println("++++++++++++++++++");
+//
+//				System.out.println(schedule.getScheDay());
+//				System.out.println("날짜 : "+scheDay +"시 : "+timeHour+"분 : "+timeMin);
+//				System.out.println("+++++++"+scheDay.substring(0, 4)+""+scheDay.substring(5, 7)+" "+scheDay.substring(8, 10)+"+++++++++");
+//				System.out.println("+++++++"+timeHour.substring(0,2)+"+++++++++"+timeHour.substring(timeHour.length()-2, timeHour.length())+"");
+//				
+				schedule.setTimeHour(timeHour.substring(0,2));
+				schedule.setTimeMin(timeHour.substring(timeHour.length()-2, timeHour.length()));
+				plannerService.updateSchedule2(schedule);
+
+				return "redirect:/planner/getScheduleList.jsp";
+			}
+	
 	@RequestMapping(value="deleteSchedule", method=RequestMethod.GET)
-	public String deleteSchedule(@RequestParam("scheCode") int scheCode ,Model model)throws Exception{
+	public String deleteSchedule(@RequestParam("scheCode") int scheCode ,Model model,HttpSession session)throws Exception{
 		System.out.println("plannerController -----------------------deleteSchedule:GET ");
 
 		Schedule schedule = plannerService.getSchedule(scheCode);
 		model.addAttribute("schedule", schedule);
+		User user= (User)session.getAttribute("user");
+		int userCode=user.getUserCode();
 		
 		plannerService.deleteSchedule(scheCode);
+	
+		return "forward:/planner/getScheduleList.jsp";
+	}
+	
+	@RequestMapping(value="deleteAllSchedule", method=RequestMethod.GET)
+	public String deleteAllSchedule(@RequestParam("plannerCode") int plannerCode ,Model model,HttpSession session)throws Exception{
+		System.out.println("plannerController -----------------------deleteAllSchedule:GET ");
+//
+//		Schedule schedule = plannerService.getSchedule(plannerCode);
+//		model.addAttribute("schedule", schedule);
+//		User user= (User)session.getAttribute("user");
+//		int userCode=user.getUserCode();
+//		
+		plannerService.deleteAllSchedule(plannerCode);
 	
 		return "forward:/planner/getScheduleList.jsp";
 	}

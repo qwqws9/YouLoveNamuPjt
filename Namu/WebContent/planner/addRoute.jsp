@@ -38,7 +38,7 @@
    max-width: calc(100% - 2em);
    margin: 1em auto;
    overflow: hidden;
-   width: 800px;
+   width: 300px;
 }
 
 
@@ -71,29 +71,30 @@ tr:nth-child(odd):hover td {
 	<br><br><br>
 <h4 class="text-center"> 루트 짜기 </h4>
 		<br><br>
-<!-- map -->
-<div class="container">
-<div id="map" style="width: 1200px; height: 700px;"></div>
+
+<!-- area  -->
+<div class="col-md-10 col-lg-12" >
+  <div class="row">	
+     	<div class="col-md-1"></div>
+<!-- map area -->
+
+ 	<div class="col-md-7">
+<div id="map" style="width: 100%px; height: 600px;"></div>
 </div>
 	
-<%-- 
-<label class="sr-only" for="searchKeyword"> 도시명 </label> 
-<input type="text"  id="searchKeyword" name="searchKeyword" placeholder="검색어"
-value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
 
-<!-- <form name="multiForm" id="multiForm" action="/planner/addRoute" method="post"> -->
-
+<!-- table area -->
+<div class="col-md-2" >
 <form>
 <table  class="table-fill" id="list_table">
 	<thead>
 		<tr>
-		<!-- <th>dd</th> -->
 			<th style="display:none;"> </th>
 			<th style="text-align:center;"> 도시  </th>
 			<th style="display:none;"> </th>
 			<th style="display:none;"> </th>
 			<th>체류일   </th>
-			<th>삭제 </th>
+			<th>삭제  <button type="button" class="btn btn-default"  id="deleteall" onclick="deleteMarkers();"> </button></th>
 		</tr>
 	</thead>
 	
@@ -102,16 +103,22 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
 	    	 </table>
 	 <!--    	 <input type="submit" id="mul_input_submit" name="mul_input_submit" />
 	    -->
-	    	</form>
+	    	</form></div>
+	    	
+	<!-- right area -->
+	    	<div class="col-md-1"></div>
+	    	</div>
+	    	</div>
 <br><br><br><br>
 	 <div class="col-md-10 col-lg-12" >
 <div class="row">
-   <div class="col-md-6"></div>
-      <div class="col-md-4">
-		     <a class="btn btn-default" href="#" role="button"> 이전 단계 </a>
+   <div class="col-md-8"></div>
+      <div class="col-md-2">
+		      <button type="button" class="btn btn-default"  id="previous" style="color:#868296"> 이전 단계 </button>
 		  
-		      <button type="button" class="btn btn-default"  id="save"> 다음 단계  </button>
+		      <button type="button" class="btn btn-default"  id="save" style="color:#868296"> 다음 단계  </button>
 		      </div></div></div>
+		      <br>   <br>   <br>   <br>
 	<script type="text/javascript">	
 
 	function fncAddRoute(){
@@ -126,12 +133,19 @@ value="${! empty search.searchKeyword ? search.searchKeyword : '' }"> --%>
     	fncAddRoute();    	
     });
 	
-    $("a[href='#']").on("click",function(){
-    	
-    	history.go(-1);
-    	
+    $("#previous").on("click",function(){
+    	var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
+		
+    	self.location = "/planner/updatePlanner?plannerCode="+plannerCode;
+
+
     });
     
+    $(function () {
+        $('#deleteall').click( function() {
+            $( '#list_table > tbody').empty();
+        });
+    });
      
      
      $(document).on('click','#tourModal',function(){
@@ -245,7 +259,7 @@ $('#list_table').on("click", ".deletebtn", function () {
     iconsLength = icons.length;
    ////////////////////////////////////////////////////
       poly = new google.maps.Polyline({
-          strokeColor: '#f2c029',
+    	  strokeColor: '#30a9de',
           strokeOpacity: 1.0,
           strokeWeight: 3
         });
@@ -270,9 +284,8 @@ $('#list_table').on("click", ".deletebtn", function () {
 			var keyword=this.id;
 		
 			infowindow.setContent('<img src="/resources/images/flag/'+this.content+'" alt="..." height="20" width="35">'    
-						+"　"+this.id+ '</p>'+'	<button type="button" class="btn btn-info btn-sm" id="tourModal" >'+this.id+'<p> 관광지 살펴보기 </button>'
+						+"　"+this.id+ '</p>'+'<button type="button" style="border-radius:10px;border:0;width:100px;height:35px;background:#F2C029;color:#ffffff; " id="tourModal" >'+this.id+'<p> 관광지 살펴보기 </button>'
 						+'<input type="hidden" value="'+this.id+'">'
-						/* onclick="tourModal('+this.id+');"  */
 						);
 
 	        infowindow.open(map, marker);
@@ -319,20 +332,17 @@ $('#list_table').on("click", ".deletebtn", function () {
 					$('<tr>').append(
 					/* 	$('<td>').append("<img src='/resources/images/flag/'"+array2[path.getLength()-1]+"alt='...' height='20' width='35'>"), */
 						$('<td  style="display:none;">').append(""+myMarker.id),
-						$('<td>').append("<input name='cityName' type='text' id='cityName' value='"+array[path.getLength()-1]+"' style='background-color:transparent;border:0 solid black;' readonly>"),
+						$('<td style="text-align:center;">').append("<input name='cityName' type='text' id='cityName' value='"+array[path.getLength()-1]+"' style='background-color:transparent;border:0 solid black;' readonly>"),
 						$('<td  style="display:none;" >').append( "<input name='lat' type='text' id='lat' value="+myMarker.position.lat()+" style='display:none;' readonly>"),
 						$('<td  style="display:none;" >').append( "<input name='lng' type='text' id='lng' value="+(myMarker.position.lng()).toFixed(6)+" style='display:none;' readonly>"),
 						$('<td>').append( "<select name='stayDay' id='stayDay'><option value='1' selected='selected'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"),
 						$('<td>').append(
-								 "<input class='deletebtn' type='button' value = 'delete' id='delete' />")
+								 "<button class='deletebtn' type='button'  style='border:none; background: none' id='delete'>"
+			    		+"<i class='fas fa-minus-circle'></i></button>")
 					)
 				);
 		   }
-	 
-	 
-	 
-	 
-	 
+
 	  //////////////////////////////////////////전체마커 관리용//////////////////
 	  function setMapOnAll(map) {
 		 for (var j = 0; j < myMarkers.length; j++) {
@@ -340,23 +350,22 @@ $('#list_table').on("click", ".deletebtn", function () {
 	 		}
 		 poly.setMap();
 		}
-	  
-	 
+	
 	  function clearMarkers() {
 	        setMapOnAll(null);
 	      }
-
 
 	      function showMarkers() {
 	        setMapOnAll(map);
 	      }
 
-	      function deleteMarkers() {
-	        clearMarkers();
+	   /*    function deleteMarkers() {
+	    		array = [];
 	      	myMarkers = [];
-	      	 poly.setPath(null);
+	     	 poly.setPath(null); 
+	      	 
 	      }
-
+ */
 	</script> 
 
 	</body>

@@ -138,9 +138,28 @@ public class PlannerDaoImpl implements PlannerDao{
 	}
 	
 	@Override
+	public void deleteAllSchedule(int plannerCode) throws Exception {
+		sqlSession.delete("PlannerMapper.deleteAllSchedule", plannerCode);
+	}
+	
+	@Override
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception {
 		return sqlSession.selectList("PlannerMapper.getScheduleList",plannerCode);
 	}
 	
+	@Override
+	public int updateSchedule(Schedule schedule) throws Exception {
+		return sqlSession.update("PlannerMapper.updateSchedule", schedule);
+	}
+	
+//	@Override
+//	public int updateSchedule2(Schedule schedule) throws Exception {
+//		return sqlSession.update("PlannerMapper.updateSchedule2",schedule);
+//	}
+	
+	@Override
+	public void updateSchedule2(Schedule schedule) throws Exception {
+		 sqlSession.update("PlannerMapper.updateSchedule2",schedule);
+	}
 	
 }

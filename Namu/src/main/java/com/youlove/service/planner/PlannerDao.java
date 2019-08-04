@@ -42,6 +42,8 @@ public interface PlannerDao {
 	
 	public void deleteRoute(int plannerCode) throws Exception;
 	
+	public void  deleteAllSchedule(int plannerCode) throws Exception;
+	
 	public List<Route> getRouteList(int plannerCode) throws Exception;
 	
 	public List<Route> getRouteCityName(int plannerCode) throws Exception;
@@ -60,6 +62,10 @@ public interface PlannerDao {
 	
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception;
 	
-//	public void updateSchedule(Schedule schedule) throws Exception;
+	public int updateSchedule(Schedule schedule) throws Exception;
+	
+//	public int updateSchedule2(Schedule schedule) throws Exception;
+	
+	public void updateSchedule2(Schedule schedule) throws Exception;
 }
 

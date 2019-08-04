@@ -17,7 +17,7 @@
 	
 	<div class="col-md-1"></div>
 		<div class="col-md-8">
-	  		<div id="map" style="width: 950px; height: 500px;">
+	  		<div id="map" style="width: width: 100%; height: 500px;">
 			</div>
 		</div>
 		<div class="col-md 2">
@@ -198,7 +198,7 @@
     
     ///////////////////////////////////////////
       poly = new google.maps.Polyline({
-          strokeColor: '#f25c5c',
+    	  strokeColor: '#30a9de',
           strokeOpacity: 1.0,
           strokeWeight: 3
         });
@@ -215,6 +215,7 @@
 		        position: new google.maps.LatLng(routeLat[i], routeLng[i]),
 		        map: map,
 		        id:route[i],
+		        icon:image
 		      });     
 	      markers.push(myMarker);
 	      var path=poly.getPath();

@@ -16,7 +16,7 @@
         hide: noop,
 
         // Options
-        color: false,
+        color: "#a3daff",
         flat: false,
         showInput: false,
         allowEmpty: false,

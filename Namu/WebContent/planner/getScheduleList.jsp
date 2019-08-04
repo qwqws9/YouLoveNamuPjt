@@ -44,6 +44,9 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
 	<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
 
+	<link rel="stylesheet" type="text/css" href="/resources/css/timedropper.css ">
+	<script type="text/javascript" src="/resources/javascript/timedropper.js"></script>
+
 <style type="text/css">
 input{
 background: none; border: 0 none;
@@ -72,10 +75,10 @@ background: none; border: 0 none;
   padding: 0;
 }
 
-body {
+/* body {
   margin: 100px;
 }
-
+ */
 .pop-layer .pop-container {
   padding: 20px 25px;
  
@@ -111,10 +114,31 @@ border-radius:5px ;
   display: none;
   position: fixed;
   _position: absolute;
-   top: 50%;
-  left: 50%;
-  width: 410px;
-  height: auto;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index:100;
+}
+.di-layer {
+ display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index:100;
+}
+
+.d-layer {
+ display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index:100;
 }
 
@@ -129,7 +153,35 @@ border-radius:5px ;
   filter: alpha(opacity=50);
 }
 
-.dim-layer .pop-layer {
+.di-layer .diBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.d-layer .dBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.dim-layer .pop-layer, {
+  display: block;
+}
+.di-layer .pop-layer, {
+  display: block;
+}
+.d-layer .pop-layer, {
   display: block;
 }
 
@@ -159,7 +211,7 @@ a.btn-layerClose:hover {
     width: 100%;
     text-align:center;
 }
-#submit, #reset, #close{
+#submit, #reset, #update, #delete,#close{
   display: inline-block;
   height: 25px;
   padding: 0 14px 0;
@@ -169,7 +221,7 @@ a.btn-layerClose:hover {
   color: #fff;
   line-height: 25px;}
   
-#submit:hover, #reset:hover, #close:hover {
+#submit:hover, #update:hover, #delete:hover, #reset:hover, #close:hover {
 /*   border: 1px solid #091940; */
   background-color: #f2c029;
   color: #fff;
@@ -178,78 +230,256 @@ a.btn-layerClose:hover {
 </style>
 
 <script>
-function onchangeDay(yy,mm,dd,ss){ 
+
+function refreshScheduleList(){
+	location.reload();
+}
+
+/* function onchangeDay(yy,mm,dd,ss){    //사용안함 일단keep
 	 $("#nows").html(yy+"."+mm+"."+dd+".("+ss+")"); 
-	}
+	} */
+
+ $(function(){
+	$(document).on('click','#deleteall',function(){
+		
+		if (confirm("작성하신 모든 일정을 삭제하시겠습니까?") == true){ 
+			var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
+			
+			self.location = "/planner/deleteAllSchedule?plannerCode="+plannerCode;
+		}else{   
+		    return;
+		}
+
+ 	});
+	
+	
+	
+ 	
+	  $(document).on('click','#tourModal',function(){
+		  var tourId = $(this).next().val().trim();
+	    	 tourModal(tourId);
+	    	 $('#tourModalShow').trigger('click');
+	     });
+	     
+	     $("#previous").on("click",function(){
+			   var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
+					self.location = "/planner/updateRoute?plannerCode="+plannerCode;
+			    });
+		
+		 $("#save").on("click",function(){
+				var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
+					 self.location = "/planner/getPlanner?plannerCode="+plannerCode;
+			 });
+
+		 $ ("#alarm").timeDropper();
+		 
+		 $("#color").spectrum({
+			   flat: false,
+			   showInput: true,
+			   preferredFormat: "hex",
+			   color: "#a3daff"
+			  });
+	
+		  $(document).on('click','#ualarm',function(){
+		  $ ("#ualarm").timeDropper();
+		  });
+	
+				 $("#ucolor").spectrum({
+					   flat: false,
+					   showInput: true,
+					   preferredFormat: "hex"
+				
+			  });
+
+				 
+ });
+ 
 function deleteSchedule(){
+var scheCode=$("#scheCode").val();
 
-	 self.location = "/planner/deleteSchedule?scheCode="+$("#scheCode").val();
+	$.ajax({
+		url			: '/planner/json/deleteSchedule/' + scheCode,
+		method		: 'GET',
+		headers		: {
+			'Accept'		: 'Application/json',
+			'Content-Type'	: 'Application/json'
+		},
+			 success: function(JSONData,status) {
+
+					$('body').load('/planner/getScheduleList/',function(){ 
+						alert("삭제되었습니다");
+		 				refreshScheduleList(); 
+					});
+				
+			}
+	}); 
+} 
+
+function updateSchedule(){
+	var scheCode=$("#scheCode").val();
+
+	$.ajax({
+		url : "/planner/json/getSchedule/"+scheCode ,
+		method : "GET" ,
+		dataType : "json" ,
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		/* async:false, */
+		success : function(JSONData , status) {
+		   	console.log('4번째');
+		   	
+		   	if(JSONData.schePlace == null){
+				JSONData.schePlace=" ";
+			}
+			if(JSONData.scheDetail == null){
+				JSONData.scheDetail=" ";
+			}
+			JSONData.timeHour= JSONData.timeHour+":"+JSONData.timeMin; 	
+				var displayValue = 
+								'<h5 class="title">일정 수정</h5><br/><br/>'
+								 +'<div class="col-md-12" ><div class="row">'
+								+'<div class="col-md-4"><p> 날짜 </p></div>'
+								+'<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay" value="'+JSONData.scheDay+'" readonly/></div>' 
+								+'</div></div>'
+								 
+								 +'<div class="col-md-12" ><div class="row">'
+								+'<div class="col-md-4"><p>   일정 </p></div> '
+								 +'<div class="col-md-8"> <input type="text" name="scheName" value="'+JSONData.scheName+'"> </div>'
+								 +'</div></div>'
+								          
+								+'<div class="col-md-12" ><div class="row">' 
+								+'<div class="col-md-4"> <p> 일정시작시간 </p></div>' 
+								+'	<div class="col-md-8"><input type="text" id ="ualarm" name="timeHour" value="'+JSONData.timeHour+'"> </div>'
+								+'</div></div>'
+
+								+' <div class="col-md-12" ><div class="row">'
+								+'<div class="col-md-4"><p> 일정장소 </p></div>'
+								+' <div class="col-md-8"><input type="text" name="schePlace" value="'+JSONData.schePlace+'"> </div>'
+								+'</div></div>'
+								 
+								 +'<div class="col-md-12" ><div class="row"> '
+								+'<div class="col-md-4"> <p> 일정상세 </p></div>'
+								 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" > '+JSONData.scheDetail+' </textarea></div>'
+								 +'</div></div>'
+							/* 
+								 +'<div class="col-md-12" ><div class="row"> '
+								 +'<div class="col-md-4"> <p> 표시 색상 선택</p></div>'
+								 +'<div class="col-md-8"> <input type="color" name="color" id="ucolor"  style="width:100px;" value="'+JSONData.color+'"></div>'
+								 +'</div></div>'*/
+								 +'<div class><input type="hidden" id="scheCode" name="scheCode" value="'+JSONData.scheCode+'"></div>'
+								+'<br/><br/><br/>'  ;
+
+								$('#updateSchedule' ).html(displayValue);
+							 alert(displayValue); 
+			}
+		});
+	 layer_open('layer3');
 	}
-	    
 
+/* function updateSchedule2(){
+	var scheCode=$("#scheCode").val();
+
+	$.ajax ({
+		url : '/planner/json/updateSchedule2/'+scheCode,
+		method : 'post',
+		data	: JSON.stringify({
+			scheCode : scheCode,
+			scheName : scheName
+		}), 
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		  success: function(JSONData,status) {
+			alert("성");
+				
+		}
+	
+});
+} */
+	
+/* function deleteSchedule(){
+self.location = "/planner/deleteSchedule?scheCode="+$("#scheCode").val();
+var scheCode=$("#scheCode").val();
+alert("삭제되었습니다");
+
+$.ajax({
+	url			: '/planner/json/deleteSchedule/' + scheCode,
+	method		: 'GET',
+	headers		: {
+		'Accept'		: 'Application/json',
+		'Content-Type'	: 'Application/json'
+	},
+	 success: function(JSONData,status) {
+		 this.fadeOut(); 
+			$('body').load('/planner/getScheduleList',function(){
+				
+			})
+		}
+}); 
+}  */
+	
+	//}
+	  
 function layer_open(el){
-	//var temp = $('#'+el);
-    var $el = $('#'+el);    //레이어의 id를 $el 변수에 저장
-    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
+	
+    var $el = $('#'+el);   
+    var isDim = $el.prev().hasClass('dimBg');   
+    var isDi = $el.prev().hasClass('diBg');  
+    var isD = $el.prev().hasClass('dBg'); 
+    
     isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
+    isDi ? $('.di-layer').fadeIn() : $el.fadeIn();
+    isD ? $('.d-layer').fadeIn() : $el.fadeIn();
+    
     var $elWidth = ~~($el.outerWidth()),
         $elHeight = ~~($el.outerHeight()),
         docWidth = $(document).width(),
-        docHeight = $(document).height();
+        docHeight = $(document).height(); 
 
-    // 화면의 중앙에 레이어를 띄운다.
-    if ($elHeight < docHeight || $elWidth < docWidth) {
+
+   // 화면의 중앙에 레이어를 띄운다.
+  
         $el.css({
             marginTop: -$elHeight /2,
             marginLeft: -$elWidth/2
-        })
-    } else {
-        $el.css({top: 0, left: 0});
-    }
-
+        });
+  
+ 
     $el.find('#close').click(function(){
-        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
+        isDim ?$('.dim-layer').fadeOut() : $el.fadeOut(); 
+        isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
+        isD ? $('.d-layer').fadeOut() : $el.fadeOut(); 
+        return false;
+    });
+    
+    $el.find('#delete').click(function(){
+        isDim ?$('.dim-layer').fadeOut() : $el.fadeOut(); 
+        isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
+        isD ? $('.d-layer').fadeOut() : $el.fadeOut(); 
+        return false;
+    });
+    $el.find('#update').click(function(){
+        isDim ?$('.dim-layer').fadeOut() : $el.fadeOut(); 
+        isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
+        isD ? $('.d-layer').fadeOut() : $el.fadeOut(); 
         return false;
     });
 
-    $('.layer .dimBg').click(function(){
+/*     $('.layer .dimBg').click(function(){
         $('.dim-layer').fadeOut();
         return false;
     });
-
+ */
 }
 
-/* 
-$(document).ready(function(){
-	$(document).mousedown(function(e){
-		$('.dim-layer').each(function(){
-		        if( $(this).css('display') == 'block' )
-		        {
-		            var l_position = $(this).offset();
-		            l_position.right = parseInt(l_position.left) + ($(this).width());
-		            l_position.bottom = parseInt(l_position.top) + parseInt($(this).height());
 
 
-		            if( ( l_position.left <= e.pageX && e.pageX <= l_position.right )
-		                && ( l_position.top <= e.pageY && e.pageY <= l_position.bottom ) )
-		            {
-		                //alert( 'popup in click' );
-		            }
-		            else
-		            {
-		                //alert( 'popup out click' );
-		                $(this).hide("fast");
-		            }
-		        }
-		    });
-		}); 
-		})
- */
 function fncAddSchedule(){
 	// 유효성 검사 
-	
+
  	var scheName = $("input[name='scheName']").val();
 	
 	if(scheName == null || scheName.length<1){
@@ -258,109 +488,133 @@ function fncAddSchedule(){
 	} 
 
 	$($("#scheForm")).attr("method" , "POST").attr("action" , "/planner/addSchedule").attr("enctype" , "multipart/form-data").submit();
+
+}		
+
+function fncUpdateSchedule(){
+
+	$($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
+	
 }		
 
 
-function fncUpdateSchedule(scheCode){
-	$.ajax({
-		type :"post",
-		url :"/planner/updateSchedule",
-		data : {id:event.id},
-		success : function(contents){
-			var lay = $('#layer2');lay.fadeOut();
-        	var con = $('#main-container');con.fadeOut();
-       		var insert = $('#insertForm-container');insert.fadeIn();
-       		$(".insertForm-sdate-li").html("<input type=date name=sdate value="+contents.cl_sdate+"></input><input type=time name=stime step=1800 value="+contents.cl_stime+"></input>");
-       		$(".insertForm-edate-li").html("<input type=date name=edate value="+contents.cl_edate+"></input><input type=time name=etime step=1800 value="+contents.cl_etime+"></input>");
-       		$(".insertForm-name-li").html("<select name=title><optgroup label=업무일정><option value=회사일정>회사일정</option><option value=지점일정>지점일정</option><option value=부서일정>부서일정</option><option value=개인업무>개인업무</option></optgroup><optgroup label=개인일정><option value=출장>출장</option><option value=연차>연차</option></optgroup></select>");
-       		$(".insertForm-suject-li").html("<input type=text placeholder= 제목 name=subject class=subject value="+contents.cl_subject+"></input>");
-       		$(".insertForm-place-li").html("<input type=text placeholder= 장소 name=place class=place value="+contents.cl_place+"></input>");
-       		
-       		$(".insertForm-contents-li2").html("<textarea name=contents class=insertForm-contents placeholder= 내용 >"+contents.cl_contents+"</textarea>");
-       		$(".insertForm-hidden").html("<input type=hidden name=num value="+contents.cl_num+"></input>");
-		}, 
-		error : function(){
-			alert("error");
+	/* $.ajax ({
+		url : '/planner/json/updateSchedule2/'+event.id,
+		method : 'post',
+		data	: JSON.stringify({
+			scheCode : scheCode,
+			scheDay	: scheDay,
+			scheName	: scheName	
+		}), 
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		  success: function(JSONData,status) {
+				$('body').load('/planner/getScheduleList',function(){
+				
+			})
 		}
-		});
-}
+	
+});
+} */
+
 
  
 $(function () {
-	
+
+
 		   $('#calendar').fullCalendar({
-			   
+			 
 			    events: function(start, end, timezone, callback) {  
 
-	        	console.log('1번째');
+	        	console.log('fullcalendar callback ');
 	        $.ajax({
 	   	                url: "/planner/getScheduleList",
 	   	                type : 'post',
 	   	                data : { startDate :  start.format('yyyy-MM-dd HH:mm:ss'),endDate :  end.format('yyyy-MM-dd HH:mm:ss') },
 	   	                dataType: 'json',
-	   	               	/* async:false, */
 	   	                success: function(data) {
-	   	              	console.log('2번째');
+	   	              	console.log('/planner/getScheduleList');
 	   	                   var events2 = [];
 	   	                   $(data).each(function() {
 	   	                        events2.push({
 	   	                           title: $(this).attr('title'),
 	   	                            start: $(this).attr('start'),
-	   	                         color: $(this).attr('color'),
+	   	                         	color: $(this).attr('color'),
 	   	                            id: $(this).attr('id') ,
-	   	                         end: $(this).attr('end'),
-	   	                       allDay: $(this).attr('allDay')
-	   	                     
-	   	                        });
-	   	                     
-	   	                     
+	   	                         	end: $(this).attr('end'),
+	   	                       		allDay: $(this).attr('allDay')
+	   	                        }); 
 	   	                    });
 	   	                 console.log(data);
 	   	              
 	                    callback(events2);
 	                }
-	                   }); 
+	             }); 
 	     }, 	 
 	        
-		      header: {
-		        left: 'prev,next today',
-		        center: 'title',
-		        right: 'month,agendaWeek,listDay'
-		      },
-		     
-		      editable: true,
-		      droppable: true, 
-				
-		   		 dayClick: function(date, allDay, jsEvent, view) {
-		        	   var yy=date.format("YYYY");
-		        	   var mm=date.format("MM");
-		        	   var dd=date.format("DD");
-		        	   var ss=date.format("dd");
-		        	  var date = (moment(date).format('YYYY-MM-DD'));
+				     header: {
+				        left: 'prev,next today',
+				        center: 'title',
+				        right: 'month,agendaWeek,listDay'
+				     },
+		      		editable: true,
+		      		droppable: true, 
+		   			dayClick: function(date, allDay, jsEvent, view) {
+			        	   var yy=date.format("YYYY");
+			        	   var mm=date.format("MM");
+			        	   var dd=date.format("DD");
+			        	   var ss=date.format("dd");
+			        	  var date = (moment(date).format('YYYY-MM-DD'));
 		        	  document.getElementById("scheDay").value=date;
 		        	   layer_open('layer1');
-		        	   onchangeDay(yy,mm,dd,ss);
-		        	     },  
+		        	 
+		        	 },  
+					eventLimit: true,
+			    	eventDrop: function(event, delta, revertFunc) {
+			    	
+		    		            alert("일정 "+ event.title + " 의 날짜를 " + event.start.format() + " 로 변경합니다");
+		    		       
+		    		            	console.log("update schedule");
+		    		            	
+		    		            	$.ajax ({
+		    		        			url : '/planner/json/updateSchedule/'+event.id,
+		    		        			method : 'post',
+		    		        			data	: JSON.stringify({
+		    								scheCode : event.id,
+		    		        				scheDay	: event.start.format()
+		    		        			}), 
+		    		        			headers : {
+		    		        				"Accept" : "application/json",
+		    		        				"Content-Type" : "application/json"
+		    		        			},
+		    		        			  success: function(JSONData,status) {
+		    		      					$('body').load('/planner/getScheduleList',function(){
+		    		    						
+		    		    					})
+		    		    				}
+		    		    			
+		    		    		});
+		    		        	},
 
-		    			 eventLimit: true,
-		    			  
-		    		    eventDrop: function(event, delta, revertFunc) {
-		    			
-		    		            alert(event.title + "를 " + event.start.format() + " 로 이동합니다");
-		    		            if (!confirm("수정하시겠습니까?")) {
-		    		                revertFunc();
-		    		            } 
-		    		        },
-		    		    
-		     ////////////////////////////////////////////////////////
-		  			 eventClick: function(event, element) {
+
+		  			eventClick: function(event, element) {
+		  				if(event.end!=null){
+		  					var displayValue = 
+		  					'<button type="button" style="border-radius:10px;border:0;width:150px;height:50px;background:#F2C029;color:#ffffff; " id="tourModal" >'+event.id+'<p> 관광지 살펴보기 </button><input type="hidden" value="'+event.id+'">'
+		  					$('#getSchedule2' ).html(displayValue);
+		  				
+ 				layer_open('layer2');
+		  			
+		  				}else{
+		  				
 		    	/*  alert(event.id); */
 		    		 var scheCode=event.id;
-		    	   	console.log('3번째');
+		    	
+		    	   	console.log('event click ->/planner/json/getSchedule/');
 		
-					$.ajax( 
-			
-							{
+					$.ajax({
 								url : "/planner/json/getSchedule/"+event.id ,
 								method : "GET" ,
 								dataType : "json" ,
@@ -371,11 +625,19 @@ $(function () {
 								/* async:false, */
 								success : function(JSONData , status) {
 								   	console.log('4번째');
-									var displayValue = 
+								   	
+								   	if(JSONData.schePlace == null){
+										JSONData.schePlace=" ";
+									}
+									if(JSONData.scheDetail == null){
+										JSONData.scheDetail=" ";
+									}
+									JSONData.timeHour= JSONData.timeHour+":"+JSONData.timeMin; 
+										var displayValue = 
 														'<h5 class="title">일정 보기 </h5><br/><br/>'
 														 +'<div class="col-md-12" ><div class="row">'
 														+'<div class="col-md-4"><p> 날짜 </p></div>'
-														+'<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay" value="'+JSONData.scheDay+'"/></div>' 
+														+'<div class="col-md-8"> <input type="date" name="scheDay" id="scheDay" value="'+JSONData.scheDay+'"readonly/></div>' 
 														+'</div></div>'
 														 
 														 +'<div class="col-md-12" ><div class="row">'
@@ -386,7 +648,6 @@ $(function () {
 														+'<div class="col-md-12" ><div class="row">' 
 														+'<div class="col-md-4"> <p> 일정시작시간 </p></div>' 
 														+'<div class="col-md-4"><input type="text" name="timeHour" value="'+JSONData.timeHour+'"readonly/></div>'
-														+'<div class="col-md-4"><input type="text" name="timeMin" value="'+JSONData.timeMin+'"readonly/></div>'
 														+'</div></div>'
 
 														+' <div class="col-md-12" ><div class="row">'
@@ -396,23 +657,19 @@ $(function () {
 														 
 														 +'<div class="col-md-12" ><div class="row"> '
 														+'<div class="col-md-4"> <p> 일정상세 </p></div>'
-														 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" readonly> '+JSONData.scheDetail+'" </textarea></div>'
+														 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" readonly> '+JSONData.scheDetail+' </textarea></div>'
 														 +'</div></div>'
 														 +'<div class><input type="hidden" id="scheCode" name="scheCode" value="'+JSONData.scheCode+'"></div>'
 														+'<br/><br/><br/>';
-								
-												
-																 $('#getSchedule' ).html(displayValue);
-			
-					/* alert(displayValue); */
 				
-								}
-						});
-					 layer_open('layer2');
+														$('#getSchedule' ).html(displayValue);
+														/* alert(displayValue); */
+									}
+								});
+							 layer_open('layer2');
+		  				}
+						}, 
 				
-		      }, 
-					/////////////////////////////////////////////////////
-	
 		      drop: function() {
 		 
 		        if ($('#drop-remove').is(':checked')) {
@@ -422,36 +679,10 @@ $(function () {
 		      }
 		
 		  });
-		  
-
-  $("#color").spectrum({
-   flat: false,
-   showInput: true,
-   preferredFormat: "hex",
-   color: "#000000"
-  });
-
-
- 
-	 $("a[href='#']").on("click",function(){
-	 	
-	 	history.go(-1);
-	 });
 	
-	 $("#save").on("click",function(){
-		
-			var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
-				 self.location = "/planner/getPlanner?plannerCode="+plannerCode;
-		 	
-		 });
-	 });
 
-/* 
-$(document).on('click','#delete',function(){
+});
 
-	 tourModal(tourId);
-	 $('#tourModalShow').trigger('click');
-}) */
 
 </script>
 </head>
@@ -469,128 +700,38 @@ $(document).on('click','#delete',function(){
 	<br><br><br>
 <h4 class="text-center"> 상세 플랜 짜기 </h4>
 		<br><br>
+
+<div style="display:none">
+<button type="button" class="btn btn-primary" data-toggle="modal" id="tourModalShow"  data-target="#modalTourList" >관광지</button>
+</div>
 <!--캘린더  -->
+<section class="schedule">
 <div  id="calendar"><!-- <p class="date" id="nows"></p> -->
  </div>
-
-<br><br><br><br>
-	 <div class="col-md-10 col-lg-12" >
-<div class="row">
-   <div class="col-md-6"></div>
+</section>
+<br>
+ <div class="col-md-12"><div class="row"> 
+  <div class="col-md-9"></div>
+ <div class="col-md-3"><button type="button" id="deleteall" style="border-radius:10px;border:0;width:90px;height:30px;background:#cbcbcb;color:#ffffff; "> 플랜 전체 삭제 </button>
+ </div>
+ </div> </div>
+  <div class="col-md-12"><div class="row"> 
+  <div class="col-md-8"></div>
+  <div class="col-md-4"> <p> * 작성한 스케줄을 모두 삭제합니다.</p></div>
+  </div></div>
+ <br><br><br>
+ <div class="col-md-12">
+ <div class="row"> 
+   <div class="col-md-8"></div>
       <div class="col-md-4" >
-		     <a class="btn btn-default" href="#" role="button"> 이전 단계 </a>
+		    <button type="button" class="btn btn-default"  id="previous" style="color:#868296"> 이전 단계</button>
 		  
-		      <button type="button" class="btn btn-default"  id="save"> 내 플래너 보기  </button>
+		      <button type="button" class="btn btn-default"  id="save" style="color:#868296"> 내 플래너 보기  </button>
 		      </div></div></div>
-		      
-		      
-		      
-<!--일정 등록 팝업  -->
-
-<div style="height: 300px;"></div>
-<a href="#layer1" class="btn-example"></a>
-<div id="layer1" class="pop-layer">
-<div class="pop-container">
-        <div class="pop-conts">
-            <div class="addSchedule">
-          <form name="scheForm" id="scheForm" action="javascript:fncAddSchedule();" method="post">
-          <h5 class="title"> 일정 등록  </h5> 
-    		<br/><br/>
-    		
- <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4"><p> 날짜 </p></div> 
-<div class="col-md-8"> <input type="text" name="scheDay" id="scheDay"/></div> 
- </div></div>
- 
- <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4"><p>   일정 </p></div> 
- <div class="col-md-8"> <input type="text" name="scheName"/> </div> 
- </div></div>
-          
-<div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4"> <p> 일정시작시간 </p></div> 
-<div class="col-md-4"><select class="custom-select mr-sm-2" id="timeHour" name="timeHour">
-
-  	 <option value='00' selected='selected'>00</option><option value='01'>01</option><option value='02'>02</option><option value='03'>03</option><option value='04'>04</option><option value='05'>05</option><option value='06'>06</option><option value='07'>07</option><option value='08'>08</option><option value='09'>09</option><option value='10'>10</option>
-<option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option>
-  	 <option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option>
-  	 </select>
-  	 </div>
-<div class="col-md-4"><select class="custom-select mr-sm-2" id="timeMin" name="timeMin">
-
-  	 <option value='00' selected='selected'>00</option><option value='10'>10</option><option value='20'>20</option>
-  	 <option value='30'>30</option><option value='40'>40</option><option value='50'>50</option>
-  	 </select>
-  	 </div>
-</div></div>
-
- <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
-  <p> 일정장소 </p></div> 
- <div class="col-md-8"><input type="text" name="schePlace"/> </div>
- </div></div>
- 
- <div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
- <p> 일정상세 </p></div>
- <div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3"></textarea></div>
- </div></div>
- 
-<div class="col-md-12" >	
-<div class="row"> 
-<div class="col-md-4">  
- <p> 표시 색상 선택</p></div> 
- <div class="col-md-8"> <input type="color" name="color" id="color"  style="width:100px;"></div>
- </div></div>  
-<br/><br/><br/>
-       
- <div class="col-md-12" >	
-<div class="col-md-4">  
-  <input type ="submit" value="등록" id="submit"></div>
-    <div class="col-md-4">  
-    <input type ="reset" value="취소" id="reset"> </div>
-        <div class="col-md-4"> <input type='button' id="close"  value='닫기'/></div>
-        </div></div>
-       
-</div> </div>
-        	</form>
-		</div></div> 
-<br/><br/>
-
-
-
-
-<!--일정 상세 팝업  -->
-<div style="height: 300px;"></div>
-<a href="#layer2" class="btn-example"></a>
-<div class="dim-layer">
-<div class="dimBg"></div>
-<div id="layer2" class="pop-layer">
-<div class="pop-container">
-        <div class="pop-conts">
-            <div class="schedule">
-               
-   <div id="getSchedule"></div>
-    	
-<div class="row"> 
- <div class="col-md-4"> <input type ="submit" value="수정" id="update"></div> 
-<div class="col-md-4"> <input type ="submit" value="삭제" id="delete" onclick="deleteSchedule();"></div>
-<div class="col-md-4"> <input type='button' id="close"  value='닫기' ></div>
-	</div></div>
-		</div></div> </div></div>
-<br/><br/>
-
-
-<!-- 일정수정 팝업  -->
-
-
-
-
-
+		      <br> <br> <br> <br>
+	<jsp:include page="/planner/addSchedule.jsp" />
+	<jsp:include page="/planner/getSchedule.jsp" />
+	<jsp:include page="/planner/updateSchedule.jsp" />
+	<jsp:include page="/guide/tourModal.jsp" />
 </body>
 </html>

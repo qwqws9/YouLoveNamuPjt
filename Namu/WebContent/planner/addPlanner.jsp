@@ -44,41 +44,55 @@ margin:0 auto
 	 	var plannerName = $("input[name='plannerName']").val();
 		var departDate =$("input[name='departDate']").val();
 		
-		/* 
+		
 		if(plannerName == null || plannerName.length<1){
 			alert("플래너 제목을 입력해주세요.");
 			return;
-		} */
+		} 
 	
-		/* if(departDate == null || departDate.length<1){
+	 if(departDate == null || departDate.length<1){
 			alert( "여행시작일을 입력해주세요.");
 			return;
 		}
-		 */
+		
 		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/addPlanner").attr("enctype" , "multipart/form-data").submit();
 	}		
+	
+	 function readURL(input) {
+	        if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            reader.onload = function(e) {
+	                $('#preview').attr('src', e.target.result);
+	            }
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+/* 
+	    $("#imgInp").change(function() {
+	        readURL(this);
+	    }); */
 	
 	$(function(){
 		$('#file').on('change',function(){
 	        var fileName = $(this).val();
 	        $(this).next('.custom-file-label').html(fileName);
+	        readURL(this);
 	    });
 		
 	    /* $( "#departDate" ).datepicker({
-	    	changeMonth: true,
+	    	changeMonth: true
 	        changeYear: true,
 	        dateFormat: 'yy-mm-dd'			        
 	    }); */
 	    
-	    $(".selector").flatpickr({ 
+	    $("#departDate").flatpickr({ 
 
 	    	dateFormat: "Y-m-d",
-
-	    	minDate:"today",
-
+	    	
+	    	minDate:"today"
+			
 	    	/* maxDate: new Date().fp_incr(30) */
 	    });
-
 	    
 	    $("#save").on("click",function(){    	
 	    	fncAddPlanner();    	
@@ -89,9 +103,7 @@ margin:0 auto
 	    	history.go(-1);
 	    	
 	    });
-	    
-	
-	    
+ 
 	});
 	</script>		
     
@@ -108,6 +120,8 @@ margin:0 auto
   		</ul>
 		</div>
 	<br><br><br>
+	
+	
 <div class="container">
 <h4 class="text-center"> 플래너 만들기 </h4>
 		<br><br>
@@ -175,8 +189,9 @@ margin:0 auto
 		    <label for="departDate">여행 시작일 </label>
 		     </div>
 		    <div class="col-md-4">
-		   <!--    <input type="text" class="form-control" id="departDate" name="departDate"   > -->
-		   <input type="text" class="selector"  id="departDate" name="departDate" placeholder="날짜를 선택하세요." />
+		    
+<input type="text" class="form-control" id="departDate" name="departDate"  placeholder="날짜를 선택하세요" > 
+		 <!--   <input type="text" class="selector"  id="departDate" name="departDate" placeholder="날짜를 선택하세요" /> -->
 <!-- 
 <a class="input-button" title="toggle" data-toggle><i class="icon-calendar"></i></a>
 		    -->
@@ -193,30 +208,30 @@ margin:0 auto
 		    <label for="file" >플래너 이미지</label>
 		     </div>
 		    <div class="col-md-4">
-		  <div class="custom-file">
+		   <div class="custom-file">
 			<input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;">
 			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
-	 </div>
-		     <div class="col-md-2"></div>
-		  </div>
+			</div></div>
+	 
+		     <div class="col-md-2"> &nbsp;&nbsp;[Preview]<p><img id="preview"src="/resources/images/planner/alternative_image.png" style="width:200px;height:150px" /></div>
 		     </div></div>
 		  
-		<br/> 
+		<br/><br/> <br/>  
 		
 	 <div class="col-md-10 col-lg-12" >
 <div class="row">
-   <div class="col-md-6"></div>
-      <div class="col-md-4">
-		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
+   <div class="col-md-8"></div>
+      <div class="col-md-2">
+		     <a class="btn btn-default" href="#" role="button" style="color:#868296">취&nbsp;소</a>
 		  
-		      <button type="button" class="btn btn-default" id="save"> 다음 단계  </button>
+		      <button type="button" class="btn btn-default" id="save" style="color:#868296" > 다음 단계  </button>
 		      
 			 </div>
 		    </div>
 		  </div>
 		</form>
 		</div>
-
+   <br>   <br>   <br>   <br>
 </body>
 
 </html>

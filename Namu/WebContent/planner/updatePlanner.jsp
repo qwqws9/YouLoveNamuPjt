@@ -20,6 +20,11 @@
   	<!-- css -->
   	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
    <link rel="stylesheet" type="text/css" href="/resources/css/planner.css">
+      
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
    
 <style>
 form{
@@ -49,18 +54,36 @@ margin:0 auto
 		}
 		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();
 	}		
-
+	 function readURL(input) {
+	        if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            reader.onload = function(e) {
+	                $('#preview').attr('src', e.target.result);
+	            }
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+/* 
+	    $("#imgInp").change(function() {
+	        readURL(this);
+	    }); */
+	
 	$(function(){
+		
 		$('#file').on('change',function(){
 	        var fileName = $(this).val();
 	        $(this).next('.custom-file-label').html(fileName);
+	        readURL(this);
 	    });
-	   $( "#departDate" ).datepicker({
-	    	changeMonth: true,
-	        changeYear: true,
-	        dateFormat: 'yy-mm-dd'			        
+		
+	   
+	    $("#departDate").flatpickr({ 
+
+	    	dateFormat: "Y-m-d",
+	    	
+	    	/* maxDate: new Date().fp_incr(30) */
 	    });
-	 
+	    
 	    $("#save").on("click",function(){    	
 	    	fncUpdatePlanner();    	
 	    });
@@ -88,8 +111,10 @@ margin:0 auto
   		</ul>
 		</div>
 	<br><br><br>
+	
 <!-- addPlanner area-->
 <div class="container">
+
 <h4 class="text-center"> 플래너 만들기 </h4>
 		<br><br>
 	<form class="form-horizontal">
@@ -99,8 +124,7 @@ margin:0 auto
 <div class="row">
    <div class="col-md-2"></div>
       <div class="col-md-2">
-      
-      
+
 		    <label for="plannerName"> 플래너 Title  </label>
 		    </div>
 		    <div class="col-md-4">
@@ -191,8 +215,9 @@ margin:0 auto
 		    <label for="departDate">여행 시작일 </label>
 		     </div>
 		    <div class="col-md-4">
-		      <input type="text" class="form-control" id="departDate" name="departDate" value="${planner.departDate}"  >
+			 <input type="text" class="form-control" id="departDate" name="departDate" value="${planner.departDate}" placeholder="날짜를 선택하세요"> 
 		   </div>
+		   
 		     <div class="col-md-2"></div>
 		  </div>
 		     </div>
@@ -205,29 +230,40 @@ margin:0 auto
 		    <label for="file" >플래너 이미지</label>
 		     </div>
 		    <div class="col-md-4">
-		     <div class="custom-file">
-		 <input type="file" accept="image/*" class="custom-file-input" id="file" name="file" style="color: black;" value="${planner.plannerImage }">
+		   <div class="custom-file">
+			<input type="file" accept="image/*" class="custom-file-input" id="file" name="file" value="${planner.plannerImage}" style="color: black;">
+			  <c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">
 			<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
-	 </div>
-		     <div class="col-md-2"></div>
-		  </div>
+			</c:if>
+			<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">
+				<label class="custom-file-label" for="file" data-browse="Image" style="color: #ff7d75;"></label>
+			</c:if>
+			</div>
+
+		       <c:if test="${! empty planner.plannerImage && planner.plannerImage ne 'NotImage'}">
+		       <div class="col-md-2"> &nbsp;&nbsp;[Preview]<p> <img id="preview"src="/resources/images/planner/${planner.plannerImage}" style="width:200px;height:150px" /></div>
+		       </c:if>
+				<c:if test="${empty planner.plannerImage || planner.plannerImage eq 'NotImage'}">
+				 <div class="col-md-2"> &nbsp;&nbsp;[Preview]<p> <img id="preview"src="/resources/images/planner/alternative_image.png" style="width:200px;height:150px" /></div>
+		       </c:if>
+		        </div>
 		     </div></div>
 		  
-		<br/> 
+		<br/><br/> <br/>  
 		  <div class="col-md-10 col-lg-12" >
 <div class="row">
-   <div class="col-md-6"></div>
-      <div class="col-md-4">
-		     <a class="btn btn-default" href="#" role="button">취&nbsp;소</a>
+   <div class="col-md-8"></div>
+      <div class="col-md-2">
+		     <a class="btn btn-default" href="#" role="button" style="color:#868296">취&nbsp;소</a>
 		  
-		      <button type="button" class="btn btn-default" id="save" > 다음 단계  </button>
+		      <button type="button" class="btn btn-default" id="save" style="color:#868296"> 다음 단계  </button>
 		      
 			 </div>
 		    </div>
 		  </div>
-		</form>
-		</div>
+		</form>	  </div>	
 		
+		   <br>   <br>   <br>   <br>
 	
 </body>
 

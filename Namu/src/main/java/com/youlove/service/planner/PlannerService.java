@@ -49,9 +49,13 @@ public interface PlannerService {
 	
 	public void deleteSchedule(int scheCode) throws Exception;
 	
+	public void deleteAllSchedule(int plannerCode) throws Exception;
+	
 	public List<Schedule> getScheduleList(int plannerCode) throws Exception;	//ok route, schedule 한번에
 
-//	public void updateSchedule(Schedule schedule) throws Exception;
+	public boolean updateSchedule(Schedule schedule) throws Exception;
 	
+//	public boolean updateSchedule2(Schedule schedule) throws Exception;
 	
+	public void  updateSchedule2(Schedule schedule) throws Exception;
 }
