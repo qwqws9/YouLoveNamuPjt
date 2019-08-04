@@ -35,6 +35,7 @@
 </head>
 <body>
 	<section class="visual_image">
+		<div></div>
 		<div class="main_txt">
 			Don't<br/>
 			call it a dream.<br/>
