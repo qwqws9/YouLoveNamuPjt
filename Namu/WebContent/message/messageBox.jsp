@@ -19,7 +19,7 @@
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 	
 	<!-- websocket -->
-  	<script src="/socket.io/socket.io.js"></script>
+<!--   	<script src="/socket.io/socket.io.js"></script> -->
   	<!-- css -->
   	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
   	<link rel="stylesheet" type="text/css" href="/resources/css/message.css">
@@ -32,7 +32,7 @@
 		<div class="row">
 			
 			<div class="leftbar">
-				<div class="heading">
+				<div class="heading text-center">
 					<button type="button" id="sendMessage">쪽지쓰기</button>
 				</div>
 				<div id='listings' class='listings'>
@@ -43,7 +43,7 @@
 				</div>
 			</div><!-- left bar -->
 			
-			<div class="messageBox" style="border: 1px solid red;">
+			<div class="messageBox">
 			
 				<div class="header" style="padding-top: 15px;padding-left: 10px;">
 					<select id="messageSearch">
@@ -73,21 +73,21 @@
 				<hr>
 				
 				<div class="body">
-					<table class="" style="width: 100%;">
+					<table class="table table-hover" style="width: 100%;">
 						<thead>
 					    	<tr>
-					      		<th><input type="checkbox"></th>
-					      		<th>No.</th>
-					      		<th>보낸회원</th>
-					      		<th>내용</th>
-					      		<th>날짜</th>
+					      		<th scope="col"><input type="checkbox"></th>
+					      		<th scope="col">No.</th>
+					      		<th scope="col">보낸회원</th>
+					      		<th scope="col">내용</th>
+					      		<th scope="col">날짜</th>
 					    	</tr>
 					  	</thead>
 					  	<tbody >
 					  		<c:forEach var="i" begin="0" end="6">
-					    	<tr style="border: 1px solid red;">
+					    	<tr>
 					    		<td><input type="checkbox"></td>
-					    		<td>1</td>
+					    		<th scope="row">1</th>
 					      		<td>
 					      			<a href="#">중현</a>
 					      		</td>
@@ -101,8 +101,9 @@
 					</table>
 				</div><!-- end of body -->
 				
-				<div class="navigation">
-					<nav aria-label="Page navigation example" style="margin: auto;">
+				
+				<div class="navigation" style="">
+					<nav aria-label="Page navigation example" style="margin: auto; align-content: center;">
 						<ul class="pagination" style="">
 					    	<li class="page-item">
 						      	<a class="page-link" href="#" aria-label="Previous">
@@ -126,10 +127,10 @@
 				<hr>
 				
 				<div class="footer">
-					<button>답장</button>
-					<button>보관</button>
-					<button>삭제</button>
-					<button>차단</button>
+					<button type="button">답장</button>
+					<button type="button">보관</button>
+					<button type="button">삭제</button>
+					<button type="button">차단</button>
 				</div><!-- end of footer -->
 			</div><!-- right bar -->
 		</div><!-- end of container row -->

@@ -49,5 +49,10 @@ public class WishBeenServiceImpl implements WishBeenService {
 		return wishBeenDao.selectPageDetail(tourId,cost,checkin,checkout);
 	}
 
+	@Override
+	public List<Tour> initFood() throws Exception {
+		return wishBeenDao.initFood();
+	}
+
 
 }

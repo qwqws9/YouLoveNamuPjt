@@ -15,9 +15,9 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	<!-- SearchBox -->
 	<link href="/resources/css/search.css" rel="stylesheet">
+	<link href="/resources/css/getCommunityList.css" rel="stylesheet">
 	
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	
 	
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	<script src="/resources/javascript/getProfile.js"></script>
@@ -37,7 +37,6 @@
 	
 	
 	<style>
-	
 		.owl-item{
 	 		position: relative;
 	 		height: 330px; 
@@ -61,22 +60,9 @@
 			<div class="col-md-12 col-lg-12">
 			
 			
-				<div class="row" style="background-color: rgba(242, 192, 41, 0.1); height: 500px;">
-					<div class="col-md-12 col-lg-12">
-					
-					
-						<div class="col-md-3 offset-1">
-							<h1>Community</h1>
-						</div>
-					
-					
-					</div>
-				</div>
-				
-				<br><br><br>
-			
+<!-- 				owl -->
 				<div class="row justify-content-center">
-					<div class="owl-carousel owl-theme owl-loaded" style="width: 90%;">
+					<div class="owl-carousel owl-theme owl-loaded" style="width: 80%;">
 					    <div class="owl-stage-outer">
 					        <div class="owl-stage">
 					        	<c:forEach var="best" items="${bestlist}" begin="0" end="10">
@@ -101,13 +87,14 @@
 
 			<div class="col-1 col-md-1"></div>
 			<div class="col-10 col-md-10 col-lg-10">
+				
+			
+				
+			
+			
+			
 				<div class="row">
-					<div class="col-2 col-md-2 col-lg-2 offset-1" style="top: 8px;">
-						<h5>
-							<strong style="font-style: inherit;"></strong>
-						</h5>
-					</div>
-					<div class="col-md-9 col-lg-9">
+					<div class="col-md-7 col-lg-7 offset-5">
 						<div class="row justify-content-end" style="padding-top: 13px;">
 							<div class="col-md-2 col-lg-2 offset-4" style="font-size: 15px;">
 								<a href="#" class="board" style="color: #282c37;"><strong class="all" >전체</strong></a>
@@ -181,7 +168,7 @@
 
 
 				<div class="row justify-content-center">
-					<div class="col-10 col-md-10">
+					<div class="col-lg-6 col-md-6">
 						<form><!-- Search -->
 						<input type="hidden" id="communityBoardURL" name="communityBoard" value="">
 						<div class="row">
@@ -235,6 +222,7 @@
 						</div>
 						</form>
 					</div>
+					
 					
 					
 					<div class="col-10 col-md-10 append">

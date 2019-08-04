@@ -66,7 +66,7 @@ public class TotalSearchController {
 		//관광지 정보
 		tour.setKeyword(search.getSearchKeyword());
 		tour.setPageNum(1);
-		
+		tour.setAddress("tour");
 		//관광지 검색
 		List<Tour> tourList = wishbeenService.selectPageNum(tour);
 		if(tourList != null) {

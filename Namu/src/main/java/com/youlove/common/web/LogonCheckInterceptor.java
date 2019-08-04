@@ -87,8 +87,10 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 				uri.indexOf("addComment") != -1				                             ||
 				uri.indexOf("updateComment") != -1		 	                             ||
 				uri.indexOf("deleteComment") != -1		 	                             ||
-				uri.indexOf("getCommentOne") != -1
-				
+				uri.indexOf("getCommentOne") != -1						                 ||
+				// WalletController                                                      ||
+				uri.indexOf("getWalletListView") != -1				                     ||
+				uri.indexOf("getWalletList") != -1		
 				
 				
 				// LikeController                                                        ||
@@ -104,7 +106,7 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 					) {
 				System.out.println(uri);
 				System.out.println("비회원 접근불가.........");
-				response.sendRedirect("/");
+				response.sendRedirect("/user/loginView");
 				return false;
 			}
 		}

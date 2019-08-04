@@ -1,15 +1,15 @@
 $(function(){
-	
-	$('body').oLoader({
-		  wholeWindow: true, //makes the loader fit the window size
-		  lockOverflow: true, //disable scrollbar on body
-		   
-		  backgroundColor: '#282c37',
-		  fadeInTime: 1000,
-		  fadeLevel: 0.7,
-		  image: '../resources/images/ownageLoader/430377_e43058e053634b499f67c63cd1e3ba02_mv2.gif',  
-		 
-		});
+//	
+//	$('body').oLoader({
+//		  wholeWindow: true, //makes the loader fit the window size
+//		  lockOverflow: true, //disable scrollbar on body
+//		   
+//		  backgroundColor: '#282c37',
+//		  fadeInTime: 1000,
+//		  fadeLevel: 0.7,
+//		  image: '../resources/images/ownageLoader/430377_e43058e053634b499f67c63cd1e3ba02_mv2.gif',  
+//		 
+//		});
 	
 	$('.nodeTest').on('click',function(){
 		console.log("현재접속 호출 전");
@@ -149,62 +149,95 @@ $(function(){
 	
 });
 
-$(window).load(function(){
-	$('body').oLoader('hide');
-});;
+//$(window).load(function(){
+//	$('body').oLoader('hide');
+//});;
 
-// 환율 정보 .jsp 온로드
 $(function() {
-	// innerHTML
+	// 메인 이미지 랜덤
+	var imgRandom = Math.floor(Math.random() * 3);
+	var top, right, bottom, left;
+	
+	if(imgRandom == 0){
+		imgRandom = 'main_images_01.jpg';
+		top = '150px';
+		right = '250px';
+	}else if(imgRandom == 1){
+		imgRandom = 'main_images_02.jpg';
+		top = '200px';
+		right = '250px';
+	}else if(imgRandom == 2){
+		imgRandom = 'main_images_03.jpg';
+		top = '150px';
+		left = '350px';
+	}
+	//console.log(imgRandom);
+	
+	$('.visual_image').css('background-image', 'url(/resources/images/main/' + imgRandom + ')');
+	
+	if(right != null){
+		$('.main_txt').css({'top':top, 'right':right});
+	}else if(left != null){
+		$('.main_txt').css({'top':top, 'left':left});
+	}
+
+	// 스크롤 애니메이션
+	$('html, body').on('mousewheel', function(e) {
+		//console.log($(window).scrollTop());
+		
+		if($(window).scrollTop() < $('header').offset().top){
+			//console.log(e.originalEvent.wheelDelta);
+			
+			if(e.originalEvent.wheelDelta < 0){
+				$('html, body').stop().animate({scrollTop:$('header').offset().top},1000);
+			}else if(e.originalEvent.wheelDelta >= 0){
+				$('html, body').stop().animate({scrollTop:0},1000);
+			}
+		}
+	});
+	// scroll 클릭 애니메이션 이벤트
+	$('.scrolll').on('click',function(){
+		$('html, body').stop().animate({scrollTop:$('header').offset().top},1000);
+	})
+    
+	// 환율 정보 .jsp 온로드
 	$($('#exchange_container')).load('/wallet/mainExchangeRates.jsp', function(data) {
 		//console.log(data);
 		
 		exchangeRatesData();
 	});
 	
-	
-	$.ajax(
-			{
-				url : "/planner/json/getBestPlannerList" ,
-				method : "POST" ,
-	
-				dataType : "json" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(JSONData) {
-
-				
-						
-						$.each(JSONData.list, function( index, planner){
-							
-							displayValue = "	<div class='square'>"	
-									+"	<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"'/>"
-									+" <div style='background-image: url(/resources/images/planner/"+planner.plannerImage+")'><div>"
-									+"<div class='plan_name text_shadow' id='plannerName'>"+planner.plannerName+"<div>"
-											
-											+"<div class='plan_period text_shadow'>"+planner.departDate +"</div>"
-											+"<div class='plan_budget text_shadow'></div>"
-											+"<div class='wallet_is'>	" 
-											+"<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
-											+"<label class='btn btn-secondary'>"
-											+"	<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
-											+"</label>"
-											+"<label class='btn btn-secondary active'>"
-											+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
-											+"</label></div></div></div></div>"
-										
-											if(index <4) {
-												
-											
-											$("#bestPlanner").append(displayValue);
-											}
-											//$('.plannerImageMain'+index).css('background-image','url(/resources/images/planner/'+planner.plannerImage+')');
-							});
-
-					} 	
-
-				});	
-						
+	// 플래너 리스트 Ajax
+	$.ajax({
+		url : "/planner/json/getBestPlannerList" ,
+		method : "POST" ,
+		dataType : "json" ,
+		headers : {
+			"Accept" : "application/json" ,
+			"Content-Type" : "application/json"
+		} ,
+		success : function(JSONData) {
+			$.each(JSONData.list, function(index, planner) {
+				displayValue = "<div class='square'>"
+					+"<input type='hidden' class='plannerCode' value='"+planner.plannerCode+"' />"
+					+"<div style='background-image: url(/resources/images/planner/"+planner.plannerImage+")'><div>"
+					+"<div class='plan_name text_shadow' id='plannerName'>"+planner.plannerName+"<div>"
+					+"<div class='plan_period text_shadow'>"+planner.departDate +"</div>"
+					+"<div class='plan_budget text_shadow'></div>"
+					+"<div class='wallet_is'>" 
+					+"<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
+					+"<label class='btn btn-secondary'>"
+					+"<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
+					+"</label>"
+					+"<label class='btn btn-secondary active'>"
+					+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
+					+"</label></div></div></div></div>";
+					
+				if(index < 4){
+					$("#bestPlanner").append(displayValue);
+				}
+				//$('.plannerImageMain'+index).css('background-image','url(/resources/images/planner/'+planner.plannerImage+')');
+			});
+		}
+	});
 });

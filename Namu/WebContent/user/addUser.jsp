@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>Insert title here</title> -->
+<jsp:include page="/layout/head.jsp" />
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -68,7 +70,9 @@ input::placeholder {
 			  			<input type="text" id="emailCheckNum" class="form-control" placeholder="전송중" readonly="readonly" >
 			  			</div>
 			  			<div class="col-lg-4">
-			  			<button type="button" class="btn btn-outline-primary" name="saveM">확인</button>
+			  			<button type="button" class="btn btn-outline-primary" id="spinnerEmail" name="saveM">
+			  				 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			  			</button>
 			  			</div>
 			  			<div class="col-lg-4">
 			  			<button type="button" class="btn btn-outline-danger"  name="emailCheck">재입력</button>
@@ -99,7 +103,9 @@ input::placeholder {
 			  			<input type="text" id="phoneCheckNum"  class="form-control" placeholder="전송중" readonly="readonly" >
 			  			</div>
 			  			<div class="col-lg-4">
-			  			<button type="button" class="btn btn-outline-primary" name="saveP">확인</button>
+			  			<button type="button" class="btn btn-outline-primary" id="spinnerPhone" name="saveP">
+			  				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			  			</button>
 			  			</div>
 			  			<div class="col-lg-4">
 			  			<button type="button" class="btn btn-outline-danger"  name="phoneCheck">재입력</button>
@@ -430,9 +436,13 @@ input::placeholder {
 					//alert('aa');
 					$('#email').removeAttr('readonly');
 					$('#email').parent().next().children().removeAttr('disabled');
+					$('#spinnerEmail').text();
+					$('#spinnerEmail').children().addClass('spinner-border spinner-border-sm');
 				}else {
 					$('#phone').removeAttr('readonly');
 					$('#phone').parent().next().children().removeAttr('disabled');
+					$('#spinnerPhone').text();
+					$('#spinnerPhone').children().addClass('spinner-border spinner-border-sm');
 
 				}
 			});
@@ -625,9 +635,14 @@ input::placeholder {
 					if(JSONData.target == 'email') {
 						$('#saveM').val(JSONData.checkNum);
 						$('#emailCheckNum').attr('placeholder','인증번호').removeAttr('readonly');
+						$('#spinnerEmail').text('확인');
+						$('#spinnerEmail').children().removeClass();
+						
 					}else if(JSONData.target == 'phone') {
 						$('#saveP').val(JSONData.checkNum);
 						$('#phoneCheckNum').attr('placeholder','인증번호').removeAttr('readonly');
+						$('#spinnerPhone').text('확인');
+						$('#spinnerPhone').children().removeClass();
 						$('#phoneHelp').text('이메일과 휴대폰번호는 모두 아이디로 사용가능');
 						
 					}else if(JSONData.target == 'error') {

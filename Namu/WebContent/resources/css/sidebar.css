@@ -37,18 +37,17 @@
 		
 		/* 메인화면 버튼 */
 		.openbtn {
-		  font-size: 15px;
+			position: fixed;
+			top: 180px;
+			left: 30px;
+		  font-size: 30px;
 		  cursor: pointer;
-		  background-color: white;
-		  border-radius: 3px;
+		  border-radius: .25em;
 		  color: #F2C029;
 		  padding: 10px 10px;
 		  border: none;
 		}
 		
-		.openbtn:hover {
-		  background-color: rgba(163, 218, 255, 0.5);
-		}
 		
 		/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 		#main {

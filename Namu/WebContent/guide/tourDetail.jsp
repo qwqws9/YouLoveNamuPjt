@@ -6,8 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>Insert title here</title> -->
+<jsp:include page="/layout/head.jsp" />
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -38,14 +40,8 @@ function initMap() {
   var marker = new google.maps.Marker({position: uluru, map: map});
 }
     </script>
-    <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-    -->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8DDpdqJVfPLVpbX0jetSxRg_TmBCRC2Q&callback=initMap">
-    </script>
+    
+  
 </head>
 <body>
 <header><jsp:include page="/layout/header.jsp" /></header>
@@ -234,6 +230,9 @@ function initMap() {
       			$('div[class="container-fluid"]').attr('class','container');
       		});
       
-      </script>             
+      </script>
+        <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8DDpdqJVfPLVpbX0jetSxRg_TmBCRC2Q&callback=initMap">
+    </script>             
 </body>
 </html>

@@ -211,18 +211,6 @@ public class UserRestController {
 	@RequestMapping(value="json/addPay",method=RequestMethod.POST)
 	public boolean addPay(@RequestBody Pay pay) throws Exception{
 		
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println(pay.toString());
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
 		boolean result = userService.addPay(pay);
 		
 		return result;
@@ -344,7 +332,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(value="json/sendNum", method=RequestMethod.POST)
-	public Map<String,Object> sendNum(@RequestBody Map<String, Object> param) throws Exception {
+	public Map<String,Object> sendNum(@RequestBody Map<String, Object> param,HttpServletRequest request) throws Exception {
 		
 		System.out.println("/user/json/sendNum");
 		
@@ -358,17 +346,19 @@ public class UserRestController {
 		Map<String,Object> map = new HashMap<>();
 		
 		String number = RandomNumber.getRandom();
-		String content = "YouLovePlan 회원가입 인증번호는 " + number +" 입니다.";
-		String title = "[YouLove]회원가입 인증메일";
+		//String content = "YouLovePlan 회원가입 인증번호는 " + number +" 입니다.";
+		String content = number;
+		String title = "[YouLovePlan] 인증메일 입니다";
 		
 		map.put("checkNum", number);
 		
 		if(target.equals("email")) {
-			CheckEmailTransfer.gmailSend(title, content, receiver);
+			CheckEmailTransfer.gmailSend(title, content, receiver,request);
 		
 			map.put("target", "email");
 		
 		}else if(target.equals("phone")) {
+			content = "[YouLovePlan] 요청하신 인증번호는 " + number + " 입니다.";
 			boolean result = CheckSMSTransfer.smsSend(smsId, smsKey, content, receiver);
 //			boolean result = true;
 			System.out.println(result);

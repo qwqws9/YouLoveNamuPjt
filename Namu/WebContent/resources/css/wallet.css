@@ -2,7 +2,7 @@
 html, body, div, span, ul, li, input, button { margin: 0; padding: 0; }
 body { line-height: 1; direction: ltr; }
 h2, h3 { margin: 0; padding: 0; font-size: inherit; font-weight: inherit; }
-ul, li { list-style:none; }
+ul, li { list-style: none; }
 input, button, select, textarea { background: none; border: 0 none; }
 input[type=button] { background: transparent; outline: 0; cursor: pointer; }
 input[type=radio], input[type=file]
@@ -43,7 +43,6 @@ a:link, a:active, a:hover { text-decoration: none; }
 .square > div > div:hover .text_shadow { text-shadow: none; }
 .square .text_shadow { text-shadow: 5px 0 4px #fff, -5px 0 4px #fff }
 .plan_name { font-size: 18px; font-weight: 700; }
-/*.plan_flag { margin-top: 25px; }*/
 .plan_period { margin-top: 20px; font-size: 14px; }
 .plan_budget { height: 70px; font-size: 14px; }
 .plan_budget div { display: inline-block; margin-top: 30px; padding: 8px 15px; background-color: rgba(255, 255, 255, .3); border: 1px solid #282c37; border-radius: 1em; }
