@@ -30,21 +30,44 @@
 
 <div class="preview_wrap">
 	<section class="one three_wrap">
-		<h3><span>가볼만한 곳</span></h3>
+		<h3 class="tourLocation"><span>가볼만한 곳<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029; " ></i></span></h3>
 	</section>
 	
 	<section class="two three_wrap">
-		<h3><span>맛집</span></h3>
+		<h3 class="foodLocation"><span>맛집<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029; " ></i></span></h3>
 	</section>
 	
 	<section class="three three_wrap">
-		<h3><span>숙소</span></h3>
+		<h3 class="hotelLocation"><span>숙소<i class="far fa-plus-square fa-1x" style="padding-left: 5px; color:#f2c029; " ></i></span></h3>
 	</section>
 </div>
 
 
 <script type="text/javascript">
 	$(function(){
+		$('.tourLocation').on('click',function(){
+			self.location = '/guide/initTour';
+		})
+		$('.foodLocation').on('click',function(){
+			self.location = '/guide/initFood';
+		})
+		$('.hotelLocation').on('click',function(){
+			self.location = '/guide/initHotel';
+		})
+		$(document).on('click','div[class^=tour]',function(){
+			var code = $(this).children().val().trim();
+			self.location = '/guide/selectTourDetail/'+code;
+		})
+		$(document).on('click','div[class^=food]',function(){
+			var code = $(this).children().val().trim();
+			self.location = '/guide/selectTourDetail/'+code;
+		})
+		$(document).on('click','div[class^=hotel]',function(){
+			var code = $(this).children().val().trim();
+			self.location = '/guide/selectTourDetail/'+code;
+		})
+		
+		
 		$.ajax({
 			url : '/guide/json/getWishbeenPreview',
 			method : 'post',
@@ -65,21 +88,23 @@
 						return;
 					}
 					$('.one').append(
-					'<div class="tour'+index+' preview_cont">'
+					'<div class="tour'+index+' preview_cont"><input type="hidden" value="'+tour.tourId+'">'
 					+'<img class="img_rounded" src="'+tour.tourThumb+'">'
 					+'<div>'
 					+'<h4><img src="/resources/images/spot-type01-01.png" width="22" height="22"><span>'+tour.tourName+'</span></h4>'
 					+'<div><p>'+tour.tourShortDesc+'</p></div>'
 					+'</div>'
 					+'</div>');
-				});
+				});	
+					
+				
 				
 				$.each(data.food,function(index,food){
 					if(index > 4) {
 						return;
 					}
 					$('.two').append(
-					'<div class="food'+index+' preview_cont">'
+					'<div class="food'+index+' preview_cont"><input type="hidden" value="'+food.tourId+'">'
 					+'<img class="img_rounded" src="'+food.tourThumb+'">'
 					+'<div>'
 					+'<h4><img src="/resources/images/spot-type01-02.png" width="22" height="22"><span>'+food.tourName+'</span></h4>'
@@ -88,12 +113,13 @@
 					+'</div>');
 				});
 				
+				
 				$.each(data.hotel,function(index,hotel){
 					if(index > 4) {
 						return;
 					}
 					$('.three').append(
-					'<div class="hotel'+index+' preview_cont">'
+					'<div class="hotel'+index+' preview_cont"><input type="hidden" value="'+hotel.hotelId+'">'
 					+'<img class="img_rounded" src="'+hotel.hotelThumb+'">'
 					+'<div>'
 					+'<h4><img src="/resources/images/spot-type01-03.png" width="22" height="22"><span>'+hotel.hotelName+'</span></h4>'
@@ -101,6 +127,7 @@
 					+'</div>'
 					+'</div>');
 				});
+				
 				
 			
 			}

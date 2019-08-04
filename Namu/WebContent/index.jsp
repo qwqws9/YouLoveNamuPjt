@@ -5,6 +5,7 @@
 <head>
 	<jsp:include page="/layout/head.jsp" />
 	
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	
 	<!-- Optional JavaScript -->
@@ -16,7 +17,7 @@
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	
+<!-- 	<script src="/resources/javascript/jquery-ui.min.js"></script> -->
 	<!-- Our Own Resources -->
 	<script src="../resources/javascript/jquery.oLoader.min.js"></script>
 	<!-- 날씨, 환율 정보를 위한 국가 도시 리스트 출력 -->
@@ -35,8 +36,9 @@
 </head>
 <body>
 	<section class="visual_image">
+		<div></div>
 		<div class="main_txt">
-			don't<br/>
+			Don't<br/>
 			call it a dream.<br/>
 			call it a <span>PLAN</span>.
 		</div>

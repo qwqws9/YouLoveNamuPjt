@@ -12,12 +12,13 @@ html, body { height: 100%; }
 /* 메인 이미지 */
 section.visual_image
 	{ position: relative; width: 100%; height: 100%; color: rgba(255, 255, 255, .8); background-position: center; background-size: cover; image-repeat: no-repeat; }
+section.visual_image > div:first-child { position: absolute; top: 50px; left: 50px; display: block; width: 220px; height: 100px; background-image: url(/resources/images/youloveplan_logo_white.png); background-size: 220px auto; background-repeat: no-repeat; }
 .main_txt
 	{ position: absolute; font-size: 70px; font-weight: 900; line-height: 1.2; }
-.main_txt span { font-size: 80px; }
+.main_txt > span { font-size: 80px; }
 .scrolll { display: block; position: absolute; bottom: 50px; left: 50%; color: inherit; font-size: 18px; text-align: center; transform: translateX(-50%); cursor: default; }
 .scrolll:hover { color: inherit; text-decoration: none; }
-.scrolll span
+.scrolll > span
 	{ position: absolute; top: -70px; left: 50%; width: 30px; height: 30px; margin-left: -15px; border-left: 1px solid #fff; border-bottom: 1px solid #fff;
 	  -webkit-transform: rotateZ(-45deg); transform: rotateZ(-45deg); -webkit-animation: sdb 1.5s infinite; animation: sdb 1.5s infinite; box-sizing: border-box; }
 @-webkit-keyframes sdb {
