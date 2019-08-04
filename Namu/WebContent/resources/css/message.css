@@ -7,9 +7,17 @@
 		color: #404040;
 	  	text-decoration: none;
 	}
+	
+	a:hover{
+	
+	
+	}
+	
 	button{
 		background: none;
-		border: none;
+		border: #F2C029;
+		outline: none;
+		
 	}
 	td{
 		height: 40px;
@@ -20,7 +28,7 @@
 	  	top: 0;
 	  	left: 0;
 	  	overflow: hidden;
-	  	border-right: 1px solid rgba(0, 0, 0, 0.25);
+/* 	  	border-right: 1px solid rgba(0, 0, 0, 0.25); */
 	}
 	.messageBox {
 	  	position: absolute;
