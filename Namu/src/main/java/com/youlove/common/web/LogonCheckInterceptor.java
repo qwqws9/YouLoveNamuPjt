@@ -106,7 +106,7 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 					) {
 				System.out.println(uri);
 				System.out.println("비회원 접근불가.........");
-				response.sendRedirect("/");
+				response.sendRedirect("/user/loginView");
 				return false;
 			}
 		}
