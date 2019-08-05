@@ -266,8 +266,7 @@ $(function () {
 		      },
 		     
 		      defaultDate: ddate,  
-		      editable: true,
-		      droppable: true, 
+		     
 		     /* dayClick: function(date) { */
 		    /*       var date = (moment(date).format('YYYY-MM-DD'));
 		          document.getElementById("startDate").value=date;
@@ -411,6 +410,7 @@ var departDate=${planner.departDate};
 		        right: 'agendaWeek,listDay'
 		      },
 		      defaultDate: ddate,  
+		      
 		      editable: true,
 		      droppable: true, 
 		     /* dayClick: function(date) { */
