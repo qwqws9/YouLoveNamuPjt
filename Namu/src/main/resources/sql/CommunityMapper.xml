@@ -130,8 +130,9 @@
 		SELECT *
 			FROM (SELECT first_table.*, ROWNUM AS row_seq
 		            FROM ( SELECT community_code, community_board, community_title, community_content, community_date,
-		                                    community_thumbnail, open_range, views, writer, city_name
-	                        FROM community
+		                                    community_thumbnail, open_range, views, u.nickname, city_name
+	                        FROM community c, users u
+	                        WHERE c.writer = u.user_code
 	                        ORDER BY views DESC ) first_table
 		            WHERE ROWNUM  &lt;= 6 )
 <!-- 			WHERE  row_seq BETWEEN 0 AND 10 -->

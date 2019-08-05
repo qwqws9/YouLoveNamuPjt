@@ -111,6 +111,10 @@
 			var plannerCode = $(this).children(':eq(0)').val();
 			self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
 	 	});
+		$(document).on('click','.white',function(){
+			var communityCode = $(this).children('.communityCode').val();
+			self.location = '/community/getCommunity?communityCode='+communityCode;
+		});
 	});
 	
 	</script>
@@ -122,13 +126,14 @@
 		</section>
 		
 		<div class="comm">
-			<h2 class="wallet_title"><span>커뮤니티 게시판 </span></h2>
-			<section class="wallet_box">
+			<h2 class=""><span>커뮤니티 게시판 </span></h2>
+			<section class="">
 				<div class="square_wrap clear" id="bestCommunity">
 					<div class="square">
-						<div>
+						<div class="getCommunity">
 							<div>
 								<div class="white">
+									<input type="hidden" class="communityCode" value="">
 									<div class="plan_name text_shadow" id="plannerName">제목</div>
 									<div class="plan_period text_shadow">내용</div>
 									<div class="plan_budget text_shadow">글쓰니</div>

@@ -49,6 +49,16 @@ public class PartyController {
 		System.out.println(this.getClass());
 	}
 	
+	@RequestMapping(value = "addPartyView")
+	public ModelAndView addPartyView()throws Exception{
+		System.out.println("\nPartyController:::addPartyView() 시작:::");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/party/addParty.jsp");
+		
+		System.out.println("\nPartyController:::addPartyView() 시작:::");
+		return modelAndView;
+	}
+	
 	@RequestMapping(value="addParty",method=RequestMethod.POST)
 	public ModelAndView addParty(@ModelAttribute("party") Party party,
 									@RequestParam(value="cityName")String cityName,
