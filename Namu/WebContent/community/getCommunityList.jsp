@@ -174,7 +174,7 @@
 						<div class="row">
 							
 							
-							<div class="col-md-6 col-lg-6">
+							<div class="col-md-4 col-lg-4">
 								<div class="communitySearch">
 									<div class="community input-holder">
 										<input type="text" class="search-input" name="searchKeyword" placeholder="Search" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"/>
@@ -198,7 +198,7 @@
 <!-- 								</div> -->
 <!-- 							</div> -->
 
-							<div class="col-lg-6">
+							<div class="col-lg-3 col-md-3 offset-5">
 								<div class="row float-right">
 									<div class="col mr-3">
 										<select id="searchSelect" name="searchCondition" class="form-control" title="All" style="border: 1px solid #30a9de; background: white;">
