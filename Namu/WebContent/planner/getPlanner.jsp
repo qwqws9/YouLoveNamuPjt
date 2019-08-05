@@ -46,7 +46,7 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		
+	
 		//로드될때 현재 세션 사용자가 좋아요를 눌렀으면 체크되는 로직
 		$.ajax ({
 			url : '/like/json/checkLike',
@@ -212,12 +212,13 @@
 	<div class="col-md-12">
 		<div class="row">
 			<div class="col-md-1"></div>
-		<div class="col-md-8">	<img class="thumb"src="/resources/images/planner/${planner.plannerImage}"  width="100%"></div>
+		<div class="col-md-8">	<img class="thumb"src="/resources/images/planner/${planner.plannerImage}"  height="400px" width="100%"></div>
 		<%-- <div class="col-md-4"> <img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="200px" height="200px"></div>
  --%>		<div class="col-md-2 text-left">  
  		<br><br>
-		작성자 : &nbsp; ${planner.plannerWriter.nickname}<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="20px" height="20px"> <p><p>
-		작성일 : &nbsp;${planner.regDate}<p>
+		작성자 : &nbsp; ${planner.plannerWriter.nickname}&nbsp;&nbsp;&nbsp;&nbsp;<img src="/resources/images/profile/${planner.plannerWriter.profileImg}"  class="rounded-circle" id="userProfile" name="userProfile"  width="50px" height="50px"> <p><p>
+		<hr>
+		작성일 : &nbsp;${planner.regDate}<p><p>
 		여행멤버 :&nbsp;	<c:if test="${! empty planner.member && (planner.member eq '1')}">
 									혼자 </c:if>
 									<c:if test="${! empty planner.member && (planner.member eq '2')}">
@@ -237,6 +238,7 @@
 					<div class="col-md-1">
 					<br><br><br><br>
 					</div></div></div>
+					</div>
 					<%-- 
 					
 			<div class="col-md-2">	작성일 : &nbsp;${planner.regDate}  <p>작성자 : &nbsp;
@@ -309,55 +311,32 @@
 							<div class="col-md-12">
 								<jsp:include page="/planner/getRoute.jsp" />
 							</div>
-							
-							
-						</div>
-						
-						<br>
-						
+			
+						<br><br><br>
+		
 						<!-- 달력 -->
 							<!-- month -->
 							<div class="col-md-12">
+							<div class="row">
 								<jsp:include page="/planner/getScheduleList2.jsp" />
-							</div>
+							</div></div>
 							<!-- list -->
-						
+		
+						<br><br><br>
+								<div class="col-md-12">
+									<div class="row">
+							
+								<div class="col-md-1">	</div>	
+								<div class="col-md-11">		
+			<p style="font-size:20px"><span style="color:#f2c029"><i class="fas fa-star"></i> </span> ${planner.plannerWriter.nickname} 님 여행 도시의 추천 리스트를 확인하세요 </p>
+			</div></div></div>
+			
+					<div class="col-md-12">
+					<div class="row">
+						<jsp:include page="/guide/preview.jsp" />
 						</div>
-						
-						<br>
-				<%-- 		
-	
-						<div class="row">
-							<div class="owl-carousel owl-theme owl-loaded">
-								<div class="owl-stage-outer" style="height: 300px;">
-									<div class="owl-carousel owl-theme">
-									    <div class="item" style="width:250px">
-									    	<img class="d"src="/resources/images/planner/${planner.plannerImage}">
-									    </div>
-									    <div class="item" style="width:100px">
-									    	<img class="d"src="/resources/images/planner/${planner.plannerImage}">
-									    </div>
-									    <div class="item" style="width:500px">
-									    	<img class="d"src="/resources/images/planner/${planner.plannerImage}">
-									    </div>
-									    <div class="item" style="width:100px">
-									    	<img class="d"src="/resources/images/planner/${planner.plannerImage}">
-									    </div>
-									</div>
-								</div>
-								<div class="owl-nav">
-							        <div class="owl-prev">prev</div>
-							        <div class="owl-next">next</div>
-							    </div>
-							    <div class="owl-dots">
-							        <div class="owl-dot active"><span></span></div>
-							        <div class="owl-dot"><span></span></div>
-							        <div class="owl-dot"><span></span></div>
-							    </div>
-							</div>	
-						</div>
-						 --%>
-						
+						   
+						    </div>  
 							<!-- 댓글 -->
 								<div class="container-fluid">
 						    <jsp:include page="../comment/getComment.jsp" >
@@ -379,6 +358,7 @@
 								</div>
 							</div>
 						</c:if>
+						</div>
 						</div>
 			<br><br>
 	

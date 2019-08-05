@@ -98,7 +98,7 @@ border-radius:5px ;
   z-index: 10;
 }
 
-.dim-layer {
+.do-layer {
   display: none;
   position: fixed;
   _position: absolute;
@@ -109,7 +109,7 @@ border-radius:5px ;
   z-index: 100;
 }
 
-.dim-layer .dimBg {
+.do-layer .doBg {
   position: absolute;
   top: 0;
   left: 0;
@@ -120,7 +120,7 @@ border-radius:5px ;
   filter: alpha(opacity=50);
 }
 
-.dim-layer .pop-layer {
+.do-layer .pop-layer {
   display: block;
 }
 
@@ -176,10 +176,10 @@ function onchangeDay(yy,mm,dd,ss){
 function layer_open(el){
 	
     var $el = $('#'+el);   
-    var isDim = $el.prev().hasClass('dimBg');   
+    var isDo = $el.prev().hasClass('doBg');   
     var isDi = $el.prev().hasClass('diBg');  
     
-    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+    isDo ? $('.do-layer').fadeIn() : $el.fadeIn();
     isDi ? $('.di-layer').fadeIn() : $el.fadeIn();
     
     var $elWidth = ~~($el.outerWidth()),
@@ -203,7 +203,7 @@ function layer_open(el){
     }
  
     $el.find('#close').click(function(){
-        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); 
+        isDo ? $('.do-layer').fadeOut() : $el.fadeOut(); 
         isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
         return false;
     });
@@ -289,12 +289,10 @@ $(function () {
 		     ////////////////////////////////////////////////////////
 		    eventClick: function(event, element) {
 		    	if(event.end!=null){
-  					var displayValue = 
-  					'<button type="button" style="border-radius:10px;border:0;width:200px;height:60px;background:#F2C029;color:#ffffff; " id="tourModal" >'+event.id+'<p> 관광지 살펴보기 </button><input type="hidden" value="'+event.id+'">'
-  					$('#getSchedule' ).html(displayValue);
-  				
-			layer_open('layer2');
-  			
+
+				    	 tourModal(event.id);
+				    	 $('#tourModalShow').trigger('click');
+
   				}else{
   				
 		    	 var scheCode=event.id;
@@ -341,13 +339,13 @@ $(function () {
 														+'<br/><br/><br/>';
 								
 												
-																 $('#getSchedule' ).html(displayValue);
+																 $('#getSchedule2' ).html(displayValue);
 			
-				/* 	alert(displayValue); */
+			/* alert(displayValue);  */
 				
 								}
 						});
-					 layer_open('layer2');
+					 layer_open('layer4');
   				}
 		      }, 
 					/////////////////////////////////////////////////////
@@ -436,12 +434,10 @@ var departDate=${planner.departDate};
 		     ////////////////////////////////////////////////////////
 		    eventClick: function(event, element) {
 		    	if(event.end!=null){
-  					var displayValue = 
-  					'<button type="button" style="border-radius:10px;border:0;width:200px;height:60px;background:#F2C029;color:#ffffff; " id="tourModal" >'+event.id+'<p> 관광지 살펴보기 </button><input type="hidden" value="'+event.id+'">'
-  					$('#getSchedule' ).html(displayValue);
-  				
-			layer_open('layer2');
-  			
+
+  						    	 tourModal(event.id);
+  						    	 $('#tourModalShow').trigger('click');
+
   				}else{
   				
 		    	 var scheCode=event.id;
@@ -483,20 +479,20 @@ var departDate=${planner.departDate};
 														 
 														 +'<div class="col-md-12" ><div class="row"> '
 														+'<div class="col-md-4"> <p> 일정상세 </p></div>'
-														 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" readonly> '+JSONData.scheDetail+'" </textarea></div>'
+														 +'<div class="col-md-8"><textarea name="scheDetail"  cols="20" rows="3" readonly> '+JSONData.scheDetail+' </textarea></div>'
 														 +'</div></div>'
 														 +'<div class><input type="hidden" id="scheCode" name="scheCode" value="'+JSONData.scheCode+'"></div>'
 														+'<br/><br/><br/>';
 								
 												
-																 $('#getSchedule' ).html(displayValue);
+																 $('#getSchedule2' ).html(displayValue);
 			
 				console.log(displayValue);
 				
 								}
 			
 						});
-					 layer_open('layer2');
+					 layer_open('layer4');
 		    }
 		      }, 
 					/////////////////////////////////////////////////////
@@ -520,6 +516,9 @@ var departDate=${planner.departDate};
 <!--캘린더  -->
 <br><br><br><br>
 
+<div style="display:none">
+<button type="button" class="btn btn-primary" data-toggle="modal" id="tourModalShow"  data-target="#modalTourList" >관광지</button>
+</div>
  <div class="col-md-12" >	
 <div class="row"> 
 <div class="col-md-1"></div>
@@ -533,5 +532,6 @@ var departDate=${planner.departDate};
   <div class="col-md-1"></div>
  </div></div>
  <jsp:include page="/planner/getSchedule2.jsp" />
+  <jsp:include page="/guide/tourModal.jsp" />
 </body>
 </html>

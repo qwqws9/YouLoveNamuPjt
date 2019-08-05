@@ -9,6 +9,10 @@ html, body { height: 100%; }
 .gnb_wrap { padding-top: 100px; }
 .openbtn { position: fixed; top:0; }
 
+
+/* 시차 */
+
+
 /* 메인 이미지 */
 section.visual_image
 	{ position: relative; width: 100%; height: 100%; color: rgba(255, 255, 255, .8); background-position: center; background-size: cover; image-repeat: no-repeat; }

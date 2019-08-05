@@ -1,5 +1,31 @@
 $(function(){
 //	
+	setInterval(getTime,1000);
+	
+	function getTime() {
+		$.ajax({
+			url : "/guide/json/getTime",
+			method : "POST" ,
+			//dataType : "json" ,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData , status) {
+				$.each(JSONData , function(index,item){
+					console.log(item.countryName);
+					console.log(item.time);
+					console.log(item.timeGap);
+				})
+			}
+			,
+			error:function( jqXHR, textStatus, errorThrown){
+				alert(textStatus);
+				alert(errorThrown);
+			}
+		}) // end ajax 
+	}
+	
 //	$('body').oLoader({
 //		  wholeWindow: true, //makes the loader fit the window size
 //		  lockOverflow: true, //disable scrollbar on body
