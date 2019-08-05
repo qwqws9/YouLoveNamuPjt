@@ -524,9 +524,12 @@ input::placeholder {
 				
 			});
 			
-			$('button:contains("확인")').on('click',function(){
+// 			$('button:contains("확인")').on('click',function(){
+// 				compareNum($(this).attr('name'),$(this).parent().prev().children().val());
+// 			})
+			$(document).on('click','button:contains("확인")',function(){
 				compareNum($(this).attr('name'),$(this).parent().prev().children().val());
-			})
+			});
 			
 			// 닉네임 중복체크 ajax 통신
 			$('#nickname').on('keyup',function(){

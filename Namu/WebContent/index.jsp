@@ -49,10 +49,16 @@
 		<header><jsp:include page="/layout/header.jsp" /></header>
 	
 		<div class="timezone">
-			<span class="time_data"><span class="seoul"><span><img src="/resources/images/flag/IT.png"/></span> Seoul</span><span class="times">17:47:52</span></span>
+			<span class="time_data seoul"><span class="seoul"><span><img src="/resources/images/flag/KRW.svg"/></span> Seoul</span><span class="times">17:47:52</span></span>
+			<span class="time_data paris"><span class="paris"><span><img src="/resources/images/flag/FR.png"/></span> Paris</span><span class="times">7시간 시차</span></span>
+			<span class="time_data london"><span class="london"><span><img src="/resources/images/flag/GB.png"/></span> London</span><span class="times">8시간 시차</span></span>
+			<span class="time_data mockba"><span class="mockba"><span><img src="/resources/images/flag/russia.png"/></span> Mockba</span><span class="times">6시간 시차</span></span>
+			<span class="time_data newyork"><span class="newyork"><span><img src="/resources/images/flag/america.png"/></span> NewYork</span><span class="times">13시간 시차</span></span>
+			<span class="time_data paulo"><span class="paulo"><span><img src="/resources/images/flag/sanpa.png"/></span> São Paulo</span><span class="times">12시간 시차</span></span>
+			<span class="time_data sydney"><span class="sydney"><span><img src="/resources/images/flag/sydney.png"/></span> Sydney</span><span class="times">1시간 시차</span></span>
 		</div>
 	</div>
-	
+	<br><br><br>
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
 	<div class="container" style="padding-top: 100px;">
 		<div class="row">
