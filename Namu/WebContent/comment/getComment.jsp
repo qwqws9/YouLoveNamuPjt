@@ -74,9 +74,127 @@
 	</div>
 	<br><br><br><br><br><br>
 	
+	<div class="modal fade" id="commentPolice" tabindex="-1" role="dialog" aria-labelledby="policeLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel">신고</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          		<span aria-hidden="true">&times;</span>
+        		</button>
+      		</div>
+      		<div class="modal-body">
+      			<div>
+      				<input type="hidden"  id="fromUserComment" value="${user.userCode }">
+      				<input type="hidden"  id="toUserComment" value="">
+      				작성자 : <input type="text" id="commentWriterUserNick"  value="" style="outline: none;background: none;border: none; width: 30%">
+      				<input type="hidden" id="policeCommentCode"  value="">
+<!--       				댓글번호 : <input type="text" id="policeDetailCodeComment" value="" style="outline: none;background: none;border: none; width: 30%"> -->
+      			</div>
+      			<div>
+      			<br>
+      				<div class="form-group">
+					    <label for="policeOption">신고 유형</label>
+					    <select name="policeOption" class="form-control" id="policeOptionComment">
+					      <option value="홍보 게시글">홍보 게시글</option>
+					      <option value="명예훼손/사생활 침해">명예훼손/사생활 침해</option>
+					      <option value="부적절한게시물">부적절한 게시물</option>
+					      <option value="기타">기타</option>
+					    </select>
+					  </div>
+      			</div>
+      			<div>
+	      			<textarea id="policeContentComment" style="width:100%;height: 100px;" placeholder="신고 내용"></textarea>
+      			</div>
+      			
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" id="policeCloseComment" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        		<button type="button" class="btn btn-primary" id="goPoliceComment">신고</button>
+      		</div>
+    	</div>
+  	</div>
+</div>
+
+
+	
 <div class="profilePopup" style="disaply:none;"></div>
 
 <script type="text/javascript">
+
+
+
+////////////////////////////////////////신고//////////////////////////////////////
+$(document).on('click','.reportComment',function(){
+	var writerNick = $(this).parents('span[class^=apto]').children('strong').text();
+	var nick = writerNick.substr(1,writerNick.length);
+	//console.log(nick);
+	//작성자 닉네임
+	$('#commentWriterUserNick').val(nick);
+	
+	var writerUserCode = $(this).parents('div[class^=media]').next().val().trim();
+	//console.log(writerUserCode);
+	//작성자 유저코드
+	$('#toUserComment').val(writerUserCode);
+	
+	//댓글 번호
+	var commentCode = $(this).parents('div[class^=media]').children().val().trim();
+	//console.log('댓글번호 : ' + commentCode);
+	$('#policeCommentCode').val(commentCode);
+})
+
+$(document).on('click','#goPoliceComment',function(){
+	//댓글 작성자 회원코드
+	var writerCode = $('#toUserComment').val().trim();
+	//댓글번호
+	var commentCode = $('#policeCommentCode').val().trim();
+	var boardCode = $('#boardCode').val().trim();
+	var detailCode = $('#detailCode').val().trim();
+	var sessionId = $('#sessionId').val().trim();
+	var option = $('#policeOptionComment').val().trim();
+	var content = $('#policeContentComment').val().trim();
+	
+	if(content.length <= 0) {
+		alert('내용을 입력하세요.');
+		return;
+	}else {
+		$.ajax({
+			url : '/user/json/addPolice',
+			method  : 'post',
+			data : JSON.stringify ({
+				fromUser : {
+					userCode : sessionId
+				},
+				toUser : {
+					userCode : writerCode
+				},
+				policeBoardCode : boardCode,
+				policeDetailCode : detailCode,
+				policeOption : option,
+				policeContent : content,
+				commentCode : commentCode
+			}),
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(data,status) {
+				alert('신고가 완료되었습니다.');
+				$('#policeCloseComment').trigger('click');
+			}
+		});
+	}
+			
+		
+		
+	
+	
+	
+})
+
+
+
+
 
 
 ////////////////////////////////////////추천 /////////////////////////////////////
@@ -531,7 +649,7 @@ function deleteLike(commentCode,likeName) {
 			    		+'<input type="hidden" class="writerUserCode" value="'+item.writerComment.userCode+'">'
 			    		+' </li>');
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
-							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.apto-'+index);
+							$('<button class="reportComment" data-target="#commentPolice"  data-toggle="modal"  style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.apto-'+index);
 						}else if(item.commentDelete == 0 && item.writerComment.userCode == userCode) {
 							$('<button class="commentEdit" style="position: absolute; right: 50px; border:none; background: none;">수정</button>').appendTo('.apto-'+index);
 							$('<button class="commentDelete" style="position: absolute; right: 0px; border:none; background: none;">삭제</button>').appendTo('.apto-'+index);
@@ -576,7 +694,7 @@ function deleteLike(commentCode,likeName) {
 					   +'<input type="hidden" class="writerUserCode" value="'+item.writerComment.userCode+'">'
 					   +'</li>' );
 						if(item.commentDelete == 0 && item.writerComment.userCode != userCode ) {
-							$('<button class="reportComment" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.aptoo-'+index);
+							$('<button class="reportComment" data-target="#commentPolice"  data-toggle="modal" style="position: absolute; right: 0; color:#4285F4; border:none; background: none;"><i class="fas fa-bell"></i>신고</button>').appendTo('.aptoo-'+index);
 						}else if(item.commentDelete == 0 && item.writerComment.userCode == userCode) {
 							$('<button class="commentEdit" style="position: absolute; right: 50px; border:none; background: none;">수정</button>').appendTo('.aptoo-'+index);
 							$('<button class="commentDelete" style="position: absolute; right: 0px; border:none; background: none;">삭제</button>').appendTo('.aptoo-'+index);

@@ -37,7 +37,7 @@ public class WishBeenDaoImpl implements WishBeenDao {
     //Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
     // http://chromedriver.chromium.org/downloads 크롬 드라이버 버전에 맞게 설치
-    public static final String WEB_DRIVER_PATH = "C:\\Users\\ejfrm\\Desktop\\selenium\\chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "C:\\chromedriver.exe";
     
     //크롤링 할 URL
     private String base_url;

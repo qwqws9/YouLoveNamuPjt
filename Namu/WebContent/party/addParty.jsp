@@ -83,7 +83,7 @@
 												위도
 											</div>
 											<div class="col-8">
-									   			<input type="text" id="latitude" name="latitude" class="form-control" placeholder=""
+									   			<input type="hidden" id="latitude" name="latitude" class="form-control" placeholder=""
 									   				readonly="readonly" style="border: none; background: none;">
 											</div>
 										</div>
@@ -94,7 +94,7 @@
 												경도
 											</div>
 											<div class="col-8">
-									   			<input type="text" id="longitude" name="longitude" class="form-control" placeholder=""
+									   			<input type="hidden" id="longitude" name="longitude" class="form-control" placeholder=""
 									   				readonly="readonly" style="border: none; background: none;">
 											</div>
 										</div>
@@ -493,7 +493,7 @@
 	  	marker.setLngLat([lng, lat])
 	  	marker.addTo(map);
 		$("#latitude").val(lat);
-		$("#longitude").val(lat);
+		$("#longitude").val(lng);
 	  	
 			});
 	</script>

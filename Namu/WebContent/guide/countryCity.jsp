@@ -18,6 +18,7 @@
 					  <button type="button" class="CZ weatherCountry list-group-item list-group-item-action">체코</button>
 					  <button type="button" class="FR weatherCountry list-group-item list-group-item-action">프랑스</button>
 					  <button type="button" class="HU weatherCountry list-group-item list-group-item-action">헝가리</button>
+					  <button type="button" class="SK weatherCountry list-group-item list-group-item-action">슬로바키아</button>
 					</div>
 				</div>
       </div>

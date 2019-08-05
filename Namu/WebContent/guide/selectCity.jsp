@@ -20,6 +20,7 @@
 					  <button type="button" class="flightCountry list-group-item list-group-item-action">체코</button>
 					  <button type="button" class="flightCountry list-group-item list-group-item-action">프랑스</button>
 					  <button type="button" class="flightCountry list-group-item list-group-item-action">헝가리</button>
+<!-- 					  <button type="button" class="flightCountry list-group-item list-group-item-action">슬로바키아</button> -->
 					</div>
 				</div>
       </div>
@@ -88,6 +89,11 @@
 		    <small>부다페스트 페렌츠 리스트 국제공항 (BUD)</small>
 		  </button>
 	  </div>
+<!-- 	  <div class="flightCity tmffh" style="display:none"> -->
+<!-- 		  <button type="button" class="fCity list-group-item list-group-item-action" value="BTS"> -->
+<!-- 		    <small>브라티슬라바 공항 (BTS)</small> -->
+<!-- 		  </button> -->
+<!-- 	  </div> -->
 	  
       
       

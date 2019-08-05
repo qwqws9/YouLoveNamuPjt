@@ -46,6 +46,11 @@
 		  color: #F2C029;
 		  padding: 10px 10px;
 		  border: none;
+		  z-index: 1000;
+		  background-color: transparent;
+		}
+		.openbtn svg {
+			z-index: 1100;
 		}
 		
 		

@@ -189,7 +189,7 @@ $(function() {
 			//console.log(e.originalEvent.wheelDelta);
 			
 			if(e.originalEvent.wheelDelta < 0){
-				$('html, body').stop().animate({scrollTop:$('header').offset().top},1000);
+				$('html, body').stop().animate({scrollTop:$('header').offset().top},1000,'easeOutBack');
 			}else if(e.originalEvent.wheelDelta >= 0){
 				$('html, body').stop().animate({scrollTop:0},1000);
 			}
@@ -197,7 +197,7 @@ $(function() {
 	});
 	// scroll 클릭 애니메이션 이벤트
 	$('.scrolll').on('click',function(){
-		$('html, body').stop().animate({scrollTop:$('header').offset().top},1000);
+		$('html, body').stop().animate({scrollTop:$('header').offset().top},1000,'easeOutBack');
 	})
     
 	// 환율 정보 .jsp 온로드
@@ -240,4 +240,61 @@ $(function() {
 			});
 		}
 	});
+	//CommunityList
+	$.ajax({
+		url : "/community/json/bestCommunityList",
+		method : "POST",
+		data : JSON.stringify({
+			"currentPage" : 0
+		}),
+		dataType : 'json',
+		headers : {
+ 			 "Accept" : "application/json",
+             "Content-Type" : "application/json"
+ 		},
+ 		success : function(JSONData, status){
+ 			//console.log(JSONData);
+ 			$.each(JSONData.list,function(index,community){
+ 				var communityBoard;
+ 				if(community.communityBoard == 1){
+ 					communityBoard = '자유게시판'
+ 				}else if(community.communityBoard == 2){
+ 					communityBoard = '도시별게시판'
+ 				}else{
+ 					communityBoard = 'QnA게시판'
+ 				}
+ 				
+ 				var communityContent;
+ 				communityContent = $(community.communityContent).text($(community.communityContent).text().trim());
+ 				console.log(communityContent);
+
+ 				$("#bestCommunity").append(
+	 				'<div class="square">'
+						+'<div style="background-image: url(/resources/images/ThumbNail/'+community.communityThumbnail+')">'
+							+'<div>'
+								+'<div class="white">'
+									+'<input type="hidden" class="communityCode" value="'+community.communityCode+'">'
+									+'<div class="plan_name text_shadow" id="communityTitle">'+community.communityTitle+'</div>'
+									+'<div class="plan_period text_shadow">'+community.writer.nickname+'</div>'
+									+'<div class="plan_budget text_shadow">'+communityBoard+'</div>'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+					+'</div>'
+ 				);
+ 			});
+ 			
+ 			
+ 		},
+ 		error:function(jqXHR, textStatus, errorThrown){
+			alert( textStatus );
+			alert( errorThrown );
+		}
+	});
+	
+	$.each($(".plan_period.text_shadow"),function(){
+    	$(this).text($(this).text().trim());
+    });
+	
+	
 });

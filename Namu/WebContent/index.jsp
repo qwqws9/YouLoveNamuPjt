@@ -17,14 +17,14 @@
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!-- 	<script src="/resources/javascript/jquery-ui.min.js"></script> -->
+	<script src="/resources/javascript/jquery-ui.min.js"></script>
 	<!-- Our Own Resources -->
 	<script src="../resources/javascript/jquery.oLoader.min.js"></script>
 	<!-- 날씨, 환율 정보를 위한 국가 도시 리스트 출력 -->
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/index.css">
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	
@@ -40,7 +40,7 @@
 		<div class="main_txt">
 			Don't<br/>
 			call it a dream.<br/>
-			call it a <span>PLAN</span>.
+			Call it a <span>PLAN</span>.
 		</div>
 		<a href="#" class="scrolll"><span></span>Scroll</a>
 	</section>
@@ -48,7 +48,7 @@
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<div class="container" style="padding-top: 150px;">
+	<div class="container" style="padding-top: 100px;">
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">
@@ -107,31 +107,31 @@
 	
 	<script type="text/javascript">
 	$(function() {
-		$(document).on('click','.wallet_box .square',function(){
+		$(document).on('click','.plannerClick .square',function(){
 			var plannerCode = $(this).children(':eq(0)').val();
 			self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
 	 	});
+		$(document).on('click','.communityClick .white',function(){
+			var communityCode = $(this).children('.communityCode').val();
+			self.location = '/community/getCommunity?communityCode='+communityCode;
+		});
 	});
 	
 	</script>
 	
 	<div class="wrap">
-	<h2 class="wallet_title"><span> 여행 플래너 공유 </span></h2>
-	<section class="wallet_box">
-	<div class="square_wrap clear" id="bestPlanner">
+		<h2 class="wallet_title"><span>여행 플래너 공유 </span></h2>
+		<section class="wallet_box plannerClick">
+			<div class="square_wrap clear" id="bestPlanner"></div>
+		</section>
+		
+		<div class="comm">
+			<h2 class="wallet_title"><span>커뮤니티 게시판 </span></h2>
+			<section class="wallet_box communityClick">
+				<div class="square_wrap clear" id="bestCommunity"></div>
+			</section>
+		</div>
 	</div>
-	 
-	 <br><br>
-	 <h2 class="wallet_title"><span> 커뮤니티 게시판 </span></h2>
-	 <br><br>
-	<div class="row">
-		<div class="col-md-12 col-lg-12">
-	 		<jsp:include page="/community/bestCommunity.jsp"></jsp:include>
-	 	</div>
-	 </div>
-	 
-</section>
-</div>
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
 
 </body>

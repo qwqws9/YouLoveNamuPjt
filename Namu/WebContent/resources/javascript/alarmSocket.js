@@ -20,6 +20,8 @@ function socketcall(writerUser,protocol) {
 		socket.emit("timeline", { To: writerUser, msg : '회원님과 친구맺기를 원합니다.' });
 	}else if(protocol == '3') {
 		socket.emit("timeline", { To: writerUser, msg : '회원님의 게시물을 좋아합니다.' });
+	}else if(protocol == '4') {
+		socket.emit("timeline", { To: writerUser, msg : '회원님과 동행맺기를 원합니다.' });
 	}
 }
 
@@ -45,7 +47,7 @@ $(function(){
 	
 	if(userCode  != '') {
 		
-		socket = io("http://192.168.0.30:3000");
+		socket = io("http://192.168.0.94:3000");
 		    // 서버로 자신의 정보를 전송한다.
 		    socket.emit("login", {
 		      // name: "ungmo2",
@@ -205,6 +207,35 @@ function addTimelineFriend(senduserCode,receiverUserCode,protocol) {
 		success : function(data,status){
 				if(data == true) {
 					socketcall(receiverUserCode,'2');
+				}
+		}
+	})
+}
+
+
+
+//프로필정보 동행추가 메시지 전달
+function addTimelineParty(senduserCode,receiverUserCode,protocol) {
+	
+	$.ajax ({
+		url : '/timeline/json/addTimeline',
+		method : 'post',
+		data : JSON.stringify({
+			protocol : protocol,
+			fromUser : {
+				userCode : senduserCode
+			},
+			toUser : {
+				userCode : receiverUserCode
+			}
+		}),
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(data,status){
+				if(data == true) {
+					socketcall(receiverUserCode,'4');
 				}
 		}
 	})
