@@ -24,7 +24,7 @@
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/index.css">
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	
@@ -48,7 +48,7 @@
 	<header><jsp:include page="/layout/header.jsp" /></header>
 	
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<div class="container" style="padding-top: 150px;">
+	<div class="container" style="padding-top: 100px;">
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">
@@ -116,17 +116,29 @@
 	</script>
 	
 	<div class="wrap">
-	<h2 class="wallet_title"><span> 여행 플래너 공유 </span></h2>
-	<section class="wallet_box">
-	<div class="square_wrap clear" id="bestPlanner">
-	</div>
-	 
-	<h2 class="wallet_title"><span> 커뮤니티 게시판 </span></h2>
-	<div class="" id="bestCommunity">
-	</div>
-	
-	
-	</section>
+		<h2 class="wallet_title"><span>여행 플래너 공유 </span></h2>
+		<section class="wallet_box">
+			<div class="square_wrap clear" id="bestPlanner"></div>
+		</section>
+		
+		<div class="comm">
+			<h2 class="wallet_title"><span>커뮤니티 게시판 </span></h2>
+			<section class="wallet_box">
+				<div class="square_wrap clear" id="bestCommunity">
+					<div class="square">
+						<div>
+							<div>
+								<div class="white">
+									<div class="plan_name text_shadow" id="plannerName">제목</div>
+									<div class="plan_period text_shadow">내용</div>
+									<div class="plan_budget text_shadow">글쓰니</div>
+								</div>
+							</div>
+						</div>
+					</div><!-- //square -->
+				</div>
+			</section>
+		</div>
 	</div>
 	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
 
