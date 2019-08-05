@@ -106,7 +106,7 @@ tr:nth-child(odd):hover td {
 	    	</form></div>
 	    	
 	<!-- right area -->
-	    	<div class="col-md-1"></div>
+	   <!--  	<div class="col-md-1"></div> -->
 	    	</div>
 	    	</div>
 <br><br><br><br>
@@ -114,7 +114,7 @@ tr:nth-child(odd):hover td {
 <div class="row">
    <div class="col-md-8"></div>
       <div class="col-md-2">
-		      <button type="button" class="btn btn-default"  id="previous" style="color:#868296"> 이전 단계 </button>
+		      <!-- <button type="button" class="btn btn-default"  id="previous" style="color:#868296"> 이전 단계 </button> -->
 		  
 		      <button type="button" class="btn btn-default"  id="save" style="color:#868296"> 다음 단계  </button>
 		      </div></div></div>
@@ -164,7 +164,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 			var td = tr.children();
 			var no = td.eq(0).html();
 			
-			alert(no);
+			/* alert(no); */
 			  $(this).parent().parent().remove();
 			for (var i = 0; i < myMarkers.length; i++) {
 	            if (myMarkers[i].id == no) {                
@@ -199,6 +199,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 	var array2=[];
 
     var icons = [
+    	
       iconURLPrefix + 'ltblue-dot.png',
       iconURLPrefix + 'green-dot.png',
       iconURLPrefix + 'blue-dot.png',
@@ -208,7 +209,7 @@ $('#list_table').on("click", ".deletebtn", function () {
       iconURLPrefix + 'yellow-dot.png',
       iconURLPrefix + 'red-dot.png',
     ];
-    var image = "/resources/images/favicon.ico";
+    var image = "/resources/images/planner/icon.png";
     
     var infowindow;
     var map;
@@ -235,7 +236,7 @@ $('#list_table').on("click", ".deletebtn", function () {
  		}
  	 });
  
-   alert(locations); 
+ /*   alert(locations);  */
    
 
   
@@ -337,8 +338,9 @@ $('#list_table').on("click", ".deletebtn", function () {
 						$('<td  style="display:none;" >').append( "<input name='lng' type='text' id='lng' value="+(myMarker.position.lng()).toFixed(6)+" style='display:none;' readonly>"),
 						$('<td>').append( "<select name='stayDay' id='stayDay'><option value='1' selected='selected'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option></select>"),
 						$('<td>').append(
-								 "<button class='deletebtn' type='button'  style='border:none; background: none' id='delete'>"
-			    		+"<i class='fas fa-minus-circle'></i></button>")
+								"<button class='deletebtn' type='button'  style='border:none; background: none' id='delete'>"
+					    		+"<i class='fas fa-minus-circle'></i>"
+					    		+' </button>')
 					)
 				);
 		   }

@@ -258,7 +258,6 @@
 			</form>
 			</div>
 			<div class="col-1">
-				<button type="button" id="coco" onclick="getSchedule()">ddd</button>
 			</div><!-- 사이드바 -->
 		</div>
 	</div>

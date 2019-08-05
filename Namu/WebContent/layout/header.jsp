@@ -158,7 +158,7 @@
 								    <div id="CommunityMenu" class="collapse" aria-labelledby="headingOne" data-parent="#Community">
 								      	<div class="card-body">
 									  		<a id="communityList" href="#">커뮤니티 목록</a>
-										    <a href="#">분석</a>
+<!-- 										    <a href="#">분석</a> -->
 								      	</div>
 								    </div>
 								</div>

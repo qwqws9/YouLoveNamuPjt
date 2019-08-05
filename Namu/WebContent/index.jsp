@@ -45,7 +45,13 @@
 		<a href="#" class="scrolll"><span></span>Scroll</a>
 	</section>
 	
-	<header><jsp:include page="/layout/header.jsp" /></header>
+	<div class="time_wrap">
+		<header><jsp:include page="/layout/header.jsp" /></header>
+	
+		<div class="timezone">
+			<span class="time_data"><span class="seoul"><span><img src="/resources/images/flag/IT.png"/></span> Seoul</span><span class="times">17:47:52</span></span>
+		</div>
+	</div>
 	
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
 	<div class="container" style="padding-top: 100px;">
@@ -120,13 +126,13 @@
 	</script>
 	
 	<div class="wrap">
-		<h2 class="wallet_title"><span>여행 플래너 공유 </span></h2>
+		<h2 class="wallet_title"><span>베스트 추천 플래너</span></h2>
 		<section class="wallet_box plannerClick">
 			<div class="square_wrap clear" id="bestPlanner"></div>
 		</section>
 		
 		<div class="comm">
-			<h2 class="wallet_title"><span>커뮤니티 게시판 </span></h2>
+			<h2 class="wallet_title"><span>커뮤니티 게시판</span></h2>
 			<section class="wallet_box communityClick">
 				<div class="square_wrap clear" id="bestCommunity"></div>
 			</section>

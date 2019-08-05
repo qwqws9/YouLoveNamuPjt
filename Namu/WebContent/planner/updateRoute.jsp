@@ -102,7 +102,7 @@ tr:nth-child(odd):hover td {
 	    	</form></div>
 	    	
 <!-- right area -->
-	    	<div class="col-md-1"></div>
+	   
 	    	
 	   <!-- area -->
 	    	</div>
@@ -158,8 +158,7 @@ $('#list_table').on("click", ".deletebtn", function () {
 			var no = td.eq(0).html();
 			var cn = td.eq(1).text(); 
 		/* 	var cn =$("#list_table td input").eq(0).val(); */
-			/* alert(no);
-			alert(cn); */
+			
 			  $(this).parent().parent().remove();
 			for (var i = 0; i < myMarkers.length; i++) {
 	            if (myMarkers[i].id == no || myMarkers[i].id == cn) {                
@@ -208,7 +207,7 @@ $('#list_table').on("click", ".deletebtn", function () {
       iconURLPrefix + 'yellow-dot.png',
       iconURLPrefix + 'red-dot.png',
     ];
-    var image = "/resources/images/favicon.ico";
+    var image = "/resources/images/planner/icon.png";
     
     var infowindow;
     var map;
@@ -470,13 +469,12 @@ $('#list_table').on("click", ".deletebtn", function () {
 	 	  	/* alert(path.getLength());
 		    alert(firstMarkers); */
 	        
-	       /* $.each(myMarkers,function(index){
+	   /*   $.each(myMarkers,function(index){
 	    	   alert(index+" 번째 "+myMarkers[index].position);
 	    	   alert(" 번째 "+myMarker.id.position);
 	  
-	    //////////////////////////////////////////////////////////
-	    	var index; */
-	   
+	    	var index; 
+	    */
 	    	   $('#list_table').append(
 					$('<tr>').append(
 					/* 	$('<td>').append("<img src='/resources/images/flag/'"+array2[path.getLength()-1]+"alt='...' height='20' width='35'>"), */
