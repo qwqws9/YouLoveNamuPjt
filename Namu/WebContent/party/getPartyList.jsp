@@ -271,16 +271,21 @@
 		}
 		
 		.fas.fa-cog.update{
+			color: #30A9DE;
 			cursor: pointer;
-			padding-left: 110px;
+/* 			left: 0; */
+/* 			padding-left: 0; */
+			
 		}
 		.fas.fa-cog.update:hover{
 			color: #F2C029;
 			transition: 0.3s;
 		}
 		.fas.fa-trash-alt.remove{
+			color: #30A9DE;
 			cursor: pointer;
-			padding-left: 10px;
+			left: 0;
+			padding-left: 0;
 		}
 		.fas.fa-trash-alt.remove:hover{
 			color: #F2C029;
@@ -420,7 +425,7 @@
 				<div class="modal-dialog" role="document">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
-			        		<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			        		<h5 class="modal-title" id="exampleModalLabel">동행신청하기</h5>
 			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          		<span aria-hidden="true">&times;</span>
 			        		</button>
@@ -446,11 +451,14 @@
             	self.location = "/party/updatePartyView?partyCode="+update;
           	});
 			$(document).on("click",".fas.fa-trash-alt.remove",function(event){
-				alert("ddd");
 				var partyCode = $(this).parent().parent().text().split('·',1);
 				var remove = $.trim(partyCode);
 				self.location = "/party/deleteParty?partyCode="+remove;
 			});
+			
+			$(document).on('click','.fas.fa-paper-plane.sendParty',function(event){
+				
+			})
 			
 
 			
@@ -672,11 +680,11 @@
 				    		}};
      				json.push(geo);
      				profile = item.partyWriter.profileImg
+					//console.log(profile);
      				
      			});
      			
      			
-				console.log(geo);
 				
 				
 				geojson = {
@@ -746,6 +754,7 @@
 			 	//회원 변경되었을때 프로필사진 변경되는지 체크필요?????????????????
 				geojson.features.forEach(function(marker) {
 					  // Create a div element for the marker
+					  console.log(marker);
 					  var el = document.createElement('div');
 					  // Add a class called 'marker' to each div
 					  el.className = 'marker';
@@ -753,7 +762,7 @@
 					  
 					  var img = el.appendChild(document.createElement('img'));
 					  img.className = 'rounded-circle';
-					  img.src = '/resources/images/profile/'+profile;
+					  img.src = '/resources/images/profile/'+marker.properties.writerProfileImg;
 					  img.style.cssText = 'width: 45px;height: 45px;  border: 1px solid rgba(0, 0, 0, 0.25);'
 					  
 					  // By default the image for your custom marker will be anchored
@@ -977,13 +986,13 @@
 			    var update 
 			    update = where.appendChild(document.createElement('i'));
 			    update.className = 'fas fa-cog update';
-			    //update.style.cssText = 'cursor: pointer;'
+			    //update.style.cssText = 'text-align:right;'
 			    
 			    //<i class="fas fa-cog"></i>
 			    var remove 
 			    remove = where.appendChild(document.createElement('i'));
 			    remove.className = 'fas fa-trash-alt remove';
-			    //remove.style.cssText = 'cursor: pointer;'
+			    //remove.style.cssText = 'text-align:right;'
 			    //<i class="fas fa-trash-alt"></i>
 			    //var partyCode = prop.partyCode;
 			    	//updateParty(partyCode);

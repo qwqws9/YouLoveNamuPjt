@@ -106,6 +106,7 @@ public class CommunityController {
 		Hashtag hashVo = new Hashtag();
 		hashVo.setHashtag(hashtag);
 		hashVo.setWriter(user);
+		System.out.println("communityCode" + community.getCommunityCode());
 		hashVo.setCommunityCode(community.getCommunityCode());
 		hashtagService.addHashtag(hashVo);
 		

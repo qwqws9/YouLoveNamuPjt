@@ -6,8 +6,8 @@
 <head>
 	<meta charset="utf-8">
 	<!-- 타임라인을 위한 노드 서버 연결 -->
-<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
-<!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
+	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script>
+	<script src="/resources/javascript/alarmSocket.js"></script>
 	<!-- 지우지 말것...... -->
 	
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
@@ -16,7 +16,6 @@
 	<script>
 
 	//채팅 팝업
-	//var url = "http://192.168.0.13:8005?nickname=${user.nickname}";
 	var chat = "http://192.168.0.13:8005?nickname=${user.nickname}&profile=${user.profileImg}";
 	var chatbot = "../chatbot/getChatbot.jsp";
 	
@@ -27,6 +26,13 @@
 				/* popup = window.open(url, "popup_chat", "resizable")
 				popup.resizeTo(450,700);
 				popup.resizeBy(-100,-100); */
+			});
+		});
+	};
+	function onChatbot(){
+		$(document).ready(function(){
+			$("#getChatbot").on("click", function(){
+				popup = window.open(chatbot, "popup_chatbot", "width=470, height=447, location=no, left=500, top=50")
 			});
 		});
 	};
@@ -107,8 +113,9 @@
 								
 								
 							<div class="row">
-								<div class="col-md-3 col-lg-3" style="padding-top: 7px;">
-									<button type="button" style="background: none; border: none; cursor: pointer;" onclick="javascript:messageBox()"><i class="fas fa-envelope fa-lg"></i></button>
+								<div class="col-md-3 col-lg-3" style="padding-top: 7px;"><!-- 채팅 -->
+									<button type="button" style="background: none; border: none; cursor: pointer;" onclick="javascript:onChat()" id='getChat'><i class="far fa-comment-dots" 
+									style="width: 1em;font-size: 1.5em;"></i></button>
 								</div>
 								<div class="col-md-3 col-lg-3" style="padding-top: 7px;">
 									<button type="button" style="background: none; border: none; cursor: pointer;" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-address-book fa-lg"></i></button>
@@ -195,41 +202,15 @@
 						</div>
 						
 						<div class="row"><!-- 챗봇 -->
-							<div class="col-lg-12 text-left">
+							<div class="col-lg-12 text-right">
 								<a href="#">
 									<span class="chat">
-										<img src="/resources/images/favicon.ico" style="height: 60px;" data-toggle="modal" data-target="#myModal">
+										<img src="/resources/images/favicon.ico" style="height: 50px;" onclick=onChatbot()  id='getChatbot'>
 									</span>
 								</a>
 							</div>
 						</div>
-						
-						<!-- 모달창.... -->
-						<div class="modal fade" id="myModal">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header"></div>
-						      <div class="modal-body">
-						        Hello! Webisfree.com
-						      </div>
-						      <div class="modal-footer"></div>
-						    </div>
-						  </div>
-						</div>
-						
-						
-						<div class="row"><!-- 채팅 -->
-							<div class="col-lg-12 text-left">
-								<a href="#">
-									<span class="talk">
-										<c:if test="${! empty user.nickname}">
-											<img src="/resources/images/youlovetalk_logo.png" alt="유럽톡" class="talk_img"  style="height: 60px;" onClick=onChat() id='getChat'>
-										</c:if>
-									</span>
-								</a>
-							</div>
-						</div>
-												
+																							
 						
 					</div><!-- end of menu -->
 				</div><!-- end of row -->

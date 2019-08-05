@@ -80,7 +80,8 @@
     var infowindow;
     var map;
    	var myMarkerId;
-   	var image = "/resources/images/favicon.ico";
+    var image = "/resources/images/planner/icon.png";
+   /* 	var image = "/resources/images/favicon.ico"; */
    	
   $(function() {
     var plannerCode=${planner.plannerCode};
@@ -96,13 +97,9 @@
 
  	success : function(JSONData) {
  		console.log(JSONData);   
+ 
  	route = JSONData;
- 	
-
- 	$("#searchKeyword").autocomplete({
- 	source : route
-
- 	});
+		/* alert(route[0]);   */
  	}
  	});
  	

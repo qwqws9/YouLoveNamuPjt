@@ -141,6 +141,16 @@ border-radius:5px ;
   height: 100%;
   z-index:100;
 }
+.do-layer {
+ display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index:100;
+}
 
 .dim-layer .dimBg {
   position: absolute;
@@ -175,6 +185,17 @@ border-radius:5px ;
   filter: alpha(opacity=50);
 }
 
+.do-layer .doBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
 .dim-layer .pop-layer, {
   display: block;
 }
@@ -182,6 +203,9 @@ border-radius:5px ;
   display: block;
 }
 .d-layer .pop-layer, {
+  display: block;
+}
+.do-layer .pop-layer, {
   display: block;
 }
 
@@ -372,7 +396,7 @@ function updateSchedule(){
 								+'<br/><br/><br/>'  ;
 
 								$('#updateSchedule' ).html(displayValue);
-							 alert(displayValue); 
+							/*  alert(displayValue);  */
 			}
 		});
 	 layer_open('layer3');
@@ -429,10 +453,12 @@ function layer_open(el){
     var isDim = $el.prev().hasClass('dimBg');   
     var isDi = $el.prev().hasClass('diBg');  
     var isD = $el.prev().hasClass('dBg'); 
+    var isDo = $el.prev().hasClass('doBg'); 
     
     isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
     isDi ? $('.di-layer').fadeIn() : $el.fadeIn();
     isD ? $('.d-layer').fadeIn() : $el.fadeIn();
+    isDo ? $('.do-layer').fadeIn() : $el.fadeIn();
     
     var $elWidth = ~~($el.outerWidth()),
         $elHeight = ~~($el.outerHeight()),
@@ -452,6 +478,7 @@ function layer_open(el){
         isDim ?$('.dim-layer').fadeOut() : $el.fadeOut(); 
         isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
         isD ? $('.d-layer').fadeOut() : $el.fadeOut(); 
+        isDo ? $('.do-layer').fadeOut() : $el.fadeOut(); 
         return false;
     });
     
@@ -459,6 +486,7 @@ function layer_open(el){
         isDim ?$('.dim-layer').fadeOut() : $el.fadeOut(); 
         isDi ? $('.di-layer').fadeOut() : $el.fadeOut(); 
         isD ? $('.d-layer').fadeOut() : $el.fadeOut(); 
+        
         return false;
     });
     $el.find('#update').click(function(){
@@ -492,6 +520,11 @@ function fncAddSchedule(){
 }		
 
 function fncUpdateSchedule(){
+
+/* 	if(scheName == null || scheName.length<1){
+		alert("일정명을 입력해주세요.");
+		return;
+	}  */
 
 	$($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
 	
@@ -601,12 +634,10 @@ $(function () {
 
 		  			eventClick: function(event, element) {
 		  				if(event.end!=null){
-		  					var displayValue = 
-		  					'<button type="button" style="border-radius:10px;border:0;width:150px;height:50px;background:#F2C029;color:#ffffff; " id="tourModal" >'+event.id+'<p> 관광지 살펴보기 </button><input type="hidden" value="'+event.id+'">'
-		  					$('#getSchedule2' ).html(displayValue);
-		  				
- 				layer_open('layer2');
-		  			
+
+						    	 tourModal(event.id);
+						    	 $('#tourModalShow').trigger('click');
+
 		  				}else{
 		  				
 		    	/*  alert(event.id); */
@@ -724,13 +755,14 @@ $(function () {
  <div class="row"> 
    <div class="col-md-8"></div>
       <div class="col-md-4" >
-		    <button type="button" class="btn btn-default"  id="previous" style="color:#868296"> 이전 단계</button>
+		   <!--  <button type="button" class="btn btn-default"  id="previous" style="color:#868296"> 이전 단계</button> -->
 		  
 		      <button type="button" class="btn btn-default"  id="save" style="color:#868296"> 내 플래너 보기  </button>
 		      </div></div></div>
 		      <br> <br> <br> <br>
 	<jsp:include page="/planner/addSchedule.jsp" />
 	<jsp:include page="/planner/getSchedule.jsp" />
+		<jsp:include page="/planner/getSchedule2.jsp" />
 	<jsp:include page="/planner/updateSchedule.jsp" />
 	<jsp:include page="/guide/tourModal.jsp" />
 </body>

@@ -12,7 +12,7 @@
 <div style="display:none;"></div>
 <a href="#layer4" class="btn-example"></a>
 <div class="do-layer" >
-<div class="d0Bg"></div>
+<div class="doBg"></div>
 <div id="layer4" class="pop-layer">
 <div class="pop-container">
         <div class="pop-conts">
