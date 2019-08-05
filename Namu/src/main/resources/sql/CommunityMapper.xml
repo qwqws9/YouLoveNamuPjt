@@ -133,7 +133,7 @@
 		                                    community_thumbnail, open_range, views, writer, city_name
 	                        FROM community
 	                        ORDER BY views DESC ) first_table
-		            WHERE ROWNUM  &lt;= 10 )
+		            WHERE ROWNUM  &lt;= 6 )
 <!-- 			WHERE  row_seq BETWEEN 0 AND 10 -->
 			
 	</select>

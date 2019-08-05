@@ -240,4 +240,52 @@ $(function() {
 			});
 		}
 	});
+	//CommunityList
+	$.ajax({
+		url : "/community/json/bestCommunityList",
+		method : "POST",
+		data : JSON.stringify({
+			"currentPage" : 0
+		}),
+		dataType : 'json',
+		headers : {
+ 			 "Accept" : "application/json",
+             "Content-Type" : "application/json"
+ 		},
+ 		success : function(JSONData, status){
+ 			//console.log(JSONData);
+ 			$.each(JSONData.list,function(index,community){
+ 				var communityBoard;
+ 				console.log(community.communityBoard);
+ 				if(community.communityBoard == 1){
+ 					communityBoard = '자유게시판'
+ 				}else if(community.communityBoard == 2){
+ 					communityBoard = '도시별게시판'
+ 				}else{
+ 					communityBoard = 'QnA게시판'
+ 				}
+ 				$("#bestCommunity").append("<div class='square'>"
+					+"<input type='hidden' class='plannerCode' value='"+community.communityCode+"' />"
+					+"<div style='background-image: url(/resources/images/ThumbNail/"+community.communityThumbnail+")'><div>"
+					+"<div class='plan_name text_shadow' id='communityTitle'>"+community.communityTitle+"<div>"
+					+"<div class='plan_period text_shadow'>"+communityBoard +"</div>"
+					+"<div class='plan_budget text_shadow'></div>"
+					+"<div class='wallet_is'>" 
+					+"<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
+					+"<label class='btn btn-secondary'>"
+					+"<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
+					+"</label>"
+					+"<label class='btn btn-secondary active'>"
+					+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
+					+"</label></div></div></div></div>");
+ 			});
+ 			
+ 			
+ 		},
+ 		error:function(jqXHR, textStatus, errorThrown){
+			alert( textStatus );
+			alert( errorThrown );
+		}
+	});
+	
 });
