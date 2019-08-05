@@ -252,13 +252,12 @@
       			</div>
       			<div>
       				<div class="form-group">
-					    <label for="policeOption">신고 조건</label>
+					    <label for="policeOption">신고 유형</label>
 					    <select name="policeOption" class="form-control" id="policeOption">
-					      <option value="욕설">욕설</option>
-					      <option value="그냥">그냥</option>
+					      <option value="홍보 게시글">홍보 게시글</option>
+					      <option value="명예훼손/사생활 침해">명예훼손/사생활 침해</option>
 					      <option value="부적절한게시물">부적절한 게시물</option>
-					      <option value="다음">다음</option>
-					      <option value="네이버">네이버</option>
+					      <option value="기타">기타</option>
 					    </select>
 					  </div>
       			</div>

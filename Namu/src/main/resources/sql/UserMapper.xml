@@ -73,6 +73,7 @@
 		<result property="policeContent" 				column="POLICE_CONTENT" 				jdbcType="VARCHAR" />
 		<result property="policeDate" 					column="POLICE_DATE" 					jdbcType="VARCHAR" />
 		<result property="processing" 					column="PROCESSING" 					jdbcType="CHAR" />
+		<result property="commentCode" 					column="COMMENT_CODE" 					jdbcType="NUMERIC"/>
 		<association property="fromUser" 	javaType="user">
 			<result property="userCode" 	column="USER_CODE" />
 			<result property="nickname"		column="NICKNAME" />
@@ -242,7 +243,7 @@
 	
 	<insert id="addPolice" parameterType="police">
 		INSERT INTO police
-		VALUES (seq_police_code.nextval,#{fromUser.userCode},#{toUser.userCode},#{policeBoardCode},#{policeDetailCode},#{policeOption},#{policeContent},#{policeDate},'X')
+		VALUES (seq_police_code.nextval,#{fromUser.userCode},#{toUser.userCode},#{policeBoardCode},#{policeDetailCode},#{policeOption},#{policeContent},#{policeDate},'X',#{commentCode:NUMERIC})
 	</insert>
 	
 	<select id="getPoliceList" resultMap="policeMap">

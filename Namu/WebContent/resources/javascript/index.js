@@ -189,7 +189,7 @@ $(function() {
 			//console.log(e.originalEvent.wheelDelta);
 			
 			if(e.originalEvent.wheelDelta < 0){
-				$('html, body').stop().animate({scrollTop:$('header').offset().top},1000);
+				$('html, body').stop().animate({scrollTop:$('header').offset().top},1000,'easeOutBack');
 			}else if(e.originalEvent.wheelDelta >= 0){
 				$('html, body').stop().animate({scrollTop:0},1000);
 			}
@@ -197,7 +197,7 @@ $(function() {
 	});
 	// scroll 클릭 애니메이션 이벤트
 	$('.scrolll').on('click',function(){
-		$('html, body').stop().animate({scrollTop:$('header').offset().top},1000);
+		$('html, body').stop().animate({scrollTop:$('header').offset().top},1000,'easeOutBack');
 	})
     
 	// 환율 정보 .jsp 온로드
