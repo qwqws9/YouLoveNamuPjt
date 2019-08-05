@@ -1,6 +1,6 @@
 $(function(){
 //	
-	setInterval(getTime,1000);
+	setInterval(getTime, 1000);
 	
 	function getTime() {
 		$.ajax({
