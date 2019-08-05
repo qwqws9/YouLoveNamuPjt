@@ -5,6 +5,7 @@
 <head>
 	<jsp:include page="/layout/head.jsp" />
 	
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	
 	<!-- Optional JavaScript -->
@@ -23,7 +24,7 @@
 	<script src="/resources/javascript/getProfile.js"></script>
 	<script src="/resources/javascript/index.js"></script>
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/wallet.css">
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	
@@ -34,13 +35,20 @@
 	</style>
 </head>
 <body>
+	<section class="visual_image">
+		<div></div>
+		<div class="main_txt">
+			Don't<br/>
+			call it a dream.<br/>
+			call it a <span>PLAN</span>.
+		</div>
+		<a href="#" class="scrolll"><span></span>Scroll</a>
+	</section>
+	
 	<header><jsp:include page="/layout/header.jsp" /></header>
+	
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<div class="container">
-		<br><br>
-		<!-- <button type="button" id="ooo">로그인</button> -->
-		<br><br>
-		
+	<div class="container" style="padding-top: 150px;">
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">
@@ -113,19 +121,14 @@
 	<div class="square_wrap clear" id="bestPlanner">
 	</div>
 	 
-	<br><br>
 	<h2 class="wallet_title"><span> 커뮤니티 게시판 </span></h2>
-		<div class="" id="bestCommunity" >
-		</div>
+	<div class="" id="bestCommunity">
+	</div>
+	
+	
 	</section>
 	</div>
-		
-	<div>
-	
-	</div>	
-	
-	
-	
-<jsp:include page="/guide/countryCity.jsp"></jsp:include>
+	<jsp:include page="/guide/countryCity.jsp"></jsp:include>
+
 </body>
 </html>
