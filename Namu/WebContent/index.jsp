@@ -83,7 +83,7 @@
 	</div>
 	<br><br><br>
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<div class="container" style="padding-top: 100px;">
+	<div class="container">
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">
