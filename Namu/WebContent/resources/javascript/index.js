@@ -256,7 +256,7 @@ $(function() {
  			//console.log(JSONData);
  			$.each(JSONData.list,function(index,community){
  				var communityBoard;
- 				console.log(community.writer);
+ 				console.log(community.communityBoard);
  				if(community.communityBoard == 1){
  					communityBoard = '자유게시판'
  				}else if(community.communityBoard == 2){
@@ -264,34 +264,28 @@ $(function() {
  				}else{
  					communityBoard = 'QnA게시판'
  				}
- 				var communityContent;
- 				communityContent = $(community.communityContent).text($(community.communityContent).text().trim());
- 				console.log(communityContent);
- 				
- 				$("#bestCommunity").append(
-	 				'<div class="square">'
-						+'<div>'
-							+'<div>'
-								+'<div class="white">'
-									+'<input type="hidden" class="communityCode" value="'+community.communityCode+'">'
-									+'<div class="plan_name text_shadow" id="communityTitle">'+community.communityTitle+'</div>'
-									+'<div class="plan_period text_shadow">'+$(communityContent).text()+'</div>'
-									+'<div class="plan_budget text_shadow">'+community.writer.nickname+'</div>'
-								+'</div>'
-							+'</div>'
-						+'</div>'
-					+'</div>'
- 				);
+ 				$("#bestCommunity").append("<div class='square'>"
+					+"<input type='hidden' class='plannerCode' value='"+community.communityCode+"' />"
+					+"<div style='background-image: url(/resources/images/ThumbNail/"+community.communityThumbnail+")'><div>"
+					+"<div class='plan_name text_shadow' id='communityTitle'>"+community.communityTitle+"<div>"
+					+"<div class='plan_period text_shadow'>"+communityBoard +"</div>"
+					+"<div class='plan_budget text_shadow'></div>"
+					+"<div class='wallet_is'>" 
+					+"<div class='btn-group btn-group-toggle isWallet' data-toggle='buttons' style='visibility:hidden'>"
+					+"<label class='btn btn-secondary'>"
+					+"<input type='radio' name='options' id='opened' autocomplete='off'><span class='txt'></span>"
+					+"</label>"
+					+"<label class='btn btn-secondary active'>"
+					+"<input type='radio' name='options' id='closed' autocomplete='off' checked><span class='txt'></span>"
+					+"</label></div></div></div></div>");
  			});
+ 			
+ 			
  		},
  		error:function(jqXHR, textStatus, errorThrown){
 			alert( textStatus );
 			alert( errorThrown );
 		}
-	});/*end of community*/
-	
-	$.each($(".plan_period.text_shadow"),function(){
-    	$(this).text($(this).text().trim());
-    })
+	});
 	
 });

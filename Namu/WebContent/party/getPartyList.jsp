@@ -651,7 +651,7 @@
      		success : function(JSONData, status){
      			$.each(JSONData.list,function(index,item){
      				geo = {type: 'Feature',
-				    		geometry: {type: 'Point', coordinates: [item.longitude, item.latitude]},
+				    		geometry: {type: 'Point', coordinates: [item.latitude, item.longitude]},
 				    		properties: { 
 				    			writer: item.partyWriter.nickname,
 				    			writerGender: item.partyWriter.gender,

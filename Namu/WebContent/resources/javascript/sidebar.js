@@ -68,7 +68,7 @@
 	//중현
 	$(function(){
 		$("#addParty").on("click", function(){
-			self.location = '/party/addPartyView';
+			self.location = '/party/addParty.jsp';
 		})
 		$("#getPartyList").on("click", function(){
 			self.location = '/party/getPartyList';
