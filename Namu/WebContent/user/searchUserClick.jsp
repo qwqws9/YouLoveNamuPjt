@@ -42,7 +42,7 @@
 					        <p class="card-text">자기소개</p>
 					        <p class="userIntro card-text">${userForm.introduce }</p>
 <!-- 					        <button type="button" class="profChatInvite btn btn-outline-info btn-sm" >채팅초대</button> -->
-					        <button type="button" class="profMessageSend btn btn-outline-info btn-sm" >쪽지전송</button>
+<!-- 					        <button type="button" class="profMessageSend btn btn-outline-info btn-sm" >쪽지전송</button> -->
 					        <c:if test="${!empty friendAl}">
 					        <button type="button" class="profFriendAdd btn btn-outline-info btn-sm" disabled="disabled" >이미친구</button>
 					        </c:if>
