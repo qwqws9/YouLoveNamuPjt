@@ -436,6 +436,8 @@
 			$(document).on('click','.fas.fa-paper-plane.sendParty',function(event){
 				var sendUser = '${user.userCode}';
 				var receive = $('.userCode').val();
+				console.log(sendUser);
+				console.log(receive);
 				addTimelineParty(sendUser,receive,'4');
 				alert("신청이 완료되었습니다.");
 			})

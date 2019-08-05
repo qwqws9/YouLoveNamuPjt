@@ -21,6 +21,7 @@ function socketcall(writerUser,protocol) {
 	}else if(protocol == '3') {
 		socket.emit("timeline", { To: writerUser, msg : '회원님의 게시물을 좋아합니다.' });
 	}else if(protocol == '4') {
+		//console.log('소켓으로 들어옴');
 		socket.emit("timeline", { To: writerUser, msg : '회원님과 동행맺기를 원합니다.' });
 	}
 }
@@ -87,6 +88,7 @@ $(function(){
 		}
 	
 	function alarmPopup(data) {
+		//alert('알람팝업 들어옴');
 		$('.timelinePop_wrap').remove();
 		$('body').append(
 '<div class="timelinePop_wrap">'
@@ -216,7 +218,7 @@ function addTimelineFriend(senduserCode,receiverUserCode,protocol) {
 
 //프로필정보 동행추가 메시지 전달
 function addTimelineParty(senduserCode,receiverUserCode,protocol) {
-	
+	console.log('타임라인으로 들어옴');
 	$.ajax ({
 		url : '/timeline/json/addTimeline',
 		method : 'post',
