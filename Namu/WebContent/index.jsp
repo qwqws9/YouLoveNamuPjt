@@ -40,7 +40,7 @@
 		<div class="main_txt">
 			Don't<br/>
 			call it a dream.<br/>
-			call it a <span>PLAN</span>.
+			Call it a <span>PLAN</span>.
 		</div>
 		<a href="#" class="scrolll"><span></span>Scroll</a>
 	</section>
