@@ -5,7 +5,7 @@
     width:75%;display:flex;flex-direction:column;
 }
 .text > p:first-of-type{
-    width:100%;margin-top:0;margin-bottom:auto;line-height: 13px;font-size: 12px;
+    width:100%;margin-top:5px;margin-bottom:auto;line-height: 13px;font-size: 13px;
 }
 .text > p:last-of-type{
     width:100%;text-align:right;color:silver;margin-bottom:-7px;margin-top:auto;
@@ -17,7 +17,7 @@
     float:right;padding-left:10px;
 }
 .avatar{
-    display:flex;
+    display:inline-flex;
     justify-content:center;
     align-items:center;
     width:25%;
@@ -46,10 +46,10 @@ body > div > div > div:nth-child(2) > span{
     background: whitesmoke;padding: 10px;font-size: 21px;border-radius: 50%;
 }
 body > div > div > div.msj-rta.macro{
-    margin:auto;margin-left:1%;
+    margin:auto;margin-left:1%;background:whitesmoke;
 }
 ul {
-    width:10%;
+    width:100%;
     list-style-type: none;
     padding:18px;
     position:absolute;
@@ -96,9 +96,6 @@ input:focus{
 :-moz-placeholder { /* Firefox 18- */
     color: #d4d4d4;
 }
-
-<!--요건 keyword 카테고리 설정 버튼-->
-
 .dd{
 		align-self: center;
 		margin-top:10px;
@@ -115,6 +112,3 @@ input:focus{
 		transition: 0.2s;
 		border-radius: 4px;
 	}
-
-
-

@@ -270,13 +270,13 @@ $(function() {
 
  				$("#bestCommunity").append(
 	 				'<div class="square">'
-						+'<div>'
+						+'<div style="background-image: url(/resources/images/ThumbNail/'+community.communityThumbnail+')">'
 							+'<div>'
 								+'<div class="white">'
 									+'<input type="hidden" class="communityCode" value="'+community.communityCode+'">'
 									+'<div class="plan_name text_shadow" id="communityTitle">'+community.communityTitle+'</div>'
-									+'<div class="plan_period text_shadow">'+$(communityContent).text()+'</div>'
-									+'<div class="plan_budget text_shadow">'+community.writer.nickname+'</div>'
+									+'<div class="plan_period text_shadow">'+community.writer.nickname+'</div>'
+									+'<div class="plan_budget text_shadow">'+communityBoard+'</div>'
 								+'</div>'
 							+'</div>'
 						+'</div>'
