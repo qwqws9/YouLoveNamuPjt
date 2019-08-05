@@ -134,15 +134,15 @@ public class PlannerController {
 		
 		session.setAttribute("plannerCode", planner.getPlannerCode());
 		System.out.println(planner.getPlannerCode());
-//		if(file.getOriginalFilename() == "") {
-//		
-//			planner.setPlannerImage(planner.getPlannerImage());
-//			System.out.println(planner.getPlannerImage());
-//		}else {
+		if(file.getOriginalFilename() == "") {
+			Planner oldPlanner= plannerService.getPlanner(planner.getPlannerCode());
+			planner.setPlannerImage(oldPlanner.getPlannerImage());
+			System.out.println(planner.getPlannerImage());
+		}else {
 			String fileName = FileNameUUId.convert(file, "planner", request);
 			planner.setPlannerImage(fileName);
 
-		//}
+		}
 		plannerService.updatePlanner(planner);
 		
 		return "forward:/planner/updateRoute.jsp";
@@ -161,7 +161,7 @@ public class PlannerController {
 		
 		plannerService.deletePlanner(plannerCode);
 	
-		return "redirect:/planner/getPlannerList.jsp";
+		return "redirect:/planner/getPlannerList";
 	}
 	
 	@RequestMapping( value="getPlanner", method=RequestMethod.GET )
@@ -283,6 +283,7 @@ public class PlannerController {
 		
 		//departDate 받아와서 set 
 		Planner planner=plannerService.getPlanner(plannerCode);
+		System.out.println(planner);
 		String departDate=planner.getDepartDate();
 		System.out.println(departDate);
 		

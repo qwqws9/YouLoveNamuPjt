@@ -53,7 +53,7 @@
 	}); 
 	}); 
 $(function() {	
-	/* $('#searchKeyword').on("keypress", function(event){
+ $('#searchKeyword').on("keypress", function(event){
 		if(event.keyCode == '13'){
 				fncGetList(1);
 			}
@@ -61,7 +61,7 @@ $(function() {
 			fncGetList(1);
 
 	});    //확인해보기   
-	 */
+	 
 	var locations=[];
 	
 	 $.ajax({
@@ -224,6 +224,7 @@ $(function() {
 		}); */
 	 	$(document).on('click','button.btn.btn-default',function(){
  			$('section').load('/planner/getAllPlannerList section', {searchKeyword:$('#searchKeyword').val().trim(), searchCondition:$('#searchCondition').val().trim(), searchCondition2:$('#searchCondition2').val().trim()});
+ 	
 	 	});
 	 	
 	 	$(document).on('change','select[name="searchCondition"],select[name="searchCondition2"]',function(){
