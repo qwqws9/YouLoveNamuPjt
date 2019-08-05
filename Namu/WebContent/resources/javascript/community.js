@@ -184,8 +184,8 @@ function addCommunity(){
 		}else{
 			/*$("form").on( "submit", function( event ) {
 				  event.preventDefault();
-				  alert( $( "form" ).serialize() );
 			});*/
+			alert( $( "form" ).serialize() );
 			$($("form")[1]).attr("method","POST").attr("action","/community/addCommunity").attr("enctype" , "multipart/form-data").submit();
 		}
 	}	

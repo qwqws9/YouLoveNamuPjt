@@ -124,11 +124,11 @@
 		    
 		 
 		 $('#adult').on('change',function() {
-			 alert($(this).val());
+			 //alert($(this).val());
 		 })
 		
 		$('#children').on('change',function() {
-			alert($(this).val());
+			//alert($(this).val());
 		 })
 		 
 		 $('#inputKeyword').on('keydown',function(key){

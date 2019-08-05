@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youlove.common.DateFormat;
+import com.youlove.common.TimeZoneId;
 import com.youlove.common.api.OpenWeather;
 import com.youlove.service.domain.City;
 import com.youlove.service.domain.Flight;
 import com.youlove.service.domain.Hotel;
+import com.youlove.service.domain.Time;
 import com.youlove.service.domain.Tour;
 import com.youlove.service.domain.Weather;
 import com.youlove.service.guide.GuideService;
@@ -37,6 +39,22 @@ public class GuideRestController {
 	@Autowired
 	@Qualifier("wishBeenServiceImpl")
 	private WishBeenService wishBeenService;
+	
+	
+	@RequestMapping("/json/getTime")
+	public List<Time> getTime() throws Exception {
+		
+		System.out.println("/json/getTime");
+		
+		List<Time> list = TimeZoneId.getTimezone();
+		
+		return list;
+	}
+	
+	
+	
+	
+	
 	
 	/*
 	 *  	국가명 or 도시명 으로  정보조회

@@ -167,6 +167,65 @@
 							</div>
 						</c:if>
 						
+						
+						
+						
+						<!-- 동행 초대 -->
+						<c:if test="${item.protocol eq '4' && item.fromUser.userCode ne user.userCode }">
+							<div class="timePreview-${status.index } media text-muted pt-3">
+								<input type="hidden" value="${item.fromUser.userCode }">
+								<img class="timelineProf" alt="" src="/resources/images/profile/${item.fromUser.profileImg }" width="45" height="45">
+								<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+								<span class="timelineTarget d-block" style="position:relative;">
+									<strong class="timelineProf text-gray-dark">@ ${item.fromUser.nickname }</strong>
+									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
+								</span>
+								<span class=""><button class="inviteMessage" style="border:none; background: none" >
+								<c:if test="${item.inviteCode eq '0' }">
+								회원님과 동행맺기를 원합니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '1' }">
+								회원님과 동행이 되었습니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '2' }">
+								회원님과 동행맺기를 거절하셨습니다.
+								</c:if>
+								</button></span>
+								<c:if test="${item.inviteCode eq '0' }">
+								<input type="hidden" value="${item.timelineCode }">
+								<button class="timelinePartyAcceptBtn btn btn-outline-success btn-sm" >수락</button>
+								<button class="timelinePartyRefuseBtn btn btn-outline-danger btn-sm" >거절</button>
+								</c:if>
+								</p>
+							</div>
+						</c:if>
+						
+						
+						<!-- 동행 초대 보낸사람 -->
+						<c:if test="${item.protocol eq '4' && item.fromUser.userCode eq user.userCode }">
+							<div class="timePreview-${status.index } media text-muted pt-3">
+								<input type="hidden" value="${item.toUser.userCode }">
+								<img class="timelineProf" alt="" src="/resources/images/profile/${item.toUser.profileImg }" width="45" height="45">
+								<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+								<span class="timelineTarget d-block" style="position:relative;">
+									<strong class="timelineProf text-gray-dark">@ ${item.toUser.nickname }</strong>
+									<button class="timelineDate" style="position: absolute; right: 0px; border:none; background: none;">${item.timeDate }</button>
+								</span>
+								<span class=""><button class="" style="border:none; background: none" >
+								<c:if test="${item.inviteCode eq '0' }">
+								동행 초대 메시지를 전달했습니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '1' }">
+								회원님과 동행이 되었습니다.
+								</c:if>
+								<c:if test="${item.inviteCode eq '2' }">
+								회원님과 동행맺기를 거절하셨습니다.
+								</c:if>
+								</button></span>
+								</p>
+							</div>
+						</c:if>
+						
 			 		</c:forEach>
 				</div>
 			</div>
@@ -184,7 +243,7 @@ $(document).on("click",".timelineProf",function(){
 });
 
 
-
+//친구 초대 수락
 $(document).on("click",".timelineFriendAcceptBtn",function(){ 
 	var timeCode = $(this).prev().val().trim();
 	var sendUser = $(this).parents('div').children().val().trim();
@@ -196,12 +255,34 @@ $(document).on("click",".timelineFriendAcceptBtn",function(){
 	$(this).parents('div[class^=timePreview]').find('.inviteMessage').text('회원님과 친구가 되었습니다.');
 	$(this).remove();
 });
-
+//친구 초대 거절
 $(document).on("click",".timelineFriendRefuseBtn",function(){ 
 	var timeCode = $(this).prev().prev().val().trim();
 	updateTimelineInvite(timeCode,'2');
 	$(this).prev().remove();
 	$(this).parents('div[class^=timePreview]').find('.inviteMessage').text('회원님과 친구맺기를 거절하셨습니다.');
+	$(this).remove();
+});
+
+//동행 초대 수락
+$(document).on("click",".timelinePartyAcceptBtn",function(){ 
+	var timeCode = $(this).prev().val().trim();
+	var sendUser = $(this).parents('div').children().val().trim();
+	var sessionUser = $('#nodeUserCode').val().trim();
+	inviteProfile(sendUser,sessionUser,'2');
+	inviteProfile(sessionUser,sendUser,'2');
+	updateTimelineInvite(timeCode,'1');
+	$(this).next().remove();
+	$(this).parents('div[class^=timePreview]').find('.inviteMessage').text('회원님과 동행이 되었습니다.');
+	$(this).remove();
+});
+
+//동행 초대 거절
+$(document).on("click",".timelineFriendRefuseBtn",function(){ 
+	var timeCode = $(this).prev().prev().val().trim();
+	updateTimelineInvite(timeCode,'2');
+	$(this).prev().remove();
+	$(this).parents('div[class^=timePreview]').find('.inviteMessage').text('회원님과 동행맺기를 거절하셨습니다.');
 	$(this).remove();
 });
 
