@@ -22,7 +22,7 @@ a:link, a:active, a:hover { text-decoration: none; }
 
 
 /* LIST */
-.wallet_title { margin-bottom: 30px; padding: 30px 0; font-size: 25px; font-weight: 700; border-bottom: 2px solid #cbcbcb; }
+.wallet_title { margin-bottom: 30px; padding: 60px 0 30px 0; font-size: 25px; font-weight: 700; border-bottom: 2px solid #cbcbcb; }
 .wallet_title span { margin-left: 30px; }
 .wallet_box { width: 99%; margin: auto; }
 .wallet_box:not(first-child) { margin-top: 20px; }
@@ -30,7 +30,7 @@ a:link, a:active, a:hover { text-decoration: none; }
 .square_wrap { width: 100%; }
 .square { float: left; width: 25%; min-width: 275px; }
 .square > div
-	{ width: 95%; margin: auto; text-align: center; background-size: cover; background-image: url(/resources/images/wallet/ad702919-85be-477b-92a5-d141ec930aa0.png); background-position: center center; background-repeat: no-repeat;
+	{ width: 95%; margin: auto; text-align: center; background-size: cover; background-position: center center; background-repeat: no-repeat;
 	  border-radius: 2.2em; box-sizing: border-box; }
 .square > div:hover { background-size: 200% 200%; }
 .square > div > div
@@ -51,10 +51,13 @@ a:link, a:active, a:hover { text-decoration: none; }
 .wallet_is .btn-secondary:not(:disabled):not(.disabled).active:focus { box-shadow: inset 0 0 black; }
 .wallet_is .btn-group-toggle .txt { font-size: 13px; font-weight: 700; }
 
-.comm .square { width: 33.33% }
+.comm .square { width: 33.33%; margin-top: 20px; }
+.comm .wallet_title { margin-bottom: 10px; padding: 150px 0 30px 0; }
 .comm .square > div, .comm .square > div > div { border-radius: .24em; }
 .comm .square > div { height: 350px; }
 .comm .square > div > div { position: relative; padding-top: 100px; }
-.comm .square .white { position: absolute; left: 0; bottom: 0; width: 100%; padding: 20px; text-align: left; background-color: #fff; }
-.comm .plan_period { margin-top: 30px; }
+.comm .square > div > div:hover { background-color: transparent; }
+.comm .square .white { position: absolute; left: 0; bottom: 0; width: calc(100% - 1px); height: 150px; margin-left: .5px; padding: 20px; text-align: left; background-color: #fff; border-bottom-left-radius: .23em; border-bottom-right-radius: .23em; }
+.comm .plan_name { position: absolute; top: 20px; width: 85%; }
+.comm .plan_period { margin-top: 70px; }
 .comm .plan_budget { height: 30px; }

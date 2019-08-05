@@ -107,11 +107,11 @@
 	
 	<script type="text/javascript">
 	$(function() {
-		$(document).on('click','.wallet_box .square',function(){
+		$(document).on('click','.plannerClick .square',function(){
 			var plannerCode = $(this).children(':eq(0)').val();
 			self.location = '/planner/getPlanner?plannerCode=' + plannerCode;
 	 	});
-		$(document).on('click','.white',function(){
+		$(document).on('click','.communityClick .white',function(){
 			var communityCode = $(this).children('.communityCode').val();
 			self.location = '/community/getCommunity?communityCode='+communityCode;
 		});
@@ -121,27 +121,14 @@
 	
 	<div class="wrap">
 		<h2 class="wallet_title"><span>여행 플래너 공유 </span></h2>
-		<section class="wallet_box">
+		<section class="wallet_box plannerClick">
 			<div class="square_wrap clear" id="bestPlanner"></div>
 		</section>
 		
 		<div class="comm">
-			<h2 class=""><span>커뮤니티 게시판 </span></h2>
-			<section class="">
-				<div class="square_wrap clear" id="bestCommunity">
-					<div class="square">
-						<div class="getCommunity">
-							<div>
-								<div class="white">
-									<input type="hidden" class="communityCode" value="">
-									<div class="plan_name text_shadow" id="plannerName">제목</div>
-									<div class="plan_period text_shadow">내용</div>
-									<div class="plan_budget text_shadow">글쓰니</div>
-								</div>
-							</div>
-						</div>
-					</div><!-- //square -->
-				</div>
+			<h2 class="wallet_title"><span>커뮤니티 게시판 </span></h2>
+			<section class="wallet_box communityClick">
+				<div class="square_wrap clear" id="bestCommunity"></div>
 			</section>
 		</div>
 	</div>
