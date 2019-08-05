@@ -310,14 +310,14 @@
 			
 			
 			
-				<div class="row"><!-- Search -->
-					<div class="col-md-12 col-lg-12">
-						<div class="row">
-							<i class="fas fa-search-location" onclick="partySearch()"></i>
-						  	<input type="text" id="partySearch" class="partySearch" placeholder="검색...">
-						</div>
-					</div>
-				</div>
+<!-- 				<div class="row">Search -->
+<!-- 					<div class="col-md-12 col-lg-12"> -->
+<!-- 						<div class="row"> -->
+<!-- 							<i class="fas fa-search-location" onclick="partySearch()"></i> -->
+<!-- 						  	<input type="text" id="partySearch" class="partySearch" placeholder="검색..."> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			
 				<br>
 							
@@ -416,29 +416,6 @@
  --%>			</div><!-- end of main -->
 			
 			
-			<div class="col-lg-1">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-				</button>
-			</div><!-- 사이드바 -->
-			
-			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-			    	<div class="modal-content">
-			      		<div class="modal-header">
-			        		<h5 class="modal-title" id="exampleModalLabel">동행신청하기</h5>
-			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          		<span aria-hidden="true">&times;</span>
-			        		</button>
-			      		</div>
-			      		<div class="modal-body">
-					    </div>
-			      		<div class="modal-footer">
-			        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			        		<button type="button" class="btn btn-primary">Save changes</button>
-			      		</div>
-			    	</div>
-			  	</div>
-			</div>
 						
 			
 		</div><!-- end row of container -->
@@ -457,7 +434,10 @@
 			});
 			
 			$(document).on('click','.fas.fa-paper-plane.sendParty',function(event){
-				
+				var sendUser = '${user.userCode}';
+				var receive = $('.userCode').val();
+				addTimelineParty(sendUser,receive,'4');
+				alert("신청이 완료되었습니다.");
 			})
 			
 
@@ -660,7 +640,8 @@
      			$.each(JSONData.list,function(index,item){
      				geo = {type: 'Feature',
 				    		geometry: {type: 'Point', coordinates: [item.longitude, item.latitude]},
-				    		properties: { 
+				    		properties: {
+				    			userCode: item.partyWriter.userCode,
 				    			writer: item.partyWriter.nickname,
 				    			writerGender: item.partyWriter.gender,
 				    			writerBirth: item.partyWriter.birth,
@@ -680,7 +661,7 @@
 				    		}};
      				json.push(geo);
      				profile = item.partyWriter.profileImg
-					//console.log(profile);
+					console.log(geo);
      				
      			});
      			
@@ -861,7 +842,7 @@
 		  var popup = new mapboxgl.Popup({ closeOnClick: false })
 		    .setLngLat(currentFeature.geometry.coordinates)
 		    .setHTML('<h4>'+ currentFeature.properties.partyCode +' · '+currentFeature.properties.partyTitle+'</h4>'
-		    		+'<div>작성자 : ' +currentFeature.properties.writer +'</div>'
+		    		+'<div class="receiver">작성자 : ' +currentFeature.properties.writer +'</div>'
 		    		+'<div style="font-size: small;">작성시간 : '+currentFeature.properties.regDate+'</div>'
 				 	+'<div style="font-size: small;">희망성별 : ' 
 				 	+ gender
@@ -876,6 +857,7 @@
 				 	/* +'<button type="button" class="sendParty" style="background: none; border-radius: 3px;float: right;">신청하기</button>' */
 				 	+'</span>'
 				 	+'</div>'
+				 	+'<input type="hidden" class="userCode" value="'+currentFeature.properties.userCode+'"/>'
 		    )
 		    .addTo(map);
 		}

@@ -6,13 +6,26 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<!-- jQuery -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!-- fontawesome -->
 	<script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
+	<!-- common -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	
+	
+	<style type="text/css">
+		.img-thumbnail{
+		
+			width: 200px;
+			height: 150px;
+		}
+	</style>
 	<script>
 		$(function(){
 			
@@ -406,7 +419,7 @@
 		<c:forEach var="related" items="${related}">
 			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 related">
 				<input type="hidden" class="relatedCode" value="${related.communityCode }" >
-				<a href="#"><img class="img-thumbnail" src="/resources/images/ThumbNail/${related.communityThumbnail }" class="related" id="related" name=related alt="관련글" class="" width="230px" height="150px" style="border-radius: 6px;"></a>
+				<a href="#"><img class="" src="/resources/images/ThumbNail/${related.communityThumbnail }" class="related" id="related" name=related alt="관련글" class="" width="230px" height="160px" style="border-radius: 6px;"></a>
 				<div class="related" style="">
 					${related.communityTitle }
 				</div>
