@@ -12,12 +12,22 @@ public class Police {
 	private String policeContent;
 	private String policeDate;
 	private String processing;
+	private int commentCode;
 	
 	
 	
 	
 	
 	
+	
+	
+	
+	public int getCommentCode() {
+		return commentCode;
+	}
+	public void setCommentCode(int commentCode) {
+		this.commentCode = commentCode;
+	}
 	public String getProcessing() {
 		return processing;
 	}

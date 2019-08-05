@@ -17,7 +17,7 @@
 	<!-- Font Awesome SVG with JavaScript -->
 	<script src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"></script>
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!-- 	<script src="/resources/javascript/jquery-ui.min.js"></script> -->
+	<script src="/resources/javascript/jquery-ui.min.js"></script>
 	<!-- Our Own Resources -->
 	<script src="../resources/javascript/jquery.oLoader.min.js"></script>
 	<!-- 날씨, 환율 정보를 위한 국가 도시 리스트 출력 -->
