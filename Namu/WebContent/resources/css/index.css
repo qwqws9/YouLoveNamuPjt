@@ -24,11 +24,19 @@ a:link, a:active, a:hover { text-decoration: none; }
 /* TIMEZONE */
 header { background-color: #fff; }
 .time_wrap { height: 100%; }
-.timezone { background-color: #a3daff; position: relative; width: 1200px; height: 700px; margin: auto; margin-top: 30px; border-radius: 12em; background-image: url(/resources/images/main/europe_map.png); background-position: center center; background-size: auto 600px; background-repeat: no-repeat; }
-.time_data { position: absolute; font-weight: 700; font-size: 17px; line-height: 25px; text-align: center; /* 서울 */ top: 225px; right: 200px; }
-.time_data > span { display: block; }
-.time_data .times { font-size: 20px }
+.timezone { background-color: #a3daff; font-family: 'Montserrat', sans-serif; position: relative; max-width: 1100px; height: 600px; margin: auto; margin-top: 30px; border-radius: 12em; background-image: url(/resources/images/main/europe_map.png); background-position: center center; background-size: auto 100%; background-repeat: no-repeat; }
+.time_data { position: absolute; font-weight: 700; font-size: 18px; line-height: 30px; text-align: center; }
+.time_data.seoul { /* 서울 */ top: 155px; right: 150px; }
+.time_data.paris { /* 프랑스 */ top: 150px; left: 530px; }
+.time_data.london { /* 영국 */ top: 85px; left: 420px; }
+.time_data.mockba { /* 러시아 */ top: 90px; right: 370px; }
+.time_data.newyork { /* 미국 */ top: 200px; left: 250px; }
+.time_data.paulo { /* 브라질 */ bottom: 130px; left: 320px; }
+.time_data.sydney { /* 호주 */ top: 420px; right: 125px; }
+.time_data > span, .time_data > div { display: inline-block; }
+.time_data .times { width: 95px; font-size: 20px; border: 1px solid #cbcbcb; background-color: #f0f0f0; border-radius: 4px; padding: 2px 0; vertical-align: middle; }
 .time_data img { margin: 0; padding: 0; width: auto; height: 18px;}
+
 
 /* LIST */
 .wallet_title { margin-bottom: 30px; padding: 60px 0 30px 0; font-size: 25px; font-weight: 700; border-bottom: 2px solid #cbcbcb; }

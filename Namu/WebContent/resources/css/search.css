@@ -18,7 +18,7 @@
 			    transition: all 0.3s ease-in-out;
 			}
 			.communitySearch.active .community.input-holder {
-			    width:450px;
+			    width:250px;
 			    border-radius: 50px;
 			    background: rgba(48,169,222,0.2);
 			    transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);

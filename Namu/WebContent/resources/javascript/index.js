@@ -1,6 +1,6 @@
 $(function(){
 //	
-	setInterval(getTime,1000);
+	setInterval(getTime, 1000);
 	
 	function getTime() {
 		$.ajax({
@@ -13,9 +13,24 @@ $(function(){
 			},
 			success : function(JSONData , status) {
 				$.each(JSONData , function(index,item){
-					console.log(item.countryName);
-					console.log(item.time);
-					console.log(item.timeGap);
+					if(item.countryName == '한국') {
+						$('.time_data.seoul .times').text(item.time);
+					}else if(item.countryName == '서유럽'){
+						$('.time_data.london .times').text(item.time);
+					}else if(item.countryName == '중앙유럽'){
+						$('.time_data.paris .times').text(item.time);
+					}else if(item.countryName == '러시아'){
+						$('.time_data.mockba .times').text(item.time);
+					}else if(item.countryName == '미국'){
+						$('.time_data.newyork .times').text(item.time);
+					}else if(item.countryName == '호주'){
+						$('.time_data.sydney .times').text(item.time);
+					}else if(item.countryName == '브라질'){
+						$('.time_data.paulo .times').text(item.time);
+					}
+					//console.log(item.countryName);
+					//console.log(item.time);
+					//console.log(item.timeGap);
 				})
 			}
 			,

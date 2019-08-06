@@ -27,7 +27,9 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/index.css">
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-	
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    
 	<style type="text/css">
 		#callCountry {width: 100%; margin-top: 15px; color: #f2c029; border: 1px solid #f2c029;}
 		#callCountry:hover {color: #fff; background-color: #f2c029;}
@@ -49,12 +51,39 @@
 		<header><jsp:include page="/layout/header.jsp" /></header>
 	
 		<div class="timezone">
-			<span class="time_data"><span class="seoul"><span><img src="/resources/images/flag/IT.png"/></span> Seoul</span><span class="times">17:47:52</span></span>
+			<div class="time_data seoul">
+				<span class="seoul"><span><img src="/resources/images/flag/KRW.svg"/></span> Seoul</span><br/>
+				<div class="times">17:47:52</div>
+			</div>
+			<div class="time_data paris">
+				<span class="paris"><span><img src="/resources/images/flag/FR.png"/></span> Paris</span><br/>
+				<div class="times">7시간 시차</div>
+			</div>
+			<div class="time_data london">
+				<span class="london"><span><img src="/resources/images/flag/GB.png"/></span> London</span><br/>
+				<div class="times">8시간 시차</div>
+			</div>
+			<div class="time_data mockba">
+				<span class="mockba"><span><img src="/resources/images/flag/russia.png"/></span> Mockba</span><br/>
+				<div class="times">6시간 시차</div>
+			</div>
+			<div class="time_data newyork">
+				<span class="newyork"><span><img src="/resources/images/flag/america.png"/></span> NewYork</span><br/>
+				<div class="times">13시간 시차</div>
+			</div>
+			<div class="time_data paulo">
+				<span class="paulo"><span><img src="/resources/images/flag/sanpa.png"/></span> São Paulo</span><br/>
+				<div class="times">12시간 시차</div>
+			</div>
+			<div class="time_data sydney">
+				<span class="sydney"><span><img src="/resources/images/flag/sydney.png"/></span> Sydney</span><br/>
+				<div class="times">1시간 시차</div>
+			</div>
 		</div>
 	</div>
-	
+	<br><br><br>
 	<!-- 사이드바 추가(채팅, 관리자채팅) -->
-	<div class="container" style="padding-top: 100px;">
+	<div class="container">
 		<div class="row">
 			<!-- 날씨 -->
 			<div class="col-sm-4">

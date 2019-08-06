@@ -269,63 +269,63 @@ input::placeholder {
 		var nickname = $('#nickname').attr('class');
 		
 		
-// 		if(captcha != 'form-control is-valid') {
-// 			$('#userCaptcha').focus();
-// 			alert('캡차값을 확인하세요')
-// 			return;
-// 		}
+		if(captcha != 'form-control is-valid') {
+			$('#userCaptcha').focus();
+			alert('캡차값을 확인하세요')
+			return;
+		}
 		
-// 		if(email != 'form-control is-valid') {
-// 			$('#email').focus();
-// 			alert('이메일을 확인하세요')
-// 			return;
-// 		}
+		if(email != 'form-control is-valid') {
+			$('#email').focus();
+			alert('이메일을 확인하세요')
+			return;
+		}
 		
-// 		if(phone != 'form-control is-valid') {
-// 			$('#phone').focus();
-// 			alert('휴대폰번호를 확인하세요')
-// 			return;
-// 		}
+		if(phone != 'form-control is-valid') {
+			$('#phone').focus();
+			alert('휴대폰번호를 확인하세요')
+			return;
+		}
 		
-// 		if(password != password2) {
-// 			$('#password').focus();
-// 			alert('비밀번호를 확인하세요')
-// 			return;
-// 		}
+		if(password != password2) {
+			$('#password').focus();
+			alert('비밀번호를 확인하세요')
+			return;
+		}
 		
-// 		if(name.length < 1) {
-// 			$('#name').focus();
-// 			alert('이름을 입력하세요')
-// 			return;
-// 		}
+		if(name.length < 1) {
+			$('#name').focus();
+			alert('이름을 입력하세요')
+			return;
+		}
 		
-// 		if(gender.length < 1) {
-// 			$('#gender').focus();
-// 			alert('성별을 입력하세요')
-// 			return;
-// 		}
+		if(gender.length < 1) {
+			$('#gender').focus();
+			alert('성별을 입력하세요')
+			return;
+		}
 		
-// 		if(nickname != 'form-control is-valid') {
-// 			$('#nickname').focus();
-// 			alert('닉네임을 확인하세요')
-// 			return;
-// 		}
+		if(nickname != 'form-control is-valid') {
+			$('#nickname').focus();
+			alert('닉네임을 확인하세요')
+			return;
+		}
 		
-// 		if(introduce == 'form-control is-invalid') {
-// 			$('#introduce').focus();
-// 			alert('자기소개는 1000bytes 이하만 입력가능합니다.')
-// 			return;
-// 		}
+		if(introduce == 'form-control is-invalid') {
+			$('#introduce').focus();
+			alert('자기소개는 1000bytes 이하만 입력가능합니다.')
+			return;
+		}
 		
 		
-// 		if(birth.length < 1) {
-// 			$('#birth').focus();
-// 			alert('생년월일을 입력하세요')
-// 			return;
-// 		}else {
-// 			isValidDate(birth);
-// 			return;
-// 		}
+		if(birth.length < 1) {
+			$('#birth').focus();
+			alert('생년월일을 입력하세요')
+			return;
+		}else {
+			isValidDate(birth);
+			return;
+		}
 		
 		$('form').attr('method',"post").attr('action','/user/addUser').submit();
 	}
@@ -524,9 +524,12 @@ input::placeholder {
 				
 			});
 			
-			$('button:contains("확인")').on('click',function(){
+// 			$('button:contains("확인")').on('click',function(){
+// 				compareNum($(this).attr('name'),$(this).parent().prev().children().val());
+// 			})
+			$(document).on('click','button:contains("확인")',function(){
 				compareNum($(this).attr('name'),$(this).parent().prev().children().val());
-			})
+			});
 			
 			// 닉네임 중복체크 ajax 통신
 			$('#nickname').on('keyup',function(){
