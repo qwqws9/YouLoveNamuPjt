@@ -377,9 +377,11 @@
 			</div>
 		</div>
 		<div class="col-6" align="right" style="bottom: 5px;" >
-			<button style="border: none; background: none;" id="update"><span style="font-size: 13px" >수정</span></button>
-			<span style="font-size: 8px">|</span>
-			<button style="border: none; background: none;" data-toggle="modal" data-target="#exampleModal"><span style="font-size: 13px" >삭제</span></button>
+			<c:if test="${community.writer.userCode == user.userCode}">
+				<button style="border: none; background: none;" id="update"><span style="font-size: 13px" >수정</span></button>
+				<span style="font-size: 8px">|</span>
+				<button style="border: none; background: none;" data-toggle="modal" data-target="#exampleModal"><span style="font-size: 13px" >삭제</span></button>
+			</c:if>
 		</div>
 	</div>
 	
