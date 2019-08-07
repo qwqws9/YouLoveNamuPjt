@@ -596,9 +596,9 @@ $(function () {
 		      			
 		      			if(event.end==null){
 		      		
-		      			true;
+		      			true
 		      		}else{
-		      			false;
+		      			false
 		      		}
 		      			},
 		      		
