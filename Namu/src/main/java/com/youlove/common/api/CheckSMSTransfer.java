@@ -54,7 +54,7 @@ public final class CheckSMSTransfer {
         try {
             HttpPost httpPost = new HttpPost(url);
             httpPost.setHeader("Content-type", "application/json; charset=utf-8");
-            String json = "{\"sender\":\""+"01090720802"+"\",\"receivers\":[\""+receiver+"\"],\"content\":\""+content+"\"}";
+            String json = "{\"sender\":\""+"01067479984"+"\",\"receivers\":[\""+receiver+"\"],\"content\":\""+content+"\"}";
 
             StringEntity se = new StringEntity(json, "UTF-8");
             httpPost.setEntity(se);
