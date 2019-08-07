@@ -314,8 +314,7 @@ function refreshScheduleList(){
 					   preferredFormat: "hex"
 				
 			  });
-
-				 
+			 
  });
  
 function deleteSchedule(){
@@ -592,7 +591,17 @@ $(function () {
 				        center: 'title',
 				        right: 'month,agendaWeek,listDay'
 				     },
-		      		editable: true,
+				     
+		      		editable: function(event){
+		      			
+		      			if(event.end==null){
+		      		
+		      			true;
+		      		}else{
+		      			false;
+		      		}
+		      			},
+		      		
 		      		droppable: true, 
 		   			dayClick: function(date, allDay, jsEvent, view) {
 			        	   var yy=date.format("YYYY");
@@ -604,9 +613,10 @@ $(function () {
 		        	   layer_open('layer1');
 		        	 
 		        	 },  
+		        	 
 					eventLimit: true,
 			    	eventDrop: function(event, delta, revertFunc) {
-			    	
+			    		if(event.end==null){
 		    		            alert("일정 "+ event.title + " 의 날짜를 " + event.start.format() + " 로 변경합니다");
 		    		       
 		    		            	console.log("update schedule");
@@ -629,6 +639,7 @@ $(function () {
 		    		    				}
 		    		    			
 		    		    		});
+			    		}
 		    		        	},
 
 
@@ -742,8 +753,8 @@ $(function () {
 </section>
 <br>
  <div class="col-md-12"><div class="row"> 
-  <div class="col-md-9"></div>
- <div class="col-md-3"><button type="button" id="deleteall" style="border-radius:10px;border:0;width:90px;height:30px;background:#cbcbcb;color:#ffffff; "> 플랜 전체 삭제 </button>
+  <div class="col-md-8"></div>
+ <div class="col-md-4"><button type="button" id="deleteall" style="border-radius:10px;border:0;width:140px;height:30px;background:#cbcbcb;color:#ffffff; "> 플랜 전체 삭제 </button>
  </div>
  </div> </div>
   <div class="col-md-12"><div class="row"> 
