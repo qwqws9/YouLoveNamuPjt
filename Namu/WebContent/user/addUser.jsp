@@ -13,6 +13,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script src="https://kit.fontawesome.com/b3ea0a8bf1.js"></script>
 
 <style type="text/css">
@@ -227,25 +229,25 @@ input::placeholder {
 	 
 	     
 	     if (month < 1 || month > 12) { 
-	          alert("달은 1월부터 12월까지 입력 가능합니다.");
+	    	 swal("달은 1월부터 12월까지 입력 가능합니다.");
 	          $('#birth').focus();
 	          return false;
 	     }
 	    if (day < 1 || day > 31) {
-	          alert("일은 1일부터 31일까지 입력가능합니다.");
+	    	swal("일은 1일부터 31일까지 입력가능합니다.");
 	          $('#birth').focus();
 	          return false;
 	     }
 	     if ((month==4 || month==6 || month==9 || month==11) && day==31) {
 	    	 $('#birth').focus();
-	          alert(month+"월은 31일이 존재하지 않습니다.");
+	    	 swal(month+"월은 31일이 존재하지 않습니다.");
 	          return false;
 	     }
 	     if (month == 2) {
 	          var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 	          if (day>29 || (day==29 && !isleap)) {
 	        	  $('#birth').focus();
-	               alert(year + "년 2월은  " +day + "일이 없습니다.");
+	        	  swal(year + "년 2월은  " +day + "일이 없습니다.");
 	               return false;
 	          }
 	     }
@@ -271,64 +273,80 @@ input::placeholder {
 		
 		if(captcha != 'form-control is-valid') {
 			$('#userCaptcha').focus();
-			alert('캡차값을 확인하세요')
+			swal('캡차값을 확인하세요')
 			return;
 		}
 		
 		if(email != 'form-control is-valid') {
 			$('#email').focus();
-			alert('이메일을 확인하세요')
+			swal('이메일을 확인하세요')
 			return;
 		}
 		
 		if(phone != 'form-control is-valid') {
 			$('#phone').focus();
-			alert('휴대폰번호를 확인하세요')
+			swal('휴대폰번호를 확인하세요')
+			return;
+		}
+		
+		if(password.length < 1) {
+			$('#password').focus();
+			swal('비밀번호를 입력하세요')
 			return;
 		}
 		
 		if(password != password2) {
 			$('#password').focus();
-			alert('비밀번호를 확인하세요')
+			swal('비밀번호를 확인하세요')
 			return;
 		}
 		
 		if(name.length < 1) {
 			$('#name').focus();
-			alert('이름을 입력하세요')
+			swal('이름을 입력하세요')
 			return;
 		}
 		
 		if(gender.length < 1) {
 			$('#gender').focus();
-			alert('성별을 입력하세요')
+			swal('성별을 입력하세요')
 			return;
 		}
 		
 		if(nickname != 'form-control is-valid') {
 			$('#nickname').focus();
-			alert('닉네임을 확인하세요')
+			swal('닉네임을 확인하세요')
 			return;
 		}
 		
 		if(introduce == 'form-control is-invalid') {
 			$('#introduce').focus();
-			alert('자기소개는 1000bytes 이하만 입력가능합니다.')
+			swal('자기소개는 1000bytes 이하만 입력가능합니다.')
 			return;
 		}
 		
 		
 		if(birth.length < 1) {
 			$('#birth').focus();
-			alert('생년월일을 입력하세요')
+			swal('생년월일을 입력하세요')
 			return;
 		}else {
 			isValidDate(birth);
-			return;
 		}
 		
-		$('form').attr('method',"post").attr('action','/user/addUser').submit();
-	}
+//		swal("회원가입 성공!", "로그인 후 사용해주세요!", "success",function(){
+			$($('form')[1]).attr('method',"post").attr('action','/user/addUser').submit();
+//		});
+		
+// 		swal({
+// 			 title: "회원가입 성공!",
+// 			  text: "로그인후 사용해주세요!",
+// 			  icon: "success",
+// 			  button: "Ok!",
+// 		},function(){
+// 			$($('form')[1]).attr('method',"post").attr('action','/user/addUser').submit();
+// 		})
+ 	}
 	
 	
 		$(function(){
@@ -602,9 +620,11 @@ input::placeholder {
 				if(target == 'saveM'){
 					nodisplay('emailCheck');
 					$('button[name=emailCheck]').text('완료').attr('class','btn btn-outline-success');
+					$('#email').attr('class','form-control is-valid')
 				}else {
 					nodisplay('phoneCheck');
 					$('button[name=phoneCheck]').text('완료').attr('class','btn btn-outline-success');
+					$('#phone').attr('class','form-control is-valid')
 				}
 			}else {
 				if(target == 'saveM'){
