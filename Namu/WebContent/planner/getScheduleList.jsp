@@ -525,7 +525,7 @@ function fncAddSchedule(){
 	} 
 
 	$($("#scheForm")).attr("method" , "POST").attr("action" , "/planner/addSchedule").attr("enctype" , "multipart/form-data").submit();
-
+å
 }		
 
  function fncUpdateSchedule(){
@@ -535,11 +535,11 @@ function fncAddSchedule(){
 		return;
 	}  */
 
-/* 	$($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
+$($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
 	
 }		
- */
- var scheCode=$("#scheCode").val();
+
+ /* var scheCode=$("#scheCode").val();
 
 	 $.ajax ({
 		url : '/planner/json/updateSchedule2/'+event.id,
@@ -560,7 +560,7 @@ function fncAddSchedule(){
 			})
 		}
 	
-});
+}); */
 } 
  
 
