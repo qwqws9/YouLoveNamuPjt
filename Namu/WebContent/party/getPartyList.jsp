@@ -422,6 +422,8 @@
 	</div><!-- end of container -->
 	<script>
 		$(document).ready(function(){
+			
+			
 			$(document).on("click",".fas.fa-cog.update",function(event){
 				var partyCode = $(this).parent().parent().text().split('·',1);
             	var update = $.trim(partyCode);
