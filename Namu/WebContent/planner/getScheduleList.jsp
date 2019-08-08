@@ -46,7 +46,8 @@
 
 	<link rel="stylesheet" type="text/css" href="/resources/css/timedropper.css ">
 	<script type="text/javascript" src="/resources/javascript/timedropper.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7.1.0/dist/promise.min.js"></script>
 <style type="text/css">
 input{
 background: none; border: 0 none;
@@ -265,15 +266,23 @@ function refreshScheduleList(){
 
  $(function(){
 	$(document).on('click','#deleteall',function(){
-		
-		if (confirm("작성하신 모든 일정을 삭제하시겠습니까?") == true){ 
-			var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
+		swal(
+				  {title: "작성하신 모든 일정을 삭제하시겠습니까?",  buttons: [
+				        "취소",
+				        "삭제"
+				      ],
+		/* if (confirm("작성하신 모든 일정을 삭제하시겠습니까?") == true){  */
+				  
+				    }).then(function(isConfirm) {
+				      if (isConfirm) {
+    	var plannerCode  =<%= (int)session.getAttribute("plannerCode")%>
 			
 			self.location = "/planner/deleteAllSchedule?plannerCode="+plannerCode;
 		}else{   
 		    return;
 		}
-
+		}
+		)
  	});
 	
 	
@@ -329,10 +338,12 @@ var scheCode=$("#scheCode").val();
 			'Content-Type'	: 'Application/json'
 		},
 			 success: function(JSONData,status) {
-
+		
 					$('body').load('/planner/getScheduleList/',function(){ 
-						alert("삭제되었습니다");
-		 				refreshScheduleList(); 
+				/* 
+		 				refreshScheduleList();  */
+		 		
+		 				refreshScheduleList();
 					});
 				
 			}
@@ -402,7 +413,7 @@ function updateSchedule(){
 	 layer_open('layer3');
 	}
 
-/* function updateSchedule2(){
+/*  function updateSchedule2(){
 	var scheCode=$("#scheCode").val();
 
 	$.ajax ({
@@ -422,7 +433,7 @@ function updateSchedule(){
 		}
 	
 });
-} */
+}  */
 	
 /* function deleteSchedule(){
 self.location = "/planner/deleteSchedule?scheCode="+$("#scheCode").val();
@@ -511,7 +522,8 @@ function fncAddSchedule(){
  	var scheName = $("input[name='scheName']").val();
 	
 	if(scheName == null || scheName.length<1){
-		alert("일정명을 입력해주세요.");
+		swal({title:"일정명을 입력해주세요.",
+			dangerMode:true});
 		return;
 	} 
 
@@ -519,19 +531,20 @@ function fncAddSchedule(){
 
 }		
 
-function fncUpdateSchedule(){
-
+ function fncUpdateSchedule(){
+	 	var scheName = $("input[name='scheName']").val(); 
 /* 	if(scheName == null || scheName.length<1){
 		alert("일정명을 입력해주세요.");
 		return;
 	}  */
+	swal({title:"일정이 수정되었습니다."});
+$($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
 
-	$($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
 	
-}		
 
+ /* var scheCode=$("#scheCode").val();
 
-	/* $.ajax ({
+	 $.ajax ({
 		url : '/planner/json/updateSchedule2/'+event.id,
 		method : 'post',
 		data	: JSON.stringify({
@@ -543,15 +556,16 @@ function fncUpdateSchedule(){
 			"Accept" : "application/json",
 			"Content-Type" : "application/json"
 		},
+		
 		  success: function(JSONData,status) {
 				$('body').load('/planner/getScheduleList',function(){
 				
 			})
 		}
 	
-});
-} */
-
+}); */
+} 
+ 
 
  
 $(function () {
@@ -606,8 +620,10 @@ $(function () {
 		        	 },  
 					eventLimit: true,
 			    	eventDrop: function(event, delta, revertFunc) {
-			    	
-		    		            alert("일정 "+ event.title + " 의 날짜를 " + event.start.format() + " 로 변경합니다");
+
+			    		if(event.end==null){
+		    		            swal({title:"일정 "+ event.title + " 의 날짜를 " + event.start.format() + " 로 변경합니다"});
+
 		    		       
 		    		            	console.log("update schedule");
 		    		            	
@@ -625,10 +641,11 @@ $(function () {
 		    		        			  success: function(JSONData,status) {
 		    		      					$('body').load('/planner/getScheduleList',function(){
 		    		    						
-		    		    					})
+		    		    					});
 		    		    				}
 		    		    			
 		    		    		});
+			    		}
 		    		        	},
 
 

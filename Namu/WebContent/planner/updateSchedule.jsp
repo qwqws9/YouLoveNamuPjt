@@ -18,7 +18,7 @@
 <div class="pop-container">
         <div class="pop-conts">
             <div class="updateSchedule2">
-                <form name="scheForm2" id="scheForm2" action="javascript:fncUpdateSchedule();" method="post"> 
+                <form name="scheForm2" id="scheForm2" action="/planner/updateSchedule2" method="post" > 
    <div id="updateSchedule"></div>
 
 <div class="col-md-12" ><div class="row"> 
