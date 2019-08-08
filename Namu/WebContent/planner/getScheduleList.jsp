@@ -641,10 +641,11 @@ $(function () {
 		    		        			  success: function(JSONData,status) {
 		    		      					$('body').load('/planner/getScheduleList',function(){
 		    		    						
-		    		    					})
+		    		    					});
 		    		    				}
 		    		    			
 		    		    		});
+			    		}
 		    		        	},
 
 
