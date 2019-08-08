@@ -73,37 +73,37 @@
 				
 				<div class="row">
 					<div class="col-md-12 col-lg-12">
-						<div class="row">
-							<div class="col-md-2 col-lg-2">
-								나의 위치는?
-							</div>
-							<div class="col-md-10  col-lg-10 form-group">
-								<div class="row">
-									<div class="col-md-6 col-lg-6">
-										<div class="row">
-											<div class="col-3">
-												위도
-											</div>
-											<div class="col-8">
-									   			<input type="text" id="latitude" name="latitude" class="form-control" placeholder=""
+<!-- 						<div class="row"> -->
+<!-- 							<div class="col-md-2 col-lg-2"> -->
+<!-- 								나의 위치는? -->
+<!-- 							</div> -->
+<!-- 							<div class="col-md-10  col-lg-10 form-group"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-md-6 col-lg-6"> -->
+<!-- 										<div class="row"> -->
+<!-- 											<div class="col-3"> -->
+<!-- 												위도 -->
+<!-- 											</div> -->
+<!-- 											<div class="col-8"> -->
+									   			<input type="hidden" id="latitude" name="latitude" class="form-control" placeholder=""
 									   				value="${party.latitude }" readonly="readonly" style="border: none; background: none;">
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-lg-6">
-										<div class="row">
-											<div class="col-3">
-												경도
-											</div>
-											<div class="col-8">
-									   			<input type="text" id="longitude" name="longitude" class="form-control" placeholder=""
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-md-6 col-lg-6"> -->
+<!-- 										<div class="row"> -->
+<!-- 											<div class="col-3"> -->
+<!-- 												경도 -->
+<!-- 											</div> -->
+<!-- 											<div class="col-8"> -->
+									   			<input type="hidden" id="longitude" name="longitude" class="form-control" placeholder=""
 									   				value="${party.longitude }" readonly="readonly" style="border: none; background: none;">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 					
 						<div class="row">
 							<div class="col-md-2 col-lg-2 text-center">
@@ -354,6 +354,12 @@
 	      		</div>
 		      	<div class="modal-body" id="calendar">
 		      	</div>
+		      	<div class="modal-footer">
+		      		<div>S</div>
+		      		<input type="text" id="partyStartModal" name="partyStart" class="form-control" readonly="readonly" placeholder="Start Date">
+		      		<div>E</div>
+		      		<input type="text" id="partyEndModal" name="partyEnd" class="form-control" readonly="readonly" placeholder="End Date">
+		      	</div>
 	    	</div>
 	  	</div>
 	</div>
@@ -413,6 +419,8 @@
 			    console.log(startDate +" , "+endDate);
 			    $("#partyStart").val(startDate);
 				$("#partyEnd").val(endDate);
+				$("#partyStartModal").val(startDate);
+				$("#partyEndModal").val(endDate);
 			}
 		$(function(){
 			//현재시간
