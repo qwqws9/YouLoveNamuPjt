@@ -337,10 +337,12 @@ var scheCode=$("#scheCode").val();
 			'Content-Type'	: 'Application/json'
 		},
 			 success: function(JSONData,status) {
-
+		
 					$('body').load('/planner/getScheduleList/',function(){ 
-						swal({text:"삭제되었습니다"});
-		 				refreshScheduleList(); 
+				/* 
+		 				refreshScheduleList();  */
+		 		
+		 				refreshScheduleList();
 					});
 				
 			}
@@ -519,13 +521,13 @@ function fncAddSchedule(){
  	var scheName = $("input[name='scheName']").val();
 	
 	if(scheName == null || scheName.length<1){
-		swal({text:"일정명을 입력해주세요.",
+		swal({title:"일정명을 입력해주세요.",
 			dangerMode:true});
 		return;
 	} 
 
 	$($("#scheForm")).attr("method" , "POST").attr("action" , "/planner/addSchedule").attr("enctype" , "multipart/form-data").submit();
-å
+
 }		
 
  function fncUpdateSchedule(){
@@ -534,10 +536,10 @@ function fncAddSchedule(){
 		alert("일정명을 입력해주세요.");
 		return;
 	}  */
-
+	swal({title:"일정이 수정되었습니다."});
 $($("#scheForm2")).attr("method" , "POST").attr("action" , "/planner/updateSchedule2").attr("enctype" , "multipart/form-data").submit();
+
 	
-}		
 
  /* var scheCode=$("#scheCode").val();
 
@@ -629,7 +631,7 @@ $(function () {
 					eventLimit: true,
 			    	eventDrop: function(event, delta, revertFunc) {
 			    		if(event.end==null){
-		    		            swal({text:"일정 "+ event.title + " 의 날짜를 " + event.start.format() + " 로 변경합니다"});
+		    		            swal({title:"일정 "+ event.title + " 의 날짜를 " + event.start.format() + " 로 변경합니다"});
 		    		       
 		    		            	console.log("update schedule");
 		    		            	
