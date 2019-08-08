@@ -55,7 +55,7 @@ public interface PlannerService {
 
 	public boolean updateSchedule(Schedule schedule) throws Exception;
 	
-//	public boolean updateSchedule2(Schedule schedule) throws Exception;
+	//public boolean updateSchedule2(Schedule schedule) throws Exception;
 	
 	public void  updateSchedule2(Schedule schedule) throws Exception;
 }

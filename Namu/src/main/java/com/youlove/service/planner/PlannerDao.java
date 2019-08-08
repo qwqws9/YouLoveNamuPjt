@@ -64,7 +64,7 @@ public interface PlannerDao {
 	
 	public int updateSchedule(Schedule schedule) throws Exception;
 	
-//	public int updateSchedule2(Schedule schedule) throws Exception;
+	// public int updateSchedule2(Schedule schedule) throws Exception;
 	
 	public void updateSchedule2(Schedule schedule) throws Exception;
 }
