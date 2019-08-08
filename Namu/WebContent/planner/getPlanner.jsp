@@ -21,28 +21,18 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	
+
+
 	<!-- Our Own Resources -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/planner.css">
+ 	<!-- Font Awesome  -->
 
-	<!-- owlCarousel -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-	
-	
-	<style>
-	.container-fluid { 
-  padding-left: 500px;
-  margin-right: auto;
-  margin-left: auto;
-  }
+		<link rel="stylesheet" type="text/css" href="/resources/css/spectrum.css">
+	<script type="text/javascript" src="/resources/javascript/spectrum.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-		.owl-item{
-	 		position: relative;
-	 		height: 330px; 
-	 		border: 1px solid rgba(0, 0, 0, 0.25);
-	 	}
-	</style>
 	<script type="text/javascript">
 	
 	$(function(){
@@ -88,12 +78,23 @@
 			 self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
 			  }); /* */ 
 			$("#deletep").on("click",function(){
-				if (confirm("작성하신 모든 일정을 삭제하시겠습니까?") == true){ 
-			 self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
-				}
-			});
-
-		});
+				
+				swal(
+						  {title: "플래너를 삭제하시겠습니까?",  buttons: [
+						        "취소",
+						        "삭제"
+						      ],
+				/* if (confirm("작성하신 모든 일정을 삭제하시겠습니까?") == true){  */
+						  
+						    }).then(function(isConfirm) {
+						      if (isConfirm) {
+						    	  self.location = "/planner/deletePlanner?plannerCode=${planner.plannerCode}";
+						      }else{   
+								    return;
+								}
+								}
+								)
+						 	});
 		 
 	//게시물 좋아요
 	$(document).on('click','.boardLike',function(){
@@ -124,7 +125,7 @@
 			deleteLikeBoard(boardCode,detailCode,sessionUser);
 		}
 	});
-	
+});
 	
 	function addLikeBoard(boardCode,detailCode,sessionUser,writerUser) {
 		
@@ -179,18 +180,6 @@
 		})
 	}
 	
-	
-	
-		 
-// 		 $(document).ready(function(){
-// 			var owl = $(".owl-carousel");
-// 			owl.owlCarousel({
-// 			 	margin:10,
-// 		        loop:true,
-// 		        autoWidth:true,
-// 		        items:4
-// 			});
-// 		 });
 	</script>
 
 </head> 

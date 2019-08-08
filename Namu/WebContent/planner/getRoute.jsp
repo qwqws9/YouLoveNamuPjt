@@ -53,9 +53,7 @@
     var routeLat=[];
     var routeLng=[];
     
-  /* var locations = [];
-    var locationLat = [];
-    var locationLng = []; */
+
     var markers = new Array();
     var iconCounter = 0;
     var iconsLength;
@@ -227,7 +225,7 @@
    		      var marker = new google.maps.Marker({
    		        position: new google.maps.LatLng(locationLat[i], locationLng[i]),
    		        map: map,
-   		        id:locations[i],
+   		        
    		    	 icon: icons[iconCounter]
    		      });
    		   marker.setMap(null);

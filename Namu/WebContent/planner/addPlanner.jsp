@@ -26,7 +26,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
    
 <style>
 form{
@@ -46,12 +46,16 @@ margin:0 auto
 		
 		
 		if(plannerName == null || plannerName.length<1){
-			alert("플래너 제목을 입력해주세요.");
+			swal({title:"플래너 제목을 입력해주세요."});
+			return;
+		} 
+		if(plannerName.length >50 ){
+			swal({title:"플래너 제목을 제한 길이를 초과하였습니다. 다시 입력해주세요. "});
 			return;
 		} 
 	
 	 if(departDate == null || departDate.length<1){
-			alert( "여행시작일을 입력해주세요.");
+		 swal({ text:"여행시작일을 입력해주세요."});
 			return;
 		}
 		

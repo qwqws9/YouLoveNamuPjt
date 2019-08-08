@@ -156,7 +156,7 @@ public class PlannerDaoImpl implements PlannerDao{
 //	public int updateSchedule2(Schedule schedule) throws Exception {
 //		return sqlSession.update("PlannerMapper.updateSchedule2",schedule);
 //	}
-	
+//	
 	@Override
 	public void updateSchedule2(Schedule schedule) throws Exception {
 		 sqlSession.update("PlannerMapper.updateSchedule2",schedule);

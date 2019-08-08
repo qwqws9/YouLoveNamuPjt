@@ -25,7 +25,8 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-   
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
 <style>
 form{
 margin:0 auto
@@ -42,14 +43,14 @@ margin:0 auto
 	 	var plannerName = $("input[name='plannerName']").val();
 		var departDate =$("input[name='departDate']").val();
 		
-		/* 
+		
 		if(plannerName == null || plannerName.length<1){
-			alert("플래너 제목을 입력해주세요.");
+			 swal({ text:"플래너 제목을 입력해주세요."});
 			return;
-		} */
+		} 
 	
 		if(departDate == null || departDate.length<1){
-			alert( "여행시작일을 입력해주세요.");
+			 swal({ text:"여행시작일을 입력해주세요."});
 			return;
 		}
 		$($("form")[1]).attr("method" , "POST").attr("action" , "/planner/updatePlanner?plannerCode=${planner.plannerCode}").attr("enctype" , "multipart/form-data").submit();

@@ -351,15 +351,15 @@ public class PlannerRestController {
 		return result;
 	}
 	
-//	@RequestMapping(value = "/json/updateSchedule2/{scheCode}", method = RequestMethod.POST)
-//	public boolean updateSchedule2(@PathVariable int scheCode,@RequestBody Schedule schedule) throws Exception{
-//
-//		System.out.println("plannerController------------------------updateSchedule: POST");
-//		
-//		boolean result =plannerService.updateSchedule2(schedule);
-//		
-//		return result;
-//	}
+	@RequestMapping(value = "/json/updateSchedule2/{scheCode}", method = RequestMethod.POST)
+	public boolean updateSchedule2(@PathVariable int scheCode,@RequestBody Schedule schedule) throws Exception{
+
+		System.out.println("plannerController------------------------updateSchedule: POST");
+		
+		boolean result =plannerService.updateSchedule2(schedule);
+		
+		return result;
+	}
 	
 	@RequestMapping(value="json/deleteSchedule/{scheCode}", method=RequestMethod.GET)
 	public int deleteSchedule(@PathVariable int scheCode ,HttpSession session)throws Exception{
