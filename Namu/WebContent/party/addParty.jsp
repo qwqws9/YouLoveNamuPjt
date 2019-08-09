@@ -149,10 +149,12 @@
 								<div class="row">
 									<div class="col-3 form-group">
 										<select class="form-control" id="country" title="Country">
+											<option>Country</option>
 										</select>
 									</div>
 									<div class="col-3 form-group">
 										<select class="form-control" id="city" name="cityName" title="City">
+											<option>City</option>
 										</select>
 									</div>
 									<div class="col-6 form-group">

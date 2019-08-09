@@ -158,10 +158,12 @@
 								<div class="row">
 									<div class="col-3 form-group">
 										<select class="form-control" id="country" title="Country">
+											<option>Country</option>
 										</select>
 									</div>
 									<div class="col-3 form-group">
 										<select class="form-control" id="city" name="cityName" title="City">
+											<option>City</option>
 										</select>
 									</div>
 									<div class="col-6 form-group">
@@ -333,7 +335,6 @@
 			</form>
 			</div>
 			<div class="col-1">
-				<button type="button" id="coco" onclick="getSchedule()">ddd</button>
 			</div><!-- 사이드바 -->
 		</div>
 	</div>
