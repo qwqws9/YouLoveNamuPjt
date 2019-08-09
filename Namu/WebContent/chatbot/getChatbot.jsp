@@ -19,6 +19,7 @@
 	<link  rel="stylesheet"  href="/resources/css/chatbot.css" /> 
 		
 	<script type="text/javascript">
+	
 	//카테고리 전역변수 선언
 	var keywordTypeNum=0;
 	//챗봇 프로필
@@ -26,7 +27,20 @@
 	//비회원 공통 프로필
 	//var userProfile= "../resources/images/captcha/stitch.png";
 	var userProfile= "../resources/images/blank-profile.png";
+	
+	//첨부할 이미지 설정
+	
+	// 메인 이미지 랜덤
+	var imgRandom = Math.floor(Math.random() * 3);
 		
+	if(imgRandom == 0){
+		imgRandom = 'main_images_01.jpg';
+	}else if(imgRandom == 1){
+		imgRandom = 'main_images_02.jpg';
+	}else if(imgRandom == 2){
+		imgRandom = 'main_images_03.jpg';
+	}
+
 	//시간 설정
 	function formatAMPM(date) {
 	    var hours = date.getHours();
@@ -52,7 +66,7 @@
 	                        '<div class="msj macro">' +
 	                        '<div class="avatar"><img class="img-circle" style="width:60%;" src="'+ chatbotProfile +'" /></div>' +
 	                            '<div class="text text-l">' +
-	                                '<p>'+ text +'</p>' +
+	                            	'<p>'+ text +'</p>' +
 	                                '<p><small style="font-size: 12px;">'+date+'</small></p>' +
 	                            '</div>' +
 	                        '</div>' +
@@ -74,6 +88,30 @@
 	        }, time);
 	}
 	
+	function insertChatImg(who, text, time){
+	    if (time === undefined){
+	        time = 0;
+	    }
+	    var control = "";
+	    var date = formatAMPM(new Date());
+	    
+	    if (who == "system"){
+	        control = '<li style="width:100%">' +
+	                        '<div class="msj macro">' +
+	                        '<div class="avatar"><img class="img-circle" style="width:60%;" src="'+ chatbotProfile +'" /></div>' +
+	                            '<div class="text text-l">' +
+	                            	'<img src="/resources/images/main/'+ imgRandom +'" style="width: 240px; border-radius: 10px;"/>'+
+	                            	'<p>'+ text +'</p>' +
+	                                '<p><small style="font-size: 12px;">'+date+'</small></p>' +
+	                            '</div>' +
+	                        '</div>' +
+	                    '</li>';
+	    }
+	    setTimeout(
+	        function(){                        
+	            $("ul").append(control).scrollTop($("ul").prop('scrollHeight'));
+	        }, time);
+	}
 	//채팅 입력란 초기화
 	function resetChat(){
 	    $("ul").empty();
@@ -115,6 +153,11 @@
 		
 	}	
 	
+	//console.log(imgRandom);
+	
+	//$('.visual_image').css('background-image', 'url(/resources/images/main/' + imgRandom + ')');
+	
+	
 	//입력한 keyword 챗봇창에 보여주기
 	//입력한 keyword DB검색
 	function searchKeyword(){
@@ -138,7 +181,7 @@
 			  		console.log("data ====="+ data)
 					//db에 없는 내용이면
 					var answer = JSON.stringify(data.answer)
-			  		insertChat("system", answer+"<br>"+"더 검색하실 내용이 있으신가요??", 0);
+			  		insertChatImg("system", answer+"<br>"+"더 검색하실 내용이 있으신가요??", 0);
 			  	},
 			  	error : function(data){
 			  		//console.log('검색내용 없음')
