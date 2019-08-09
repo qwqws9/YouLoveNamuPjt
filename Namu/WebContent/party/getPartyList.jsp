@@ -970,8 +970,9 @@
 			    where.style.cssText = 'font-size: small;';
 				
 			    
-			    	
-			    if(${user.userCode} == prop.userCode){
+				var userCode = ${user.userCode};			    	
+			    if(${user != null}){
+			    if(userCode == prop.userCode){
 			    
 			    //update delete
 			    var update 
@@ -988,6 +989,7 @@
 			    //var partyCode = prop.partyCode;
 			    	//updateParty(partyCode);
 			    }
+			    }	
 			    
 			    
 				// Add an event listener for the links in the sidebar listing
