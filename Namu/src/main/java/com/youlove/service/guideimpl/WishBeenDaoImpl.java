@@ -194,7 +194,7 @@ public class WishBeenDaoImpl implements WishBeenDao {
 	            Document doc = Jsoup.parse(html);
 	            //System.out.println(doc);
 	            
-	            System.out.println("-------------------------------------------------");
+	            System.out.println("-----------------------파싱완료--------------------------");
 	            //Elements el = doc.select("img[width=32]");
 	            Elements el = doc.select("div[id^='view']");
 	            String view = "";
@@ -245,7 +245,7 @@ public class WishBeenDaoImpl implements WishBeenDao {
 	    			
 	    			
 	    			list.add(flight);
-	    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	    			//System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();

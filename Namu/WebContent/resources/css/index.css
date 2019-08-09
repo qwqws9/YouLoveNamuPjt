@@ -74,7 +74,7 @@ header { background-color: #fff; }
 .comm .square > div { height: 350px; }
 .comm .square > div > div { position: relative; padding-top: 100px; }
 .comm .square > div > div:hover { background-color: transparent; }
-.comm .square .white { position: absolute; left: 0; bottom: 0; width: calc(100% - 1px); height: 150px; margin-left: .5px; padding: 20px; text-align: left; background-color: #fff; border-bottom-left-radius: .23em; border-bottom-right-radius: .23em; }
+.comm .square .white { position: absolute; left: 0; bottom: 0; width: 100%; height: 150px; margin-left: 0px; padding: 20px; text-align: left; background-color: #fff; border-bottom-left-radius: .23em; border-bottom-right-radius: .23em; }
 .comm .plan_name { position: absolute; top: 20px; width: 85%; }
 .comm .plan_period { margin-top: 70px; }
 .comm .plan_budget { height: 30px; }

@@ -83,8 +83,8 @@
 <!-- 												위도 -->
 <!-- 											</div> -->
 <!-- 											<div class="col-8"> -->
-<!-- 									   			<input type="hidden" id="latitude" name="latitude" class="form-control" placeholder="" -->
-<!-- 									   				readonly="readonly" style="border: none; background: none;"> -->
+									   			<input type="hidden" id="latitude" name="latitude" class="form-control" placeholder=""
+									   				readonly="readonly" style="border: none; background: none;">
 <!-- 											</div> -->
 <!-- 										</div> -->
 <!-- 									</div> -->
@@ -94,8 +94,8 @@
 <!-- 												경도 -->
 <!-- 											</div> -->
 <!-- 											<div class="col-8"> -->
-<!-- 									   			<input type="hidden" id="longitude" name="longitude" class="form-control" placeholder="" -->
-<!-- 									   				readonly="readonly" style="border: none; background: none;"> -->
+									   			<input type="hidden" id="longitude" name="longitude" class="form-control" placeholder=""
+									   				readonly="readonly" style="border: none; background: none;">
 <!-- 											</div> -->
 <!-- 										</div> -->
 <!-- 									</div> -->
@@ -149,10 +149,12 @@
 								<div class="row">
 									<div class="col-3 form-group">
 										<select class="form-control" id="country" title="Country">
+											<option>Country</option>
 										</select>
 									</div>
 									<div class="col-3 form-group">
 										<select class="form-control" id="city" name="cityName" title="City">
+											<option>City</option>
 										</select>
 									</div>
 									<div class="col-6 form-group">
@@ -278,6 +280,12 @@
 	      		</div>
 		      	<div class="modal-body" id="calendar">
 		      	</div>
+		      	<div class="modal-footer">
+		      		<div>S</div>
+		      		<input type="text" id="partyStartModal" name="partyStart" class="form-control" readonly="readonly" placeholder="Start Date">
+		      		<div>E</div>
+		      		<input type="text" id="partyEndModal" name="partyEnd" class="form-control" readonly="readonly" placeholder="End Date">
+		      	</div>
 	    	</div>
 	  	</div>
 	</div>
@@ -335,6 +343,8 @@
 			    console.log(startDate +" , "+endDate);
 			    $("#partyStart").val(startDate);
 				$("#partyEnd").val(endDate);
+				$("#partyStartModal").val(startDate);
+				$("#partyEndModal").val(endDate);
 			}
 		$(function(){
 			//현재시간
@@ -465,13 +475,13 @@
 		  defaultLanguage: 'ko'
 		}));
 		//search geoCoder
-		map.addControl(new MapboxGeocoder({
-			accessToken: mapboxgl.accessToken,
-			mapboxgl: mapboxgl,
-			marker : {
-				color : 'orange'
-			}
-			}));
+// 		map.addControl(new MapboxGeocoder({
+// 			accessToken: mapboxgl.accessToken,
+// 			mapboxgl: mapboxgl,
+// 			marker : {
+// 				color : 'orange'
+// 			}
+// 			}));
 		//나의 위치 검색
 		map.addControl(new mapboxgl.GeolocateControl({
 			positionOptions: {

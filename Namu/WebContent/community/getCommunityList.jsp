@@ -39,7 +39,7 @@
 	<style>
 		.owl-item{
 	 		position: relative;
-	 		height: 330px; 
+	 		height: 400px; 
 	 		border: 1px solid rgba(0, 0, 0, 0.25);
 	 	}
 	 	.bestTitle{ 
@@ -59,7 +59,7 @@
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
 			
-			
+				<br><br><br>
 <!-- 				owl -->
 				<div class="row justify-content-center">
 					<div class="owl-carousel owl-theme owl-loaded" style="width: 80%;">
@@ -240,7 +240,7 @@
 										<c:if test="${community.communityBoard eq '3'}">QnA 게시판</c:if>
 									</p>
 									<c:if test="${community.communityBoard eq '1'}">
-										<p class="text-center" ><i class="fab fa-fly fa-2x"></i></p>
+<!-- 										<p class="text-center" ><i class="fab fa-fly fa-2x"></i></p> -->
 									</c:if>
 									<c:if test="${community.communityBoard eq '2'}">
 										<p class="text-center" ><img alt="" class="getCommunity image" name="thumbnail" src="/resources/images/flag/${community.city.flagImage}" width="30px" height="20px" style="border-radius: 3px; cursor: pointer;"></p>
@@ -248,7 +248,7 @@
 										<p class="text-center" style="font-size: small; color: #344157;">[${community.city.cityName}]</p>
 									</c:if>
 									<c:if test="${community.communityBoard eq '3'}">
-										<p class="text-center" ><i class="far fa-comments fa-2x"></i></p>
+<!-- 										<p class="text-center" ><i class="far fa-comments fa-2x"></i></p> -->
 									</c:if>
 								</div>
 								<div class="col-7 col-md-7">
@@ -296,9 +296,9 @@
 				<div class="row">
 					<div class="col" style="position: fixed; bottom: 30px;">
 						<button type="button" id="addCommunity"
-							style="border-radius: 30px; border: 2px dashed #30a9de; background: none; width: 60px; height: 60px;">
+							style="border-radius: 30px; border: 2px solid #282C37; background: #282C37; width: 60px; height: 60px;">
 							<i class="fas fa-pencil-alt fa-2x"
-								style="color: #30a9de; width: 30px; height: 30;"></i>
+								style="color: white; width: 30px; height: 30;"></i>
 						</button>
 					</div>
 				</div>

@@ -279,28 +279,28 @@ function callCommunityList(page){
 
 //Search Box Event
 function searchCommunity(obj, evt){
-	    var container = $(obj).closest('.communitySearch');
-	        if(!container.hasClass('active')){
-	            container.addClass('active');
-	            evt.preventDefault();
-	            $(".search-icon").on("click", function(){
-	            	/*$("form").on( "submit", function( event ) {
-					  event.preventDefault();
-					  alert( $( "form" ).serialize() );
-					});*/
-	            	//document.location.href.replace(document.location.href,'');
-	            	if(document.location.href.indexOf('communityBoard') != -1){
-	            		var thisCommunityBoard = document.location.href.split('?')[1].split('=')[1]
-	            	}
-	            	$('#communityBoardURL').val(thisCommunityBoard);
-	            	$("form").attr("method", "POST").attr("action", "/community/getCommunityList").submit();
-	            })
-	        }
-	        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
-	            container.removeClass('active');
-	            container.find('.search-input').val('');
-	        }
-	}
+    var container = $(obj).closest('.communitySearch');
+    if(!container.hasClass('active')){
+        container.addClass('active');
+        evt.preventDefault();
+        $(".search-icon").on("click", function(){
+        	/*$("form").on( "submit", function( event ) {
+			  event.preventDefault();
+			  alert( $( "form" ).serialize() );
+			});*/
+        	//document.location.href.replace(document.location.href,'');
+        	if(document.location.href.indexOf('communityBoard') != -1){
+        		var thisCommunityBoard = document.location.href.split('?')[1].split('=')[1]
+        	}
+        	$('#communityBoardURL').val(thisCommunityBoard);
+        	$("form").attr("method", "POST").attr("action", "/community/getCommunityList").submit();
+        })
+    }
+    else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+        container.removeClass('active');
+        container.find('.search-input').val('');
+    }
+}
 
 	
 

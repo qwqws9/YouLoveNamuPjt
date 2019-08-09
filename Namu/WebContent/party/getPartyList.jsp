@@ -422,6 +422,8 @@
 	</div><!-- end of container -->
 	<script>
 		$(document).ready(function(){
+			
+			
 			$(document).on("click",".fas.fa-cog.update",function(event){
 				var partyCode = $(this).parent().parent().text().split('·',1);
             	var update = $.trim(partyCode);
@@ -960,12 +962,18 @@
 			    var date = listing.appendChild(document.createElement('div'));
 			    date.innerHTML = '동행 기간 : ' + '시작 - '+prop.partyStart + ' · ' + '끝 - '+ prop.partyEnd
 			    date.style.cssText = 'font-size: small;';
-							    
+			    
+			    	
 			    //country
 			    var where = listing.appendChild(document.createElement('div'));
 			    where.innerHTML = '동행 지역 : '+ prop.country+' · '+prop.city
 			    where.style.cssText = 'font-size: small;';
-
+				
+			    
+				var userCode = ${user.userCode};			    	
+			    if(${user != null}){
+			    if(userCode == prop.userCode){
+			    
 			    //update delete
 			    var update 
 			    update = where.appendChild(document.createElement('i'));
@@ -980,6 +988,8 @@
 			    //<i class="fas fa-trash-alt"></i>
 			    //var partyCode = prop.partyCode;
 			    	//updateParty(partyCode);
+			    }
+			    }	
 			    
 			    
 				// Add an event listener for the links in the sidebar listing
