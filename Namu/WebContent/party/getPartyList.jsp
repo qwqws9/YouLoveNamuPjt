@@ -26,6 +26,7 @@
 	<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 	<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' type='text/css' />
 	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!-- Full Calendar -->
 	<script type="text/javascript"  src="/resources/javascript/moment.min.js"></script>  
@@ -441,7 +442,12 @@
 				console.log(sendUser);
 				console.log(receive);
 				addTimelineParty(sendUser,receive,'4');
-				alert("신청이 완료되었습니다.");
+				//alert("신청이 완료되었습니다.");
+				swal({
+					title : '동행 신청',
+					text : '타임라인에서 확인 가능합니다.',
+					icon : 'success'
+				})
 			})
 			
 

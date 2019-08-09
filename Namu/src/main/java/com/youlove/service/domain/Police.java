@@ -86,7 +86,8 @@ public class Police {
 	public String toString() {
 		return "Police [policeCode=" + policeCode + ", fromUser=" + fromUser + ", toUser=" + toUser
 				+ ", policeBoardCode=" + policeBoardCode + ", policeDetailCode=" + policeDetailCode + ", policeOption="
-				+ policeOption + ", policeContent=" + policeContent + "]";
+				+ policeOption + ", policeContent=" + policeContent + ", policeDate=" + policeDate + ", processing="
+				+ processing + ", commentCode=" + commentCode + "]";
 	}
 	
 	

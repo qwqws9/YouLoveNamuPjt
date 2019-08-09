@@ -95,7 +95,12 @@ $(function(){
 				multipleUser += '#'+$(this).children().next().val().trim();
 			});
 			multipleAdd(multipleUser,'2');
-			alert('초대메시지를 보냈습니다.')
+			//alert('초대메시지를 보냈습니다.')
+			swal({
+				title : '친구 추가',
+				text : '초대메시지를 보냈습니다.',
+				icon : 'success'
+			})
 		}
 		//alert(multipleUser);
 			

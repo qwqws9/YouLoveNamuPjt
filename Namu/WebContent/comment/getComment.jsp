@@ -179,7 +179,11 @@ $(document).on('click','#goPoliceComment',function(){
 				"Content-Type" : "application/json"
 			},
 			success : function(data,status) {
-				alert('신고가 완료되었습니다.');
+				//alert('신고가 완료되었습니다.');
+				swal({
+					title : '신고 완료',
+					icon : 'success'
+								})
 				$('#policeCloseComment').trigger('click');
 			}
 		});

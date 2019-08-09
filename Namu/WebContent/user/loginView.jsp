@@ -20,6 +20,7 @@
  <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
  <script src="/resources/javascript/kakaoLogin.js"></script>
  
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
  
 </head>
 
@@ -169,7 +170,12 @@
 					//self.location = '/';
 					//alert(JSONData.userCode);
 					if(JSONData.endBlock != null) {
-						alert(JSONData.startBlock+" ~ " + JSONData.endBlock+ " 까지 제한된 회원입니다.")
+						//alert(JSONData.startBlock+" ~ " + JSONData.endBlock+ " 까지 제한된 회원입니다.")
+						swal({
+							title : '정지 회원',
+							text : JSONData.startBlock+" ~ " + JSONData.endBlock,
+							icon : 'error'
+						})
 					}else {
 						login();
 					}

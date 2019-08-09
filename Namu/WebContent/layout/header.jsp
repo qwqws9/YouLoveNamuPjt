@@ -6,13 +6,13 @@
 <head>
 	<meta charset="utf-8">
 	<!-- 타임라인을 위한 노드 서버 연결 -->
-<!-- 	<script src="http://192.168.0.94:3000/socket.io/socket.io.js"></script> -->
+<!-- 	<script src="http://192.168.0.30:3000/socket.io/socket.io.js"></script> -->
 <!-- 	<script src="/resources/javascript/alarmSocket.js"></script> -->
 	<!-- 지우지 말것...... -->
 	<link href="/resources/css/timeline.css" rel="stylesheet">
 	<link href="/resources/css/sidebar.css" rel="stylesheet">
 	<script src="/resources/javascript/sidebar.js"></script>
-  	
+  	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 
 	//채팅 팝업

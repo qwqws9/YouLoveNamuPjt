@@ -18,6 +18,7 @@
 	<!-- common -->
 	<link rel="stylesheet" type="text/css" href="/resources/css/common.css">
 	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<style type="text/css">
 		.img-thumbnail{
@@ -100,7 +101,11 @@
 								"Content-Type" : "application/json"
 							},
 							success : function(data,status) {
-								alert('신고가 완료되었습니다.');
+								//alert('신고가 완료되었습니다.');
+								swal({
+									title : '신고 완료',
+									icon : 'success'
+								})
 								$('#policeClose').trigger('click');
 							}
 						});
