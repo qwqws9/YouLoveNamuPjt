@@ -120,9 +120,7 @@
 								내용
 							</div>
 							<div class="col-md-10 col-lg-10 form-group">
-						    	<textarea class="form-control" id="partyContent" name="partyContent" rows="3">
-						    	${party.partyContent}
-						    	</textarea>
+						    	<textarea class="form-control" id="partyContent" name="partyContent" rows="3">${party.partyContent}</textarea>
 							</div>
 						</div>	
 						
