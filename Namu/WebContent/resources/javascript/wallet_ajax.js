@@ -95,7 +95,7 @@ function deleteWalletAjax(walletCode) {
 			//console.log('JSONData :: ' + JSONData);
 			
 			if(JSONData == true){
-				alert('삭제되었습니다.');
+//				alert('삭제되었습니다.');
 				
 				$('.square[data-wallet-code=' + walletCode + ']').css('cursor', 'default');
 				

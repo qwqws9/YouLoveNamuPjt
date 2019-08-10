@@ -30,17 +30,36 @@ $(function() {
 		//console.log('walletCode : ' + $(this).closest('.square').attr('data-wallet-code'));
 		
 		if($(this).hasClass('active') && $(this).closest('.square').attr('data-wallet-code') == null){
-			var result = confirm('가계부를 생성하시겠습니까?');
-			
-			if(result){
-				var plannerCode = $(this).closest('.square').data('plannerCode');
-				//console.log('plannerCode : ' + plannerCode);
-				
-				addWalletAjax(plannerCode);
-			}else{
-				$(this).removeClass('active');
-				$(this).next().addClass('active').children().prop('checked', true);
-			}
+//			var result = confirm('가계부를 생성하시겠습니까?');
+//			
+//			if(result){
+//				var plannerCode = $(this).closest('.square').data('plannerCode');
+//				//console.log('plannerCode : ' + plannerCode);
+//				
+//				addWalletAjax(plannerCode);
+//			}else{
+//				$(this).removeClass('active');
+//				$(this).next().addClass('active').children().prop('checked', true);
+//			}
+			swal({
+				  title: "가계부를 생성하시겠습니까?",
+				  icon: "info",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal("가계부가 생성되었습니다", {
+				      icon: "success",
+				    });
+				    var plannerCode = $(this).closest('.square').data('plannerCode');
+					//console.log('plannerCode : ' + plannerCode);
+					addWalletAjax(plannerCode);
+				  } else {
+					  $(this).removeClass('active');
+					$(this).next().addClass('active').children().prop('checked', true);
+				  }
+				});
 		}else{
 			return false;
 		}
@@ -52,17 +71,37 @@ $(function() {
 		//console.log('walletCode : ' + $(this).closest('.square').attr('data-wallet-code'));
 		
 		if($(this).hasClass('active') && $(this).closest('.square').attr('data-wallet-code') != null){
-			var result = confirm('기존 가계부 내역이 모두 삭제 됩니다. 정말 삭제하시겠습니까?');
-			
-			if(result){
-				var walletCode = $(this).closest('.square').attr('data-wallet-code');
-				//console.log('walletCode : ' + walletCode);
-				
-				deleteWalletAjax(walletCode);
-			}else{
-				$(this).removeClass('active');
-				$(this).prev().addClass('active').children().prop('checked', true);
-			}
+//			var result = confirm('기존 가계부 내역이 모두 삭제 됩니다. 정말 삭제하시겠습니까?');
+//			
+//			if(result){
+//				var walletCode = $(this).closest('.square').attr('data-wallet-code');
+//				//console.log('walletCode : ' + walletCode);
+//				
+//				deleteWalletAjax(walletCode);
+//			}else{
+//				$(this).removeClass('active');
+//				$(this).prev().addClass('active').children().prop('checked', true);
+//			}
+			swal({
+				  title: "가계부 삭제",
+				  text : '기존 가계부 내역이 모두 삭제 됩니다. \n 정말 삭제하시겠습니까?',
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal("가계부가 삭제되었습니다", {
+				      icon: "success",
+				    });
+				    var walletCode = $(this).closest('.square').attr('data-wallet-code');
+					//console.log('walletCode : ' + walletCode);
+					deleteWalletAjax(walletCode);
+				  } else {
+					$(this).removeClass('active');
+					$(this).prev().addClass('active').children().prop('checked', true);
+				  }
+				});
 		}else{
 			return false;
 		}
