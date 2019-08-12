@@ -66,11 +66,11 @@
 	 	
 	 <insert 	id="addPlanner"		parameterType="planner" >
 		<selectKey keyProperty="plannerCode" resultType="int" order="BEFORE">
-		 SELECT MAX(planner_code)+1 FROM planner
+		 SELECT seq_planner_code.nextval FROM dual
 		</selectKey>
 	 	INSERT
 		INTO planner(PLANNER_CODE , planner_ver, planner_writer, PLANNER_NAME , PLANNER_IMAGE, MEMBER,  STATUS, ISGROUP , BOARD_CODE, DEPART_DATE , REG_DATE ) 
-		VALUES	 (seq_planner_code.nextval, 1, #{plannerWriter.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member},  'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
+		VALUES	 (#{plannerCode}, 1, #{plannerWriter.userCode}, #{plannerName:VARCHAR} , #{plannerImage:VARCHAR}, #{member},  'B',  'N' , '4', #{departDate:VARCHAR}, SYSDATE)
 	
 
 	 </insert>

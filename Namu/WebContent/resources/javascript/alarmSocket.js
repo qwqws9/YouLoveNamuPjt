@@ -48,7 +48,7 @@ $(function(){
 	
 	if(userCode  != '') {
 		
-		socket = io("http://192.168.0.54:3000");
+		socket = io("http://192.168.0.94:3000");
 		    // 서버로 자신의 정보를 전송한다.
 		    socket.emit("login", {
 		      // name: "ungmo2",
